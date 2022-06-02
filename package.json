@@ -1,0 +1,19 @@
+{
+  "name": "rellygudfutos",
+  "version": "0.1.0",
+  "description": "Photo Gallery",
+  "scripts": {
+    "server": "cd backend && yarn server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/michaelkerr0576/rellygudfutos_v2.git"
+  },
+  "keywords": [],
+  "author": "Michael Kerr",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/michaelkerr0576/rellygudfutos_v2/issues"
+  },
+  "homepage": "https://github.com/michaelkerr0576/rellygudfutos_v2#readme"
+}
