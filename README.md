@@ -2,6 +2,19 @@
 
 ## Development Notes
 
+### MERN Stack
+
+This application will be using the MERN stack. MERN stands for MongoDB, Express, React, Node, after the four key technologies that make up the stack.
+
+- MongoDB - document database
+- Express(.js) - Node.js web framework
+- React(.js) - a client-side JavaScript framework
+- Node(.js) - the premier JavaScript web server
+
+**Useful Links:**
+
+- [Youtube Tutorial - Traversy Media](https://www.youtube.com/playlist?list=PLillGF-RfqbbQeVSccR9PGKHzPJSWqcsm)
+
 ### Node Express Typescript
 
 **Useful Links:**
@@ -19,6 +32,12 @@ Airbnb introduces it as the “Most reasonable approach to JavaScript”. To che
 - [Eslint Rules](https://eslint.org/docs/rules/)
 - [Airbnb Style Guide](https://airbnb.io/javascript/react/)
 - [Youtube Tutorial - Traversy Media](https://www.youtube.com/watch?v=SydnKbGc7W8&ab_channel=TraversyMedia)
+
+### Path Aliases
+
+Makes it a lot easier to import from anywhere within the project and move files around without changing imports and you never end up with something like `../../../../../components/`. Too many `../../../../../` can be extremely sore on the eyes. This was more of a pain then I thought it would be. Getting Typescript, Eslint and Vscode Intellisense to play nice was a b\*tch.
+
+See `tsconfig.json` for path configurations.
 
 ### React Query
 

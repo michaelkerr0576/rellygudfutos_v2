@@ -3,15 +3,15 @@ module.exports = {
     browser: true,
     commonjs: true,
     es2021: true,
+    es6: true,
     node: true,
   },
   extends: [
     'airbnb-base',
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
-    'plugin:import/errors',
+    'plugin:import/recommended',
     'plugin:import/typescript',
-    'plugin:import/warnings',
     'plugin:node/recommended',
     'prettier',
   ],
@@ -19,7 +19,13 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 'latest',
   },
-  plugins: ['@typescript-eslint', 'import', 'prettier', 'simple-import-sort'],
+  plugins: [
+    '@typescript-eslint',
+    'eslint-plugin-import',
+    'import',
+    'prettier',
+    'simple-import-sort',
+  ],
   rules: {
     'prettier/prettier': [
       'error',
@@ -27,6 +33,9 @@ module.exports = {
         endOfLine: 'auto',
       },
     ],
+    // typescript errors to handle missing imports
+    'node/no-missing-import': 'off',
+    'import/no-unresolved': 'off',
     'simple-import-sort/imports': [
       'error',
       {
