@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Photo Gallery",
   "scripts": {
-    "server": "cd backend && yarn server"
+    "dev": "cd backend && yarn dev"
   },
   "repository": {
     "type": "git",

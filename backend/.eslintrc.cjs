@@ -9,6 +9,9 @@ module.exports = {
     'airbnb-base',
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
+    'plugin:import/errors',
+    'plugin:import/typescript',
+    'plugin:import/warnings',
     'plugin:node/recommended',
     'prettier',
   ],
@@ -40,5 +43,12 @@ module.exports = {
       },
     ],
     'simple-import-sort/exports': 'error',
+    'node/no-unsupported-features/es-syntax': [
+      'error',
+      {
+        version: '>=8.0.0',
+        ignores: ['modules'],
+      },
+    ],
   },
 };

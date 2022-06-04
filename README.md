@@ -7,12 +7,7 @@
 **Useful Links:**
 
 - [Setting Up](https://developer.okta.com/blog/2018/11/15/node-express-typescript)
-
-### Node Express Typescript
-
-**Useful Links:**
-
-- [Setting Up](https://www.npmjs.com/package/typescript-express-starter)
+- [File Structure](https://www.npmjs.com/package/typescript-express-starter)
 
 ### Eslint & Airbnb Style Guide
 

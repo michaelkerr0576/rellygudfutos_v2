@@ -7,6 +7,9 @@ module.exports = {
     'airbnb',
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
+    'plugin:import/errors',
+    'plugin:import/typescript',
+    'plugin:import/warnings',
     'plugin:jsx-a11y/recommended',
     'plugin:node/recommended',
     'plugin:react-hooks/recommended',
@@ -57,5 +60,20 @@ module.exports = {
       },
     ],
     'simple-import-sort/exports': 'error',
+    'node/no-unsupported-features/es-syntax': [
+      'error',
+      {
+        version: '>=8.0.0',
+        ignores: ['modules'],
+      },
+    ],
+    'node/no-missing-import': [
+      'error',
+      {
+        allowModules: [],
+        resolvePaths: ['src/'],
+        tryExtensions: ['.js', '.json', '.node', 'ts'],
+      },
+    ],
   },
 };
