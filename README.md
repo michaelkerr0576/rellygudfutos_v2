@@ -41,8 +41,8 @@ See `tsconfig.paths.json` in frontend and backend root folders for configured pa
 
 **Useful Links:**
 
-- [tsconfig.json Config](https://www.typescriptlang.org/tsconfig#paths)
-- [eslintrc.js Config](https://github.com/alexgorbatchev/eslint-import-resolver-typescript)
+- [Config tsconfig.json](https://www.typescriptlang.org/tsconfig#paths)
+- [Config eslintrc.js](https://github.com/alexgorbatchev/eslint-import-resolver-typescript)
 - [Stack Overflow Troubleshoot](https://stackoverflow.com/questions/69932369/setting-up-eslint-import-resolver-typescript-in-monorepo)
 
 ### React Query
