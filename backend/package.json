@@ -5,7 +5,7 @@
     "node": ">=8.0.0"
   },
   "description": "handles backend",
-  "main": "dist/index.js",
+  "main": "./dist/index.js",
   "scripts": {
     "start": "node server.ts",
     "dev": "nodemon server.ts"
@@ -36,7 +36,6 @@
     "eslint-plugin-simple-import-sort": "^7.0.0",
     "nodemon": "^2.0.7",
     "prettier": "^2.6.2",
-    "tsconfig-paths": "^4.0.0",
     "typescript": "^4.7.2"
   }
 }

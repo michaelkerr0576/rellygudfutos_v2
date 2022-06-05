@@ -1,7 +1,10 @@
 module.exports = {
   env: {
     browser: true,
+    commonjs: true,
     es2021: true,
+    es6: true,
+    node: true,
   },
   extends: [
     'airbnb',
@@ -25,6 +28,7 @@ module.exports = {
   },
   plugins: [
     '@typescript-eslint',
+    'eslint-plugin-import',
     'import',
     'jsx-a11y',
     'prettier',
@@ -39,6 +43,8 @@ module.exports = {
         endOfLine: 'auto',
       },
     ],
+    // Conflict with importing aliases. Typescript and Eslint have errors to handle missing imports
+    'node/no-missing-import': 'off',
     'simple-import-sort/imports': [
       'error',
       {
@@ -66,5 +72,29 @@ module.exports = {
         ignores: ['modules'],
       },
     ],
+    'react/jsx-filename-extension': [
+      2,
+      { extensions: ['.js', '.jsx', '.ts', '.tsx'] },
+    ],
+    'import/extensions': [
+      'error',
+      'ignorePackages',
+      {
+        js: 'never',
+        jsx: 'never',
+        ts: 'never',
+        tsx: 'never',
+      },
+    ],
+  },
+  settings: {
+    'import/parsers': {
+      '@typescript-eslint/parser': ['.ts', '.tsx'],
+    },
+    'import/resolver': {
+      typescript: {
+        project: './frontend/tsconfig.json',
+      },
+    },
   },
 };

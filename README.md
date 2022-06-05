@@ -37,10 +37,12 @@ Airbnb introduces it as the “Most reasonable approach to JavaScript”. To che
 
 Makes it a lot easier to import from anywhere within the project and move files around without changing imports and you never end up with something like `../../../../../components/`. Too many `../../../../../` can be extremely sore on the eyes. This was more of a pain then I thought it would be. Getting Typescript, Eslint and Vscode Intellisense to play nice was a b\*tch.
 
+See `tsconfig.paths.json` in frontend and backend root folders for configured paths.
+
 **Useful Links:**
 
 - [tsconfig.json Config](https://www.typescriptlang.org/tsconfig#paths)
-- [eslintrc.js](https://github.com/alexgorbatchev/eslint-import-resolver-typescript)
+- [eslintrc.js Config](https://github.com/alexgorbatchev/eslint-import-resolver-typescript)
 - [Stack Overflow Troubleshoot](https://stackoverflow.com/questions/69932369/setting-up-eslint-import-resolver-typescript-in-monorepo)
 
 ### React Query
@@ -59,3 +61,11 @@ Super light weight client side state. For this application, Redux is overkill wh
 **Useful Links:**
 
 - [Zustand Docs](https://docs.pmnd.rs/zustand/introduction)
+
+### Terminal
+
+Some useful commands and what they do.
+
+**General:**
+
+- Kill localhost bash - `npx kill-port 5000`
