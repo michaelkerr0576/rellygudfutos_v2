@@ -3,21 +3,19 @@
     "require": ["tsconfig-paths/register"]
   },
   "compilerOptions": {
+    "baseUrl": ".",
     "esModuleInterop": true,
-    "lib": ["es5", "es6"],
     "module": "commonjs",
     "moduleResolution": "node",
     "noImplicitAny": true,
-    "outDir": "./dist",
-    "sourceMap": true,
-    "target": "es6",
-    "types": ["node"],
-    "baseUrl": "./src",
+    "outDir": "dist",
     "paths": {
-      "@routes/*": ["./routes/*"],
-      "@controllers/*": ["./controllers/*"]
-    }
+      "@routes/*": ["./src/routes/*"],
+      "@controllers/*": ["./src/controllers/*"]
+    },
+    "sourceMap": true,
+    "target": "es6"
   },
-  "include": ["./src/**/*", "**/*.ts"],
-  "exclude": ["node_modules"]
+  "exclude": ["./node_modules"],
+  "include": ["./src/**/*", "**/*.ts"]
 }

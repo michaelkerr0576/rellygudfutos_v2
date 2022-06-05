@@ -33,9 +33,8 @@ module.exports = {
         endOfLine: 'auto',
       },
     ],
-    // typescript errors to handle missing imports
+    // Conflict with importing aliases. Typescript and Eslint have errors to handle missing imports
     'node/no-missing-import': 'off',
-    'import/no-unresolved': 'off',
     'simple-import-sort/imports': [
       'error',
       {
@@ -59,5 +58,15 @@ module.exports = {
         ignores: ['modules'],
       },
     ],
+  },
+  settings: {
+    'import/parsers': {
+      '@typescript-eslint/parser': ['.ts'],
+    },
+    'import/resolver': {
+      typescript: {
+        project: './backend/tsconfig.json',
+      },
+    },
   },
 };
