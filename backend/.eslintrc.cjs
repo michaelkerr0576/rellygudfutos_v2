@@ -8,6 +8,7 @@ module.exports = {
   },
   extends: [
     'airbnb-base',
+    'airbnb-typescript/base',
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:import/recommended',
@@ -39,10 +40,12 @@ module.exports = {
       'error',
       {
         groups: [
-          // Internal packages.
-          ['^(@|components)(/.*|$)'],
           // Side effect imports.
           ['^\\u0000'],
+          // Packages.
+          ['^express', '^\\w'],
+          // Internal packages.
+          ['^(@|components)(/.*|$)'],
           // Parent imports. Put `..` last.
           ['^\\.\\.(?!/?$)', '^\\.\\./?$'],
           // Other relative imports. Put same-folder imports and `.` last.
@@ -56,6 +59,21 @@ module.exports = {
       {
         version: '>=8.0.0',
         ignores: ['modules'],
+      },
+    ],
+    '@typescript-eslint/explicit-function-return-type': [
+      'error',
+      {
+        allowTypedFunctionExpressions: false,
+      },
+    ],
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': [
+      'error',
+      {
+        argsIgnorePattern: '^_',
+        varsIgnorePattern: '^_',
+        caughtErrorsIgnorePattern: '^_',
       },
     ],
   },

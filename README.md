@@ -15,7 +15,18 @@ This application will be using the MERN stack. MERN stands for MongoDB, Express,
 
 - [Youtube Tutorial - Traversy Media](https://www.youtube.com/playlist?list=PLillGF-RfqbbQeVSccR9PGKHzPJSWqcsm)
 
-### Node Express Typescript
+#### Typescript
+
+Typescript will be used across Frontend and Backend. Can customize behaviour in `tsconfig.json`.
+
+**Useful Links:**
+
+- [Typescript Cheat Sheet](https://www.typescriptlang.org/cheatsheets)
+- [Typescript Compiler Options](https://www.typescriptlang.org/tsconfig)
+
+### Node Express with Typescript
+
+Setting up Backend to be Typescript. Everything Typescript!
 
 **Useful Links:**
 
@@ -47,7 +58,7 @@ See `tsconfig.paths.json` in frontend and backend root folders for configured pa
 
 ### React Query
 
-Server side state that reduces API requests.
+Server side state that reduces API requests :drooling_face:.
 
 **Useful Links:**
 
@@ -64,8 +75,38 @@ Super light weight client side state. For this application, Redux is overkill wh
 
 ### Terminal
 
-Some useful commands and what they do.
+Some useful commands and what they do because I will forget.
 
 **General:**
 
 - Kill localhost bash - `npx kill-port 5000`
+
+**Yarn:**
+List of commands [Yarn cli](https://classic.yarnpkg.com/en/docs/cli/)
+
+- Installs all the dependencies defined in a `package.json` file - `yarn install`
+- Add package to dependencies - `yarn add package`
+- Add package to dev dependencies - `yarn add -D package`
+- Remove package from `package.json` - `yarn remove package`
+
+**Git:**
+
+- Add all changed files to staging area - `git add .`
+- Commit staging area files with commit message - `git commit -m 'commit message'`
+- Push changes to Github repo - `git push`
+- Pull changes from Github repo - `git pull`
+
+**Node & nvm:**
+Using [nvm for Windows](https://github.com/coreybutler/nvm-windows).
+Check [Node for Windows](https://nodejs.org/en/) for recommended version.
+
+- List of Node versions installed - `nvm list`
+- Current Node version running - `nvm current`
+- Use Node version specified - `nvm use 16.15.1`
+- Install Node version specified - `nvm install 16.15.1`
+- Node version - `node -v`
+
+**Typescript:**
+
+- Check version - `tsc --version`
+- Compile file - `tsc index.ts`

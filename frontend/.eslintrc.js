@@ -8,6 +8,7 @@ module.exports = {
   },
   extends: [
     'airbnb',
+    'airbnb-typescript',
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:import/recommended',
@@ -49,12 +50,12 @@ module.exports = {
       'error',
       {
         groups: [
-          // Packages `react` related packages come first.
-          ['^react', '^@?\\w'],
-          // Internal packages.
-          ['^(@|components)(/.*|$)'],
           // Side effect imports.
           ['^\\u0000'],
+          // Packages.
+          ['^react', '^\\w'],
+          // Internal packages.
+          ['^(@|components)(/.*|$)'],
           // Parent imports. Put `..` last.
           ['^\\.\\.(?!/?$)', '^\\.\\./?$'],
           // Other relative imports. Put same-folder imports and `.` last.
@@ -84,6 +85,21 @@ module.exports = {
         jsx: 'never',
         ts: 'never',
         tsx: 'never',
+      },
+    ],
+    '@typescript-eslint/explicit-function-return-type': [
+      'error',
+      {
+        allowTypedFunctionExpressions: false,
+      },
+    ],
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': [
+      'error',
+      {
+        argsIgnorePattern: '^_',
+        varsIgnorePattern: '^_',
+        caughtErrorsIgnorePattern: '^_',
       },
     ],
   },

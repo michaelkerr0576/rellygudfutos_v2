@@ -1,11 +1,19 @@
 import 'dotenv/config';
 
-import photosRoutes from '@routes/photos.routes';
 import express from 'express';
+import bodyParser from 'body-parser';
+
+import errorHandler from '@middlewares/errorHandler.middleware';
+import photosRoutes from '@routes/photos.routes';
 
 const port = process.env.PORT || 5000;
 const app = express();
 
-app.use('/photos', photosRoutes);
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
-app.listen(port, () => console.log(`Server started on port ${port}`));
+app.use('/api/photos', photosRoutes);
+
+app.use(errorHandler);
+
+app.listen(port, (): void => console.log(`Server started on port ${port}`));

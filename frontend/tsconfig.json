@@ -1,13 +1,18 @@
 {
+  "ts-node": {
+    "require": ["tsconfig-paths/register"]
+  },
   "compilerOptions": {
     "allowJs": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "jsx": "react",
-    "module": "commonjs",
+    "lib": ["dom", "es6"],
+    "module": "es6",
     "moduleResolution": "node",
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": true,
+    "noUnusedLocals": true,
     "noUnusedParameters": true,
     "preserveConstEnums": true,
     "sourceMap": true,
