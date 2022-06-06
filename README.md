@@ -15,6 +15,15 @@ This application will be using the MERN stack. MERN stands for MongoDB, Express,
 
 - [Youtube Tutorial - Traversy Media](https://www.youtube.com/playlist?list=PLillGF-RfqbbQeVSccR9PGKHzPJSWqcsm)
 
+#### Architecture
+
+General project structuring.
+
+**Useful Links:**
+
+- [Express Architecture](https://blog.logrocket.com/organizing-express-js-project-structure-better-productivity/)
+- [React Architecture](https://www.taniarascia.com/react-architecture-directory-structure/)
+
 #### Typescript
 
 Typescript will be used across Frontend and Backend. Can customize behaviour in `tsconfig.json`.
@@ -31,7 +40,6 @@ Setting up Backend to be Typescript. Everything Typescript!
 **Useful Links:**
 
 - [Setting Up](https://developer.okta.com/blog/2018/11/15/node-express-typescript)
-- [File Structure](https://www.npmjs.com/package/typescript-express-starter)
 
 ### Eslint & Airbnb Style Guide
 
@@ -82,7 +90,7 @@ Some useful commands and what they do because I will forget.
 - Kill localhost bash - `npx kill-port 5000`
 
 **Yarn:**
-List of commands [Yarn cli](https://classic.yarnpkg.com/en/docs/cli/)
+<br />List of commands [Yarn cli](https://classic.yarnpkg.com/en/docs/cli/)
 
 - Installs all the dependencies defined in a `package.json` file - `yarn install`
 - Add package to dependencies - `yarn add package`
@@ -97,8 +105,8 @@ List of commands [Yarn cli](https://classic.yarnpkg.com/en/docs/cli/)
 - Pull changes from Github repo - `git pull`
 
 **Node & nvm:**
-Using [nvm for Windows](https://github.com/coreybutler/nvm-windows).
-Check [Node for Windows](https://nodejs.org/en/) for recommended version.
+<br />Using [nvm for Windows](https://github.com/coreybutler/nvm-windows).
+<br />Check [Node for Windows](https://nodejs.org/en/) for recommended version.
 
 - List of Node versions installed - `nvm list`
 - Current Node version running - `nvm current`
