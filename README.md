@@ -85,28 +85,30 @@ Super light weight client side state. For this application, Redux is overkill wh
 
 Some useful commands and what they do because I will forget.
 
-**General:**
+#### General
 
 - Kill localhost bash - `npx kill-port 5000`
 
-**Yarn:**
-<br />List of commands [Yarn cli](https://classic.yarnpkg.com/en/docs/cli/)
+#### Yarn
+
+List of commands [Yarn Cli](https://classic.yarnpkg.com/en/docs/cli/)
 
 - Installs all the dependencies defined in a `package.json` file - `yarn install`
 - Add package to dependencies - `yarn add package`
 - Add package to dev dependencies - `yarn add -D package`
 - Remove package from `package.json` - `yarn remove package`
 
-**Git:**
+#### Git
 
 - Add all changed files to staging area - `git add .`
 - Commit staging area files with commit message - `git commit -m 'commit message'`
 - Push changes to Github repo - `git push`
 - Pull changes from Github repo - `git pull`
 
-**Node & nvm:**
-<br />Using [nvm for Windows](https://github.com/coreybutler/nvm-windows).
-<br />Check [Node for Windows](https://nodejs.org/en/) for recommended version.
+#### Node & Nvm
+
+Using [nvm for Windows](https://github.com/coreybutler/nvm-windows).
+Check [Node for Windows](https://nodejs.org/en/) for recommended version.
 
 - List of Node versions installed - `nvm list`
 - Current Node version running - `nvm current`
@@ -114,7 +116,7 @@ Some useful commands and what they do because I will forget.
 - Install Node version specified - `nvm install 16.15.1`
 - Node version - `node -v`
 
-**Typescript:**
+#### Typescript
 
 - Check version - `tsc --version`
 - Compile file - `tsc index.ts`
