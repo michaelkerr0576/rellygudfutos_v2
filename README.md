@@ -14,15 +14,17 @@ This application will be using the MERN stack. MERN stands for MongoDB, Express,
 **Useful Links:**
 
 - [Youtube Tutorial - Traversy Media](https://www.youtube.com/playlist?list=PLillGF-RfqbbQeVSccR9PGKHzPJSWqcsm)
+  </br>
 
 #### Architecture
 
-General project structuring.
+General project structuring. Split into Frontend and Backend. Each folder contains everything it needs in case it needs to be decoupled in the future.
 
 **Useful Links:**
 
 - [Express Architecture](https://blog.logrocket.com/organizing-express-js-project-structure-better-productivity/)
 - [React Architecture](https://www.taniarascia.com/react-architecture-directory-structure/)
+  </br>
 
 #### Typescript
 
@@ -32,6 +34,7 @@ Typescript will be used across Frontend and Backend. Can customize behaviour in 
 
 - [Typescript Cheat Sheet](https://www.typescriptlang.org/cheatsheets)
 - [Typescript Compiler Options](https://www.typescriptlang.org/tsconfig)
+  </br>
 
 ### Node Express with Typescript
 
@@ -40,6 +43,7 @@ Setting up Backend to be Typescript. Everything Typescript!
 **Useful Links:**
 
 - [Setting Up](https://developer.okta.com/blog/2018/11/15/node-express-typescript)
+  </br>
 
 ### Eslint & Airbnb Style Guide
 
@@ -51,6 +55,7 @@ Airbnb introduces it as the “Most reasonable approach to JavaScript”. To che
 - [Eslint Rules](https://eslint.org/docs/rules/)
 - [Airbnb Style Guide](https://airbnb.io/javascript/react/)
 - [Youtube Tutorial - Traversy Media](https://www.youtube.com/watch?v=SydnKbGc7W8&ab_channel=TraversyMedia)
+  </br>
 
 ### Path Aliases
 
@@ -63,6 +68,7 @@ See `tsconfig.paths.json` in frontend and backend root folders for configured pa
 - [Config tsconfig.json](https://www.typescriptlang.org/tsconfig#paths)
 - [Config eslintrc.js](https://github.com/alexgorbatchev/eslint-import-resolver-typescript)
 - [Stack Overflow Troubleshoot](https://stackoverflow.com/questions/69932369/setting-up-eslint-import-resolver-typescript-in-monorepo)
+  </br>
 
 ### React Query
 
@@ -72,6 +78,7 @@ Server side state that reduces API requests :drooling_face:.
 
 - [React Query Docs](https://react-query.tanstack.com/)
 - [Youtube Tutorial - Codevolution](https://www.youtube.com/watch?v=VtWkSCZX0Ec&list=PLC3y8-rFHvwjTELCrPrcZlo6blLBUspd2&ab_channel=Codevolution)
+  </br>
 
 ### Zustand
 
@@ -80,6 +87,7 @@ Super light weight client side state. For this application, Redux is overkill wh
 **Useful Links:**
 
 - [Zustand Docs](https://docs.pmnd.rs/zustand/introduction)
+  </br>
 
 ### Terminal
 
@@ -100,6 +108,7 @@ List of commands [Yarn Cli](https://classic.yarnpkg.com/en/docs/cli/)
 
 #### Git
 
+- Status of staged and unstaged changes - `git status`
 - Add all changed files to staging area - `git add .`
 - Commit staging area files with commit message - `git commit -m 'commit message'`
 - Push changes to Github repo - `git push`
@@ -107,7 +116,7 @@ List of commands [Yarn Cli](https://classic.yarnpkg.com/en/docs/cli/)
 
 #### Node & Nvm
 
-Using [nvm for Windows](https://github.com/coreybutler/nvm-windows).
+Using [Nvm for Windows](https://github.com/coreybutler/nvm-windows).
 Check [Node for Windows](https://nodejs.org/en/) for recommended version.
 
 - List of Node versions installed - `nvm list`
