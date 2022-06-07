@@ -1,9 +1,9 @@
-import express, { NextFunction } from 'express';
+import { NextFunction, Request, Response } from 'express';
 
 const errorHandler = (
   error: Error,
-  _request: express.Request,
-  response: express.Response,
+  _request: Request,
+  response: Response,
   _next: NextFunction,
 ): void => {
   const statusCode = response.statusCode ? response.statusCode : 500;

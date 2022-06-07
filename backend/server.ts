@@ -1,10 +1,14 @@
 import 'dotenv/config';
+import 'colors';
 
 import express from 'express';
 import bodyParser from 'body-parser';
 
-import errorHandler from '@middlewares/errorHandler.middleware';
-import photosRoutes from '@routes/photos.routes';
+import connectMongoDB from '@/config/connectMongoDB.config';
+import errorHandler from '@/middlewares/errorHandler.middleware';
+import photosRoutes from '@/routes/photos.routes';
+
+connectMongoDB();
 
 const port = process.env.PORT || 5000;
 const app = express();
@@ -16,4 +20,6 @@ app.use('/api/photos', photosRoutes);
 
 app.use(errorHandler);
 
-app.listen(port, (): void => console.log(`Server started on port ${port}`));
+app.listen(port, (): void =>
+  console.log(`Server started on port ${port}`.cyan.underline),
+);

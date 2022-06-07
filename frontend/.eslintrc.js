@@ -25,6 +25,7 @@ module.exports = {
       jsx: true,
     },
     ecmaVersion: 'latest',
+    project: ['./frontend/tsconfig.json'],
     sourceType: 'module',
   },
   plugins: [

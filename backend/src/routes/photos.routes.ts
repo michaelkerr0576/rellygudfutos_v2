@@ -1,6 +1,6 @@
 import express from 'express';
 
-import photosController from '@controllers/photos.controller';
+import photosController from '@/controllers/photos.controller';
 
 const router = express.Router();
 

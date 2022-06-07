@@ -14,7 +14,6 @@ This application will be using the MERN stack. MERN stands for MongoDB, Express,
 **Useful Links:**
 
 - [Youtube Tutorial - Traversy Media](https://www.youtube.com/playlist?list=PLillGF-RfqbbQeVSccR9PGKHzPJSWqcsm)
-  </br>
 
 #### Architecture
 
@@ -22,9 +21,9 @@ General project structuring. Split into Frontend and Backend. Each folder contai
 
 **Useful Links:**
 
+- [Node Architecture](https://softwareontheroad.com/ideal-nodejs-project-structure/)
 - [Express Architecture](https://blog.logrocket.com/organizing-express-js-project-structure-better-productivity/)
 - [React Architecture](https://www.taniarascia.com/react-architecture-directory-structure/)
-  </br>
 
 #### Typescript
 
@@ -34,7 +33,6 @@ Typescript will be used across Frontend and Backend. Can customize behaviour in 
 
 - [Typescript Cheat Sheet](https://www.typescriptlang.org/cheatsheets)
 - [Typescript Compiler Options](https://www.typescriptlang.org/tsconfig)
-  </br>
 
 ### Node Express with Typescript
 
@@ -43,7 +41,6 @@ Setting up Backend to be Typescript. Everything Typescript!
 **Useful Links:**
 
 - [Setting Up](https://developer.okta.com/blog/2018/11/15/node-express-typescript)
-  </br>
 
 ### Eslint & Airbnb Style Guide
 
@@ -55,7 +52,6 @@ Airbnb introduces it as the “Most reasonable approach to JavaScript”. To che
 - [Eslint Rules](https://eslint.org/docs/rules/)
 - [Airbnb Style Guide](https://airbnb.io/javascript/react/)
 - [Youtube Tutorial - Traversy Media](https://www.youtube.com/watch?v=SydnKbGc7W8&ab_channel=TraversyMedia)
-  </br>
 
 ### Path Aliases
 
@@ -68,17 +64,53 @@ See `tsconfig.paths.json` in frontend and backend root folders for configured pa
 - [Config tsconfig.json](https://www.typescriptlang.org/tsconfig#paths)
 - [Config eslintrc.js](https://github.com/alexgorbatchev/eslint-import-resolver-typescript)
 - [Stack Overflow Troubleshoot](https://stackoverflow.com/questions/69932369/setting-up-eslint-import-resolver-typescript-in-monorepo)
-  </br>
+
+### MongoDB & Mongoose
+
+MongoDB likes to think it has no rule book. So here is some rules:
+
+1. Embed unless there is a compelling reason not to
+2. Avoid JOINS if they can be avoided
+3. Array should never grow without bound
+4. An object should not be embedded if it needs to be accessed individually
+
+Based on these rules. I will:
+
+- Embed Equipment as an array for Users
+- Separate Tags from Photos because I will need to access Tags separately
+
+##### Users to Equipment - Embed in Users
+
+An example of embedded data that Users and Equipment will have:
+![image](https://user-images.githubusercontent.com/53580213/172372055-fee70f8a-dc96-437f-a33b-0ca4dbd75a51.png)
+
+##### Photos to Tags - Many to Many
+
+An example of the Many to Many relationship that Photos and Tags will have:
+![image](https://user-images.githubusercontent.com/53580213/172371168-9855767a-ee9b-4a43-817e-3e2a09f2dbae.png)
+
+**Useful Links:**
+
+- [Youtube Tutorial Best Practices - MongoDB](https://www.youtube.com/watch?v=QAqK-R9HUhc&ab_channel=MongoDB)
+- [Youtube Tutorial Anti Patterns - MongoDB](https://www.youtube.com/watch?v=8CZs-0it9r4&ab_channel=MongoDB)
+- [Mongoose Typescript Schema](https://thecodebarbarian.com/working-with-mongoose-in-typescript.html)
+
+### Paginated Data
+
+First time round in rellygudfutos_v1 I decided not to paginate the data... This led to long loading time for the photos endpoint. I want to avoid that this time round so the application scales well.
+
+**Useful Links:**
+
+- [Youtube Tutorial - Web Dev Simplified](https://www.youtube.com/watch?v=ZX3qt0UWifc&ab_channel=WebDevSimplified)
 
 ### React Query
 
-Server side state that reduces API requests :drooling_face:.
+Server side state that reduces API requests. :drooling_face:
 
 **Useful Links:**
 
 - [React Query Docs](https://react-query.tanstack.com/)
 - [Youtube Tutorial - Codevolution](https://www.youtube.com/watch?v=VtWkSCZX0Ec&list=PLC3y8-rFHvwjTELCrPrcZlo6blLBUspd2&ab_channel=Codevolution)
-  </br>
 
 ### Zustand
 
@@ -87,7 +119,6 @@ Super light weight client side state. For this application, Redux is overkill wh
 **Useful Links:**
 
 - [Zustand Docs](https://docs.pmnd.rs/zustand/introduction)
-  </br>
 
 ### Terminal
 

@@ -14,12 +14,14 @@
     "noImplicitAny": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
+    "outDir": "./build",
     "preserveConstEnums": true,
     "sourceMap": true,
     "strict": true,
     "target": "es6"
   },
   "exclude": ["./node_modules", "./build"],
-  "include": ["./src/**/*", "**/*.ts", "**/*.tsx"],
+  "include": ["./src/**/*", "**/*.ts", "**/*.tsx", ".eslintrc.js"],
+  "typeRoots": ["./src/types"],
   "extends": "./tsconfig.paths.json"
 }
