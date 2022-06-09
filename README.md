@@ -79,7 +79,7 @@ Based on these rules. I will:
 - Embed Equipment as an array for Users
 - Separate Tags from Photos because I will need to access Tags separately
 
-##### Users to Equipment - Embed in Users
+##### Users to Equipment - Embed Equipment in Users
 
 An example of embedded data that Users and Equipment will have:
 ![image](https://user-images.githubusercontent.com/53580213/172372055-fee70f8a-dc96-437f-a33b-0ca4dbd75a51.png)
@@ -95,22 +95,38 @@ An example of the Many to Many relationship that Photos and Tags will have:
 - [Youtube Tutorial Anti Patterns - MongoDB](https://www.youtube.com/watch?v=8CZs-0it9r4&ab_channel=MongoDB)
 - [Mongoose Typescript Schema](https://thecodebarbarian.com/working-with-mongoose-in-typescript.html)
 
-### Paginated Data
+### Sorting, Filtering and Pagination
 
-First time round in rellygudfutos_v1 I decided not to paginate the data... This led to long loading time for the photos endpoint. I want to avoid that this time round so the application scales well.
+First time round in rellygudfutos_v1 Frontend handled sorting and filtering. Pagination wasn't even a thing... As you can guess, this was not a long term solution. Loading up everything upfront did have some pros and cons.
+
+**Pros:**
+
+1. Sorting was very quick (no API request needed)
+2. Filtering was very quick (no API request needed)
+
+**Cons:**
+
+1. Long loading times for the `GET /photos` endpoint
+2. App wont scale well as more photos are added
 
 **Useful Links:**
 
-- [Youtube Tutorial - Web Dev Simplified](https://www.youtube.com/watch?v=ZX3qt0UWifc&ab_channel=WebDevSimplified)
+- [Node Sorting, Filtering and Pagination](https://medium.com/swlh/node-js-api-add-crud-operations-with-pagination-filtering-grouping-and-sorting-capabilities-55375ad0b774)
+- [MongoDB Sorting, Filtering and Pagination](https://jeffdevslife.com/p/1-mongodb-query-of-advanced-filtering-sorting-limit-field-and-pagination-with-mongoose/)
+- [Youtube Pagination Tutorial - Web Dev Simplified](https://www.youtube.com/watch?v=ZX3qt0UWifc&ab_channel=WebDevSimplified)
 
-### React Query
+### Next.js && React Query
 
-Server side state that reduces API requests. :drooling_face:
+Next.js as server sid rendering that reduces first contentful paint. :drooling_face:
+React Query as server side state that reduces API requests. :drooling_face:
 
 **Useful Links:**
 
+- [Setting Up](https://prateeksurana.me/blog/mastering-data-fetching-with-react-query-and-next-js/)
 - [React Query Docs](https://react-query.tanstack.com/)
-- [Youtube Tutorial - Codevolution](https://www.youtube.com/watch?v=VtWkSCZX0Ec&list=PLC3y8-rFHvwjTELCrPrcZlo6blLBUspd2&ab_channel=Codevolution)
+- [Youtube Next.js Tutorial - Traversy Media](https://www.youtube.com/watch?v=mTz0GXj8NN0&ab_channel=TraversyMedia)
+- [Youtube Next.js Tutorial - Fireship](https://www.youtube.com/watch?v=Sklc_fQBmcs&ab_channel=Fireship)
+- [Youtube React Query Tutorial - Codevolution](https://www.youtube.com/watch?v=VtWkSCZX0Ec&list=PLC3y8-rFHvwjTELCrPrcZlo6blLBUspd2&ab_channel=Codevolution)
 
 ### Zustand
 

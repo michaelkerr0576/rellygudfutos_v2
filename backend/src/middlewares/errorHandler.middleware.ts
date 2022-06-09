@@ -1,5 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 
+const nodeEnv = process.env.NODE_ENV || 'development';
+
 const errorHandler = (
   error: Error,
   _request: Request,
@@ -11,7 +13,7 @@ const errorHandler = (
   response.status(statusCode);
   response.json({
     message: error.message,
-    stack: process.env.NODE_ENV === 'production' ? null : error.stack,
+    stack: nodeEnv === 'production' ? undefined : error.stack,
   });
 };
 

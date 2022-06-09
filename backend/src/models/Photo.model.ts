@@ -12,4 +12,6 @@ const photoSchema = new Schema<IPhoto>({
   avatar: String,
 });
 
-export default model<IPhoto>('Photo', photoSchema);
+const Photo = model<IPhoto>('Photo', photoSchema);
+
+export default Photo;

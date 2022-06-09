@@ -17,8 +17,8 @@
 
 // const paginateResults = (model: any) => {
 //   return async (request: Request, _response: Response, _next: NextFunction) => {
-//     const page = parseInt(request.query.page as string);
-//     const limit = parseInt(request.query.limit as string);
+//     const page = parseInt(request.query.page as string) || 1;
+//     const limit = parseInt(request.query.limit as string) || 10;
 
 //     const startIndex = (page - 1) * limit;
 //     const endIndex = page * limit;
