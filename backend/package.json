@@ -2,7 +2,7 @@
   "name": "rellygudfutos-backend",
   "version": "0.1.0",
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=10.6.0"
   },
   "description": "handles backend",
   "main": "./dist/index.js",

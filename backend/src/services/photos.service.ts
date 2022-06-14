@@ -1,12 +1,10 @@
-// Photo.create(req.body)
-// .then((result) => {
-//   // do something with result
+import PhotoModel, { IPhoto } from '@/models/Photo.model';
 
-//   return result;
-// })
-// .then((user) => res.json(user))
-// .catch(next);
+const addPhoto = (form: IPhoto): Promise<IPhoto> => PhotoModel.create(form);
 
-const photosService = {};
+const getPhotos = (): Promise<IPhoto[]> =>
+  PhotoModel.find().then((result): IPhoto[] => result);
+
+const photosService = { addPhoto, getPhotos };
 
 export default photosService;

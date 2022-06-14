@@ -70,7 +70,7 @@ module.exports = {
     'node/no-unsupported-features/es-syntax': [
       'error',
       {
-        version: '>=8.0.0',
+        version: '>=10.6.0',
         ignores: ['modules'],
       },
     ],
