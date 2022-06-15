@@ -55,9 +55,9 @@ Airbnb introduces it as the “Most reasonable approach to JavaScript”. To che
 
 ### Path Aliases
 
-Makes it a lot easier to import from anywhere within the project and move files around without changing imports and you never end up with something like `../../../../../components/`. Too many `../../../../../` can be extremely sore on the eyes. This was more of a pain then I thought it would be. Getting Typescript, Eslint and Vscode Intellisense to play nice was a b\*tch.
+Makes it a lot easier to import from anywhere within the project and move files around without changing imports and you never end up with something like `../../../../../components/`. Too many `../../../../../` can be extremely sore on the eyes. This was more of a pain then I thought it would be. Getting Typescript, Eslint, Jest and Vscode Intellisense to play nice was a b\*tch.
 
-See `tsconfig.paths.json` in frontend and backend root folders for configured paths.
+See `tsconfig.paths.json` in frontend and backend folders for configured paths. See `jest.config.cjs` in backend folder for paths set up tests.
 
 **Useful Links:**
 
@@ -89,11 +89,20 @@ An example of embedded data that Users and Equipment will have:
 An example of the Many to Many relationship that Photos and Tags will have:
 ![image](https://user-images.githubusercontent.com/53580213/172371168-9855767a-ee9b-4a43-817e-3e2a09f2dbae.png)
 
+##### Testing
+
+Decided to use an in-memory database over mocks. This will allow the tests to be directly executed on the in-memory database. This allows the tests to more closely emulate production instead of using mocks that can be incorrect, incomplete or outdated. :nerd_face:
+
 **Useful Links:**
 
 - [Youtube Tutorial Best Practices - MongoDB](https://www.youtube.com/watch?v=QAqK-R9HUhc&ab_channel=MongoDB)
 - [Youtube Tutorial Anti Patterns - MongoDB](https://www.youtube.com/watch?v=8CZs-0it9r4&ab_channel=MongoDB)
 - [Mongoose Typescript Schema](https://thecodebarbarian.com/working-with-mongoose-in-typescript.html)
+- [Mongoose Docs](https://mongoosejs.com/docs/)
+- [Testing with Mongoose - Jest](https://javascript.plainenglish.io/unit-testing-node-js-mongoose-using-jest-106a39b8393d)
+- [Testing with Mongoose - mongodb-memory-server 1](https://dev.to/paulasantamaria/testing-node-js-mongoose-with-an-in-memory-database-32np)
+- [Testing with Mongoose - mongodb-memory-server 2](https://dev.to/remrkabledev/testing-with-mongodb-memory-server-4ja2)
+- [mongodb-memory-server Docs](https://github.com/nodkz/mongodb-memory-server)
 
 ### Sorting, Filtering and Pagination
 

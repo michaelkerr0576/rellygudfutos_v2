@@ -25,7 +25,7 @@ module.exports = {
       jsx: true,
     },
     ecmaVersion: 'latest',
-    project: ['./frontend/tsconfig.json'],
+    project: ['./tsconfig.json'],
     sourceType: 'module',
   },
   plugins: [
@@ -110,7 +110,7 @@ module.exports = {
     },
     'import/resolver': {
       typescript: {
-        project: './frontend/tsconfig.json',
+        project: './tsconfig.json',
       },
     },
   },

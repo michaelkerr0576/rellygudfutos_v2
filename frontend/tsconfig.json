@@ -22,6 +22,6 @@
   },
   "exclude": ["./node_modules", "./build"],
   "include": ["./src/**/*", "**/*.ts", "**/*.tsx", ".eslintrc.js"],
-  "typeRoots": ["./src/types"],
+  "typeRoots": ["./src/types", "./node_modules/@types"],
   "extends": "./tsconfig.paths.json"
 }
