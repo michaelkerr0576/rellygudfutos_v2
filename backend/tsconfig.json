@@ -15,7 +15,13 @@
     "target": "es6"
   },
   "exclude": ["./node_modules"],
-  "include": ["./src/**/*", "**/*.ts", ".eslintrc.cjs"],
-  "typeRoots": ["./src/types"],
+  "include": [
+    "./src/**/*",
+    ".eslintrc.cjs",
+    "**/*.ts",
+    "babel.config.cjs",
+    "jest.config.cjs"
+  ],
+  "typeRoots": ["./src/types", "./node_modules/@types"],
   "extends": "./tsconfig.paths.json"
 }

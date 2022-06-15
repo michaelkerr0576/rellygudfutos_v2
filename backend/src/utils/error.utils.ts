@@ -1,6 +1,6 @@
 import { Response } from 'express';
 
-import * as cmn from '@/types/cmn';
+import * as cmn from '@/types/cmn.types';
 
 const throw400Error = (response: Response): void => {
   response.status(400).json({ message: 'Bad Request' });

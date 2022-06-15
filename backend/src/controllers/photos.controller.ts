@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 
 import { IPhoto } from '@/models/Photo.model';
 import photosService from '@/services/photos.service';
-import * as cmn from '@/types/cmn';
+import * as cmn from '@/types/cmn.types';
 import errorUtils from '@/utils/error.utils';
 
 // @desc Add photo

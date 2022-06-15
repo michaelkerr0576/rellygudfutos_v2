@@ -1,5 +1,6 @@
 module.exports = {
   env: {
+    'jest/globals': true,
     browser: true,
     commonjs: true,
     es2021: true,
@@ -15,11 +16,12 @@ module.exports = {
     'plugin:import/typescript',
     'plugin:node/recommended',
     'prettier',
+    'plugin:jest/recommended',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 'latest',
-    project: ['./backend/tsconfig.json'],
+    project: ['./tsconfig.json'],
   },
   plugins: [
     '@typescript-eslint',
@@ -27,6 +29,7 @@ module.exports = {
     'import',
     'prettier',
     'simple-import-sort',
+    'jest',
   ],
   rules: {
     'prettier/prettier': [
@@ -77,14 +80,27 @@ module.exports = {
         caughtErrorsIgnorePattern: '^_',
       },
     ],
+    'jest/no-disabled-tests': 'warn',
+    'jest/no-focused-tests': 'error',
+    'jest/no-identical-title': 'error',
+    'jest/prefer-to-have-length': 'warn',
+    'jest/valid-expect': 'error',
   },
+  overrides: [
+    {
+      files: ['*test.ts'],
+      rules: {
+        '@typescript-eslint/explicit-function-return-type': 'off',
+      },
+    },
+  ],
   settings: {
     'import/parsers': {
       '@typescript-eslint/parser': ['.ts'],
     },
     'import/resolver': {
       typescript: {
-        project: './backend/tsconfig.json',
+        project: './tsconfig.json',
       },
     },
   },
