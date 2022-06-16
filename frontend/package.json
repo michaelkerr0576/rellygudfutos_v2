@@ -1,10 +1,12 @@
 {
   "name": "rellygudfutos-frontend",
   "version": "0.1.0",
+  "description": "handles frontend",
+  "author": "Michael Kerr",
+  "license": "MIT",
   "engines": {
     "node": ">=10.6.0"
   },
-  "description": "handles frontend",
   "private": true,
   "proxy": "http://localhost:5000",
   "dependencies": {

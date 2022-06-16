@@ -29,21 +29,21 @@ const throwValidationError = (
   response: Response,
   error: cmn.MongooseValidationError,
 ): void => {
+  const { _message: message } = error;
   const errors = {} as cmn.ValidationErrorsMessage;
 
   Object.keys(error.errors).forEach((key): void => {
     errors[key] = {
       message: error.errors[key].message,
-      /* @ts-expect-error: errors.key.kind does exist on MongooseValidationError */
+      /* @ts-expect-error: errors[key].kind does exist on MongooseValidationError */
       type: error.errors[key].kind,
     };
   });
 
-  // eslint-disable-next-line no-underscore-dangle
-  response.status(400).json({ message: error._message, errors });
+  response.status(400).json({ message, errors });
 };
 
-const errorUtils = {
+const throwErrorUtils = {
   throw400Error,
   throw401Error,
   throw404Error,
@@ -52,4 +52,4 @@ const errorUtils = {
   throwValidationError,
 };
 
-export default errorUtils;
+export default throwErrorUtils;

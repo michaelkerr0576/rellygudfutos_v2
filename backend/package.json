@@ -1,15 +1,19 @@
 {
   "name": "rellygudfutos-backend",
   "version": "0.1.0",
+  "description": "handles backend",
+  "author": "Michael Kerr",
+  "license": "MIT",
   "engines": {
     "node": ">=10.6.0"
   },
-  "description": "handles backend",
+  "private": true,
   "main": "./dist/index.js",
   "scripts": {
+    "build": "tsc --project tsconfig.json && tsc-alias -p tsconfig.json",
     "dev": "nodemon server.ts",
     "start": "ts-node server.ts",
-    "test": "jest --runInBand --detectOpenHandles"
+    "test": "jest --runInBand --detectOpenHandles --watchAll"
   },
   "pre-commit": [
     "precommit-msg",

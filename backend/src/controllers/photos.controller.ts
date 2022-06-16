@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { IPhoto } from '@/models/Photo.model';
 import photosService from '@/services/photos.service';
 import * as cmn from '@/types/cmn.types';
-import errorUtils from '@/utils/error.utils';
+import { throwErrorUtils } from '@/utils';
 
 // @desc Add photo
 // @route POST /photos
@@ -13,7 +13,7 @@ const addPhoto = (request: Request, response: Response): Promise<void> => {
 
   const handleResult = (result: IPhoto): void => {
     if (!result) {
-      errorUtils.throw400Error(response);
+      throwErrorUtils.throw400Error(response);
       return;
     }
 
@@ -22,11 +22,11 @@ const addPhoto = (request: Request, response: Response): Promise<void> => {
 
   const handleError = (error: cmn.MongooseValidationError): void => {
     if (error.name === 'ValidationError') {
-      errorUtils.throwValidationError(response, error);
+      throwErrorUtils.throwValidationError(response, error);
       return;
     }
 
-    errorUtils.throw500Error(response, error);
+    throwErrorUtils.throw500Error(response, error);
   };
 
   return photosService
@@ -55,12 +55,12 @@ const getPhoto = (request: Request, response: Response): void => {
 const getPhotos = (_request: Request, response: Response): Promise<void> => {
   const handleResult = (result: IPhoto[]): void => {
     if (!result) {
-      errorUtils.throw400Error(response);
+      throwErrorUtils.throw400Error(response);
       return;
     }
 
     if (result.length === 0) {
-      errorUtils.throwEmptyResultError(response, 'Photos');
+      throwErrorUtils.throwEmptyResultError(response, 'Photos');
       return;
     }
 
@@ -70,7 +70,7 @@ const getPhotos = (_request: Request, response: Response): Promise<void> => {
   return photosService
     .getPhotos()
     .then((result): void => handleResult(result))
-    .catch((error): void => errorUtils.throw500Error(response, error));
+    .catch((error): void => throwErrorUtils.throw500Error(response, error));
 };
 
 // @desc Update photo

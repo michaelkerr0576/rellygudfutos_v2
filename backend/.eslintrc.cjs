@@ -40,6 +40,7 @@ module.exports = {
     ],
     // Conflict with importing aliases. Typescript and Eslint have errors to handle missing imports
     'node/no-missing-import': 'off',
+    'import/prefer-default-export': 'off',
     'simple-import-sort/imports': [
       'error',
       {
@@ -80,6 +81,7 @@ module.exports = {
         caughtErrorsIgnorePattern: '^_',
       },
     ],
+    'jest/no-conditional-expect': 'off',
     'jest/no-disabled-tests': 'warn',
     'jest/no-focused-tests': 'error',
     'jest/no-identical-title': 'error',

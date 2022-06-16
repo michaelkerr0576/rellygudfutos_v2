@@ -122,7 +122,7 @@ const photoSchema = new Schema<IPhoto>(
       lensShutterSpeed: {
         maxLength: [50, 'Max character length exceeded'],
         minLength: [2, 'Must be at least 2 characters'],
-        required: [true, 'Lens shutter required'],
+        required: [true, 'Lens shutter speed required'],
         trim: true,
         type: String,
       },

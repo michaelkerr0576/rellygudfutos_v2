@@ -47,6 +47,7 @@ module.exports = {
     ],
     // Conflict with importing aliases. Typescript and Eslint have errors to handle missing imports
     'node/no-missing-import': 'off',
+    'import/prefer-default-export': 'off',
     'simple-import-sort/imports': [
       'error',
       {
