@@ -1,0 +1,9 @@
+const chars51 = 'asfufdbaabsjbsafjfjasfbjbjafbsjsdfddfsaowwwaasdfsd1';
+const chars101 =
+  'asfufdbaabsjbsafjfjasfbjbjafbsjbjasbjfbjbasfbjasbjfjbajbfbjasbjfbjasfbjfsbjbjfbjsfbjfsfbjsffbfsfbsffs';
+const chars301 =
+  'asfufdbaabsjbsafjfjasfbjbjafbsjbjasbjfbjbasfbjasbjfjbajbfbjasbjfbjasfbjfsbjbjfbjsfbjfsfbjsffbfsfbsffsasfufdbaabsjbsafjfjasfbjbjafbsjbjasbjfbjbasfbjasbjfjbajbfbjasbjfbjasfbjfsbjbjfbjsfbjfsfbjsffbfsfbsffsasfufdbaabsjbsafjfjasfbjbjafbsjbjasbjfbjbasfbjasbjfjbajbfbjasbjfbjasfbjfsbjbjfbjsfbjfsfbjsffbfsfbsf';
+
+const utilFixture = { chars51, chars101, chars301 };
+
+export default utilFixture;

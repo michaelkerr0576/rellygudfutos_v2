@@ -1,14 +1,37 @@
+import {
+  postPhotoEnumFixture,
+  postPhotoMaxLengthFixture,
+  postPhotoMinLengthFixture,
+  postPhotoRegexFixture,
+  postPhotoTrimFixture,
+} from '@/tests/fixtures/photos';
+import utilFixture from '@/tests/fixtures/util.fixture';
 import mongoMemoryServer from '@/tests/mongoMemoryServer';
 
 import PhotoModel from './Photo.model';
 
-beforeAll(async () => mongoMemoryServer.connectDB());
-afterAll(async () => mongoMemoryServer.disconnectDB);
-
 describe('Photo Model', () => {
-  describe('Required Validation', () => {
-    test('Expect to validate required for each property in PhotoModel', async () => {
-      const photo = new PhotoModel({}) as any;
+  beforeAll(async () => mongoMemoryServer.connectDB());
+  afterAll(async () => mongoMemoryServer.disconnectDB);
+
+  describe('Validation', () => {
+    test('Expect to validate required for the relevant properties in PhotoModel', async () => {
+      const photo = new PhotoModel({});
+
+      const expectedRequiredPaths = [
+        'details.captureLocation',
+        'details.imageCaption',
+        'details.imageFile',
+        'details.imageTitle',
+        'details.originalImageName',
+        'details.storeLink',
+        'equipment.cameraIso',
+        'equipment.cameraName',
+        'equipment.lensAperture',
+        'equipment.lensFocalLength',
+        'equipment.lensName',
+        'equipment.lensShutterSpeed',
+      ];
 
       try {
         await photo.save();
@@ -18,51 +41,132 @@ describe('Photo Model', () => {
         expect(name).toEqual('ValidationError');
         expect(message).toEqual('Photo validation failed');
 
-        // expect(errors['details.captureDate'].properties.message).toEqual(
-        //   'Capture date required',
-        // );
+        expectedRequiredPaths.forEach((path) => {
+          expect(errors[path].properties.message).toEqual(
+            `Path \`${path}\` is required.`,
+          );
+        });
+
+        expect(errors['details.imageTags'].properties.message).toEqual(
+          'Validator failed for path `details.imageTags` with value ``',
+        );
+      }
+    });
+
+    test('Expect to validate minLength for the relevant properties in PhotoModel', async () => {
+      const photo = new PhotoModel(postPhotoMinLengthFixture);
+
+      const expectedMinLengthPaths = [
+        'details.captureLocation',
+        'details.imageCaption',
+        'details.imageTitle',
+        'equipment.cameraIso',
+        'equipment.cameraName',
+        'equipment.lensAperture',
+        'equipment.lensFocalLength',
+        'equipment.lensName',
+        'equipment.lensShutterSpeed',
+      ];
+
+      try {
+        await photo.save();
+      } catch (error: any) {
+        const { name, _message: message, errors } = error;
+
+        expect(name).toEqual('ValidationError');
+        expect(message).toEqual('Photo validation failed');
+
+        expectedMinLengthPaths.forEach((path) => {
+          expect(errors[path].properties.message).toEqual(
+            `Path \`${path}\` (\`1\`) is shorter than the minimum allowed length (2).`,
+          );
+        });
+      }
+    });
+
+    test('Expect to validate maxLength for the relevant properties in PhotoModel', async () => {
+      const photo = new PhotoModel(postPhotoMaxLengthFixture);
+
+      const expectedMaxLength51Paths = [
+        'details.imageTitle',
+        'equipment.cameraIso',
+        'equipment.cameraName',
+        'equipment.lensAperture',
+        'equipment.lensFocalLength',
+        'equipment.lensName',
+        'equipment.lensShutterSpeed',
+      ];
+
+      try {
+        await photo.save();
+      } catch (error: any) {
+        const { name, _message: message, errors } = error;
+
+        expect(name).toEqual('ValidationError');
+        expect(message).toEqual('Photo validation failed');
+
+        expectedMaxLength51Paths.forEach((path) => {
+          expect(errors[path].properties.message).toEqual(
+            `Path \`${path}\` (\`${utilFixture.chars51}\`) is longer than the maximum allowed length (50).`,
+          );
+        });
+
         expect(errors['details.captureLocation'].properties.message).toEqual(
-          'Capture location required',
+          `Path \`details.captureLocation\` (\`${utilFixture.chars101}\`) is longer than the maximum allowed length (100).`,
         );
         expect(errors['details.imageCaption'].properties.message).toEqual(
-          'Image caption required',
+          `Path \`details.imageCaption\` (\`${utilFixture.chars301}\`) is longer than the maximum allowed length (300).`,
         );
-        // expect(errors['details.imageFile'].properties.message).toEqual(
-        //   'Image file required',
-        // );
-        // expect(errors['details.imageSize'].properties.message).toEqual(
-        //   'Image size required',
-        // );
-        // expect(errors['details.imageTags'].properties.message).toEqual(
-        //   'Image tags required',
-        // );
-        expect(errors['details.imageTitle'].properties.message).toEqual(
-          'Image title required',
+      }
+    });
+
+    test('Expect to validate enum for the relevant properties in PhotoModel', async () => {
+      const photo = new PhotoModel(postPhotoEnumFixture);
+
+      try {
+        await photo.save();
+      } catch (error: any) {
+        const { name, _message: message, errors } = error;
+
+        expect(name).toEqual('ValidationError');
+        expect(message).toEqual('Photo validation failed');
+
+        expect(errors['details.imageSize'].properties.message).toEqual(
+          '`xSmall` is not a valid enum value for path `details.imageSize`.',
         );
-        expect(errors['details.originalImageName'].properties.message).toEqual(
-          'Original image name required',
+      }
+    });
+
+    test('Expect to validate regex for the relevant properties in PhotoModel', async () => {
+      const photo = new PhotoModel(postPhotoRegexFixture);
+
+      try {
+        await photo.save();
+      } catch (error: any) {
+        const { name, _message: message, errors } = error;
+
+        expect(name).toEqual('ValidationError');
+        expect(message).toEqual('Photo validation failed');
+
+        expect(errors['details.captureDate'].properties.message).toEqual(
+          'Validator failed for path `details.captureDate` with value `Sun Dec 31 1899 23:34:39 GMT-0025 (Greenwich Mean Time)`',
         );
-        expect(errors['details.storeLink'].properties.message).toEqual(
-          'Store link required',
+        expect(errors['details.imageFile'].properties.message).toEqual(
+          'Validator failed for path `details.imageFile` with value `testfile.ooo`',
         );
-        expect(errors['equipment.cameraIso'].properties.message).toEqual(
-          'Camera iso required',
-        );
-        expect(errors['equipment.cameraName'].properties.message).toEqual(
-          'Camera name required',
-        );
-        expect(errors['equipment.lensAperture'].properties.message).toEqual(
-          'Lens aperture required',
-        );
-        expect(errors['equipment.lensFocalLength'].properties.message).toEqual(
-          'Lens focal length required',
-        );
-        expect(errors['equipment.lensName'].properties.message).toEqual(
-          'Lens name required',
-        );
-        expect(errors['equipment.lensShutterSpeed'].properties.message).toEqual(
-          'Lens shutter speed required',
-        );
+      }
+    });
+
+    test.skip('Expect to validate and trim the relevant properties in PhotoModel', async () => {
+      const photo = new PhotoModel(postPhotoTrimFixture);
+
+      try {
+        await photo.save();
+      } catch (error: any) {
+        const { name, _message: message } = error;
+
+        expect(name).toEqual('ValidationError');
+        expect(message).toEqual('Photo validation failed');
       }
     });
   });

@@ -57,7 +57,7 @@ Airbnb introduces it as the “Most reasonable approach to JavaScript”. To che
 
 Makes it a lot easier to import from anywhere within the project and move files around without changing imports and you never end up with something like `../../../../../components/`. Too many `../../../../../` can be extremely sore on the eyes. This was more of a pain then I thought it would be. Getting Typescript, Eslint, Jest and Vscode Intellisense to play nice was a b\*tch.
 
-See `tsconfig.paths.json` in frontend and backend folders for configured paths. See `jest.config.cjs` in backend folder for paths set up tests.
+See `tsconfig.paths.json` in frontend and backend folders for configured paths. See `jest.config.cjs` in backend folder for connection to `tsconfig.paths.json`.
 
 **Useful Links:**
 
@@ -103,6 +103,7 @@ Decided to use an in-memory database over mocks. This will allow the tests to be
 - [Testing with Mongoose - mongodb-memory-server 1](https://dev.to/paulasantamaria/testing-node-js-mongoose-with-an-in-memory-database-32np)
 - [Testing with Mongoose - mongodb-memory-server 2](https://dev.to/remrkabledev/testing-with-mongodb-memory-server-4ja2)
 - [mongodb-memory-server Docs](https://github.com/nodkz/mongodb-memory-server)
+- [Regex Generator](https://regex-generator.olafneumann.org/?sampleText=2020-03-12T13%3A34%3A56.123Z&flags=i&onlyPatterns=true&matchWholeLine=false&selection=0%7CDate,10%7CCharacter,11%7CTime,23%7CCharacter)
 
 ### Sorting, Filtering and Pagination
 
