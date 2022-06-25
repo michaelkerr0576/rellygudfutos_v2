@@ -6,7 +6,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev": "cd backend && yarn dev"
+    "devBE": "cd backend && yarn dev",
+    "testBE": "cd backend && yarn test"
   },
   "repository": {
     "type": "git",
