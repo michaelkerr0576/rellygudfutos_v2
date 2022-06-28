@@ -1,15 +1,18 @@
 export default {
   details: {
-    captureLocation: 'a',
-    imageCaption: 'b',
-    imageTitle: 'c',
+    captureLocation: ' ',
+    imageCaption: '  ',
+    imageFile: '   ',
+    imageTitle: '    ',
+    originalImageName: '     ',
+    storeLink: '       ',
   },
   equipment: {
-    cameraIso: '1',
-    cameraName: '2',
-    lensAperture: '3',
-    lensFocalLength: '4',
-    lensName: '5',
-    lensShutterSpeed: '6',
+    cameraIso: ' 1 ',
+    cameraName: '1 ',
+    lensAperture: ' 1',
+    lensFocalLength: '  1  ',
+    lensName: '  1',
+    lensShutterSpeed: '1  ',
   },
 };

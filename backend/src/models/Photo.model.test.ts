@@ -87,14 +87,16 @@ describe('Photo Model', () => {
     test('Expect to validate maxLength for the relevant properties in PhotoModel', async () => {
       const photo = new PhotoModel(postPhotoMaxLengthFixture);
 
-      const expectedMaxLength51Paths = [
-        'details.imageTitle',
+      const expectedMaxLength8Paths = [
         'equipment.cameraIso',
-        'equipment.cameraName',
         'equipment.lensAperture',
         'equipment.lensFocalLength',
-        'equipment.lensName',
         'equipment.lensShutterSpeed',
+      ];
+      const expectedMaxLength51Paths = [
+        'details.imageTitle',
+        'equipment.cameraName',
+        'equipment.lensName',
       ];
 
       try {
@@ -104,6 +106,12 @@ describe('Photo Model', () => {
 
         expect(name).toEqual('ValidationError');
         expect(message).toEqual('Photo validation failed');
+
+        expectedMaxLength8Paths.forEach((path) => {
+          expect(errors[path].properties.message).toEqual(
+            `Path \`${path}\` (\`${utilFixture.chars8}\`) is longer than the maximum allowed length (7).`,
+          );
+        });
 
         expectedMaxLength51Paths.forEach((path) => {
           expect(errors[path].properties.message).toEqual(
@@ -148,25 +156,69 @@ describe('Photo Model', () => {
         expect(name).toEqual('ValidationError');
         expect(message).toEqual('Photo validation failed');
 
-        expect(errors['details.captureDate'].properties.message).toEqual(
-          'Validator failed for path `details.captureDate` with value `Sun Dec 31 1899 23:34:39 GMT-0025 (Greenwich Mean Time)`',
-        );
         expect(errors['details.imageFile'].properties.message).toEqual(
           'Validator failed for path `details.imageFile` with value `testfile.ooo`',
+        );
+        expect(errors['details.storeLink'].properties.message).toEqual(
+          'Validator failed for path `details.storeLink` with value `http://www.futos`',
+        );
+        expect(errors['details.originalImageName'].properties.message).toEqual(
+          'Validator failed for path `details.originalImageName` with value `originaltestfile.hhh`',
+        );
+        expect(errors['equipment.cameraIso'].properties.message).toEqual(
+          'Validator failed for path `equipment.cameraIso` with value `string`',
+        );
+        expect(errors['equipment.lensAperture'].properties.message).toEqual(
+          'Validator failed for path `equipment.lensAperture` with value `a/1.2`',
+        );
+        expect(errors['equipment.lensFocalLength'].properties.message).toEqual(
+          'Validator failed for path `equipment.lensFocalLength` with value `100nn`',
+        );
+        expect(errors['equipment.lensShutterSpeed'].properties.message).toEqual(
+          'Validator failed for path `equipment.lensShutterSpeed` with value `1.200`',
         );
       }
     });
 
-    test.skip('Expect to validate and trim the relevant properties in PhotoModel', async () => {
+    test('Expect to validate and trim the relevant properties in PhotoModel', async () => {
       const photo = new PhotoModel(postPhotoTrimFixture);
+
+      const expectedRequiredPaths = [
+        'details.captureLocation',
+        'details.imageCaption',
+        'details.imageFile',
+        'details.imageTitle',
+        'details.originalImageName',
+        'details.storeLink',
+      ];
+      const expectedMinLengthPaths = [
+        'equipment.cameraIso',
+        'equipment.cameraName',
+        'equipment.lensAperture',
+        'equipment.lensFocalLength',
+        'equipment.lensName',
+        'equipment.lensShutterSpeed',
+      ];
 
       try {
         await photo.save();
       } catch (error: any) {
-        const { name, _message: message } = error;
+        const { name, _message: message, errors } = error;
 
         expect(name).toEqual('ValidationError');
         expect(message).toEqual('Photo validation failed');
+
+        expectedRequiredPaths.forEach((path) => {
+          expect(errors[path].properties.message).toEqual(
+            `Path \`${path}\` is required.`,
+          );
+        });
+
+        expectedMinLengthPaths.forEach((path) => {
+          expect(errors[path].properties.message).toEqual(
+            `Path \`${path}\` (\`1\`) is shorter than the minimum allowed length (2).`,
+          );
+        });
       }
     });
   });

@@ -32,8 +32,7 @@ const photoSchema = new Schema<IPhoto>(
       captureDate: {
         default: '1900-01-01T10:10:10.123Z',
         type: Date,
-        validate:
-          /[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\.[0-9]{1,3})?Z/i,
+        required: true,
       },
       captureLocation: {
         maxLength: 100,
@@ -51,6 +50,7 @@ const photoSchema = new Schema<IPhoto>(
       },
       imageFile: {
         required: true,
+        trim: true,
         type: String,
         validate: /\.(gif|jpe?g|tiff?|png|webp|bmp)$/i,
       },
@@ -76,20 +76,24 @@ const photoSchema = new Schema<IPhoto>(
         required: true,
         trim: true,
         type: String,
+        validate: /\.(gif|jpe?g|tiff?|png|webp|bmp)$/i,
       },
       storeLink: {
         required: true,
         trim: true,
         type: String,
+        validate:
+          /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/i,
       },
     },
     equipment: {
       cameraIso: {
-        maxLength: 50,
+        maxLength: 7,
         minLength: 2,
         required: true,
         trim: true,
         type: String,
+        validate: /^[0-9]*$/i,
       },
       cameraName: {
         maxLength: 50,
@@ -99,18 +103,20 @@ const photoSchema = new Schema<IPhoto>(
         type: String,
       },
       lensAperture: {
-        maxLength: 50,
+        maxLength: 7,
         minLength: 2,
         required: true,
         trim: true,
         type: String,
+        validate: /^f\/[0-9]*\.[0-9]+$/i,
       },
       lensFocalLength: {
-        maxLength: 50,
+        maxLength: 7,
         minLength: 2,
         required: true,
         trim: true,
         type: String,
+        validate: /^[0-9]+mm$/i,
       },
       lensName: {
         maxLength: 50,
@@ -120,11 +126,12 @@ const photoSchema = new Schema<IPhoto>(
         type: String,
       },
       lensShutterSpeed: {
-        maxLength: 50,
+        maxLength: 7,
         minLength: 2,
         required: true,
         trim: true,
         type: String,
+        validate: /^[0-9]+\/[0-9]+$/i,
       },
     },
   },
