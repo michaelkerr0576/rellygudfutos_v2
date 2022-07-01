@@ -2,26 +2,26 @@ import { Document, model, Schema } from 'mongoose';
 
 export interface ITag extends Document {
   _id: Schema.Types.ObjectId;
-  photos: Schema.Types.ObjectId[];
-  tag: string;
+  tagName: string;
+  tagPhotos: Schema.Types.ObjectId[];
 }
 
 const tagSchema = new Schema<ITag>(
   {
     _id: Schema.Types.ObjectId,
-    photos: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'Photo',
-      },
-    ],
-    tag: {
+    tagName: {
       maxLength: 50,
       minLength: 2,
       required: true,
       trim: true,
       type: String,
     },
+    tagPhotos: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Photo',
+      },
+    ],
   },
   { timestamps: true },
 );
