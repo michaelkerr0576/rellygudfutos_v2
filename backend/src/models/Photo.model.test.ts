@@ -1,5 +1,6 @@
 import {
   postPhotoEnumFixture,
+  postPhotoFixture,
   postPhotoMaxLengthFixture,
   postPhotoMinLengthFixture,
   postPhotoRegexFixture,
@@ -16,7 +17,7 @@ describe('Photo Model', () => {
 
   describe('Validation', () => {
     test('Expect to validate required for the relevant properties in PhotoModel', async () => {
-      const photo = new PhotoModel({});
+      const invalidPhoto = new PhotoModel({});
 
       const expectedRequiredPaths = [
         'details.captureLocation',
@@ -34,7 +35,7 @@ describe('Photo Model', () => {
       ];
 
       try {
-        await photo.save();
+        await invalidPhoto.save();
       } catch (error: any) {
         const { name, _message: message, errors } = error;
 
@@ -54,7 +55,7 @@ describe('Photo Model', () => {
     });
 
     test('Expect to validate minLength for the relevant properties in PhotoModel', async () => {
-      const photo = new PhotoModel(postPhotoMinLengthFixture);
+      const invalidPhoto = new PhotoModel(postPhotoMinLengthFixture);
 
       const expectedMinLengthPaths = [
         'details.captureLocation',
@@ -69,7 +70,7 @@ describe('Photo Model', () => {
       ];
 
       try {
-        await photo.save();
+        await invalidPhoto.save();
       } catch (error: any) {
         const { name, _message: message, errors } = error;
 
@@ -85,7 +86,7 @@ describe('Photo Model', () => {
     });
 
     test('Expect to validate maxLength for the relevant properties in PhotoModel', async () => {
-      const photo = new PhotoModel(postPhotoMaxLengthFixture);
+      const invalidPhoto = new PhotoModel(postPhotoMaxLengthFixture);
 
       const expectedMaxLength8Paths = [
         'equipment.cameraIso',
@@ -100,7 +101,7 @@ describe('Photo Model', () => {
       ];
 
       try {
-        await photo.save();
+        await invalidPhoto.save();
       } catch (error: any) {
         const { name, _message: message, errors } = error;
 
@@ -129,10 +130,10 @@ describe('Photo Model', () => {
     });
 
     test('Expect to validate enum for the relevant properties in PhotoModel', async () => {
-      const photo = new PhotoModel(postPhotoEnumFixture);
+      const invalidPhoto = new PhotoModel(postPhotoEnumFixture);
 
       try {
-        await photo.save();
+        await invalidPhoto.save();
       } catch (error: any) {
         const { name, _message: message, errors } = error;
 
@@ -146,10 +147,10 @@ describe('Photo Model', () => {
     });
 
     test('Expect to validate regex for the relevant properties in PhotoModel', async () => {
-      const photo = new PhotoModel(postPhotoRegexFixture);
+      const invalidPhoto = new PhotoModel(postPhotoRegexFixture);
 
       try {
-        await photo.save();
+        await invalidPhoto.save();
       } catch (error: any) {
         const { name, _message: message, errors } = error;
 
@@ -181,7 +182,7 @@ describe('Photo Model', () => {
     });
 
     test('Expect to validate and trim the relevant properties in PhotoModel', async () => {
-      const photo = new PhotoModel(postPhotoTrimFixture);
+      const invalidPhoto = new PhotoModel(postPhotoTrimFixture);
 
       const expectedRequiredPaths = [
         'details.captureLocation',
@@ -201,7 +202,7 @@ describe('Photo Model', () => {
       ];
 
       try {
-        await photo.save();
+        await invalidPhoto.save();
       } catch (error: any) {
         const { name, _message: message, errors } = error;
 
@@ -220,6 +221,59 @@ describe('Photo Model', () => {
           );
         });
       }
+    });
+
+    test('Expect no validation errors for a valid PhotoModel', async () => {
+      const validPhoto = new PhotoModel(postPhotoFixture);
+
+      const savedValidPhoto = await validPhoto.save();
+
+      const {
+        _id: expectedId,
+        details: expectedDetails,
+        equipment: expectedEquipment,
+      } = postPhotoFixture;
+      const {
+        _id: actualId,
+        details: actualDetails,
+        equipment: actualEquipment,
+      } = savedValidPhoto;
+
+      expect(savedValidPhoto).toBeTruthy();
+      expect(actualId.toString()).toEqual(expectedId.toString());
+
+      // photo details
+      expect(actualDetails.captureDate).toEqual(
+        new Date(expectedDetails.captureDate),
+      );
+      expect(actualDetails.captureLocation).toEqual(
+        expectedDetails.captureLocation,
+      );
+      expect(actualDetails.imageCaption).toEqual(expectedDetails.imageCaption);
+      expect(actualDetails.imageFile).toEqual(expectedDetails.imageFile);
+      expect(actualDetails.imageSize).toEqual(expectedDetails.imageSize);
+      expect(actualDetails.imageTags.toString()).toEqual(
+        expectedDetails.imageTags.toString(),
+      );
+      expect(actualDetails.imageTitle).toEqual(expectedDetails.imageTitle);
+      expect(actualDetails.originalImageName).toEqual(
+        expectedDetails.originalImageName,
+      );
+      expect(actualDetails.storeLink).toEqual(expectedDetails.storeLink);
+
+      // photo equipment
+      expect(actualEquipment.cameraIso).toEqual(expectedEquipment.cameraIso);
+      expect(actualEquipment.cameraName).toEqual(expectedEquipment.cameraName);
+      expect(actualEquipment.lensAperture).toEqual(
+        expectedEquipment.lensAperture,
+      );
+      expect(actualEquipment.lensFocalLength).toEqual(
+        expectedEquipment.lensFocalLength,
+      );
+      expect(actualEquipment.lensName).toEqual(expectedEquipment.lensName);
+      expect(actualEquipment.lensShutterSpeed).toEqual(
+        expectedEquipment.lensShutterSpeed,
+      );
     });
   });
 });
