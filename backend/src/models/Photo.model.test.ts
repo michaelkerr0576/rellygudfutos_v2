@@ -158,25 +158,25 @@ describe('Photo Model', () => {
         expect(message).toEqual('Photo validation failed');
 
         expect(errors['details.imageFile'].properties.message).toEqual(
-          'Validator failed for path `details.imageFile` with value `testfile.ooo`',
+          'Path `details.imageFile` is invalid (testfile.ooo).',
         );
         expect(errors['details.storeLink'].properties.message).toEqual(
-          'Validator failed for path `details.storeLink` with value `http://www.futos`',
+          'Path `details.storeLink` is invalid (http://www.futos).',
         );
         expect(errors['details.originalImageName'].properties.message).toEqual(
-          'Validator failed for path `details.originalImageName` with value `originaltestfile.hhh`',
+          'Path `details.originalImageName` is invalid (originaltestfile.hhh).',
         );
         expect(errors['equipment.cameraIso'].properties.message).toEqual(
-          'Validator failed for path `equipment.cameraIso` with value `string`',
+          'Path `equipment.cameraIso` is invalid (string).',
         );
         expect(errors['equipment.lensAperture'].properties.message).toEqual(
-          'Validator failed for path `equipment.lensAperture` with value `a/1.2`',
+          'Path `equipment.lensAperture` is invalid (a/1.2).',
         );
         expect(errors['equipment.lensFocalLength'].properties.message).toEqual(
-          'Validator failed for path `equipment.lensFocalLength` with value `100nn`',
+          'Path `equipment.lensFocalLength` is invalid (100nn).',
         );
         expect(errors['equipment.lensShutterSpeed'].properties.message).toEqual(
-          'Validator failed for path `equipment.lensShutterSpeed` with value `1.200`',
+          'Path `equipment.lensShutterSpeed` is invalid (1.200).',
         );
       }
     });

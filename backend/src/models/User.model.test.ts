@@ -66,10 +66,10 @@ describe('User Model', () => {
         expect(message).toEqual('User validation failed');
 
         expect(errors.email.properties.message).toEqual(
-          'Validator failed for path `email` with value `testEmail`',
+          'Path `email` is invalid (testemail).',
         );
         expect(errors.password.properties.message).toEqual(
-          'Validator failed for path `password` with value `34ddd`',
+          'Path `password` is invalid (34ddd).',
         );
       }
     });
@@ -87,9 +87,6 @@ describe('User Model', () => {
 
         expect(errors.email.properties.message).toEqual(
           'Path `email` is required.',
-        );
-        expect(errors.password.properties.message).toEqual(
-          'Validator failed for path `password` with value ` 1 `',
         );
       }
     });
@@ -113,7 +110,7 @@ describe('User Model', () => {
       expect(savedValidUser).toBeTruthy();
       expect(actualId.toString()).toEqual(expectedId.toString());
 
-      expect(actualEmail).toEqual(expectedEmail);
+      expect(actualEmail).toEqual(expectedEmail.toLowerCase());
       expect(actualPassword).toEqual(expectedPassword);
     });
   });

@@ -10,21 +10,22 @@ const userSchema = new Schema<IUser>(
   {
     _id: Schema.Types.ObjectId,
     email: {
-      maxLength: 100,
+      type: String,
       required: true,
       trim: true,
-      type: String,
+      lowercase: true,
       unique: true,
+      maxLength: 100,
       // * Regex: valid email address - test@email.com
-      validate:
+      match:
         /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
     },
     password: {
-      maxLength: 100,
-      required: true,
       type: String,
+      required: true,
+      maxLength: 100,
       // * Regex: secure password - minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character
-      validate:
+      match:
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
     },
   },

@@ -10,11 +10,11 @@ const tagSchema = new Schema<ITag>(
   {
     _id: Schema.Types.ObjectId,
     name: {
-      maxLength: 50,
-      minLength: 2,
+      type: String,
       required: true,
       trim: true,
-      type: String,
+      minLength: 2,
+      maxLength: 50,
     },
     photos: [
       {

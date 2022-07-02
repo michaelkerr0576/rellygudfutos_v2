@@ -100,8 +100,7 @@ Decided to use an in-memory database over mocks. This will allow the tests to be
 - [Mongoose Typescript Schema](https://thecodebarbarian.com/working-with-mongoose-in-typescript.html)
 - [Mongoose Docs](https://mongoosejs.com/docs/)
 - [Testing with Mongoose - Jest](https://javascript.plainenglish.io/unit-testing-node-js-mongoose-using-jest-106a39b8393d)
-- [Testing with Mongoose - mongodb-memory-server 1](https://dev.to/paulasantamaria/testing-node-js-mongoose-with-an-in-memory-database-32np)
-- [Testing with Mongoose - mongodb-memory-server 2](https://dev.to/remrkabledev/testing-with-mongodb-memory-server-4ja2)
+- [Testing with Mongoose - mongodb-memory-server](https://dev.to/remrkabledev/testing-with-mongodb-memory-server-4ja2)
 - [mongodb-memory-server Docs](https://github.com/nodkz/mongodb-memory-server)
 - [Regex Generator](https://regex-generator.olafneumann.org/?sampleText=2020-03-12T13%3A34%3A56.123Z&flags=i&onlyPatterns=true&matchWholeLine=false&selection=0%7CDate,10%7CCharacter,11%7CTime,23%7CCharacter)
 
