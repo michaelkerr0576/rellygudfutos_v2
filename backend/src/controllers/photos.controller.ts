@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
+import { Types } from 'mongoose';
 
-import { IPhoto } from '@/models/Photo.model';
+import PhotoModel, { IPhoto } from '@/models/Photo.model';
 import photosService from '@/services/photos.service';
 import * as cmn from '@/types/cmn.types';
 import { throwErrorUtils } from '@/utils';
@@ -10,6 +11,11 @@ import { throwErrorUtils } from '@/utils';
 // @access Private
 const addPhoto = (request: Request, response: Response): Promise<void> => {
   const { body } = request;
+
+  const newPhoto = new PhotoModel({
+    _id: new Types.ObjectId(),
+    ...body,
+  });
 
   const handleResult = (result: IPhoto): void => {
     if (!result) {
@@ -30,7 +36,7 @@ const addPhoto = (request: Request, response: Response): Promise<void> => {
   };
 
   return photosService
-    .addPhoto(body)
+    .addPhoto(newPhoto)
     .then((result): void => handleResult(result))
     .catch((error): void => handleError(error));
 };

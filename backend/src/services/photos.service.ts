@@ -1,6 +1,7 @@
 import PhotoModel, { IPhoto } from '@/models/Photo.model';
 
-const addPhoto = (form: IPhoto): Promise<IPhoto> => PhotoModel.create(form);
+const addPhoto = (newPhoto: IPhoto): Promise<IPhoto> =>
+  PhotoModel.create(newPhoto);
 
 const getPhotos = (): Promise<IPhoto[]> =>
   PhotoModel.find().then((result): IPhoto[] => result);
