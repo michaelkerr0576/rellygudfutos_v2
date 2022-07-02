@@ -1,5 +1,6 @@
 import utilFixture from '@/tests/fixtures/util.fixture';
 
 export default {
-  name: utilFixture.chars51,
+  email: utilFixture.chars101,
+  password: utilFixture.chars101,
 };

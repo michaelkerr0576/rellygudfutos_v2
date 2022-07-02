@@ -25,8 +25,8 @@ describe('Tag Model', () => {
         expect(name).toEqual('ValidationError');
         expect(message).toEqual('Tag validation failed');
 
-        expect(errors.tagName.properties.message).toEqual(
-          'Path `tagName` is required.',
+        expect(errors.name.properties.message).toEqual(
+          'Path `name` is required.',
         );
       }
     });
@@ -42,8 +42,8 @@ describe('Tag Model', () => {
         expect(name).toEqual('ValidationError');
         expect(message).toEqual('Tag validation failed');
 
-        expect(errors.tagName.properties.message).toEqual(
-          'Path `tagName` (`1`) is shorter than the minimum allowed length (2).',
+        expect(errors.name.properties.message).toEqual(
+          'Path `name` (`1`) is shorter than the minimum allowed length (2).',
         );
       }
     });
@@ -59,8 +59,8 @@ describe('Tag Model', () => {
         expect(name).toEqual('ValidationError');
         expect(message).toEqual('Tag validation failed');
 
-        expect(errors.tagName.properties.message).toEqual(
-          `Path \`tagName\` (\`${utilFixture.chars51}\`) is longer than the maximum allowed length (50).`,
+        expect(errors.name.properties.message).toEqual(
+          `Path \`name\` (\`${utilFixture.chars51}\`) is longer than the maximum allowed length (50).`,
         );
       }
     });
@@ -76,8 +76,8 @@ describe('Tag Model', () => {
         expect(name).toEqual('ValidationError');
         expect(message).toEqual('Tag validation failed');
 
-        expect(errors.tagName.properties.message).toEqual(
-          'Path `tagName` is required.',
+        expect(errors.name.properties.message).toEqual(
+          'Path `name` is required.',
         );
       }
     });
@@ -89,20 +89,20 @@ describe('Tag Model', () => {
 
       const {
         _id: expectedId,
-        tagName: expectedTagName,
-        tagPhotos: expectedTagPhotos,
+        name: expectedName,
+        photos: expectedPhotos,
       } = postTagFixture;
       const {
         _id: actualId,
-        tagName: actualTagName,
-        tagPhotos: actualTagPhotos,
+        name: actualName,
+        photos: actualPhotos,
       } = savedValidTag;
 
       expect(savedValidTag).toBeTruthy();
       expect(actualId.toString()).toEqual(expectedId.toString());
 
-      expect(actualTagName).toEqual(expectedTagName);
-      expect(actualTagPhotos.toString()).toEqual(expectedTagPhotos.toString());
+      expect(actualName).toEqual(expectedName);
+      expect(actualPhotos.toString()).toEqual(expectedPhotos.toString());
     });
   });
 });

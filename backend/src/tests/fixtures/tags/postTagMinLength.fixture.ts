@@ -1,3 +1,3 @@
 export default {
-  tagName: '1',
+  name: '1',
 };
