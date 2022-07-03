@@ -23,19 +23,17 @@ module.exports = {
     ecmaVersion: 'latest',
     project: ['./tsconfig.json'],
   },
-  plugins: [
-    '@typescript-eslint',
-    'eslint-plugin-import',
-    'import',
-    'prettier',
-    'simple-import-sort',
-    'jest',
-  ],
+  plugins: ['@typescript-eslint', 'eslint-plugin-import', 'import', 'prettier', 'simple-import-sort', 'jest'],
   rules: {
     'prettier/prettier': [
       'error',
       {
         endOfLine: 'auto',
+        formatOnSave: true,
+        printWidth: 120,
+        singleQuote: true,
+        tabWidth: 2,
+        trailingComma: 'all',
       },
     ],
     // Conflict with importing aliases. Typescript and Eslint have errors to handle missing imports

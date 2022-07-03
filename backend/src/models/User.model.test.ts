@@ -25,12 +25,8 @@ describe('User Model', () => {
         expect(name).toEqual('ValidationError');
         expect(message).toEqual('User validation failed');
 
-        expect(errors.email.properties.message).toEqual(
-          'Path `email` is required.',
-        );
-        expect(errors.password.properties.message).toEqual(
-          'Path `password` is required.',
-        );
+        expect(errors.email.properties.message).toEqual('Path `email` is required.');
+        expect(errors.password.properties.message).toEqual('Path `password` is required.');
       }
     });
 
@@ -65,12 +61,8 @@ describe('User Model', () => {
         expect(name).toEqual('ValidationError');
         expect(message).toEqual('User validation failed');
 
-        expect(errors.email.properties.message).toEqual(
-          'Path `email` is invalid (testemail).',
-        );
-        expect(errors.password.properties.message).toEqual(
-          'Path `password` is invalid (34ddd).',
-        );
+        expect(errors.email.properties.message).toEqual('Path `email` is invalid (testemail).');
+        expect(errors.password.properties.message).toEqual('Path `password` is invalid (34ddd).');
       }
     });
 
@@ -85,9 +77,7 @@ describe('User Model', () => {
         expect(name).toEqual('ValidationError');
         expect(message).toEqual('User validation failed');
 
-        expect(errors.email.properties.message).toEqual(
-          'Path `email` is required.',
-        );
+        expect(errors.email.properties.message).toEqual('Path `email` is required.');
       }
     });
 
@@ -96,16 +86,8 @@ describe('User Model', () => {
 
       const savedValidUser = await validUser.save();
 
-      const {
-        _id: expectedId,
-        email: expectedEmail,
-        password: expectedPassword,
-      } = postUserFixture;
-      const {
-        _id: actualId,
-        email: actualEmail,
-        password: actualPassword,
-      } = savedValidUser;
+      const { _id: expectedId, email: expectedEmail, password: expectedPassword } = postUserFixture;
+      const { _id: actualId, email: actualEmail, password: actualPassword } = savedValidUser;
 
       expect(savedValidUser).toBeTruthy();
       expect(actualId.toString()).toEqual(expectedId.toString());

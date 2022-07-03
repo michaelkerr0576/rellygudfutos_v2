@@ -14,10 +14,7 @@ const throw404Error = (response: Response, model: string): void => {
   response.status(404).json({ message: `${model} not found` });
 };
 
-const throw500Error = (
-  response: Response,
-  error: cmn.MongooseValidationError,
-): void => {
+const throw500Error = (response: Response, error: cmn.MongooseValidationError): void => {
   response.status(500).json({ ...error, message: 'Internal Server Error' });
 };
 
@@ -25,10 +22,7 @@ const throwEmptyResultError = (response: Response, model: string): void => {
   response.status(404).json({ message: `${model} not found. Add ${model}` });
 };
 
-const throwValidationError = (
-  response: Response,
-  error: cmn.MongooseValidationError,
-): void => {
+const throwValidationError = (response: Response, error: cmn.MongooseValidationError): void => {
   const { _message: message } = error;
   const errors = {} as cmn.ValidationErrorsMessage;
 

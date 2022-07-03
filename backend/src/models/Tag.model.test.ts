@@ -25,9 +25,7 @@ describe('Tag Model', () => {
         expect(name).toEqual('ValidationError');
         expect(message).toEqual('Tag validation failed');
 
-        expect(errors.name.properties.message).toEqual(
-          'Path `name` is required.',
-        );
+        expect(errors.name.properties.message).toEqual('Path `name` is required.');
       }
     });
 
@@ -76,9 +74,7 @@ describe('Tag Model', () => {
         expect(name).toEqual('ValidationError');
         expect(message).toEqual('Tag validation failed');
 
-        expect(errors.name.properties.message).toEqual(
-          'Path `name` is required.',
-        );
+        expect(errors.name.properties.message).toEqual('Path `name` is required.');
       }
     });
 
@@ -87,16 +83,8 @@ describe('Tag Model', () => {
 
       const savedValidTag = await validTag.save();
 
-      const {
-        _id: expectedId,
-        name: expectedName,
-        photos: expectedPhotos,
-      } = postTagFixture;
-      const {
-        _id: actualId,
-        name: actualName,
-        photos: actualPhotos,
-      } = savedValidTag;
+      const { _id: expectedId, name: expectedName, photos: expectedPhotos } = postTagFixture;
+      const { _id: actualId, name: actualName, photos: actualPhotos } = savedValidTag;
 
       expect(savedValidTag).toBeTruthy();
       expect(actualId.toString()).toEqual(expectedId.toString());

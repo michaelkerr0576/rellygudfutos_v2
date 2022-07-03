@@ -63,8 +63,7 @@ const photoSchema = new Schema<IPhoto>(
       imageTags: {
         type: [Schema.Types.ObjectId],
         ref: 'Tag',
-        validate: (v: Schema.Types.ObjectId[]): boolean =>
-          Array.isArray(v) && v.length > 0,
+        validate: (v: Schema.Types.ObjectId[]): boolean => Array.isArray(v) && v.length > 0,
       },
       imageTitle: {
         type: String,

@@ -43,9 +43,7 @@ describe('Photo Model', () => {
         expect(message).toEqual('Photo validation failed');
 
         expectedRequiredPaths.forEach((path) => {
-          expect(errors[path].properties.message).toEqual(
-            `Path \`${path}\` is required.`,
-          );
+          expect(errors[path].properties.message).toEqual(`Path \`${path}\` is required.`);
         });
 
         expect(errors['details.imageTags'].properties.message).toEqual(
@@ -94,11 +92,7 @@ describe('Photo Model', () => {
         'equipment.lensFocalLength',
         'equipment.lensShutterSpeed',
       ];
-      const expectedMaxLength51Paths = [
-        'details.imageTitle',
-        'equipment.cameraName',
-        'equipment.lensName',
-      ];
+      const expectedMaxLength51Paths = ['details.imageTitle', 'equipment.cameraName', 'equipment.lensName'];
 
       try {
         await invalidPhoto.save();
@@ -210,9 +204,7 @@ describe('Photo Model', () => {
         expect(message).toEqual('Photo validation failed');
 
         expectedRequiredPaths.forEach((path) => {
-          expect(errors[path].properties.message).toEqual(
-            `Path \`${path}\` is required.`,
-          );
+          expect(errors[path].properties.message).toEqual(`Path \`${path}\` is required.`);
         });
 
         expectedMinLengthPaths.forEach((path) => {
@@ -228,52 +220,30 @@ describe('Photo Model', () => {
 
       const savedValidPhoto = await validPhoto.save();
 
-      const {
-        _id: expectedId,
-        details: expectedDetails,
-        equipment: expectedEquipment,
-      } = postPhotoFixture;
-      const {
-        _id: actualId,
-        details: actualDetails,
-        equipment: actualEquipment,
-      } = savedValidPhoto;
+      const { _id: expectedId, details: expectedDetails, equipment: expectedEquipment } = postPhotoFixture;
+      const { _id: actualId, details: actualDetails, equipment: actualEquipment } = savedValidPhoto;
 
       expect(savedValidPhoto).toBeTruthy();
       expect(actualId.toString()).toEqual(expectedId.toString());
 
       // photo details
-      expect(actualDetails.captureDate).toEqual(
-        new Date(expectedDetails.captureDate),
-      );
-      expect(actualDetails.captureLocation).toEqual(
-        expectedDetails.captureLocation,
-      );
+      expect(actualDetails.captureDate).toEqual(new Date(expectedDetails.captureDate));
+      expect(actualDetails.captureLocation).toEqual(expectedDetails.captureLocation);
       expect(actualDetails.imageCaption).toEqual(expectedDetails.imageCaption);
       expect(actualDetails.imageFile).toEqual(expectedDetails.imageFile);
       expect(actualDetails.imageSize).toEqual(expectedDetails.imageSize);
-      expect(actualDetails.imageTags.toString()).toEqual(
-        expectedDetails.imageTags.toString(),
-      );
+      expect(actualDetails.imageTags.toString()).toEqual(expectedDetails.imageTags.toString());
       expect(actualDetails.imageTitle).toEqual(expectedDetails.imageTitle);
-      expect(actualDetails.originalImageName).toEqual(
-        expectedDetails.originalImageName,
-      );
+      expect(actualDetails.originalImageName).toEqual(expectedDetails.originalImageName);
       expect(actualDetails.storeLink).toEqual(expectedDetails.storeLink);
 
       // photo equipment
       expect(actualEquipment.cameraIso).toEqual(expectedEquipment.cameraIso);
       expect(actualEquipment.cameraName).toEqual(expectedEquipment.cameraName);
-      expect(actualEquipment.lensAperture).toEqual(
-        expectedEquipment.lensAperture,
-      );
-      expect(actualEquipment.lensFocalLength).toEqual(
-        expectedEquipment.lensFocalLength,
-      );
+      expect(actualEquipment.lensAperture).toEqual(expectedEquipment.lensAperture);
+      expect(actualEquipment.lensFocalLength).toEqual(expectedEquipment.lensFocalLength);
       expect(actualEquipment.lensName).toEqual(expectedEquipment.lensName);
-      expect(actualEquipment.lensShutterSpeed).toEqual(
-        expectedEquipment.lensShutterSpeed,
-      );
+      expect(actualEquipment.lensShutterSpeed).toEqual(expectedEquipment.lensShutterSpeed);
     });
   });
 });

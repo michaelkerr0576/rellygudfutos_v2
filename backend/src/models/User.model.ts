@@ -25,8 +25,7 @@ const userSchema = new Schema<IUser>(
       required: true,
       maxLength: 100,
       // * Regex: secure password - minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character
-      match:
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+      match: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
     },
   },
   { timestamps: true },

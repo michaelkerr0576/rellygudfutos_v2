@@ -43,6 +43,11 @@ module.exports = {
       'error',
       {
         endOfLine: 'auto',
+        formatOnSave: true,
+        printWidth: 120,
+        singleQuote: true,
+        tabWidth: 2,
+        trailingComma: 'all',
       },
     ],
     // Conflict with importing aliases. Typescript and Eslint have errors to handle missing imports
@@ -75,10 +80,7 @@ module.exports = {
         ignores: ['modules'],
       },
     ],
-    'react/jsx-filename-extension': [
-      2,
-      { extensions: ['.js', '.jsx', '.ts', '.tsx'] },
-    ],
+    'react/jsx-filename-extension': [2, { extensions: ['.js', '.jsx', '.ts', '.tsx'] }],
     'import/extensions': [
       'error',
       'ignorePackages',

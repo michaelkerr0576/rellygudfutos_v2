@@ -4,10 +4,7 @@ import photosController from '@/controllers/photos.controller';
 
 const router = express.Router();
 
-router
-  .route('/')
-  .get(photosController.getPhotos)
-  .post(photosController.addPhoto);
+router.route('/').get(photosController.getPhotos).post(photosController.addPhoto);
 
 router
   .route('/:id')
