@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { Types } from 'mongoose';
 
 import PhotoModel, { IPhoto } from '@/models/Photo.model';
-import photosService from '@/services/photos.service';
+import photosDbService from '@/services/photosDb.service';
 import * as cmn from '@/types/cmn.types';
 import { throwErrorUtils } from '@/utils';
 
@@ -35,7 +35,7 @@ const addPhoto = (request: Request, response: Response): Promise<void> => {
     throwErrorUtils.throw500Error(response, error);
   };
 
-  return photosService
+  return photosDbService
     .addPhoto(newPhoto)
     .then((result): void => handleResult(result))
     .catch((error): void => handleError(error));
@@ -73,7 +73,7 @@ const getPhotos = (_request: Request, response: Response): Promise<void> => {
     response.status(200).json(result);
   };
 
-  return photosService
+  return photosDbService
     .getPhotos()
     .then((result): void => handleResult(result))
     .catch((error): void => throwErrorUtils.throw500Error(response, error));

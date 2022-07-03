@@ -25,7 +25,7 @@ describe('Tag Model', () => {
         expect(name).toEqual('ValidationError');
         expect(message).toEqual('Tag validation failed');
 
-        expect(errors.name.properties.message).toEqual('Path `name` is required.');
+        expect(errors.tag.properties.message).toEqual('Path `tag` is required.');
       }
     });
 
@@ -40,8 +40,8 @@ describe('Tag Model', () => {
         expect(name).toEqual('ValidationError');
         expect(message).toEqual('Tag validation failed');
 
-        expect(errors.name.properties.message).toEqual(
-          'Path `name` (`1`) is shorter than the minimum allowed length (2).',
+        expect(errors.tag.properties.message).toEqual(
+          'Path `tag` (`1`) is shorter than the minimum allowed length (2).',
         );
       }
     });
@@ -57,8 +57,8 @@ describe('Tag Model', () => {
         expect(name).toEqual('ValidationError');
         expect(message).toEqual('Tag validation failed');
 
-        expect(errors.name.properties.message).toEqual(
-          `Path \`name\` (\`${utilFixture.chars51}\`) is longer than the maximum allowed length (50).`,
+        expect(errors.tag.properties.message).toEqual(
+          `Path \`tag\` (\`${utilFixture.chars51}\`) is longer than the maximum allowed length (50).`,
         );
       }
     });
@@ -74,7 +74,7 @@ describe('Tag Model', () => {
         expect(name).toEqual('ValidationError');
         expect(message).toEqual('Tag validation failed');
 
-        expect(errors.name.properties.message).toEqual('Path `name` is required.');
+        expect(errors.tag.properties.message).toEqual('Path `tag` is required.');
       }
     });
 
@@ -83,13 +83,13 @@ describe('Tag Model', () => {
 
       const savedValidTag = await validTag.save();
 
-      const { _id: expectedId, name: expectedName, photos: expectedPhotos } = postTagFixture;
-      const { _id: actualId, name: actualName, photos: actualPhotos } = savedValidTag;
+      const { _id: expectedId, tag: expectedTag, photos: expectedPhotos } = postTagFixture;
+      const { _id: actualId, tag: actualTag, photos: actualPhotos } = savedValidTag;
 
       expect(savedValidTag).toBeTruthy();
       expect(actualId.toString()).toEqual(expectedId.toString());
 
-      expect(actualName).toEqual(expectedName);
+      expect(actualTag).toEqual(expectedTag);
       expect(actualPhotos.toString()).toEqual(expectedPhotos.toString());
     });
   });
