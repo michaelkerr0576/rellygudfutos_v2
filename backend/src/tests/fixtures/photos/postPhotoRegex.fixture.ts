@@ -1,8 +1,8 @@
 export default {
   details: {
     imageFile: 'testfile.ooo',
-    storeLink: 'http://www.futos',
     originalImageName: 'originaltestfile.hhh',
+    storeLink: 'http://www.futos',
   },
   equipment: {
     cameraIso: 'string',

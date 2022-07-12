@@ -44,15 +44,43 @@ const addPhoto = (request: Request, response: Response): Promise<void> => {
 // @desc Delete photo
 // @route DELETE /photos/:id
 // @access Private
-const deletePhoto = (request: Request, response: Response): void => {
-  response.status(200).json({ message: `Delete photo ${request.params.id}` });
+const deletePhoto = (request: Request, response: Response): Promise<void> => {
+  const { id } = request.params;
+
+  const handleResult = (result: IPhoto | null): void => {
+    if (!result) {
+      throwErrorUtils.throw404Error(response, 'Photo');
+      return;
+    }
+
+    response.status(200).json(result);
+  };
+
+  return photosDbService
+    .deletePhoto(id)
+    .then((result): void => handleResult(result))
+    .catch((error): void => throwErrorUtils.throw500Error(response, error));
 };
 
 // @desc Get photo
 // @route GET /photos/:id
 // @access Public
-const getPhoto = (request: Request, response: Response): void => {
-  response.status(200).json({ message: `Get photo ${request.params.id}` });
+const getPhoto = (request: Request, response: Response): Promise<void> => {
+  const { id } = request.params;
+
+  const handleResult = (result: IPhoto | null): void => {
+    if (!result) {
+      throwErrorUtils.throw404Error(response, 'Photo');
+      return;
+    }
+
+    response.status(200).json(result);
+  };
+
+  return photosDbService
+    .getPhoto(id)
+    .then((result): void => handleResult(result))
+    .catch((error): void => throwErrorUtils.throw500Error(response, error));
 };
 
 // @desc Get photos
@@ -82,8 +110,25 @@ const getPhotos = (_request: Request, response: Response): Promise<void> => {
 // @desc Update photo
 // @route PUT /photos/:id
 // @access Private
-const updatePhoto = (request: Request, response: Response): void => {
-  response.status(200).json({ message: `Update photo ${request.params.id}` });
+const updatePhoto = (request: Request, response: Response): Promise<void> => {
+  const {
+    body,
+    params: { id },
+  } = request;
+
+  const handleResult = (result: IPhoto | null): void => {
+    if (!result) {
+      throwErrorUtils.throw404Error(response, 'Photo');
+      return;
+    }
+
+    response.status(200).json(result);
+  };
+
+  return photosDbService
+    .updatePhoto(id, body)
+    .then((result): void => handleResult(result))
+    .catch((error): void => throwErrorUtils.throw500Error(response, error));
 };
 
 const photosController = {
