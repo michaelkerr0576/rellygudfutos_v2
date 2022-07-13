@@ -44,15 +44,43 @@ const addTag = (request: Request, response: Response): Promise<void> => {
 // @desc Delete tag
 // @route DELETE /s/:id
 // @access Private
-const deleteTag = (request: Request, response: Response): void => {
-  response.status(200).json({ message: `Delete tag ${request.params.id}` });
+const deleteTag = (request: Request, response: Response): Promise<void> => {
+  const { id } = request.params;
+
+  const handleResult = (result: ITag | null): void => {
+    if (!result) {
+      throwErrorUtils.throw404Error(response, 'Tag');
+      return;
+    }
+
+    response.status(200).json(result);
+  };
+
+  return tagsDbService
+    .deleteTag(id)
+    .then((result): void => handleResult(result))
+    .catch((error): void => throwErrorUtils.throw500Error(response, error));
 };
 
 // @desc Get tag
 // @route GET /tags/:id
 // @access Public
-const getTag = (request: Request, response: Response): void => {
-  response.status(200).json({ message: `Get tag ${request.params.id}` });
+const getTag = (request: Request, response: Response): Promise<void> => {
+  const { id } = request.params;
+
+  const handleResult = (result: ITag | null): void => {
+    if (!result) {
+      throwErrorUtils.throw404Error(response, 'Tag');
+      return;
+    }
+
+    response.status(200).json(result);
+  };
+
+  return tagsDbService
+    .getTag(id)
+    .then((result): void => handleResult(result))
+    .catch((error): void => throwErrorUtils.throw500Error(response, error));
 };
 
 // @desc Get tags
@@ -82,8 +110,25 @@ const getTags = (_request: Request, response: Response): Promise<void> => {
 // @desc Update tag
 // @route PUT /tags/:id
 // @access Private
-const updateTag = (request: Request, response: Response): void => {
-  response.status(200).json({ message: `Update tag ${request.params.id}` });
+const updateTag = (request: Request, response: Response): Promise<void> => {
+  const {
+    body,
+    params: { id },
+  } = request;
+
+  const handleResult = (result: ITag | null): void => {
+    if (!result) {
+      throwErrorUtils.throw404Error(response, 'Tag');
+      return;
+    }
+
+    response.status(200).json(result);
+  };
+
+  return tagsDbService
+    .updateTag(id, body)
+    .then((result): void => handleResult(result))
+    .catch((error): void => throwErrorUtils.throw500Error(response, error));
 };
 
 const tagsController = {
