@@ -3,6 +3,7 @@ import { Document, model, Schema } from 'mongoose';
 export interface IUser extends Document {
   _id: Schema.Types.ObjectId;
   email: string;
+  name: string;
   password: string;
 }
 
@@ -19,6 +20,14 @@ const userSchema = new Schema<IUser>(
       // * Regex: valid email address - test@email.com
       match:
         /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
+    },
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+      maxLength: 100,
+      // * Regex: no support for special characters or numbers - Martin Luther King, Jr.
+      match: /^[a-z ,.'-]+$/i,
     },
     password: {
       type: String,

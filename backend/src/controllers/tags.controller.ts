@@ -23,7 +23,10 @@ const addTag = (request: Request, response: Response): Promise<void> => {
       return;
     }
 
-    response.status(200).json(result);
+    response.status(201).json({
+      message: 'Tag added',
+      addedTag: result,
+    });
   };
 
   const handleError = (error: cmn.MongooseValidationError): void => {
@@ -42,7 +45,7 @@ const addTag = (request: Request, response: Response): Promise<void> => {
 };
 
 // @desc Delete tag
-// @route DELETE /s/:id
+// @route DELETE /tags/:id
 // @access Private
 const deleteTag = (request: Request, response: Response): Promise<void> => {
   const { id } = request.params;
@@ -53,7 +56,10 @@ const deleteTag = (request: Request, response: Response): Promise<void> => {
       return;
     }
 
-    response.status(200).json(result);
+    response.status(200).json({
+      message: 'Tag deleted',
+      deletedTag: result,
+    });
   };
 
   return tagsDbService
@@ -122,7 +128,10 @@ const updateTag = (request: Request, response: Response): Promise<void> => {
       return;
     }
 
-    response.status(200).json(result);
+    response.status(200).json({
+      message: 'Tag updated',
+      updatedTag: result,
+    });
   };
 
   return tagsDbService

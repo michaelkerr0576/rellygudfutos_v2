@@ -26,6 +26,7 @@ describe('User Model', () => {
         expect(message).toEqual('User validation failed');
 
         expect(errors.email.properties.message).toEqual('Path `email` is required.');
+        expect(errors.name.properties.message).toEqual('Path `name` is required.');
         expect(errors.password.properties.message).toEqual('Path `password` is required.');
       }
     });
@@ -43,6 +44,9 @@ describe('User Model', () => {
 
         expect(errors.email.properties.message).toEqual(
           `Path \`email\` (\`${utilFixture.chars101}\`) is longer than the maximum allowed length (100).`,
+        );
+        expect(errors.name.properties.message).toEqual(
+          `Path \`name\` (\`${utilFixture.chars101}\`) is longer than the maximum allowed length (100).`,
         );
         expect(errors.password.properties.message).toEqual(
           `Path \`password\` (\`${utilFixture.chars101}\`) is longer than the maximum allowed length (100).`,
@@ -62,6 +66,7 @@ describe('User Model', () => {
         expect(message).toEqual('User validation failed');
 
         expect(errors.email.properties.message).toEqual('Path `email` is invalid (testemail).');
+        expect(errors.name.properties.message).toEqual('Path `name` is invalid (&^% 123).');
         expect(errors.password.properties.message).toEqual('Path `password` is invalid (34ddd).');
       }
     });
@@ -78,6 +83,7 @@ describe('User Model', () => {
         expect(message).toEqual('User validation failed');
 
         expect(errors.email.properties.message).toEqual('Path `email` is required.');
+        expect(errors.name.properties.message).toEqual('Path `name` is invalid (1).');
       }
     });
 

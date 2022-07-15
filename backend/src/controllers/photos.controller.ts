@@ -23,7 +23,10 @@ const addPhoto = (request: Request, response: Response): Promise<void> => {
       return;
     }
 
-    response.status(200).json(result);
+    response.status(201).json({
+      message: 'Photo added',
+      addedPhoto: result,
+    });
   };
 
   const handleError = (error: cmn.MongooseValidationError): void => {
@@ -53,7 +56,10 @@ const deletePhoto = (request: Request, response: Response): Promise<void> => {
       return;
     }
 
-    response.status(200).json(result);
+    response.status(200).json({
+      message: 'Photo deleted',
+      deletedPhoto: result,
+    });
   };
 
   return photosDbService
@@ -122,7 +128,10 @@ const updatePhoto = (request: Request, response: Response): Promise<void> => {
       return;
     }
 
-    response.status(200).json(result);
+    response.status(200).json({
+      message: 'Photo updated',
+      updatedPhoto: result,
+    });
   };
 
   return photosDbService
