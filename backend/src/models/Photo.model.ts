@@ -1,6 +1,6 @@
 import { Date, Document, model, Schema } from 'mongoose';
 
-type ImageSize = 'large' | 'medium' | 'small';
+import * as enm from '@/types/enum.types';
 
 export interface IPhoto extends Document {
   _id: Schema.Types.ObjectId;
@@ -9,7 +9,7 @@ export interface IPhoto extends Document {
     captureLocation: string;
     imageCaption: string;
     imageFile: string;
-    imageSize: ImageSize;
+    imageSize: enm.ImageSize;
     imageTags: Schema.Types.ObjectId[];
     imageTitle: string;
     originalImageName: string;
@@ -57,8 +57,8 @@ const photoSchema = new Schema<IPhoto>(
       },
       imageSize: {
         type: String,
-        enum: ['large', 'medium', 'small'],
-        default: 'medium',
+        enum: enm.ImageSize,
+        default: enm.ImageSize.MEDIUM,
       },
       imageTags: {
         type: [Schema.Types.ObjectId],

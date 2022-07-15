@@ -1,3 +1,5 @@
+import * as enm from '@/types/enum.types';
+
 export default {
   _id: '41224d776a326fb40f000002',
   details: {
@@ -5,7 +7,7 @@ export default {
     captureLocation: 'Test capture location',
     imageCaption: 'Test image caption',
     imageFile: 'testFile.jpg',
-    imageSize: 'large',
+    imageSize: enm.ImageSize.LARGE,
     imageTags: ['41224d776a326fb40f000001'],
     imageTitle: 'Test image title',
     originalImageName: 'testOriginalImageName.jpeg',

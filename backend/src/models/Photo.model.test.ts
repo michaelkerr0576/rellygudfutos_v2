@@ -135,7 +135,7 @@ describe('Photo Model', () => {
         expect(message).toEqual('Photo validation failed');
 
         expect(errors['details.imageSize'].properties.message).toEqual(
-          '`xSmall` is not a valid enum value for path `details.imageSize`.',
+          '`XSMALL` is not a valid enum value for path `details.imageSize`.',
         );
       }
     });

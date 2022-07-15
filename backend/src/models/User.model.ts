@@ -1,10 +1,13 @@
 import { Document, model, Schema } from 'mongoose';
 
+import * as enm from '@/types/enum.types';
+
 export interface IUser extends Document {
   _id: Schema.Types.ObjectId;
   email: string;
   name: string;
   password: string;
+  role: enm.UserRole;
 }
 
 const userSchema = new Schema<IUser>(
@@ -35,6 +38,11 @@ const userSchema = new Schema<IUser>(
       maxLength: 100,
       // * Regex: secure password - minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character
       match: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+    },
+    role: {
+      type: String,
+      enum: enm.UserRole,
+      default: enm.UserRole.USER,
     },
   },
   { timestamps: true },

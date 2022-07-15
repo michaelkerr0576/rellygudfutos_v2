@@ -1,4 +1,5 @@
 import {
+  postUserEnumFixture,
   postUserFixture,
   postUserMaxLengthFixture,
   postUserRegexFixture,
@@ -50,6 +51,23 @@ describe('User Model', () => {
         );
         expect(errors.password.properties.message).toEqual(
           `Path \`password\` (\`${utilFixture.chars101}\`) is longer than the maximum allowed length (100).`,
+        );
+      }
+    });
+
+    test('Expect to validate enum for the relevant properties in UserModel', async () => {
+      const invalidPhoto = new UserModel(postUserEnumFixture);
+
+      try {
+        await invalidPhoto.save();
+      } catch (error: any) {
+        const { name, _message: message, errors } = error;
+
+        expect(name).toEqual('ValidationError');
+        expect(message).toEqual('User validation failed');
+
+        expect(errors.role.properties.message).toEqual(
+          '`ULTIMATE` is not a valid enum value for path `role`.',
         );
       }
     });

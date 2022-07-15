@@ -1,5 +1,5 @@
 export default {
   details: {
-    imageSize: 'xSmall',
+    imageSize: 'XSMALL',
   },
 };
