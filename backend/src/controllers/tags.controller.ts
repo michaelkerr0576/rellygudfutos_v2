@@ -6,9 +6,9 @@ import tagsDbService from '@/services/tagsDb.service';
 import * as cmn from '@/types/cmn.types';
 import { throwErrorUtils } from '@/utils';
 
-// @desc Add tag
-// @route POST /tags
-// @access Private
+// * @desc Add tag
+// * @route POST /api/tags
+// * @access Private
 const addTag = (request: Request, response: Response): Promise<void> => {
   const { body } = request;
 
@@ -44,9 +44,9 @@ const addTag = (request: Request, response: Response): Promise<void> => {
     .catch((error): void => handleError(error));
 };
 
-// @desc Delete tag
-// @route DELETE /tags/:id
-// @access Private
+// * @desc Delete tag
+// * @route DELETE /api/tags/:id
+// * @access Private
 const deleteTag = (request: Request, response: Response): Promise<void> => {
   const { id } = request.params;
 
@@ -68,9 +68,9 @@ const deleteTag = (request: Request, response: Response): Promise<void> => {
     .catch((error): void => throwErrorUtils.throw500Error(response, error));
 };
 
-// @desc Get tag
-// @route GET /tags/:id
-// @access Public
+// * @desc Get tag
+// * @route GET /api/tags/:id
+// * @access Public
 const getTag = (request: Request, response: Response): Promise<void> => {
   const { id } = request.params;
 
@@ -89,9 +89,9 @@ const getTag = (request: Request, response: Response): Promise<void> => {
     .catch((error): void => throwErrorUtils.throw500Error(response, error));
 };
 
-// @desc Get tags
-// @route GET /tags
-// @access Public
+// * @desc Get tags
+// * @route GET /api/tags
+// * @access Public
 const getTags = (_request: Request, response: Response): Promise<void> => {
   const handleResult = (result: ITag[]): void => {
     if (!result) {
@@ -113,9 +113,9 @@ const getTags = (_request: Request, response: Response): Promise<void> => {
     .catch((error): void => throwErrorUtils.throw500Error(response, error));
 };
 
-// @desc Update tag
-// @route PUT /tags/:id
-// @access Private
+// * @desc Update tag
+// * @route PUT /api/tags/:id
+// * @access Private
 const updateTag = (request: Request, response: Response): Promise<void> => {
   const {
     body,

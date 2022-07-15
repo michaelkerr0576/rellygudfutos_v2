@@ -8,6 +8,7 @@ import connectMongoDb from '@/config/connectMongoDb.config';
 import errorHandler from '@/middlewares/errorHandler.middleware';
 import photosRoutes from '@/routes/photos.routes';
 import tagsRoutes from '@/routes/tags.routes';
+import usersRoutes from '@/routes/users.routes';
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -19,6 +20,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/api/photos', photosRoutes);
 app.use('/api/tags', tagsRoutes);
+app.use('/api/users', usersRoutes);
 
 app.use(errorHandler);
 

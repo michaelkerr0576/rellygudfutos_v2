@@ -6,9 +6,9 @@ import photosDbService from '@/services/photosDb.service';
 import * as cmn from '@/types/cmn.types';
 import { throwErrorUtils } from '@/utils';
 
-// @desc Add photo
-// @route POST /photos
-// @access Private
+// * @desc Add photo
+// * @route POST /api/photos
+// * @access Private
 const addPhoto = (request: Request, response: Response): Promise<void> => {
   const { body } = request;
 
@@ -44,9 +44,9 @@ const addPhoto = (request: Request, response: Response): Promise<void> => {
     .catch((error): void => handleError(error));
 };
 
-// @desc Delete photo
-// @route DELETE /photos/:id
-// @access Private
+// * @desc Delete photo
+// * @route DELETE /api/photos/:id
+// * @access Private
 const deletePhoto = (request: Request, response: Response): Promise<void> => {
   const { id } = request.params;
 
@@ -68,9 +68,9 @@ const deletePhoto = (request: Request, response: Response): Promise<void> => {
     .catch((error): void => throwErrorUtils.throw500Error(response, error));
 };
 
-// @desc Get photo
-// @route GET /photos/:id
-// @access Public
+// * @desc Get photo
+// * @route GET /api/photos/:id
+// * @access Public
 const getPhoto = (request: Request, response: Response): Promise<void> => {
   const { id } = request.params;
 
@@ -89,9 +89,9 @@ const getPhoto = (request: Request, response: Response): Promise<void> => {
     .catch((error): void => throwErrorUtils.throw500Error(response, error));
 };
 
-// @desc Get photos
-// @route GET /photos
-// @access Public
+// * @desc Get photos
+// * @route GET /api/photos
+// * @access Public
 const getPhotos = (_request: Request, response: Response): Promise<void> => {
   const handleResult = (result: IPhoto[]): void => {
     if (!result) {
@@ -113,9 +113,9 @@ const getPhotos = (_request: Request, response: Response): Promise<void> => {
     .catch((error): void => throwErrorUtils.throw500Error(response, error));
 };
 
-// @desc Update photo
-// @route PUT /photos/:id
-// @access Private
+// * @desc Update photo
+// * @route PUT /api/photos/:id
+// * @access Private
 const updatePhoto = (request: Request, response: Response): Promise<void> => {
   const {
     body,
