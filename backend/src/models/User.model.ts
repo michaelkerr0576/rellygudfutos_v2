@@ -1,6 +1,7 @@
 import { Document, model, Schema } from 'mongoose';
 
 import * as enm from '@/types/enum.types';
+import { regexUtils } from '@/utils';
 
 export interface IUser extends Document {
   _id: Schema.Types.ObjectId;
@@ -20,24 +21,20 @@ const userSchema = new Schema<IUser>(
       lowercase: true,
       unique: true,
       maxLength: 100,
-      // * Regex: valid email address - test@email.com
-      match:
-        /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
+      match: regexUtils.emailAddress,
     },
     name: {
       type: String,
       required: true,
       trim: true,
       maxLength: 100,
-      // * Regex: no support for special characters or numbers - Martin Luther King, Jr.
-      match: /^[a-z ,.'-]+$/i,
+      match: regexUtils.personName,
     },
     password: {
       type: String,
       required: true,
       maxLength: 100,
-      // * Regex: secure password - minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character
-      match: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+      match: regexUtils.password,
     },
     role: {
       type: String,

@@ -1,3 +1,4 @@
+import regexUtils from './regex.utils';
 import throwErrorUtils from './throwError.utils';
 
-export { throwErrorUtils };
+export { regexUtils, throwErrorUtils };

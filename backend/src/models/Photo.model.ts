@@ -1,6 +1,7 @@
 import { Date, Document, model, Schema } from 'mongoose';
 
 import * as enm from '@/types/enum.types';
+import { regexUtils } from '@/utils';
 
 export interface IPhoto extends Document {
   _id: Schema.Types.ObjectId;
@@ -52,8 +53,7 @@ const photoSchema = new Schema<IPhoto>(
         type: String,
         required: true,
         trim: true,
-        // * Regex: valid image file - .gif, jpeg, .jpg, .tiff, .png, .webp, .bmp
-        match: /\.(gif|jpe?g|tiff?|png|webp|bmp)$/i,
+        match: regexUtils.imageFile,
       },
       imageSize: {
         type: String,
@@ -77,16 +77,13 @@ const photoSchema = new Schema<IPhoto>(
         type: String,
         required: true,
         trim: true,
-        // * Regex: valid original image file - .gif, jpeg, .jpg, .tiff, .png, .webp, .bmp
-        match: /\.(gif|jpe?g|tiff?|png|webp|bmp)$/i,
+        match: regexUtils.imageFile,
       },
       storeLink: {
         type: String,
         required: true,
         trim: true,
-        // * Regex: valid http/https web link - https://www.test.com
-        match:
-          /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/i,
+        match: regexUtils.urlLink,
       },
     },
     equipment: {
@@ -96,8 +93,7 @@ const photoSchema = new Schema<IPhoto>(
         trim: true,
         minLength: 2,
         maxLength: 7,
-        // * Regex: valid camera iso - only numbers
-        match: /^[0-9]*$/i,
+        match: regexUtils.cameraIso,
       },
       cameraName: {
         type: String,
@@ -112,8 +108,7 @@ const photoSchema = new Schema<IPhoto>(
         trim: true,
         minLength: 2,
         maxLength: 7,
-        // * Regex: valid lens aperture - starts with 'f/' and finishes with number
-        match: /^f\/[0-9]*\.[0-9]+$/i,
+        match: regexUtils.cameraLensAperture,
       },
       lensFocalLength: {
         type: String,
@@ -121,8 +116,7 @@ const photoSchema = new Schema<IPhoto>(
         trim: true,
         minLength: 2,
         maxLength: 7,
-        // * Regex: valid lens focal length - starts with number and finishes with 'mm'
-        match: /^[0-9]+mm$/i,
+        match: regexUtils.cameraLensFocalLength,
       },
       lensName: {
         type: String,
@@ -137,8 +131,7 @@ const photoSchema = new Schema<IPhoto>(
         trim: true,
         minLength: 2,
         maxLength: 7,
-        // * Regex: valid lens shutter speed - starts with number, followed by '/' and finishes with number
-        match: /^[0-9]+\/[0-9]+$/i,
+        match: regexUtils.cameraLensShutterSpeed,
       },
     },
   },
