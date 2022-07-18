@@ -30,7 +30,8 @@ const addTag = (request: Request, response: Response): Promise<void> => {
   };
 
   const handleError = (error: cmn.MongooseValidationError): void => {
-    if (error.name === 'ValidationError') {
+    const isValidationError = error.name === 'ValidationError';
+    if (isValidationError) {
       throwErrorUtils.throwValidationError(response, error);
       return;
     }
@@ -99,7 +100,8 @@ const getTags = (_request: Request, response: Response): Promise<void> => {
       return;
     }
 
-    if (result.length === 0) {
+    const isEmptyResult = result.length === 0;
+    if (isEmptyResult) {
       throwErrorUtils.throwEmptyResultError(response, 'Tags');
       return;
     }

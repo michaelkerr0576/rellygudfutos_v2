@@ -18,6 +18,10 @@ const throw500Error = (response: Response, error: Error): void => {
   response.status(500).json({ ...error, message: 'Internal Server Error' });
 };
 
+const throwAlreadyExistsError = (response: Response, model: string, error: cmn.MongoError): void => {
+  response.status(400).json({ ...error, message: `${model} already exists` });
+};
+
 const throwEmptyResultError = (response: Response, model: string, error?: Error): void => {
   response.status(404).json({ ...error, message: `${model} not found. Add ${model}` });
 };
@@ -42,6 +46,7 @@ const throwErrorUtils = {
   throw401Error,
   throw404Error,
   throw500Error,
+  throwAlreadyExistsError,
   throwEmptyResultError,
   throwValidationError,
 };

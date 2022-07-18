@@ -1,18 +1,56 @@
 import { Request, Response } from 'express';
 // import jwt from 'jsonwebtoken';
 // import bcrypt from 'bcryptjs';
-// import { Types } from 'mongoose';
+import { Types } from 'mongoose';
 
-// import UserModel, { IUser } from '@/models/User.model';
-// import usersDbService from '@/services/usersDb.service';
-// import * as cmn from '@/types/cmn.types';
-// import { throwErrorUtils } from '@/utils';
+import UserModel, { IUser } from '@/models/User.model';
+import usersDbService from '@/services/usersDb.service';
+import * as cmn from '@/types/cmn.types';
+import { throwErrorUtils } from '@/utils';
 
 // * @desc Add user
 // * @route POST /api/users
 // * @access Private
-const addUser = (_request: Request, response: Response): void => {
-  response.json({ message: 'Yeah add' });
+const addUser = (request: Request, response: Response): Promise<void> => {
+  const { body } = request;
+
+  const newUser = new UserModel({
+    _id: new Types.ObjectId(),
+    ...body,
+  });
+
+  const handleResult = (result: IUser): void => {
+    if (!result) {
+      throwErrorUtils.throw400Error(response);
+      return;
+    }
+
+    response.status(201).json({
+      message: 'User added',
+      addedUser: result,
+    });
+  };
+
+  const handleError = (error: cmn.MongoError | cmn.MongooseValidationError): void => {
+    const isDuplicateUser = error.name === 'MongoError' && error.code === 11000;
+    if (isDuplicateUser) {
+      throwErrorUtils.throwAlreadyExistsError(response, 'User', error as cmn.MongoError);
+      return;
+    }
+
+    const isValidationError = error.name === 'ValidationError';
+    if (isValidationError) {
+      throwErrorUtils.throwValidationError(response, error as cmn.MongooseValidationError);
+      return;
+    }
+
+    throwErrorUtils.throw500Error(response, error);
+  };
+
+  return usersDbService
+    .addUser(newUser)
+    .then((result): void => handleResult(result))
+    .catch((error): void => handleError(error));
 };
 
 // * @desc Delete user
