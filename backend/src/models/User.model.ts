@@ -34,7 +34,6 @@ const userSchema = new Schema<IUser>(
       type: String,
       required: true,
       maxLength: 100,
-      match: regexUtils.password,
     },
     role: {
       type: String,

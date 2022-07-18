@@ -57,6 +57,7 @@ module.exports = {
       },
     ],
     'simple-import-sort/exports': 'error',
+    'no-underscore-dangle': ['error', { allow: ['_id'] }],
     'node/no-unsupported-features/es-syntax': [
       'error',
       {

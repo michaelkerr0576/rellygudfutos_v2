@@ -85,7 +85,6 @@ describe('User Model', () => {
 
         expect(errors.email.properties.message).toEqual('Path `email` is invalid (testemail).');
         expect(errors.name.properties.message).toEqual('Path `name` is invalid (&^% 123).');
-        expect(errors.password.properties.message).toEqual('Path `password` is invalid (34ddd).');
       }
     });
 

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
+import bcrypt from 'bcryptjs';
 // import jwt from 'jsonwebtoken';
-// import bcrypt from 'bcryptjs';
 import { Types } from 'mongoose';
 
 import UserModel, { IUser } from '@/models/User.model';
@@ -12,11 +12,17 @@ import { throwErrorUtils } from '@/utils';
 // * @route POST /api/users
 // * @access Private
 const addUser = (request: Request, response: Response): Promise<void> => {
-  const { body } = request;
+  const { email, name, password, role } = request.body;
+
+  const passwordSalt = bcrypt.genSaltSync(10);
+  const hashedPassword = bcrypt.hashSync(password, passwordSalt);
 
   const newUser = new UserModel({
     _id: new Types.ObjectId(),
-    ...body,
+    email,
+    name,
+    password: hashedPassword,
+    role,
   });
 
   const handleResult = (result: IUser): void => {
@@ -27,7 +33,12 @@ const addUser = (request: Request, response: Response): Promise<void> => {
 
     response.status(201).json({
       message: 'User added',
-      addedUser: result,
+      addedUser: {
+        _id: result._id,
+        email: result.email,
+        name: result.name,
+        role: result.role,
+      },
     });
   };
 
