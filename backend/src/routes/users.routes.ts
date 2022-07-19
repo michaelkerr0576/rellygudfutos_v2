@@ -12,6 +12,6 @@ router
   .put(usersController.updateUser)
   .delete(usersController.deleteUser);
 
-router.route('/login').get(usersController.loginUser);
+router.route('/login').post(usersController.loginUser);
 
 export default router;

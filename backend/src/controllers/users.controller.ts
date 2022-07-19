@@ -1,12 +1,11 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
-// import jwt from 'jsonwebtoken';
 import { Types } from 'mongoose';
 
 import UserModel, { IUser } from '@/models/User.model';
 import usersDbService from '@/services/usersDb.service';
 import * as cmn from '@/types/cmn.types';
-import { throwErrorUtils } from '@/utils';
+import { authUtils, throwErrorUtils } from '@/utils';
 
 // * @desc Add user
 // * @route POST /api/users
@@ -39,6 +38,7 @@ const addUser = (request: Request, response: Response): Promise<void> => {
         name: user.name,
         role: user.role,
       },
+      token: authUtils.generateToken(user._id),
     });
   };
 
@@ -129,6 +129,7 @@ const loginUser = (request: Request, response: Response): Promise<void> => {
         name: user.name,
         role: user.role,
       },
+      token: authUtils.generateToken(user._id),
     });
   };
 
