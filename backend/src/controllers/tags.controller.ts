@@ -17,15 +17,15 @@ const addTag = (request: Request, response: Response): Promise<void> => {
     ...body,
   });
 
-  const handleResult = (result: ITag): void => {
-    if (!result) {
+  const handleTag = (tag: ITag): void => {
+    if (!tag) {
       throwErrorUtils.throw400Error(response);
       return;
     }
 
     response.status(201).json({
       message: 'Tag added',
-      addedTag: result,
+      addedTag: tag,
     });
   };
 
@@ -41,7 +41,7 @@ const addTag = (request: Request, response: Response): Promise<void> => {
 
   return tagsDbService
     .addTag(newTag)
-    .then((result): void => handleResult(result))
+    .then((tag): void => handleTag(tag))
     .catch((error): void => handleError(error));
 };
 
@@ -51,21 +51,21 @@ const addTag = (request: Request, response: Response): Promise<void> => {
 const deleteTag = (request: Request, response: Response): Promise<void> => {
   const { id } = request.params;
 
-  const handleResult = (result: ITag | null): void => {
-    if (!result) {
+  const handleTag = (tag: ITag | null): void => {
+    if (!tag) {
       throwErrorUtils.throw404Error(response, 'Tag');
       return;
     }
 
     response.status(200).json({
       message: 'Tag deleted',
-      deletedTag: result,
+      deletedTag: tag,
     });
   };
 
   return tagsDbService
     .deleteTag(id)
-    .then((result): void => handleResult(result))
+    .then((tag): void => handleTag(tag))
     .catch((error): void => throwErrorUtils.throw500Error(response, error));
 };
 
@@ -75,18 +75,18 @@ const deleteTag = (request: Request, response: Response): Promise<void> => {
 const getTag = (request: Request, response: Response): Promise<void> => {
   const { id } = request.params;
 
-  const handleResult = (result: ITag | null): void => {
-    if (!result) {
+  const handleTag = (tag: ITag | null): void => {
+    if (!tag) {
       throwErrorUtils.throw404Error(response, 'Tag');
       return;
     }
 
-    response.status(200).json(result);
+    response.status(200).json(tag);
   };
 
   return tagsDbService
     .getTag(id)
-    .then((result): void => handleResult(result))
+    .then((tag): void => handleTag(tag))
     .catch((error): void => throwErrorUtils.throw500Error(response, error));
 };
 
@@ -94,24 +94,24 @@ const getTag = (request: Request, response: Response): Promise<void> => {
 // * @route GET /api/tags
 // * @access Public
 const getTags = (_request: Request, response: Response): Promise<void> => {
-  const handleResult = (result: ITag[]): void => {
-    if (!result) {
+  const handleTags = (tags: ITag[]): void => {
+    if (!tags) {
       throwErrorUtils.throw400Error(response);
       return;
     }
 
-    const isEmptyResult = result.length === 0;
-    if (isEmptyResult) {
+    const isTagsEmpty = tags.length === 0;
+    if (isTagsEmpty) {
       throwErrorUtils.throwEmptyResultError(response, 'Tags');
       return;
     }
 
-    response.status(200).json(result);
+    response.status(200).json(tags);
   };
 
   return tagsDbService
     .getTags()
-    .then((result): void => handleResult(result))
+    .then((tags): void => handleTags(tags))
     .catch((error): void => throwErrorUtils.throw500Error(response, error));
 };
 
@@ -124,21 +124,21 @@ const updateTag = (request: Request, response: Response): Promise<void> => {
     params: { id },
   } = request;
 
-  const handleResult = (result: ITag | null): void => {
-    if (!result) {
+  const handleTag = (tag: ITag | null): void => {
+    if (!tag) {
       throwErrorUtils.throw404Error(response, 'Tag');
       return;
     }
 
     response.status(200).json({
       message: 'Tag updated',
-      updatedTag: result,
+      updatedTag: tag,
     });
   };
 
   return tagsDbService
     .updateTag(id, body)
-    .then((result): void => handleResult(result))
+    .then((tag): void => handleTag(tag))
     .catch((error): void => throwErrorUtils.throw500Error(response, error));
 };
 

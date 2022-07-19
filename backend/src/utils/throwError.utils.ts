@@ -26,6 +26,10 @@ const throwEmptyResultError = (response: Response, model: string, error?: Error)
   response.status(404).json({ ...error, message: `${model} not found. Add ${model}` });
 };
 
+const throwInvalidCredentialsError = (response: Response, error?: Error): void => {
+  response.status(404).json({ ...error, message: 'Invalid credentials' });
+};
+
 const throwValidationError = (response: Response, error: cmn.MongooseValidationError): void => {
   const { _message: message } = error;
   const errors = {} as cmn.ValidationErrorsMessage;
@@ -48,6 +52,7 @@ const throwErrorUtils = {
   throw500Error,
   throwAlreadyExistsError,
   throwEmptyResultError,
+  throwInvalidCredentialsError,
   throwValidationError,
 };
 

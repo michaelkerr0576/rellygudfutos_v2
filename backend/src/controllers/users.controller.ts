@@ -25,8 +25,8 @@ const addUser = (request: Request, response: Response): Promise<void> => {
     role,
   });
 
-  const handleResult = (result: IUser): void => {
-    if (!result) {
+  const handleUser = (user: IUser): void => {
+    if (!user) {
       throwErrorUtils.throw400Error(response);
       return;
     }
@@ -34,10 +34,10 @@ const addUser = (request: Request, response: Response): Promise<void> => {
     response.status(201).json({
       message: 'User added',
       addedUser: {
-        _id: result._id,
-        email: result.email,
-        name: result.name,
-        role: result.role,
+        _id: user._id,
+        email: user.email,
+        name: user.name,
+        role: user.role,
       },
     });
   };
@@ -60,7 +60,7 @@ const addUser = (request: Request, response: Response): Promise<void> => {
 
   return usersDbService
     .addUser(newUser)
-    .then((result): void => handleResult(result))
+    .then((user): void => handleUser(user))
     .catch((error): void => handleError(error));
 };
 
@@ -82,32 +82,60 @@ const getUser = (_request: Request, response: Response): void => {
 // * @route GET /api/users
 // * @access Private
 const getUsers = (_request: Request, response: Response): Promise<void> => {
-  const handleResult = (result: IUser[]): void => {
-    if (!result) {
+  const handleUsers = (users: IUser[]): void => {
+    if (!users) {
       throwErrorUtils.throw400Error(response);
       return;
     }
 
-    const isEmptyResult = result.length === 0;
-    if (isEmptyResult) {
+    const isUsersEmpty = users.length === 0;
+    if (isUsersEmpty) {
       throwErrorUtils.throwEmptyResultError(response, 'Users');
       return;
     }
 
-    response.status(200).json(result);
+    response.status(200).json(users);
   };
 
   return usersDbService
     .getUsers()
-    .then((result): void => handleResult(result))
+    .then((users): void => handleUsers(users))
     .catch((error): void => throwErrorUtils.throw500Error(response, error));
 };
 
 // * @desc Login user
 // * @route POST /api/users/login
 // * @access Public
-const loginUser = (_request: Request, response: Response): void => {
-  response.json({ message: 'Yeah post' });
+const loginUser = (request: Request, response: Response): Promise<void> => {
+  const { email, password } = request.body;
+
+  const handleUser = (user: IUser | null): void => {
+    if (!user) {
+      throwErrorUtils.throw404Error(response, 'User');
+      return;
+    }
+
+    const isInvalidPassword = !bcrypt.compareSync(password, user.password);
+    if (isInvalidPassword) {
+      throwErrorUtils.throwInvalidCredentialsError(response);
+      return;
+    }
+
+    response.status(200).json({
+      message: `${user.name} logged in`,
+      user: {
+        _id: user._id,
+        email: user.email,
+        name: user.name,
+        role: user.role,
+      },
+    });
+  };
+
+  return usersDbService
+    .findUser(email)
+    .then((user): void => handleUser(user))
+    .catch((error): void => throwErrorUtils.throw500Error(response, error));
 };
 
 // * @desc Update user

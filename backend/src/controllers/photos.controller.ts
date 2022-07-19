@@ -17,15 +17,15 @@ const addPhoto = (request: Request, response: Response): Promise<void> => {
     ...body,
   });
 
-  const handleResult = (result: IPhoto): void => {
-    if (!result) {
+  const handlePhoto = (photo: IPhoto): void => {
+    if (!photo) {
       throwErrorUtils.throw400Error(response);
       return;
     }
 
     response.status(201).json({
       message: 'Photo added',
-      addedPhoto: result,
+      addedPhoto: photo,
     });
   };
 
@@ -41,7 +41,7 @@ const addPhoto = (request: Request, response: Response): Promise<void> => {
 
   return photosDbService
     .addPhoto(newPhoto)
-    .then((result): void => handleResult(result))
+    .then((photo): void => handlePhoto(photo))
     .catch((error): void => handleError(error));
 };
 
@@ -51,21 +51,21 @@ const addPhoto = (request: Request, response: Response): Promise<void> => {
 const deletePhoto = (request: Request, response: Response): Promise<void> => {
   const { id } = request.params;
 
-  const handleResult = (result: IPhoto | null): void => {
-    if (!result) {
+  const handlePhoto = (photo: IPhoto | null): void => {
+    if (!photo) {
       throwErrorUtils.throw404Error(response, 'Photo');
       return;
     }
 
     response.status(200).json({
       message: 'Photo deleted',
-      deletedPhoto: result,
+      deletedPhoto: photo,
     });
   };
 
   return photosDbService
     .deletePhoto(id)
-    .then((result): void => handleResult(result))
+    .then((photo): void => handlePhoto(photo))
     .catch((error): void => throwErrorUtils.throw500Error(response, error));
 };
 
@@ -75,18 +75,18 @@ const deletePhoto = (request: Request, response: Response): Promise<void> => {
 const getPhoto = (request: Request, response: Response): Promise<void> => {
   const { id } = request.params;
 
-  const handleResult = (result: IPhoto | null): void => {
-    if (!result) {
+  const handlePhoto = (photo: IPhoto | null): void => {
+    if (!photo) {
       throwErrorUtils.throw404Error(response, 'Photo');
       return;
     }
 
-    response.status(200).json(result);
+    response.status(200).json(photo);
   };
 
   return photosDbService
     .getPhoto(id)
-    .then((result): void => handleResult(result))
+    .then((photo): void => handlePhoto(photo))
     .catch((error): void => throwErrorUtils.throw500Error(response, error));
 };
 
@@ -94,24 +94,24 @@ const getPhoto = (request: Request, response: Response): Promise<void> => {
 // * @route GET /api/photos
 // * @access Public
 const getPhotos = (_request: Request, response: Response): Promise<void> => {
-  const handleResult = (result: IPhoto[]): void => {
-    if (!result) {
+  const handlePhotos = (photos: IPhoto[]): void => {
+    if (!photos) {
       throwErrorUtils.throw400Error(response);
       return;
     }
 
-    const isEmptyResult = result.length === 0;
-    if (isEmptyResult) {
+    const isPhotosEmpty = photos.length === 0;
+    if (isPhotosEmpty) {
       throwErrorUtils.throwEmptyResultError(response, 'Photos');
       return;
     }
 
-    response.status(200).json(result);
+    response.status(200).json(photos);
   };
 
   return photosDbService
     .getPhotos()
-    .then((result): void => handleResult(result))
+    .then((photos): void => handlePhotos(photos))
     .catch((error): void => throwErrorUtils.throw500Error(response, error));
 };
 
@@ -124,21 +124,21 @@ const updatePhoto = (request: Request, response: Response): Promise<void> => {
     params: { id },
   } = request;
 
-  const handleResult = (result: IPhoto | null): void => {
-    if (!result) {
+  const handlePhoto = (photo: IPhoto | null): void => {
+    if (!photo) {
       throwErrorUtils.throw404Error(response, 'Photo');
       return;
     }
 
     response.status(200).json({
       message: 'Photo updated',
-      updatedPhoto: result,
+      updatedPhoto: photo,
     });
   };
 
   return photosDbService
     .updatePhoto(id, body)
-    .then((result): void => handleResult(result))
+    .then((photo): void => handlePhoto(photo))
     .catch((error): void => throwErrorUtils.throw500Error(response, error));
 };
 
