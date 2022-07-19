@@ -21,7 +21,7 @@ const getPhotos = (): Promise<IPhoto[]> =>
     .then((result): IPhoto[] => result);
 
 const updatePhoto = (id: string, updatedPhoto: IPhoto): Promise<IPhoto | null> =>
-  PhotoModel.findByIdAndUpdate(id, updatedPhoto, { new: true, useFindAndModify: false })
+  PhotoModel.findByIdAndUpdate(id, updatedPhoto, { new: true })
     .select('-__v')
     .populate('details.imageTags', '-__v -photos')
     .then((result): IPhoto | null => result);

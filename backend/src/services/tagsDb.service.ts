@@ -18,7 +18,7 @@ const getTags = (): Promise<ITag[]> =>
     .then((result): ITag[] => result);
 
 const updateTag = (id: string, updatedTag: ITag): Promise<ITag | null> =>
-  TagModel.findByIdAndUpdate(id, updatedTag, { new: true, useFindAndModify: false })
+  TagModel.findByIdAndUpdate(id, updatedTag, { new: true })
     .select('-__v')
     .then((result): ITag | null => result);
 

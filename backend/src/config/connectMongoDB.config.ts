@@ -1,5 +1,10 @@
 import mongoose, { Mongoose } from 'mongoose';
 
+mongoose.set('useCreateIndex', true);
+mongoose.set('useFindAndModify', false);
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useUnifiedTopology', true);
+
 const mongoURI = process.env.MONGO_URI || '';
 
 const handleSuccess = (result: Mongoose): void =>
@@ -12,7 +17,7 @@ const handleError = (error: Error): void => {
 
 const connectMongoDB = (): Promise<void> =>
   mongoose
-    .connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
+    .connect(mongoURI)
     .then((result): void => handleSuccess(result))
     .catch((error): void => handleError(error));
 

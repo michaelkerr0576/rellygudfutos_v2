@@ -81,8 +81,26 @@ const getUser = (_request: Request, response: Response): void => {
 // * @desc Get users
 // * @route GET /api/users
 // * @access Private
-const getUsers = (_request: Request, response: Response): void => {
-  response.json({ message: 'Yeah users' });
+const getUsers = (_request: Request, response: Response): Promise<void> => {
+  const handleResult = (result: IUser[]): void => {
+    if (!result) {
+      throwErrorUtils.throw400Error(response);
+      return;
+    }
+
+    const isEmptyResult = result.length === 0;
+    if (isEmptyResult) {
+      throwErrorUtils.throwEmptyResultError(response, 'Users');
+      return;
+    }
+
+    response.status(200).json(result);
+  };
+
+  return usersDbService
+    .getUsers()
+    .then((result): void => handleResult(result))
+    .catch((error): void => throwErrorUtils.throw500Error(response, error));
 };
 
 // * @desc Login user
