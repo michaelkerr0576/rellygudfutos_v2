@@ -38,7 +38,7 @@ const addUser = (request: Request, response: Response): Promise<void> => {
         name: user.name,
         role: user.role,
       },
-      token: authUtils.generateToken(user._id),
+      token: authUtils.generateToken(user._id, user.role),
     });
   };
 
@@ -129,7 +129,7 @@ const loginUser = (request: Request, response: Response): Promise<void> => {
         name: user.name,
         role: user.role,
       },
-      token: authUtils.generateToken(user._id),
+      token: authUtils.generateToken(user._id, user.role),
     });
   };
 

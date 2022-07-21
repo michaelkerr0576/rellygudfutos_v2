@@ -104,6 +104,33 @@ Decided to use an in-memory database over mocks. This will allow the tests to be
 - [mongodb-memory-server Docs](https://github.com/nodkz/mongodb-memory-server)
 - [Regex Generator](https://regex-generator.olafneumann.org/?sampleText=2020-03-12T13%3A34%3A56.123Z&flags=i&onlyPatterns=true&matchWholeLine=false&selection=0%7CDate,10%7CCharacter,11%7CTime,23%7CCharacter)
 
+### User Authorisation
+
+Depending on the role of the user, they will have different authorisations.
+
+|             | ADMIN | USER | VIEW |
+| ----------- | :---: | :--: | :--: |
+| addUser     |   X   |  -   |  -   |
+| deleteUser  |   X   |  -   |  -   |
+| getUser     |   X   |  X   |  -   |
+| getUsers    |   X   |  X   |  -   |
+| loginUser   |   X   |  X   |  X   |
+| updateUser  |   X   |  -   |  -   |
+| addPhoto    |   X   |  X   |  -   |
+| deletePhoto |   X   |  X   |  -   |
+| getPhoto    |   X   |  X   |  X   |
+| getPhotos   |   X   |  X   |  X   |
+| updatePhoto |   X   |  X   |  -   |
+| addTag      |   X   |  X   |  -   |
+| deleteTag   |   X   |  X   |  -   |
+| getTag      |   X   |  X   |  X   |
+| getTags     |   X   |  X   |  X   |
+| updateTag   |   X   |  X   |  -   |
+
+**Useful Links:**
+
+- [User Role Based Authorisation](https://jasonwatmore.com/post/2018/11/28/nodejs-role-based-authorization-tutorial-with-example-api)
+
 ### Sorting, Filtering and Pagination
 
 First time round in rellygudfutos_v1 Frontend handled sorting and filtering. Pagination wasn't even a thing... As you can guess, this was not a long term solution. Loading up everything upfront did have some pros and cons.

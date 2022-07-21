@@ -1,16 +1,20 @@
 import express from 'express';
 
 import usersController from '@/controllers/users.controller';
+import protectRoute from '@/middlewares/protectRoute.middleware';
 
 const router = express.Router();
 
-router.route('/').get(usersController.getUsers).post(usersController.addUser);
+router
+  .route('/')
+  .get(protectRoute.userAuthorisation, usersController.getUsers)
+  .post(protectRoute.adminAuthorisation, usersController.addUser);
 
 router
   .route('/:id')
-  .get(usersController.getUser)
-  .put(usersController.updateUser)
-  .delete(usersController.deleteUser);
+  .get(protectRoute.userAuthorisation, usersController.getUser)
+  .put(protectRoute.adminAuthorisation, usersController.updateUser)
+  .delete(protectRoute.adminAuthorisation, usersController.deleteUser);
 
 router.route('/login').post(usersController.loginUser);
 
