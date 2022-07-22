@@ -6,6 +6,11 @@ import usersDbService from '@/services/usersDb.service';
 import * as enm from '@/types/enum.types';
 import { throwErrorUtils } from '@/utils';
 
+interface JwtPayload {
+  id: string;
+  role: string;
+}
+
 const jwtSecret = process.env.JWT_SECRET || '';
 
 const authenticateUser = (
@@ -20,7 +25,7 @@ const authenticateUser = (
       : undefined;
 
   if (token) {
-    const decoded = jwt.verify(token, jwtSecret) as any;
+    const decoded = jwt.verify(token, jwtSecret) as JwtPayload;
 
     const checkUserAuthentication = (user: IUser | null): void => {
       if (!user) {
