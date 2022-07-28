@@ -8,7 +8,7 @@ export default {
     imageCaption: 'Test image caption',
     imageFile: 'testFile.jpg',
     imageSize: enm.ImageSize.LARGE,
-    imageTags: ['41224d776a326fb40f000001'],
+    imageTags: ['41224d776a326fb40f000002'],
     imageTitle: 'Test image title',
     originalImageName: 'testOriginalImageName.jpeg',
     storeLink: 'https:www.testStoreLink.html',

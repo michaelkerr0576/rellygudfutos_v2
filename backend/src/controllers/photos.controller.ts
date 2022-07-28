@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { Types } from 'mongoose';
+import { LeanDocument, Types } from 'mongoose';
 
 import PhotoModel, { IPhoto } from '@/models/Photo.model';
 import photosDbService from '@/services/photosDb.service';
@@ -51,7 +51,7 @@ const addPhoto = (request: Request, response: Response): Promise<void> => {
 const deletePhoto = (request: Request, response: Response): Promise<void> => {
   const { id } = request.params;
 
-  const handlePhoto = (photo: IPhoto | null): void => {
+  const handlePhoto = (photo: LeanDocument<IPhoto> | null): void => {
     if (!photo) {
       throwErrorUtils.throw404Error(response, 'Photo');
       return;
@@ -75,7 +75,7 @@ const deletePhoto = (request: Request, response: Response): Promise<void> => {
 const getPhoto = (request: Request, response: Response): Promise<void> => {
   const { id } = request.params;
 
-  const handlePhoto = (photo: IPhoto | null): void => {
+  const handlePhoto = (photo: LeanDocument<IPhoto> | null): void => {
     if (!photo) {
       throwErrorUtils.throw404Error(response, 'Photo');
       return;
@@ -94,7 +94,7 @@ const getPhoto = (request: Request, response: Response): Promise<void> => {
 // * @route GET /api/photos
 // * @access Public
 const getPhotos = (_request: Request, response: Response): Promise<void> => {
-  const handlePhotos = (photos: IPhoto[]): void => {
+  const handlePhotos = (photos: LeanDocument<IPhoto[]>): void => {
     if (!photos) {
       throwErrorUtils.throw400Error(response);
       return;
@@ -124,7 +124,7 @@ const updatePhoto = (request: Request, response: Response): Promise<void> => {
     params: { id },
   } = request;
 
-  const handlePhoto = (photo: IPhoto | null): void => {
+  const handlePhoto = (photo: LeanDocument<IPhoto> | null): void => {
     if (!photo) {
       throwErrorUtils.throw404Error(response, 'Photo');
       return;

@@ -108,6 +108,15 @@ module.exports = {
       },
     ],
   },
+  overrides: [
+    {
+      files: ['*test.ts, *test.txs'],
+      rules: {
+        '@typescript-eslint/explicit-function-return-type': 'off',
+        '@typescript-eslint/no-explicit-any': 'off',
+      },
+    },
+  ],
   settings: {
     'import/parsers': {
       '@typescript-eslint/parser': ['.ts', '.tsx'],

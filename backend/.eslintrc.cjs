@@ -92,6 +92,7 @@ module.exports = {
       files: ['*test.ts'],
       rules: {
         '@typescript-eslint/explicit-function-return-type': 'off',
+        '@typescript-eslint/no-explicit-any': 'off',
       },
     },
   ],

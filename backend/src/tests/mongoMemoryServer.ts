@@ -10,6 +10,7 @@ const connectDB = async (): Promise<void> => {
   const uri = (await mongoServer).getUri();
 
   const mongooseOpts = {
+    useCreateIndex: true,
     useFindAndModify: false,
     useNewUrlParser: true,
     useUnifiedTopology: true,

@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { Types } from 'mongoose';
+import { LeanDocument, Types } from 'mongoose';
 
 import TagModel, { ITag } from '@/models/Tag.model';
 import tagsDbService from '@/services/tagsDb.service';
@@ -51,7 +51,7 @@ const addTag = (request: Request, response: Response): Promise<void> => {
 const deleteTag = (request: Request, response: Response): Promise<void> => {
   const { id } = request.params;
 
-  const handleTag = (tag: ITag | null): void => {
+  const handleTag = (tag: LeanDocument<ITag> | null): void => {
     if (!tag) {
       throwErrorUtils.throw404Error(response, 'Tag');
       return;
@@ -75,7 +75,7 @@ const deleteTag = (request: Request, response: Response): Promise<void> => {
 const getTag = (request: Request, response: Response): Promise<void> => {
   const { id } = request.params;
 
-  const handleTag = (tag: ITag | null): void => {
+  const handleTag = (tag: LeanDocument<ITag> | null): void => {
     if (!tag) {
       throwErrorUtils.throw404Error(response, 'Tag');
       return;
@@ -94,7 +94,7 @@ const getTag = (request: Request, response: Response): Promise<void> => {
 // * @route GET /api/tags
 // * @access Public
 const getTags = (_request: Request, response: Response): Promise<void> => {
-  const handleTags = (tags: ITag[]): void => {
+  const handleTags = (tags: LeanDocument<ITag[]>): void => {
     if (!tags) {
       throwErrorUtils.throw400Error(response);
       return;
@@ -124,7 +124,7 @@ const updateTag = (request: Request, response: Response): Promise<void> => {
     params: { id },
   } = request;
 
-  const handleTag = (tag: ITag | null): void => {
+  const handleTag = (tag: LeanDocument<ITag> | null): void => {
     if (!tag) {
       throwErrorUtils.throw404Error(response, 'Tag');
       return;

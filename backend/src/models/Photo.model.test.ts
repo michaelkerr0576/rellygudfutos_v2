@@ -13,7 +13,7 @@ import PhotoModel from './Photo.model';
 
 describe('Photo Model', () => {
   beforeAll(async () => mongoMemoryServer.connectDB());
-  afterAll(async () => mongoMemoryServer.disconnectDB);
+  afterAll(async () => mongoMemoryServer.disconnectDB());
 
   describe('Validation', () => {
     test('Expect to validate required for the relevant properties in PhotoModel', async () => {
@@ -226,7 +226,7 @@ describe('Photo Model', () => {
       expect(savedValidPhoto).toBeTruthy();
       expect(actualId.toString()).toEqual(expectedId.toString());
 
-      // photo details
+      // * Photo details
       expect(actualDetails.captureDate).toEqual(new Date(expectedDetails.captureDate));
       expect(actualDetails.captureLocation).toEqual(expectedDetails.captureLocation);
       expect(actualDetails.imageCaption).toEqual(expectedDetails.imageCaption);
@@ -237,7 +237,7 @@ describe('Photo Model', () => {
       expect(actualDetails.originalImageName).toEqual(expectedDetails.originalImageName);
       expect(actualDetails.storeLink).toEqual(expectedDetails.storeLink);
 
-      // photo equipment
+      // * Photo equipment
       expect(actualEquipment.cameraIso).toEqual(expectedEquipment.cameraIso);
       expect(actualEquipment.cameraName).toEqual(expectedEquipment.cameraName);
       expect(actualEquipment.lensAperture).toEqual(expectedEquipment.lensAperture);

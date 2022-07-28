@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
-import { Types } from 'mongoose';
+import { LeanDocument, Types } from 'mongoose';
 
 import UserModel, { IUser } from '@/models/User.model';
 import usersDbService from '@/services/usersDb.service';
@@ -82,7 +82,7 @@ const getUser = (_request: Request, response: Response): void => {
 // * @route GET /api/users
 // * @access Private
 const getUsers = (_request: Request, response: Response): Promise<void> => {
-  const handleUsers = (users: IUser[]): void => {
+  const handleUsers = (users: LeanDocument<IUser[]>): void => {
     if (!users) {
       throwErrorUtils.throw400Error(response);
       return;
@@ -109,7 +109,7 @@ const getUsers = (_request: Request, response: Response): Promise<void> => {
 const loginUser = (request: Request, response: Response): Promise<void> => {
   const { email, password } = request.body;
 
-  const handleUser = (user: IUser | null): void => {
+  const handleUser = (user: LeanDocument<IUser> | null): void => {
     if (!user) {
       throwErrorUtils.throw404Error(response, 'User');
       return;

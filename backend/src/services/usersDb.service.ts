@@ -1,21 +1,26 @@
+import { LeanDocument } from 'mongoose';
+
 import UserModel, { IUser } from '@/models/User.model';
 
 const addUser = (newUser: IUser): Promise<IUser> => UserModel.create(newUser);
 
-const getUser = (id: string): Promise<IUser | null> =>
+const getUser = (id: string): Promise<LeanDocument<IUser> | null> =>
   UserModel.findById(id)
+    .lean()
     .select('-__v')
-    .then((user): IUser | null => user);
+    .then((user): LeanDocument<IUser> | null => user);
 
-const getUsers = (): Promise<IUser[]> =>
+const getUsers = (): Promise<LeanDocument<IUser[]>> =>
   UserModel.find()
+    .lean()
     .select('-__v -password')
-    .then((users): IUser[] => users);
+    .then((users): LeanDocument<IUser[]> => users);
 
-const findUser = (email: string): Promise<IUser | null> =>
+const findUser = (email: string): Promise<LeanDocument<IUser> | null> =>
   UserModel.findOne({ email })
+    .lean()
     .select('-__v')
-    .then((user): IUser | null => user);
+    .then((user): LeanDocument<IUser> | null => user);
 
 const usersDbService = {
   addUser,

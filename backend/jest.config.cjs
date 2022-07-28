@@ -11,4 +11,5 @@ module.exports = {
   moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
     prefix: '<rootDir>/',
   }),
+  testPathIgnorePatterns: ['.d.ts', '.js'],
 };

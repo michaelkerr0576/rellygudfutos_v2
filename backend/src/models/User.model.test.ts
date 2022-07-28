@@ -12,7 +12,7 @@ import UserModel from './User.model';
 
 describe('User Model', () => {
   beforeAll(async () => mongoMemoryServer.connectDB());
-  afterAll(async () => mongoMemoryServer.disconnectDB);
+  afterAll(async () => mongoMemoryServer.disconnectDB());
 
   describe('Validation', () => {
     test('Expect to validate required for the relevant properties in UserModel', async () => {

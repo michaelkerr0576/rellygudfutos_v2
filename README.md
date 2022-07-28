@@ -1,6 +1,14 @@
 # rellygudfutos_v2
 
+## Overview
+
+A user will be presented with a homepage where they can view the photo grid.
+
 ## Development Notes
+
+Notes I have taken during the process of development. Includes all decisions made and useful links I used for guidance (or out right copied :shushing_face: :zipper_mouth_face: :smiling_imp: ).
+
+## Architecture & Setup
 
 ### MERN Stack
 
@@ -15,7 +23,7 @@ This application will be using the MERN stack. MERN stands for MongoDB, Express,
 
 - [Youtube Tutorial - Traversy Media](https://www.youtube.com/playlist?list=PLillGF-RfqbbQeVSccR9PGKHzPJSWqcsm)
 
-#### Architecture
+### File Structure
 
 General project structuring. Split into Frontend and Backend. Each folder contains everything it needs in case it needs to be decoupled in the future.
 
@@ -25,7 +33,7 @@ General project structuring. Split into Frontend and Backend. Each folder contai
 - [Express Architecture](https://blog.logrocket.com/organizing-express-js-project-structure-better-productivity/)
 - [React Architecture](https://www.taniarascia.com/react-architecture-directory-structure/)
 
-#### Typescript
+### Typescript
 
 Typescript will be used across Frontend and Backend. Can customize behaviour in `tsconfig.json`.
 
@@ -33,14 +41,6 @@ Typescript will be used across Frontend and Backend. Can customize behaviour in 
 
 - [Typescript Cheat Sheet](https://www.typescriptlang.org/cheatsheets)
 - [Typescript Compiler Options](https://www.typescriptlang.org/tsconfig)
-
-### Node Express with Typescript
-
-Setting up Backend to be Typescript. Everything Typescript!
-
-**Useful Links:**
-
-- [Setting Up](https://developer.okta.com/blog/2018/11/15/node-express-typescript)
 
 ### Eslint & Airbnb Style Guide
 
@@ -64,6 +64,16 @@ See `tsconfig.paths.json` in frontend and backend folders for configured paths. 
 - [Config tsconfig.json](https://www.typescriptlang.org/tsconfig#paths)
 - [Config eslintrc.js](https://github.com/alexgorbatchev/eslint-import-resolver-typescript)
 - [Stack Overflow Troubleshoot](https://stackoverflow.com/questions/69932369/setting-up-eslint-import-resolver-typescript-in-monorepo)
+
+## Backend
+
+### Node & Express with Typescript
+
+Setting up Backend to be Typescript. Everything Typescript!
+
+**Useful Links:**
+
+- [Setting Up](https://developer.okta.com/blog/2018/11/15/node-express-typescript)
 
 ### MongoDB & Mongoose
 
@@ -102,6 +112,7 @@ Decided to use an in-memory database over mocks. This will allow the tests to be
 - [Testing with Mongoose - Jest](https://javascript.plainenglish.io/unit-testing-node-js-mongoose-using-jest-106a39b8393d)
 - [Testing with Mongoose - mongodb-memory-server](https://dev.to/remrkabledev/testing-with-mongodb-memory-server-4ja2)
 - [mongodb-memory-server Docs](https://github.com/nodkz/mongodb-memory-server)
+- [Unit Testing Controllers](https://medium.com/craft-academy/unit-testing-express-api-c55cb709b3ac)
 - [Regex Generator](https://regex-generator.olafneumann.org/?sampleText=2020-03-12T13%3A34%3A56.123Z&flags=i&onlyPatterns=true&matchWholeLine=false&selection=0%7CDate,10%7CCharacter,11%7CTime,23%7CCharacter)
 
 ### User Authorisation
@@ -151,10 +162,12 @@ First time round in rellygudfutos_v1 Frontend handled sorting and filtering. Pag
 - [MongoDB Sorting, Filtering and Pagination](https://jeffdevslife.com/p/1-mongodb-query-of-advanced-filtering-sorting-limit-field-and-pagination-with-mongoose/)
 - [Youtube Pagination Tutorial - Web Dev Simplified](https://www.youtube.com/watch?v=ZX3qt0UWifc&ab_channel=WebDevSimplified)
 
-### Next.js && React Query
+### Next & React Query
 
 Next.js as server sid rendering that reduces first contentful paint. :drooling_face:
 React Query as server side state that reduces API requests. :drooling_face:
+
+**_ LOOK INTO VITE - Can it work with Next _**
 
 **Useful Links:**
 
@@ -172,15 +185,15 @@ Super light weight client side state. For this application, Redux is overkill wh
 
 - [Zustand Docs](https://docs.pmnd.rs/zustand/introduction)
 
-### Terminal
+## Terminal
 
 Some useful commands and what they do because I will forget.
 
-#### General
+### General
 
 - Kill localhost bash - `npx kill-port 5000`
 
-#### Yarn
+### Yarn
 
 List of commands [Yarn Cli](https://classic.yarnpkg.com/en/docs/cli/)
 
@@ -189,7 +202,7 @@ List of commands [Yarn Cli](https://classic.yarnpkg.com/en/docs/cli/)
 - Add package to dev dependencies - `yarn add -D package`
 - Remove package from `package.json` - `yarn remove package`
 
-#### Git
+### Git
 
 - Status of staged and unstaged changes - `git status`
 - Add all changed files to staging area - `git add .`
@@ -197,7 +210,7 @@ List of commands [Yarn Cli](https://classic.yarnpkg.com/en/docs/cli/)
 - Push changes to Github repo - `git push`
 - Pull changes from Github repo - `git pull`
 
-#### Node & Nvm
+### Node & Nvm
 
 Using [Nvm for Windows](https://github.com/coreybutler/nvm-windows).
 Check [Node for Windows](https://nodejs.org/en/) for recommended version.
@@ -208,7 +221,7 @@ Check [Node for Windows](https://nodejs.org/en/) for recommended version.
 - Install Node version specified - `nvm install 16.15.1`
 - Node version - `node -v`
 
-#### Typescript
+### Typescript
 
 - Check version - `tsc --version`
 - Compile file - `tsc index.ts`
