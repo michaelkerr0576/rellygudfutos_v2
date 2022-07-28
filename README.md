@@ -4,10 +4,6 @@
 
 A user will be presented with a homepage where they can view the photo grid.
 
-## Development Notes
-
-Notes I have taken during the process of development. Includes all decisions made and useful links I used for guidance (or out right copied :shushing_face: :zipper_mouth_face: :smiling_imp: ).
-
 ## Architecture & Setup
 
 ### MERN Stack
@@ -65,6 +61,14 @@ See `tsconfig.paths.json` in frontend and backend folders for configured paths. 
 - [Config eslintrc.js](https://github.com/alexgorbatchev/eslint-import-resolver-typescript)
 - [Stack Overflow Troubleshoot](https://stackoverflow.com/questions/69932369/setting-up-eslint-import-resolver-typescript-in-monorepo)
 
+### Testing
+
+The goal is to have good enough test coverage that any change I make does not cause a major incident.
+
+**Useful Links:**
+
+- [Run Tests Before Commit](https://dev.to/bqardi/testing-and-formatting-before-commit-43i5)
+
 ## Backend
 
 ### Node & Express with Typescript
@@ -89,17 +93,20 @@ Based on these rules. I will:
 - Embed Equipment as an array for Users
 - Separate Tags from Photos because I will need to access Tags separately
 
-##### Users to Equipment - Embed Equipment in Users
+**Users to Equipment - Embed Equipment in Users**
+<br/>
 
 An example of embedded data that Users and Equipment will have:
 ![image](https://user-images.githubusercontent.com/53580213/172372055-fee70f8a-dc96-437f-a33b-0ca4dbd75a51.png)
 
-##### Photos to Tags - Many to Many
+**Photos to Tags - Many to Many**
+<br/>
 
 An example of the Many to Many relationship that Photos and Tags will have:
 ![image](https://user-images.githubusercontent.com/53580213/172371168-9855767a-ee9b-4a43-817e-3e2a09f2dbae.png)
 
-##### Testing
+**Testing with MongoDB & Mongoose**
+<br/>
 
 Decided to use an in-memory database over mocks. This will allow the tests to be directly executed on the in-memory database. This allows the tests to more closely emulate production instead of using mocks that can be incorrect, incomplete or outdated. :nerd_face:
 
