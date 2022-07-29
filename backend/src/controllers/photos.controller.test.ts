@@ -11,25 +11,33 @@ import mongoMemoryServer from '@/tests/mongoMemoryServer';
 
 import photosController from './photos.controller';
 
-describe('Photo Controller', () => {
-  const freezeDate = new Date('2011-11-11T00:00:00.000Z');
+const freezeDate = new Date('2011-11-11T00:00:00.000Z');
 
+const mockResponseStatus = jest.fn();
+const mockResponseJson = jest.fn();
+
+const mockResponse: Partial<Response> = {
+  status: mockResponseStatus.mockReturnThis(),
+  json: mockResponseJson,
+};
+
+describe('Photo Controller', () => {
   beforeAll(async () => {
-    timekeeper.freeze(freezeDate);
     mongoMemoryServer.connectDB();
+    timekeeper.freeze(freezeDate);
+  });
+  afterEach(async () => {
+    mongoMemoryServer.clearDB();
+    mockResponseStatus.mockClear();
+    mockResponseJson.mockClear();
   });
   afterAll(async () => {
-    timekeeper.reset();
     mongoMemoryServer.disconnectDB();
+    timekeeper.reset();
   });
 
-  const mockResponse: Partial<Response> = {
-    status: jest.fn().mockReturnThis(),
-    json: jest.fn(),
-  };
-
   describe('addPhoto', () => {
-    test('Expect to return 400 bad request photo validation failed', async () => {
+    test('Expect to return 400 photo validation failed', async () => {
       const mockRequest: Partial<Request> = {
         body: {},
       };
@@ -85,6 +93,54 @@ describe('Photo Controller', () => {
         ],
       });
       expect(addedPhoto!.equipment).toEqual({ ...postPhotoFixture.equipment });
+    });
+  });
+
+  describe('deletePhoto', () => {
+    test('Expect to return 404 photo not found', async () => {
+      const mockRequest: Partial<Request> = {
+        params: { id: postTagFixture._id },
+      };
+
+      await photosController
+        .deletePhoto(mockRequest as Request, mockResponse as Response)
+        .catch((error): void => console.log(error));
+
+      expect(mockResponse.status).toBeCalledWith(404);
+      expect(mockResponse.json).toHaveBeenCalledWith({
+        message: 'Photo not found',
+      });
+    });
+
+    test('Expect to return 200 photo deleted', async () => {
+      const mockRequest: Partial<Request> = {
+        params: { id: postTagFixture._id },
+      };
+
+      // * DB Service: add tag as it is required for addPhoto
+      await tagsDbService.addTag(postTagFixture as any).catch((error): void => console.log(error));
+
+      // * DB Service: add photo
+      await photosDbService.addPhoto(postPhotoFixture as any).catch((error): void => console.log(error));
+
+      // * Controller: delete photo
+      await photosController
+        .deletePhoto(mockRequest as Request, mockResponse as Response)
+        .catch((error): void => console.log(error));
+
+      expect(mockResponse.status).toBeCalledWith(200);
+      expect(mockResponse.json).toHaveBeenCalledWith(
+        expect.objectContaining({
+          message: 'Photo deleted',
+        }),
+      );
+
+      // * DB Service: expect to not find photo just deleted
+      const deletedPhoto = await photosDbService
+        .findPhoto(freezeDate)
+        .catch((error): void => console.log(error));
+
+      expect(deletedPhoto).not.toBeTruthy();
     });
   });
 });
