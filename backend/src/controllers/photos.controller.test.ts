@@ -1,17 +1,20 @@
 import { Request, Response } from 'express';
-import { Types } from 'mongoose';
 // eslint-disable-next-line node/no-unpublished-import
 import timekeeper from 'timekeeper';
 
 import photosDbService from '@/services/photosDb.service';
 import tagsDbService from '@/services/tagsDb.service';
-import { postPhotoFixture, postPhotosFixture } from '@/tests/fixtures/photos';
+import {
+  postPhotoFixture,
+  postPhotoResponse,
+  postPhotosFixture,
+  postPhotosResponse,
+} from '@/tests/fixtures/photos';
 import { postTagFixture } from '@/tests/fixtures/tags';
+import utilFixture from '@/tests/fixtures/util.fixture';
 import mongoMemoryServer from '@/tests/mongoMemoryServer';
 
 import photosController from './photos.controller';
-
-const freezeDate = new Date('2011-11-11T00:00:00.000Z');
 
 const mockResponseStatus = jest.fn();
 const mockResponseJson = jest.fn();
@@ -21,57 +24,10 @@ const mockResponse: Partial<Response> = {
   json: mockResponseJson,
 };
 
-const expectedTags = [
-  {
-    _id: new Types.ObjectId(postTagFixture._id),
-    createdAt: freezeDate,
-    tag: postTagFixture.tag,
-    updatedAt: freezeDate,
-  },
-];
-
-const expectedPhoto = {
-  ...postPhotoFixture,
-  _id: new Types.ObjectId(postPhotoFixture._id),
-  createdAt: freezeDate,
-  updatedAt: freezeDate,
-  details: {
-    ...postPhotoFixture.details,
-    captureDate: new Date(postPhotoFixture.details.captureDate),
-    imageTags: expectedTags,
-  },
-};
-
-const [expectedFirstPhoto, expectedSecondPhoto] = postPhotosFixture;
-const expectedPhotos = [
-  {
-    ...expectedFirstPhoto,
-    _id: new Types.ObjectId(expectedFirstPhoto._id),
-    createdAt: freezeDate,
-    updatedAt: freezeDate,
-    details: {
-      ...expectedFirstPhoto.details,
-      captureDate: new Date(expectedFirstPhoto.details.captureDate),
-      imageTags: expectedTags,
-    },
-  },
-  {
-    ...expectedSecondPhoto,
-    _id: new Types.ObjectId(expectedSecondPhoto._id),
-    createdAt: freezeDate,
-    updatedAt: freezeDate,
-    details: {
-      ...expectedSecondPhoto.details,
-      captureDate: new Date(expectedSecondPhoto.details.captureDate),
-      imageTags: expectedTags,
-    },
-  },
-];
-
 describe('Photo Controller', () => {
   beforeAll(async () => {
     mongoMemoryServer.connectDB();
-    timekeeper.freeze(freezeDate);
+    timekeeper.freeze(utilFixture.freezeDate);
   });
   afterEach(async () => {
     mongoMemoryServer.clearDB();
@@ -123,11 +79,11 @@ describe('Photo Controller', () => {
 
       // * DB Service: find photo just added
       const addedPhoto = await photosDbService
-        .findPhoto(freezeDate)
+        .findPhoto(utilFixture.freezeDate)
         .catch((error): void => console.log(error));
 
       expect(addedPhoto).toBeTruthy();
-      expect(addedPhoto).toEqual(expectedPhoto);
+      expect(addedPhoto).toEqual(postPhotoResponse);
     });
   });
 
@@ -189,7 +145,7 @@ describe('Photo Controller', () => {
 
       // * DB Service: expect to not find photo just deleted
       const deletedPhoto = await photosDbService
-        .findPhoto(freezeDate)
+        .findPhoto(utilFixture.freezeDate)
         .catch((error): void => console.log(error));
 
       expect(deletedPhoto).not.toBeTruthy();
@@ -246,7 +202,7 @@ describe('Photo Controller', () => {
         .catch((error): void => console.log(error));
 
       expect(mockResponse.status).toBeCalledWith(200);
-      expect(mockResponse.json).toHaveBeenCalledWith(expectedPhoto);
+      expect(mockResponse.json).toHaveBeenCalledWith(postPhotoResponse);
     });
   });
 
@@ -279,7 +235,7 @@ describe('Photo Controller', () => {
         .catch((error): void => console.log(error));
 
       expect(mockResponse.status).toBeCalledWith(200);
-      expect(mockResponse.json).toHaveBeenCalledWith(expectedPhotos);
+      expect(mockResponse.json).toHaveBeenCalledWith(postPhotosResponse);
     });
   });
 });

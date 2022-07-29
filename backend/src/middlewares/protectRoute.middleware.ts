@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
+import { LeanDocument } from 'mongoose';
 
 import { IUser } from '@/models/User.model';
 import usersDbService from '@/services/usersDb.service';
@@ -27,7 +28,7 @@ const authenticateUser = (
   if (token) {
     const decoded = jwt.verify(token, jwtSecret) as JwtPayload;
 
-    const checkUserAuthentication = (user: IUser | null): void => {
+    const checkUserAuthentication = (user: LeanDocument<IUser> | null): void => {
       if (!user) {
         throwErrorUtils.throw404Error(response, 'User');
         return;
