@@ -4,6 +4,8 @@ import PhotoModel, { IPhoto } from '@/models/Photo.model';
 
 const addPhoto = (newPhoto: IPhoto): Promise<IPhoto> => PhotoModel.create(newPhoto);
 
+const addPhotos = (newPhotos: IPhoto[]): Promise<IPhoto[]> => PhotoModel.insertMany(newPhotos);
+
 const deletePhoto = (id: string): Promise<LeanDocument<IPhoto> | null> =>
   PhotoModel.findByIdAndDelete(id)
     .lean()
@@ -41,6 +43,7 @@ const updatePhoto = (id: string, updatedPhoto: IPhoto): Promise<LeanDocument<IPh
 
 const photosDbService = {
   addPhoto,
+  addPhotos,
   deletePhoto,
   findPhoto,
   getPhoto,
