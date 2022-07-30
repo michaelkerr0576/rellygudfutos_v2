@@ -22,6 +22,10 @@ const throwAlreadyExistsError = (response: Response, model: string, error: cmn.M
   response.status(400).json({ ...error, message: `${model} already exists` });
 };
 
+const throwEmptyRequestBodyError = (response: Response, model: string, error?: Error): void => {
+  response.status(400).json({ ...error, message: `Empty ${model} request body` });
+};
+
 const throwEmptyResultError = (response: Response, model: string, error?: Error): void => {
   response.status(404).json({ ...error, message: `${model} not found. Add ${model}` });
 };
@@ -51,6 +55,7 @@ const throwErrorUtils = {
   throw404Error,
   throw500Error,
   throwAlreadyExistsError,
+  throwEmptyRequestBodyError,
   throwEmptyResultError,
   throwInvalidCredentialsError,
   throwValidationError,

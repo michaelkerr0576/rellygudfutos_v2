@@ -6,6 +6,14 @@ async function createMongoServer(): Promise<MongoMemoryServer> {
 }
 const mongoServer = createMongoServer();
 
+const clearDB = async (): Promise<void> => {
+  const collections = Object.values(mongoose.connection.collections);
+
+  collections.forEach(async (collection): Promise<void> => {
+    await collection.deleteMany({});
+  });
+};
+
 const connectDB = async (): Promise<void> => {
   const uri = (await mongoServer).getUri();
 
@@ -19,14 +27,6 @@ const connectDB = async (): Promise<void> => {
   await mongoose.connect(uri, mongooseOpts);
 };
 
-const clearDB = async (): Promise<void> => {
-  const collections = Object.values(mongoose.connection.collections);
-
-  collections.forEach(async (collection): Promise<void> => {
-    await collection.deleteMany({});
-  });
-};
-
 const disconnectDB = async (): Promise<void> => {
   await mongoose.connection.dropDatabase();
   await mongoose.connection.close();
@@ -34,8 +34,8 @@ const disconnectDB = async (): Promise<void> => {
 };
 
 const mongoMemoryServer = {
-  connectDB,
   clearDB,
+  connectDB,
   disconnectDB,
 };
 

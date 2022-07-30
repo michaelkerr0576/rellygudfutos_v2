@@ -35,7 +35,7 @@ const getPhotos = (): Promise<LeanDocument<IPhoto[]>> =>
     .then((photos): LeanDocument<IPhoto[]> => photos);
 
 const updatePhoto = (id: string, updatedPhoto: IPhoto): Promise<LeanDocument<IPhoto> | null> =>
-  PhotoModel.findByIdAndUpdate(id, updatedPhoto, { new: true })
+  PhotoModel.findByIdAndUpdate(id, updatedPhoto, { new: true, runValidators: true })
     .lean()
     .select('-__v')
     .populate('details.imageTags', '-__v -photos')

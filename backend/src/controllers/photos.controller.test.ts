@@ -5,6 +5,7 @@ import timekeeper from 'timekeeper';
 import photosDbService from '@/services/photosDb.service';
 import tagsDbService from '@/services/tagsDb.service';
 import {
+  postPhotoEnumFixture,
   postPhotoFixture,
   postPhotoResponse,
   postPhotosFixture,
@@ -103,23 +104,6 @@ describe('Photo Controller', () => {
       });
     });
 
-    test('Expect to return 500 internal server error', async () => {
-      const mockRequest: Partial<Request> = {
-        params: { id: '123' },
-      };
-
-      await photosController
-        .deletePhoto(mockRequest as Request, mockResponse as Response)
-        .catch((error): void => console.log(error));
-
-      expect(mockResponse.status).toBeCalledWith(500);
-      expect(mockResponse.json).toHaveBeenCalledWith(
-        expect.objectContaining({
-          message: 'Internal Server Error',
-        }),
-      );
-    });
-
     test('Expect to return 200 photo deleted', async () => {
       const mockRequest: Partial<Request> = {
         params: { id: postPhotoFixture._id },
@@ -128,7 +112,7 @@ describe('Photo Controller', () => {
       // * DB Service: add tag as it is required for addPhoto
       await tagsDbService.addTag(postTagFixture as any).catch((error): void => console.log(error));
 
-      // * DB Service: add photo
+      // * DB Service: add photo to be deleted
       await photosDbService.addPhoto(postPhotoFixture as any).catch((error): void => console.log(error));
 
       // * Controller: delete photo
@@ -168,23 +152,6 @@ describe('Photo Controller', () => {
       });
     });
 
-    test('Expect to return 500 internal server error', async () => {
-      const mockRequest: Partial<Request> = {
-        params: { id: '123' },
-      };
-
-      await photosController
-        .getPhoto(mockRequest as Request, mockResponse as Response)
-        .catch((error): void => console.log(error));
-
-      expect(mockResponse.status).toBeCalledWith(500);
-      expect(mockResponse.json).toHaveBeenCalledWith(
-        expect.objectContaining({
-          message: 'Internal Server Error',
-        }),
-      );
-    });
-
     test('Expect to return 200 get photo', async () => {
       const mockRequest: Partial<Request> = {
         params: { id: postPhotoFixture._id },
@@ -193,7 +160,7 @@ describe('Photo Controller', () => {
       // * DB Service: add tag as it is required for addPhoto
       await tagsDbService.addTag(postTagFixture as any).catch((error): void => console.log(error));
 
-      // * DB Service: add photo
+      // * DB Service: add photo to be get
       await photosDbService.addPhoto(postPhotoFixture as any).catch((error): void => console.log(error));
 
       // * Controller: get photo
@@ -226,7 +193,7 @@ describe('Photo Controller', () => {
       // * DB Service: add tag as it is required for addPhotos
       await tagsDbService.addTag(postTagFixture as any).catch((error): void => console.log(error));
 
-      // * DB Service: add photos
+      // * DB Service: add photos to be get
       await photosDbService.addPhotos(postPhotosFixture as any).catch((error): void => console.log(error));
 
       // * Controller: get photos
@@ -236,6 +203,116 @@ describe('Photo Controller', () => {
 
       expect(mockResponse.status).toBeCalledWith(200);
       expect(mockResponse.json).toHaveBeenCalledWith(postPhotosResponse);
+    });
+  });
+
+  describe('updatePhoto', () => {
+    test('Expect to return 400 empty request body', async () => {
+      const mockRequest: Partial<Request> = {
+        body: {},
+        params: { id: postPhotoFixture._id },
+      };
+
+      // * DB Service: add tag as it is required for addPhoto
+      await tagsDbService.addTag(postTagFixture as any).catch((error): void => console.log(error));
+
+      // * DB Service: add photo to be updated
+      await photosDbService.addPhoto(postPhotoFixture as any).catch((error): void => console.log(error));
+
+      // * Controller: update photo
+      await photosController
+        .updatePhoto(mockRequest as Request, mockResponse as Response)
+        .catch((error): void => console.log(error));
+
+      expect(mockResponse.status).toBeCalledWith(400);
+      expect(mockResponse.json).toHaveBeenCalledWith(
+        expect.objectContaining({
+          message: 'Empty Photo request body',
+        }),
+      );
+    });
+
+    test('Expect to return 400 photo validation failed', async () => {
+      const mockRequest: Partial<Request> = {
+        body: {
+          ...postPhotoFixture,
+          details: { ...postPhotoFixture.details, imageSize: postPhotoEnumFixture.details.imageSize },
+        },
+        params: { id: postPhotoFixture._id },
+      };
+
+      // * DB Service: add tag as it is required for addPhoto
+      await tagsDbService.addTag(postTagFixture as any).catch((error): void => console.log(error));
+
+      // * DB Service: add photo to be updated
+      await photosDbService.addPhoto(postPhotoFixture as any).catch((error): void => console.log(error));
+
+      // * Controller: update photo
+      await photosController
+        .updatePhoto(mockRequest as Request, mockResponse as Response)
+        .catch((error): void => console.log(error));
+
+      expect(mockResponse.status).toBeCalledWith(400);
+      expect(mockResponse.json).toHaveBeenCalledWith(
+        expect.objectContaining({
+          message: 'Validation failed',
+        }),
+      );
+    });
+
+    test('Expect to return 404 photo not found', async () => {
+      const mockRequest: Partial<Request> = {
+        body: postPhotoFixture,
+        params: { id: postPhotoFixture._id },
+      };
+
+      await photosController
+        .updatePhoto(mockRequest as Request, mockResponse as Response)
+        .catch((error): void => console.log(error));
+
+      expect(mockResponse.status).toBeCalledWith(404);
+      expect(mockResponse.json).toHaveBeenCalledWith({
+        message: 'Photo not found',
+      });
+    });
+
+    test('Expect to return 200 photo updated', async () => {
+      const mockRequest: Partial<Request> = {
+        body: {
+          ...postPhotoFixture,
+          details: { ...postPhotoFixture.details, imageCaption: 'Test updated caption' },
+        },
+        params: { id: postPhotoFixture._id },
+      };
+
+      // * DB Service: add tag as it is required for addPhoto
+      await tagsDbService.addTag(postTagFixture as any).catch((error): void => console.log(error));
+
+      // * DB Service: add photo to be updated
+      await photosDbService.addPhoto(postPhotoFixture as any).catch((error): void => console.log(error));
+
+      // * Controller: update photo
+      await photosController
+        .updatePhoto(mockRequest as Request, mockResponse as Response)
+        .catch((error): void => console.log(error));
+
+      expect(mockResponse.status).toBeCalledWith(200);
+      expect(mockResponse.json).toHaveBeenCalledWith(
+        expect.objectContaining({
+          message: 'Photo updated',
+        }),
+      );
+
+      // * DB Service: find photo just updated
+      const addedPhoto = await photosDbService
+        .findPhoto(utilFixture.freezeDate)
+        .catch((error): void => console.log(error));
+
+      expect(addedPhoto).toBeTruthy();
+      expect(addedPhoto).toEqual({
+        ...postPhotoResponse,
+        details: { ...postPhotoResponse.details, imageCaption: 'Test updated caption' },
+      });
     });
   });
 });

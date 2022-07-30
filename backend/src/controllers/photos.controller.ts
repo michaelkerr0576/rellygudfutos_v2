@@ -4,7 +4,7 @@ import { LeanDocument, Types } from 'mongoose';
 import PhotoModel, { IPhoto } from '@/models/Photo.model';
 import photosDbService from '@/services/photosDb.service';
 import * as cmn from '@/types/cmn.types';
-import { throwErrorUtils } from '@/utils';
+import { generalUtils, throwErrorUtils } from '@/utils';
 
 // * @desc Add photo
 // * @route POST /api/photos
@@ -124,6 +124,12 @@ const updatePhoto = (request: Request, response: Response): Promise<void> => {
     params: { id },
   } = request;
 
+  const isBodyEmpty = generalUtils.isObjectEmpty(body);
+  if (isBodyEmpty) {
+    throwErrorUtils.throwEmptyRequestBodyError(response, 'Photo');
+    Promise.resolve();
+  }
+
   const handlePhoto = (photo: LeanDocument<IPhoto> | null): void => {
     if (!photo) {
       throwErrorUtils.throw404Error(response, 'Photo');
@@ -136,10 +142,20 @@ const updatePhoto = (request: Request, response: Response): Promise<void> => {
     });
   };
 
+  const handleError = (error: cmn.MongooseValidationError): void => {
+    const isValidationError = error.name === 'ValidationError';
+    if (isValidationError) {
+      throwErrorUtils.throwValidationError(response, error);
+      return;
+    }
+
+    throwErrorUtils.throw500Error(response, error);
+  };
+
   return photosDbService
     .updatePhoto(id, body)
     .then((photo): void => handlePhoto(photo))
-    .catch((error): void => throwErrorUtils.throw500Error(response, error));
+    .catch((error): void => handleError(error));
 };
 
 const photosController = {
