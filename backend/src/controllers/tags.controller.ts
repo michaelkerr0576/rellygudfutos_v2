@@ -4,7 +4,7 @@ import { LeanDocument, Types } from 'mongoose';
 import TagModel, { ITag } from '@/models/Tag.model';
 import tagsDbService from '@/services/tagsDb.service';
 import * as cmn from '@/types/cmn.types';
-import { throwErrorUtils } from '@/utils';
+import { generalUtils, throwErrorUtils } from '@/utils';
 
 // * @desc Add tag
 // * @route POST /api/tags
@@ -124,6 +124,12 @@ const updateTag = (request: Request, response: Response): Promise<void> => {
     params: { id },
   } = request;
 
+  const isBodyEmpty = generalUtils.isObjectEmpty(body);
+  if (isBodyEmpty) {
+    throwErrorUtils.throwEmptyRequestBodyError(response, 'Tag');
+    Promise.resolve();
+  }
+
   const handleTag = (tag: LeanDocument<ITag> | null): void => {
     if (!tag) {
       throwErrorUtils.throw404Error(response, 'Tag');
@@ -136,10 +142,20 @@ const updateTag = (request: Request, response: Response): Promise<void> => {
     });
   };
 
+  const handleError = (error: cmn.MongooseValidationError): void => {
+    const isValidationError = error.name === 'ValidationError';
+    if (isValidationError) {
+      throwErrorUtils.throwValidationError(response, error);
+      return;
+    }
+
+    throwErrorUtils.throw500Error(response, error);
+  };
+
   return tagsDbService
     .updateTag(id, body)
     .then((tag): void => handleTag(tag))
-    .catch((error): void => throwErrorUtils.throw500Error(response, error));
+    .catch((error): void => handleError(error));
 };
 
 const tagsController = {

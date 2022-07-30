@@ -23,7 +23,7 @@ const getTags = (): Promise<LeanDocument<ITag[]>> =>
     .then((tags): LeanDocument<ITag[]> => tags);
 
 const updateTag = (id: string, updatedTag: ITag): Promise<LeanDocument<ITag> | null> =>
-  TagModel.findByIdAndUpdate(id, updatedTag, { new: true })
+  TagModel.findByIdAndUpdate(id, updatedTag, { new: true, runValidators: true })
     .lean()
     .select('-__v')
     .then((tag): LeanDocument<ITag> | null => tag);
