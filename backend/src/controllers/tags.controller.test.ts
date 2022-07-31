@@ -5,6 +5,7 @@ import timekeeper from 'timekeeper';
 import tagsDbService from '@/services/tagsDb.service';
 import {
   postTagFixture,
+  postTagMinLengthFixture,
   postTagResponseFixture,
   postTagsFixture,
   postTagsResponseFixture,
@@ -192,6 +193,108 @@ describe('Tag Controller', () => {
 
       expect(mockResponse.status).toBeCalledWith(200);
       expect(mockResponse.json).toHaveBeenCalledWith(postTagsResponseFixture);
+    });
+  });
+
+  describe('updateTag', () => {
+    test('Expect to return 400 empty request body', async () => {
+      const mockRequest: Partial<Request> = {
+        body: {},
+        params: { id: postTagFixture._id },
+      };
+
+      // * DB Service: add tag to be updated
+      await tagsDbService.addTag(postTagFixture as any).catch((error): void => console.log(error));
+
+      // * Controller: update tag
+      await tagsController
+        .updateTag(mockRequest as Request, mockResponse as Response)
+        .catch((error): void => console.log(error));
+
+      expect(mockResponse.status).toBeCalledWith(400);
+      expect(mockResponse.json).toHaveBeenCalledWith(
+        expect.objectContaining({
+          message: 'Empty Tag request body',
+        }),
+      );
+    });
+
+    test('Expect to return 400 tag validation failed', async () => {
+      const mockRequest: Partial<Request> = {
+        body: {
+          ...postTagFixture,
+          tag: postTagMinLengthFixture.tag,
+        },
+        params: { id: postTagFixture._id },
+      };
+
+      // * DB Service: add tag to be updated
+      await tagsDbService.addTag(postTagFixture as any).catch((error): void => console.log(error));
+
+      // * Controller: update tag
+      await tagsController
+        .updateTag(mockRequest as Request, mockResponse as Response)
+        .catch((error): void => console.log(error));
+
+      expect(mockResponse.status).toBeCalledWith(400);
+      expect(mockResponse.json).toHaveBeenCalledWith(
+        expect.objectContaining({
+          message: 'Validation failed',
+        }),
+      );
+    });
+
+    test('Expect to return 404 tag not found', async () => {
+      const mockRequest: Partial<Request> = {
+        body: postTagFixture,
+        params: { id: postTagFixture._id },
+      };
+
+      // * Controller: update tag
+      await tagsController
+        .updateTag(mockRequest as Request, mockResponse as Response)
+        .catch((error): void => console.log(error));
+
+      expect(mockResponse.status).toBeCalledWith(404);
+      expect(mockResponse.json).toHaveBeenCalledWith({
+        message: 'Tag not found',
+      });
+    });
+
+    test('Expect to return 200 tag updated', async () => {
+      const mockRequest: Partial<Request> = {
+        body: {
+          ...postTagFixture,
+          tag: 'Test updated tag',
+        },
+        params: { id: postTagFixture._id },
+      };
+
+      // * DB Service: add tag to be updated
+      await tagsDbService.addTag(postTagFixture as any).catch((error): void => console.log(error));
+
+      // * Controller: update tag
+      await tagsController
+        .updateTag(mockRequest as Request, mockResponse as Response)
+        .catch((error): void => console.log(error));
+
+      expect(mockResponse.status).toBeCalledWith(200);
+      expect(mockResponse.json).toHaveBeenCalledWith(
+        expect.objectContaining({
+          message: 'Tag updated',
+        }),
+      );
+
+      // * DB Service: find tag just updated
+      const addedTag = await tagsDbService
+        .findTag(utilFixture.freezeDate)
+        .catch((error): void => console.log(error));
+
+      expect(addedTag).toBeTruthy();
+      expect(addedTag).toEqual({
+        ...postTagResponseFixture,
+        tag: 'Test updated tag',
+      });
     });
   });
 });
