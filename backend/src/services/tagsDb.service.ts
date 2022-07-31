@@ -10,6 +10,12 @@ const deleteTag = (id: string): Promise<LeanDocument<ITag> | null> =>
     .select('-__v')
     .then((tag): LeanDocument<ITag> | null => tag);
 
+const findTag = (createdAt: Date): Promise<LeanDocument<ITag> | null> =>
+  TagModel.findOne({ createdAt })
+    .lean()
+    .select('-__v')
+    .then((tag): LeanDocument<ITag> | null => tag);
+
 const getTag = (id: string): Promise<LeanDocument<ITag> | null> =>
   TagModel.findById(id)
     .lean()
@@ -28,6 +34,6 @@ const updateTag = (id: string, updatedTag: ITag): Promise<LeanDocument<ITag> | n
     .select('-__v')
     .then((tag): LeanDocument<ITag> | null => tag);
 
-const tagsDbService = { addTag, deleteTag, getTag, getTags, updateTag };
+const tagsDbService = { addTag, deleteTag, findTag, getTag, getTags, updateTag };
 
 export default tagsDbService;
