@@ -126,8 +126,7 @@ const updatePhoto = (request: Request, response: Response): Promise<void> => {
 
   const isBodyEmpty = generalUtils.isObjectEmpty(body);
   if (isBodyEmpty) {
-    throwErrorUtils.throwEmptyRequestBodyError(response, 'Photo');
-    Promise.resolve();
+    Promise.resolve(throwErrorUtils.throwEmptyRequestBodyError(response, 'Photo'));
   }
 
   const handlePhoto = (photo: LeanDocument<IPhoto> | null): void => {

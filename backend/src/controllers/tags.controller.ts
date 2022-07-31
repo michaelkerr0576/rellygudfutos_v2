@@ -126,8 +126,7 @@ const updateTag = (request: Request, response: Response): Promise<void> => {
 
   const isBodyEmpty = generalUtils.isObjectEmpty(body);
   if (isBodyEmpty) {
-    throwErrorUtils.throwEmptyRequestBodyError(response, 'Tag');
-    Promise.resolve();
+    Promise.resolve(throwErrorUtils.throwEmptyRequestBodyError(response, 'Tag'));
   }
 
   const handleTag = (tag: LeanDocument<ITag> | null): void => {

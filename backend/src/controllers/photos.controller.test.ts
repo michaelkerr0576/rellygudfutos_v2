@@ -7,9 +7,9 @@ import tagsDbService from '@/services/tagsDb.service';
 import {
   postPhotoEnumFixture,
   postPhotoFixture,
-  postPhotoResponse,
+  postPhotoResponseFixture,
   postPhotosFixture,
-  postPhotosResponse,
+  postPhotosResponseFixture,
 } from '@/tests/fixtures/photos';
 import { postTagFixture } from '@/tests/fixtures/tags';
 import utilFixture from '@/tests/fixtures/util.fixture';
@@ -46,6 +46,7 @@ describe('Photo Controller', () => {
         body: {},
       };
 
+      // * Controller: add photo
       await photosController
         .addPhoto(mockRequest as Request, mockResponse as Response)
         .catch((error): void => console.log(error));
@@ -84,7 +85,7 @@ describe('Photo Controller', () => {
         .catch((error): void => console.log(error));
 
       expect(addedPhoto).toBeTruthy();
-      expect(addedPhoto).toEqual(postPhotoResponse);
+      expect(addedPhoto).toEqual(postPhotoResponseFixture);
     });
   });
 
@@ -94,6 +95,7 @@ describe('Photo Controller', () => {
         params: { id: postPhotoFixture._id },
       };
 
+      // * Controller: delete photo
       await photosController
         .deletePhoto(mockRequest as Request, mockResponse as Response)
         .catch((error): void => console.log(error));
@@ -142,6 +144,7 @@ describe('Photo Controller', () => {
         params: { id: postPhotoFixture._id },
       };
 
+      // * Controller: get photo
       await photosController
         .getPhoto(mockRequest as Request, mockResponse as Response)
         .catch((error): void => console.log(error));
@@ -169,7 +172,7 @@ describe('Photo Controller', () => {
         .catch((error): void => console.log(error));
 
       expect(mockResponse.status).toBeCalledWith(200);
-      expect(mockResponse.json).toHaveBeenCalledWith(postPhotoResponse);
+      expect(mockResponse.json).toHaveBeenCalledWith(postPhotoResponseFixture);
     });
   });
 
@@ -177,6 +180,7 @@ describe('Photo Controller', () => {
     test('Expect to return 404 photos not found', async () => {
       const mockRequest: Partial<Request> = {};
 
+      // * Controller: get photos
       await photosController
         .getPhotos(mockRequest as Request, mockResponse as Response)
         .catch((error): void => console.log(error));
@@ -202,7 +206,7 @@ describe('Photo Controller', () => {
         .catch((error): void => console.log(error));
 
       expect(mockResponse.status).toBeCalledWith(200);
-      expect(mockResponse.json).toHaveBeenCalledWith(postPhotosResponse);
+      expect(mockResponse.json).toHaveBeenCalledWith(postPhotosResponseFixture);
     });
   });
 
@@ -266,6 +270,7 @@ describe('Photo Controller', () => {
         params: { id: postPhotoFixture._id },
       };
 
+      // * Controller: update photo
       await photosController
         .updatePhoto(mockRequest as Request, mockResponse as Response)
         .catch((error): void => console.log(error));
@@ -310,8 +315,8 @@ describe('Photo Controller', () => {
 
       expect(addedPhoto).toBeTruthy();
       expect(addedPhoto).toEqual({
-        ...postPhotoResponse,
-        details: { ...postPhotoResponse.details, imageCaption: 'Test updated caption' },
+        ...postPhotoResponseFixture,
+        details: { ...postPhotoResponseFixture.details, imageCaption: 'Test updated caption' },
       });
     });
   });
