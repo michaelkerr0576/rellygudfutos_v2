@@ -6,6 +6,9 @@ const addTag = (newTag: ITag): Promise<ITag> => TagModel.create(newTag);
 
 const addTags = (newTags: ITag[]): Promise<ITag[]> => TagModel.insertMany(newTags);
 
+const checkTagsExist = async (ids: string[]): Promise<boolean> =>
+  TagModel.find({ _id: { $in: ids as any } }).then((tags): boolean => ids.length === tags.length);
+
 const deleteTag = (id: string): Promise<LeanDocument<ITag> | null> =>
   TagModel.findByIdAndDelete(id)
     .lean()
@@ -36,6 +39,15 @@ const updateTag = (id: string, updatedTag: ITag): Promise<LeanDocument<ITag> | n
     .select('-__v')
     .then((tag): LeanDocument<ITag> | null => tag);
 
-const tagsDbService = { addTag, addTags, deleteTag, findTag, getTag, getTags, updateTag };
+const tagsDbService = {
+  addTag,
+  addTags,
+  checkTagsExist,
+  deleteTag,
+  findTag,
+  getTag,
+  getTags,
+  updateTag,
+};
 
 export default tagsDbService;

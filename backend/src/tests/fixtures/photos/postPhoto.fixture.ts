@@ -1,5 +1,7 @@
 import * as enm from '@/types/enum.types';
 
+import { postTagFixture } from '../tags';
+
 export default {
   _id: '41224d776a326fb40f000002',
   details: {
@@ -8,7 +10,7 @@ export default {
     imageCaption: 'Test image caption',
     imageFile: 'testFile.jpg',
     imageSize: enm.ImageSize.LARGE,
-    imageTags: ['41224d776a326fb40f000002'],
+    imageTags: [postTagFixture._id],
     imageTitle: 'Test image title',
     originalImageName: 'testOriginalImageName.jpeg',
     storeLink: 'https:www.testStoreLink.html',

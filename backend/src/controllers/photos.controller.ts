@@ -3,14 +3,22 @@ import { LeanDocument, Types } from 'mongoose';
 
 import PhotoModel, { IPhoto } from '@/models/Photo.model';
 import photosDbService from '@/services/photosDb.service';
+import tagsDbService from '@/services/tagsDb.service';
 import * as cmn from '@/types/cmn.types';
 import { generalUtils, throwErrorUtils } from '@/utils';
 
 // * @desc Add photo
 // * @route POST /api/photos
 // * @access Private
-const addPhoto = (request: Request, response: Response): Promise<void> => {
+const addPhoto = async (request: Request, response: Response): Promise<void> => {
   const { body } = request;
+
+  const tags = body?.details?.imageTags;
+  const isTagsExist = tags ? await tagsDbService.checkTagsExist(tags) : false;
+  if (!isTagsExist) {
+    throwErrorUtils.throwArrayValueNotFoundError(response, 'Tag', 'Image Tags');
+    return Promise.resolve();
+  }
 
   const newPhoto = new PhotoModel({
     _id: new Types.ObjectId(),

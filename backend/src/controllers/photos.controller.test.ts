@@ -7,6 +7,7 @@ import tagsDbService from '@/services/tagsDb.service';
 import {
   postPhotoEnumFixture,
   postPhotoFixture,
+  postPhotoRequiredFixture,
   postPhotoResponseFixture,
   postPhotosFixture,
   postPhotosResponseFixture,
@@ -41,9 +42,27 @@ describe('Photo Controller', () => {
   });
 
   describe('addPhoto', () => {
+    test('Expect to return 404 tag not found in image tags', async () => {
+      const mockRequest: Partial<Request> = {
+        body: postPhotoFixture,
+      };
+
+      // * Controller: add photo
+      await photosController
+        .addPhoto(mockRequest as Request, mockResponse as Response)
+        .catch((error): void => console.log(error));
+
+      expect(mockResponse.status).toBeCalledWith(404);
+      expect(mockResponse.json).toHaveBeenCalledWith(
+        expect.objectContaining({
+          message: 'Tag not found from Image Tags',
+        }),
+      );
+    });
+
     test('Expect to return 400 photo validation failed', async () => {
       const mockRequest: Partial<Request> = {
-        body: {},
+        body: postPhotoRequiredFixture,
       };
 
       // * Controller: add photo

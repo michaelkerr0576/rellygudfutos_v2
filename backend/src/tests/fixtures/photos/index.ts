@@ -3,6 +3,7 @@ import postPhotoEnumFixture from './postPhotoEnum.fixture';
 import postPhotoMaxLengthFixture from './postPhotoMaxLength.fixture';
 import postPhotoMinLengthFixture from './postPhotoMinLength.fixture';
 import postPhotoRegexFixture from './postPhotoRegex.fixture';
+import postPhotoRequiredFixture from './postPhotoRequired.fixture';
 import postPhotoResponseFixture from './postPhotoResponse.fixture';
 import postPhotosFixture from './postPhotos.fixture';
 import postPhotosResponseFixture from './postPhotosResponse.fixture';
@@ -14,6 +15,7 @@ export {
   postPhotoMaxLengthFixture,
   postPhotoMinLengthFixture,
   postPhotoRegexFixture,
+  postPhotoRequiredFixture,
   postPhotoResponseFixture,
   postPhotosFixture,
   postPhotosResponseFixture,
