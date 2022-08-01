@@ -25,11 +25,6 @@ const addUser = (request: Request, response: Response): Promise<void> => {
   });
 
   const handleUser = (user: IUser): void => {
-    if (!user) {
-      throwErrorUtils.throw400Error(response);
-      return;
-    }
-
     response.status(201).json({
       message: 'User added',
       addedUser: {
@@ -83,11 +78,6 @@ const getUser = (_request: Request, response: Response): void => {
 // * @access Private
 const getUsers = (_request: Request, response: Response): Promise<void> => {
   const handleUsers = (users: LeanDocument<IUser[]>): void => {
-    if (!users) {
-      throwErrorUtils.throw400Error(response);
-      return;
-    }
-
     const isUsersEmpty = users.length === 0;
     if (isUsersEmpty) {
       throwErrorUtils.throwEmptyResultError(response, 'Users');

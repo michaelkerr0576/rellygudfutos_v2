@@ -26,11 +26,6 @@ const addPhoto = async (request: Request, response: Response): Promise<void> => 
   });
 
   const handlePhoto = (photo: IPhoto): void => {
-    if (!photo) {
-      throwErrorUtils.throw400Error(response);
-      return;
-    }
-
     response.status(201).json({
       message: 'Photo added',
       addedPhoto: photo,
@@ -103,11 +98,6 @@ const getPhoto = (request: Request, response: Response): Promise<void> => {
 // * @access Public
 const getPhotos = (_request: Request, response: Response): Promise<void> => {
   const handlePhotos = (photos: LeanDocument<IPhoto[]>): void => {
-    if (!photos) {
-      throwErrorUtils.throw400Error(response);
-      return;
-    }
-
     const isPhotosEmpty = photos.length === 0;
     if (isPhotosEmpty) {
       throwErrorUtils.throwEmptyResultError(response, 'Photos');

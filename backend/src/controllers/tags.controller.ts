@@ -18,11 +18,6 @@ const addTag = (request: Request, response: Response): Promise<void> => {
   });
 
   const handleTag = (tag: ITag): void => {
-    if (!tag) {
-      throwErrorUtils.throw400Error(response);
-      return;
-    }
-
     response.status(201).json({
       message: 'Tag added',
       addedTag: tag,
@@ -95,11 +90,6 @@ const getTag = (request: Request, response: Response): Promise<void> => {
 // * @access Public
 const getTags = (_request: Request, response: Response): Promise<void> => {
   const handleTags = (tags: LeanDocument<ITag[]>): void => {
-    if (!tags) {
-      throwErrorUtils.throw400Error(response);
-      return;
-    }
-
     const isTagsEmpty = tags.length === 0;
     if (isTagsEmpty) {
       throwErrorUtils.throwEmptyResultError(response, 'Tags');
