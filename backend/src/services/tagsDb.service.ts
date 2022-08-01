@@ -1,12 +1,24 @@
-import { LeanDocument } from 'mongoose';
+import { LeanDocument, Schema } from 'mongoose';
 
 import TagModel, { ITag } from '@/models/Tag.model';
+import * as enm from '@/types/enum.types';
 
 const addTag = (newTag: ITag): Promise<ITag> => TagModel.create(newTag);
 
+const addTagPhotos = (
+  photoId: Schema.Types.ObjectId,
+  photoTagIds: Schema.Types.ObjectId[],
+): Promise<enm.RequestStatus> =>
+  TagModel.updateMany(
+    { _id: photoTagIds as any },
+    {
+      $push: { photos: photoId },
+    },
+  ).then((): enm.RequestStatus => enm.RequestStatus.SUCCESS);
+
 const addTags = (newTags: ITag[]): Promise<ITag[]> => TagModel.insertMany(newTags);
 
-const checkTagsExist = async (ids: string[]): Promise<boolean> =>
+const checkTagsExist = (ids: string[]): Promise<boolean> =>
   TagModel.find({ _id: { $in: ids as any } }).then((tags): boolean => ids.length === tags.length);
 
 const deleteTag = (id: string): Promise<LeanDocument<ITag> | null> =>
@@ -41,6 +53,7 @@ const updateTag = (id: string, updatedTag: ITag): Promise<LeanDocument<ITag> | n
 
 const tagsDbService = {
   addTag,
+  addTagPhotos,
   addTags,
   checkTagsExist,
   deleteTag,

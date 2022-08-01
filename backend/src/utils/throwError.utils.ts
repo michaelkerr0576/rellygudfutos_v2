@@ -14,7 +14,7 @@ const throw404Error = (response: Response, model: string, error?: Error): void =
   response.status(404).json({ ...error, message: `${model} not found` });
 };
 
-const throw500Error = (response: Response, error: Error): void => {
+const throw500Error = (response: Response, error?: Error): void => {
   response.status(500).json({ ...error, message: 'Internal Server Error' });
 };
 

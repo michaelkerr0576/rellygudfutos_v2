@@ -1,24 +1,26 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { LeanDocument, Types } from 'mongoose';
 
 import PhotoModel, { IPhoto } from '@/models/Photo.model';
 import photosDbService from '@/services/photosDb.service';
-import tagsDbService from '@/services/tagsDb.service';
+// import tagsDbService from '@/services/tagsDb.service';
 import * as cmn from '@/types/cmn.types';
-import { generalUtils, throwErrorUtils } from '@/utils';
+import { errorMessageUtils, generalUtils } from '@/utils';
 
 // * @desc Add photo
 // * @route POST /api/photos
 // * @access Private
-const addPhoto = async (request: Request, response: Response): Promise<void> => {
+const addPhoto = async (request: Request, response: Response, next: NextFunction): Promise<void> => {
   const { body } = request;
 
-  const tags = body?.details?.imageTags;
-  const isTagsExist = tags ? await tagsDbService.checkTagsExist(tags) : false;
-  if (!isTagsExist) {
-    throwErrorUtils.throwArrayValueNotFoundError(response, 'Tag', 'Image Tags');
-    return Promise.resolve();
-  }
+  // Todo : fix no tags handling
+  // const tagIds = body?.details?.imageTags;
+  // const isTagsExist = tagIds ? await tagsDbService.checkTagsExist(tagIds) : false;
+
+  // if (!isTagsExist) {
+  //   response.status(404);
+  //   throw new Error(errorMessageUtils.error404ArrayValueNotFound('Tag', 'Image Tags'));
+  // }
 
   const newPhoto = new PhotoModel({
     _id: new Types.ObjectId(),
@@ -26,6 +28,20 @@ const addPhoto = async (request: Request, response: Response): Promise<void> => 
   });
 
   const handlePhoto = (photo: IPhoto): void => {
+    // Todo : fix push new photo tags
+    // const {
+    //   _id: photoId,
+    //   details: { imageTags: photoTagIds },
+    // } = photo;
+
+    // const addTagsResult = await tagsDbService.addTagPhotos(photoId, photoTagIds);
+
+    // const isAddTagsFailed = addTagsResult === enm.RequestStatus.FAILED;
+    // if (isAddTagsFailed) {
+    //   throwErrorUtils.throw500Error(response);
+    //   return Promise.resolve();
+    // }
+
     response.status(201).json({
       message: 'Photo added',
       addedPhoto: photo,
@@ -35,29 +51,34 @@ const addPhoto = async (request: Request, response: Response): Promise<void> => 
   const handleError = (error: cmn.MongooseValidationError): void => {
     const isValidationError = error.name === 'ValidationError';
     if (isValidationError) {
-      throwErrorUtils.throwValidationError(response, error);
-      return;
+      const { message, errors } = errorMessageUtils.error400Validation(error);
+
+      response.status(400);
+      const newError = new Error(message);
+      const validationError = Object.assign(newError, { errors });
+      throw validationError;
     }
 
-    throwErrorUtils.throw500Error(response, error);
+    next(error);
   };
 
   return photosDbService
     .addPhoto(newPhoto)
     .then((photo): void => handlePhoto(photo))
-    .catch((error): void => handleError(error));
+    .catch((error): void => handleError(error))
+    .catch((error): void => next(error));
 };
 
 // * @desc Delete photo
 // * @route DELETE /api/photos/:id
 // * @access Private
-const deletePhoto = (request: Request, response: Response): Promise<void> => {
+const deletePhoto = (request: Request, response: Response, next: NextFunction): Promise<void> => {
   const { id } = request.params;
 
   const handlePhoto = (photo: LeanDocument<IPhoto> | null): void => {
     if (!photo) {
-      throwErrorUtils.throw404Error(response, 'Photo');
-      return;
+      response.status(404);
+      throw new Error(errorMessageUtils.error404('Photo'));
     }
 
     response.status(200).json({
@@ -69,19 +90,19 @@ const deletePhoto = (request: Request, response: Response): Promise<void> => {
   return photosDbService
     .deletePhoto(id)
     .then((photo): void => handlePhoto(photo))
-    .catch((error): void => throwErrorUtils.throw500Error(response, error));
+    .catch((error): void => next(error));
 };
 
 // * @desc Get photo
 // * @route GET /api/photos/:id
 // * @access Public
-const getPhoto = (request: Request, response: Response): Promise<void> => {
+const getPhoto = async (request: Request, response: Response, next: NextFunction): Promise<void> => {
   const { id } = request.params;
 
   const handlePhoto = (photo: LeanDocument<IPhoto> | null): void => {
     if (!photo) {
-      throwErrorUtils.throw404Error(response, 'Photo');
-      return;
+      response.status(404);
+      throw new Error(errorMessageUtils.error404('Photo'));
     }
 
     response.status(200).json(photo);
@@ -90,18 +111,18 @@ const getPhoto = (request: Request, response: Response): Promise<void> => {
   return photosDbService
     .getPhoto(id)
     .then((photo): void => handlePhoto(photo))
-    .catch((error): void => throwErrorUtils.throw500Error(response, error));
+    .catch((error): void => next(error));
 };
 
 // * @desc Get photos
 // * @route GET /api/photos
 // * @access Public
-const getPhotos = (_request: Request, response: Response): Promise<void> => {
+const getPhotos = (_request: Request, response: Response, next: NextFunction): Promise<void> => {
   const handlePhotos = (photos: LeanDocument<IPhoto[]>): void => {
     const isPhotosEmpty = photos.length === 0;
     if (isPhotosEmpty) {
-      throwErrorUtils.throwEmptyResultError(response, 'Photos');
-      return;
+      response.status(404);
+      throw new Error(errorMessageUtils.error404EmptyResult('Photos'));
     }
 
     response.status(200).json(photos);
@@ -110,13 +131,13 @@ const getPhotos = (_request: Request, response: Response): Promise<void> => {
   return photosDbService
     .getPhotos()
     .then((photos): void => handlePhotos(photos))
-    .catch((error): void => throwErrorUtils.throw500Error(response, error));
+    .catch((error): void => next(error));
 };
 
 // * @desc Update photo
 // * @route PUT /api/photos/:id
 // * @access Private
-const updatePhoto = (request: Request, response: Response): Promise<void> => {
+const updatePhoto = (request: Request, response: Response, next: NextFunction): Promise<void> => {
   const {
     body,
     params: { id },
@@ -124,14 +145,15 @@ const updatePhoto = (request: Request, response: Response): Promise<void> => {
 
   const isBodyEmpty = generalUtils.isObjectEmpty(body);
   if (isBodyEmpty) {
-    throwErrorUtils.throwEmptyRequestBodyError(response, 'Photo');
-    return Promise.resolve();
+    response.status(400);
+    const newError = new Error(errorMessageUtils.error400EmptyRequestBody('Photo'));
+    return Promise.resolve(next(newError));
   }
 
   const handlePhoto = (photo: LeanDocument<IPhoto> | null): void => {
     if (!photo) {
-      throwErrorUtils.throw404Error(response, 'Photo');
-      return;
+      response.status(404);
+      throw new Error(errorMessageUtils.error404('Photo'));
     }
 
     response.status(200).json({
@@ -143,17 +165,22 @@ const updatePhoto = (request: Request, response: Response): Promise<void> => {
   const handleError = (error: cmn.MongooseValidationError): void => {
     const isValidationError = error.name === 'ValidationError';
     if (isValidationError) {
-      throwErrorUtils.throwValidationError(response, error);
-      return;
+      const { message, errors } = errorMessageUtils.error400Validation(error);
+
+      response.status(400);
+      const newError = new Error(message);
+      const validationError = Object.assign(newError, { errors });
+      throw validationError;
     }
 
-    throwErrorUtils.throw500Error(response, error);
+    next(error);
   };
 
   return photosDbService
     .updatePhoto(id, body)
     .then((photo): void => handlePhoto(photo))
-    .catch((error): void => handleError(error));
+    .catch((error): void => handleError(error))
+    .catch((error): void => next(error));
 };
 
 const photosController = {
