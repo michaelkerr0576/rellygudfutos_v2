@@ -26,7 +26,7 @@ const mockResponse: Partial<Response> = {
 
 const mockNextFunction: NextFunction = mockNextFunctionError;
 
-describe('Tag Controller', () => {
+describe('Tags Controller', () => {
   beforeAll(async () => {
     mongoMemoryServer.connectDB();
     timekeeper.freeze(utilFixture.freezeDate);
@@ -41,7 +41,7 @@ describe('Tag Controller', () => {
     timekeeper.reset();
   });
 
-  describe('addTag', () => {
+  describe('Add Tag', () => {
     test('Expect to return 400 tag validation failed', async () => {
       const mockRequest: Partial<Request> = {
         body: {},
@@ -87,7 +87,7 @@ describe('Tag Controller', () => {
     });
   });
 
-  describe('deleteTag', () => {
+  describe('Delete Tag', () => {
     test('Expect to return 404 tag not found', async () => {
       const mockRequest: Partial<Request> = {
         params: { id: postTagFixture._id },
@@ -135,7 +135,7 @@ describe('Tag Controller', () => {
     });
   });
 
-  describe('getTag', () => {
+  describe('Get Tag', () => {
     test('Expect to return 404 tag not found', async () => {
       const mockRequest: Partial<Request> = {
         params: { id: postTagFixture._id },
@@ -172,7 +172,7 @@ describe('Tag Controller', () => {
     });
   });
 
-  describe('getTags', () => {
+  describe('Get Tags', () => {
     test('Expect to return 404 tags not found', async () => {
       const mockRequest: Partial<Request> = {};
 
@@ -205,7 +205,7 @@ describe('Tag Controller', () => {
     });
   });
 
-  describe('updateTag', () => {
+  describe('Update Tag', () => {
     test('Expect to return 400 empty request body', async () => {
       const mockRequest: Partial<Request> = {
         body: {},

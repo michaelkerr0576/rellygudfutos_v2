@@ -25,6 +25,8 @@ const error400Validation = (
 
 const error401 = (): string => 'User not authorized';
 
+const error401NoToken = (): string => 'No token provided';
+
 const error404 = (model: string): string => `${model} not found`;
 
 const error404ArrayValueNotFound = (model: string, array: string): string =>
@@ -42,6 +44,7 @@ const errorMessage = {
   error400EmptyRequestBody,
   error400Validation,
   error401,
+  error401NoToken,
   error404,
   error404ArrayValueNotFound,
   error404EmptyResult,

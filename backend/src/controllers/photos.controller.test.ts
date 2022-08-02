@@ -29,7 +29,7 @@ const mockResponse: Partial<Response> = {
 
 const mockNextFunction: NextFunction = mockNextFunctionError;
 
-describe('Photo Controller', () => {
+describe('Photos Controller', () => {
   beforeAll(async () => {
     mongoMemoryServer.connectDB();
     timekeeper.freeze(utilFixture.freezeDate);
@@ -45,7 +45,7 @@ describe('Photo Controller', () => {
     timekeeper.reset();
   });
 
-  describe('addPhoto', () => {
+  describe('Add Photo', () => {
     // Todo: Put back in after fixing in controller
     // test('Expect to return 404 tag not found in image tags', async () => {
     //   const mockRequest: Partial<Request> = {
@@ -113,7 +113,7 @@ describe('Photo Controller', () => {
     });
   });
 
-  describe('deletePhoto', () => {
+  describe('Delete Photo', () => {
     test('Expect to return 404 photo not found', async () => {
       const mockRequest: Partial<Request> = {
         params: { id: postPhotoFixture._id },
@@ -164,7 +164,7 @@ describe('Photo Controller', () => {
     });
   });
 
-  describe('getPhoto', () => {
+  describe('Get Photo', () => {
     test('Expect to return 404 photo not found', async () => {
       const mockRequest: Partial<Request> = {
         params: { id: postPhotoFixture._id },
@@ -204,7 +204,7 @@ describe('Photo Controller', () => {
     });
   });
 
-  describe('getPhotos', () => {
+  describe('Get Photos', () => {
     test('Expect to return 404 photos not found', async () => {
       const mockRequest: Partial<Request> = {};
 
@@ -240,7 +240,7 @@ describe('Photo Controller', () => {
     });
   });
 
-  describe('updatePhoto', () => {
+  describe('Update Photo', () => {
     test('Expect to return 400 empty request body', async () => {
       const mockRequest: Partial<Request> = {
         body: {},
