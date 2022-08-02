@@ -5,7 +5,7 @@ import { LeanDocument } from 'mongoose';
 import { IUser } from '@/models/User.model';
 import usersDbService from '@/services/usersDb.service';
 import * as enm from '@/types/enum.types';
-import { throwErrorUtils } from '@/utils';
+import { errorMessageUtils } from '@/utils';
 
 interface JwtPayload {
   id: string;
@@ -30,14 +30,14 @@ const authenticateUser = (
 
     const checkUserAuthentication = (user: LeanDocument<IUser> | null): void => {
       if (!user) {
-        throwErrorUtils.throw404Error(response, 'User');
-        return;
+        response.status(404);
+        throw new Error(errorMessageUtils.error404('User'));
       }
 
       const isUserAuthorised = roles.includes(user.role);
       if (!isUserAuthorised) {
-        throwErrorUtils.throw401Error(response);
-        return;
+        response.status(401);
+        throw new Error(errorMessageUtils.error401());
       }
 
       next();
@@ -46,9 +46,11 @@ const authenticateUser = (
     usersDbService
       .getUser(decoded.id)
       .then((user): void => checkUserAuthentication(user))
-      .catch((error): void => throwErrorUtils.throw500Error(response, error));
+      .catch((error): void => next(error));
   } else {
-    throwErrorUtils.throw401Error(response);
+    response.status(401);
+    const newError = new Error(errorMessageUtils.error401());
+    next(newError);
   }
 };
 
