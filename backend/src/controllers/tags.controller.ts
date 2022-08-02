@@ -1,15 +1,15 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { LeanDocument, Types } from 'mongoose';
 
 import TagModel, { ITag } from '@/models/Tag.model';
 import tagsDbService from '@/services/tagsDb.service';
 import * as cmn from '@/types/cmn.types';
-import { generalUtils, throwErrorUtils } from '@/utils';
+import { errorMessageUtils, generalUtils } from '@/utils';
 
 // * @desc Add tag
 // * @route POST /api/tags
 // * @access Private
-const addTag = (request: Request, response: Response): Promise<void> => {
+const addTag = (request: Request, response: Response, next: NextFunction): Promise<void> => {
   const { body } = request;
 
   const newTag = new TagModel({
@@ -24,32 +24,37 @@ const addTag = (request: Request, response: Response): Promise<void> => {
     });
   };
 
-  const handleError = (error: cmn.MongooseValidationError): void => {
+  const handleTagError = (error: cmn.MongooseValidationError): void => {
     const isValidationError = error.name === 'ValidationError';
     if (isValidationError) {
-      throwErrorUtils.throwValidationError(response, error);
-      return;
+      const { message, errors } = errorMessageUtils.error400Validation(error);
+
+      response.status(400);
+      const newError = new Error(message);
+      const validationError = Object.assign(newError, { errors });
+      throw validationError;
     }
 
-    throwErrorUtils.throw500Error(response, error);
+    throw error;
   };
 
   return tagsDbService
     .addTag(newTag)
     .then((tag): void => handleTag(tag))
-    .catch((error): void => handleError(error));
+    .catch((error): void => handleTagError(error))
+    .catch((error): void => next(error));
 };
 
 // * @desc Delete tag
 // * @route DELETE /api/tags/:id
 // * @access Private
-const deleteTag = (request: Request, response: Response): Promise<void> => {
+const deleteTag = (request: Request, response: Response, next: NextFunction): Promise<void> => {
   const { id } = request.params;
 
   const handleTag = (tag: LeanDocument<ITag> | null): void => {
     if (!tag) {
-      throwErrorUtils.throw404Error(response, 'Tag');
-      return;
+      response.status(404);
+      throw new Error(errorMessageUtils.error404('Tag'));
     }
 
     response.status(200).json({
@@ -61,19 +66,19 @@ const deleteTag = (request: Request, response: Response): Promise<void> => {
   return tagsDbService
     .deleteTag(id)
     .then((tag): void => handleTag(tag))
-    .catch((error): void => throwErrorUtils.throw500Error(response, error));
+    .catch((error): void => next(error));
 };
 
 // * @desc Get tag
 // * @route GET /api/tags/:id
 // * @access Public
-const getTag = (request: Request, response: Response): Promise<void> => {
+const getTag = (request: Request, response: Response, next: NextFunction): Promise<void> => {
   const { id } = request.params;
 
   const handleTag = (tag: LeanDocument<ITag> | null): void => {
     if (!tag) {
-      throwErrorUtils.throw404Error(response, 'Tag');
-      return;
+      response.status(404);
+      throw new Error(errorMessageUtils.error404('Tag'));
     }
 
     response.status(200).json(tag);
@@ -82,18 +87,18 @@ const getTag = (request: Request, response: Response): Promise<void> => {
   return tagsDbService
     .getTag(id)
     .then((tag): void => handleTag(tag))
-    .catch((error): void => throwErrorUtils.throw500Error(response, error));
+    .catch((error): void => next(error));
 };
 
 // * @desc Get tags
 // * @route GET /api/tags
 // * @access Public
-const getTags = (_request: Request, response: Response): Promise<void> => {
+const getTags = (_request: Request, response: Response, next: NextFunction): Promise<void> => {
   const handleTags = (tags: LeanDocument<ITag[]>): void => {
     const isTagsEmpty = tags.length === 0;
     if (isTagsEmpty) {
-      throwErrorUtils.throwEmptyResultError(response, 'Tags');
-      return;
+      response.status(404);
+      throw new Error(errorMessageUtils.error404EmptyResult('Tags'));
     }
 
     response.status(200).json(tags);
@@ -102,13 +107,13 @@ const getTags = (_request: Request, response: Response): Promise<void> => {
   return tagsDbService
     .getTags()
     .then((tags): void => handleTags(tags))
-    .catch((error): void => throwErrorUtils.throw500Error(response, error));
+    .catch((error): void => next(error));
 };
 
 // * @desc Update tag
 // * @route PUT /api/tags/:id
 // * @access Private
-const updateTag = (request: Request, response: Response): Promise<void> => {
+const updateTag = (request: Request, response: Response, next: NextFunction): Promise<void> => {
   const {
     body,
     params: { id },
@@ -116,14 +121,15 @@ const updateTag = (request: Request, response: Response): Promise<void> => {
 
   const isBodyEmpty = generalUtils.isObjectEmpty(body);
   if (isBodyEmpty) {
-    throwErrorUtils.throwEmptyRequestBodyError(response, 'Tag');
-    return Promise.resolve();
+    response.status(400);
+    const newError = new Error(errorMessageUtils.error400EmptyRequestBody('Tag'));
+    return Promise.resolve(next(newError));
   }
 
   const handleTag = (tag: LeanDocument<ITag> | null): void => {
     if (!tag) {
-      throwErrorUtils.throw404Error(response, 'Tag');
-      return;
+      response.status(404);
+      throw new Error(errorMessageUtils.error404('Tag'));
     }
 
     response.status(200).json({
@@ -132,20 +138,25 @@ const updateTag = (request: Request, response: Response): Promise<void> => {
     });
   };
 
-  const handleError = (error: cmn.MongooseValidationError): void => {
+  const handleTagError = (error: cmn.MongooseValidationError): void => {
     const isValidationError = error.name === 'ValidationError';
     if (isValidationError) {
-      throwErrorUtils.throwValidationError(response, error);
-      return;
+      const { message, errors } = errorMessageUtils.error400Validation(error);
+
+      response.status(400);
+      const newError = new Error(message);
+      const validationError = Object.assign(newError, { errors });
+      throw validationError;
     }
 
-    throwErrorUtils.throw500Error(response, error);
+    throw error;
   };
 
   return tagsDbService
     .updateTag(id, body)
     .then((tag): void => handleTag(tag))
-    .catch((error): void => handleError(error));
+    .catch((error): void => handleTagError(error))
+    .catch((error): void => next(error));
 };
 
 const tagsController = {

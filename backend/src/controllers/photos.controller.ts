@@ -10,7 +10,7 @@ import { errorMessageUtils, generalUtils } from '@/utils';
 // * @desc Add photo
 // * @route POST /api/photos
 // * @access Private
-const addPhoto = async (request: Request, response: Response, next: NextFunction): Promise<void> => {
+const addPhoto = (request: Request, response: Response, next: NextFunction): Promise<void> => {
   const { body } = request;
 
   // Todo : fix no tags handling
@@ -48,7 +48,7 @@ const addPhoto = async (request: Request, response: Response, next: NextFunction
     });
   };
 
-  const handleError = (error: cmn.MongooseValidationError): void => {
+  const handlePhotoError = (error: cmn.MongooseValidationError): void => {
     const isValidationError = error.name === 'ValidationError';
     if (isValidationError) {
       const { message, errors } = errorMessageUtils.error400Validation(error);
@@ -59,13 +59,13 @@ const addPhoto = async (request: Request, response: Response, next: NextFunction
       throw validationError;
     }
 
-    next(error);
+    throw error;
   };
 
   return photosDbService
     .addPhoto(newPhoto)
     .then((photo): void => handlePhoto(photo))
-    .catch((error): void => handleError(error))
+    .catch((error): void => handlePhotoError(error))
     .catch((error): void => next(error));
 };
 
@@ -96,7 +96,7 @@ const deletePhoto = (request: Request, response: Response, next: NextFunction): 
 // * @desc Get photo
 // * @route GET /api/photos/:id
 // * @access Public
-const getPhoto = async (request: Request, response: Response, next: NextFunction): Promise<void> => {
+const getPhoto = (request: Request, response: Response, next: NextFunction): Promise<void> => {
   const { id } = request.params;
 
   const handlePhoto = (photo: LeanDocument<IPhoto> | null): void => {
@@ -162,7 +162,7 @@ const updatePhoto = (request: Request, response: Response, next: NextFunction): 
     });
   };
 
-  const handleError = (error: cmn.MongooseValidationError): void => {
+  const handlePhotoError = (error: cmn.MongooseValidationError): void => {
     const isValidationError = error.name === 'ValidationError';
     if (isValidationError) {
       const { message, errors } = errorMessageUtils.error400Validation(error);
@@ -173,13 +173,13 @@ const updatePhoto = (request: Request, response: Response, next: NextFunction): 
       throw validationError;
     }
 
-    next(error);
+    throw error;
   };
 
   return photosDbService
     .updatePhoto(id, body)
     .then((photo): void => handlePhoto(photo))
-    .catch((error): void => handleError(error))
+    .catch((error): void => handlePhotoError(error))
     .catch((error): void => next(error));
 };
 

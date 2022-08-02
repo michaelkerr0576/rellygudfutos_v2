@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 // eslint-disable-next-line node/no-unpublished-import
 import timekeeper from 'timekeeper';
 
@@ -17,11 +17,14 @@ import tagsController from './tags.controller';
 
 const mockResponseStatus = jest.fn();
 const mockResponseJson = jest.fn();
+const mockNextFunctionError = jest.fn();
 
 const mockResponse: Partial<Response> = {
   status: mockResponseStatus.mockReturnThis(),
   json: mockResponseJson,
 };
+
+const mockNextFunction: NextFunction = mockNextFunctionError;
 
 describe('Tag Controller', () => {
   beforeAll(async () => {
@@ -46,11 +49,11 @@ describe('Tag Controller', () => {
 
       // * Controller: add tag
       await tagsController
-        .addTag(mockRequest as Request, mockResponse as Response)
-        .catch((error): void => console.log(error));
+        .addTag(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
+        .catch((error): void => mockNextFunction(error));
 
       expect(mockResponse.status).toBeCalledWith(400);
-      expect(mockResponse.json).toHaveBeenCalledWith(
+      expect(mockNextFunction).toHaveBeenCalledWith(
         expect.objectContaining({
           message: 'Tag validation failed',
         }),
@@ -64,8 +67,8 @@ describe('Tag Controller', () => {
 
       // * Controller: add tag
       await tagsController
-        .addTag(mockRequest as Request, mockResponse as Response)
-        .catch((error): void => console.log(error));
+        .addTag(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
+        .catch((error): void => mockNextFunction(error));
 
       expect(mockResponse.status).toBeCalledWith(201);
       expect(mockResponse.json).toHaveBeenCalledWith(
@@ -92,13 +95,15 @@ describe('Tag Controller', () => {
 
       // * Controller: delete tag
       await tagsController
-        .deleteTag(mockRequest as Request, mockResponse as Response)
-        .catch((error): void => console.log(error));
+        .deleteTag(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
+        .catch((error): void => mockNextFunction(error));
 
       expect(mockResponse.status).toBeCalledWith(404);
-      expect(mockResponse.json).toHaveBeenCalledWith({
-        message: 'Tag not found',
-      });
+      expect(mockNextFunction).toHaveBeenCalledWith(
+        expect.objectContaining({
+          message: 'Tag not found',
+        }),
+      );
     });
 
     test('Expect to return 200 tag deleted', async () => {
@@ -111,8 +116,8 @@ describe('Tag Controller', () => {
 
       // * Controller: delete tag
       await tagsController
-        .deleteTag(mockRequest as Request, mockResponse as Response)
-        .catch((error): void => console.log(error));
+        .deleteTag(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
+        .catch((error): void => mockNextFunction(error));
 
       expect(mockResponse.status).toBeCalledWith(200);
       expect(mockResponse.json).toHaveBeenCalledWith(
@@ -138,13 +143,15 @@ describe('Tag Controller', () => {
 
       // * Controller: get tag
       await tagsController
-        .getTag(mockRequest as Request, mockResponse as Response)
-        .catch((error): void => console.log(error));
+        .getTag(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
+        .catch((error): void => mockNextFunction(error));
 
       expect(mockResponse.status).toBeCalledWith(404);
-      expect(mockResponse.json).toHaveBeenCalledWith({
-        message: 'Tag not found',
-      });
+      expect(mockNextFunction).toHaveBeenCalledWith(
+        expect.objectContaining({
+          message: 'Tag not found',
+        }),
+      );
     });
 
     test('Expect to return 200 get tag', async () => {
@@ -157,8 +164,8 @@ describe('Tag Controller', () => {
 
       // * Controller: get tag
       await tagsController
-        .getTag(mockRequest as Request, mockResponse as Response)
-        .catch((error): void => console.log(error));
+        .getTag(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
+        .catch((error): void => mockNextFunction(error));
 
       expect(mockResponse.status).toBeCalledWith(200);
       expect(mockResponse.json).toHaveBeenCalledWith(postTagResponseFixture);
@@ -171,13 +178,15 @@ describe('Tag Controller', () => {
 
       // * Controller: get tags
       await tagsController
-        .getTags(mockRequest as Request, mockResponse as Response)
-        .catch((error): void => console.log(error));
+        .getTags(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
+        .catch((error): void => mockNextFunction(error));
 
       expect(mockResponse.status).toBeCalledWith(404);
-      expect(mockResponse.json).toHaveBeenCalledWith({
-        message: 'Tags not found. Add Tags',
-      });
+      expect(mockNextFunction).toHaveBeenCalledWith(
+        expect.objectContaining({
+          message: 'Tags not found. Add Tags',
+        }),
+      );
     });
 
     test('Expect to return 200 get tags', async () => {
@@ -188,8 +197,8 @@ describe('Tag Controller', () => {
 
       // * Controller: get tags
       await tagsController
-        .getTags(mockRequest as Request, mockResponse as Response)
-        .catch((error): void => console.log(error));
+        .getTags(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
+        .catch((error): void => mockNextFunction(error));
 
       expect(mockResponse.status).toBeCalledWith(200);
       expect(mockResponse.json).toHaveBeenCalledWith(postTagsResponseFixture);
@@ -208,11 +217,11 @@ describe('Tag Controller', () => {
 
       // * Controller: update tag
       await tagsController
-        .updateTag(mockRequest as Request, mockResponse as Response)
-        .catch((error): void => console.log(error));
+        .updateTag(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
+        .catch((error): void => mockNextFunction(error));
 
       expect(mockResponse.status).toBeCalledWith(400);
-      expect(mockResponse.json).toHaveBeenCalledWith(
+      expect(mockNextFunction).toHaveBeenCalledWith(
         expect.objectContaining({
           message: 'Empty Tag request body',
         }),
@@ -233,11 +242,11 @@ describe('Tag Controller', () => {
 
       // * Controller: update tag
       await tagsController
-        .updateTag(mockRequest as Request, mockResponse as Response)
-        .catch((error): void => console.log(error));
+        .updateTag(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
+        .catch((error): void => mockNextFunction(error));
 
       expect(mockResponse.status).toBeCalledWith(400);
-      expect(mockResponse.json).toHaveBeenCalledWith(
+      expect(mockNextFunction).toHaveBeenCalledWith(
         expect.objectContaining({
           message: 'Validation failed',
         }),
@@ -252,13 +261,15 @@ describe('Tag Controller', () => {
 
       // * Controller: update tag
       await tagsController
-        .updateTag(mockRequest as Request, mockResponse as Response)
-        .catch((error): void => console.log(error));
+        .updateTag(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
+        .catch((error): void => mockNextFunction(error));
 
       expect(mockResponse.status).toBeCalledWith(404);
-      expect(mockResponse.json).toHaveBeenCalledWith({
-        message: 'Tag not found',
-      });
+      expect(mockNextFunction).toHaveBeenCalledWith(
+        expect.objectContaining({
+          message: 'Tag not found',
+        }),
+      );
     });
 
     test('Expect to return 200 tag updated', async () => {
@@ -275,8 +286,8 @@ describe('Tag Controller', () => {
 
       // * Controller: update tag
       await tagsController
-        .updateTag(mockRequest as Request, mockResponse as Response)
-        .catch((error): void => console.log(error));
+        .updateTag(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
+        .catch((error): void => mockNextFunction(error));
 
       expect(mockResponse.status).toBeCalledWith(200);
       expect(mockResponse.json).toHaveBeenCalledWith(

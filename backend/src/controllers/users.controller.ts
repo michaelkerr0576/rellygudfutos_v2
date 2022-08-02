@@ -1,16 +1,16 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import { LeanDocument, Types } from 'mongoose';
 
 import UserModel, { IUser } from '@/models/User.model';
 import usersDbService from '@/services/usersDb.service';
 import * as cmn from '@/types/cmn.types';
-import { authUtils, throwErrorUtils } from '@/utils';
+import { authUtils, errorMessageUtils } from '@/utils';
 
 // * @desc Add user
 // * @route POST /api/users
 // * @access Private
-const addUser = (request: Request, response: Response): Promise<void> => {
+const addUser = (request: Request, response: Response, next: NextFunction): Promise<void> => {
   const { email, name, password, role } = request.body;
 
   const passwordSalt = bcrypt.genSaltSync(10);
@@ -37,26 +37,31 @@ const addUser = (request: Request, response: Response): Promise<void> => {
     });
   };
 
-  const handleError = (error: cmn.MongoError | cmn.MongooseValidationError): void => {
+  const handleUserError = (error: cmn.MongoError | cmn.MongooseValidationError): void => {
     const isDuplicateUser = error.name === 'MongoError' && error.code === 11000;
     if (isDuplicateUser) {
-      throwErrorUtils.throwAlreadyExistsError(response, 'User', error as cmn.MongoError);
-      return;
+      response.status(400);
+      throw new Error(errorMessageUtils.error400AlreadyExists('User'));
     }
 
     const isValidationError = error.name === 'ValidationError';
     if (isValidationError) {
-      throwErrorUtils.throwValidationError(response, error as cmn.MongooseValidationError);
-      return;
+      const { message, errors } = errorMessageUtils.error400Validation(error as cmn.MongooseValidationError);
+
+      response.status(400);
+      const newError = new Error(message);
+      const validationError = Object.assign(newError, { errors });
+      throw validationError;
     }
 
-    throwErrorUtils.throw500Error(response, error);
+    throw error;
   };
 
   return usersDbService
     .addUser(newUser)
     .then((user): void => handleUser(user))
-    .catch((error): void => handleError(error));
+    .catch((error): void => handleUserError(error))
+    .catch((error): void => next(error));
 };
 
 // * @desc Delete user
@@ -76,12 +81,12 @@ const getUser = (_request: Request, response: Response): void => {
 // * @desc Get users
 // * @route GET /api/users
 // * @access Private
-const getUsers = (_request: Request, response: Response): Promise<void> => {
+const getUsers = (_request: Request, response: Response, next: NextFunction): Promise<void> => {
   const handleUsers = (users: LeanDocument<IUser[]>): void => {
     const isUsersEmpty = users.length === 0;
     if (isUsersEmpty) {
-      throwErrorUtils.throwEmptyResultError(response, 'Users');
-      return;
+      response.status(404);
+      throw new Error(errorMessageUtils.error404EmptyResult('Users'));
     }
 
     response.status(200).json(users);
@@ -90,25 +95,25 @@ const getUsers = (_request: Request, response: Response): Promise<void> => {
   return usersDbService
     .getUsers()
     .then((users): void => handleUsers(users))
-    .catch((error): void => throwErrorUtils.throw500Error(response, error));
+    .catch((error): void => next(error));
 };
 
 // * @desc Login user
 // * @route POST /api/users/login
 // * @access Public
-const loginUser = (request: Request, response: Response): Promise<void> => {
+const loginUser = (request: Request, response: Response, next: NextFunction): Promise<void> => {
   const { email, password } = request.body;
 
   const handleUser = (user: LeanDocument<IUser> | null): void => {
     if (!user) {
-      throwErrorUtils.throw404Error(response, 'User');
-      return;
+      response.status(404);
+      throw new Error(errorMessageUtils.error404('User'));
     }
 
     const isInvalidPassword = !bcrypt.compareSync(password, user.password);
     if (isInvalidPassword) {
-      throwErrorUtils.throwInvalidCredentialsError(response);
-      return;
+      response.status(404);
+      throw new Error(errorMessageUtils.error404InvalidCredentials());
     }
 
     response.status(200).json({
@@ -126,7 +131,7 @@ const loginUser = (request: Request, response: Response): Promise<void> => {
   return usersDbService
     .findUser(email)
     .then((user): void => handleUser(user))
-    .catch((error): void => throwErrorUtils.throw500Error(response, error));
+    .catch((error): void => next(error));
 };
 
 // * @desc Update user
