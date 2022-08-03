@@ -46,24 +46,23 @@ describe('Photos Controller', () => {
   });
 
   describe('Add Photo', () => {
-    // Todo: Put back in after fixing in controller
-    // test('Expect to return 404 tag not found in image tags', async () => {
-    //   const mockRequest: Partial<Request> = {
-    //     body: postPhotoFixture,
-    //   };
+    test('Expect to return 404 tag not found in image tags', async () => {
+      const mockRequest: Partial<Request> = {
+        body: postPhotoFixture,
+      };
 
-    //   // * Controller: add photo
-    //   await photosController
-    //     .addPhoto(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
-    //     .catch((error): void => mockNextFunction(error));
+      // * Controller: add photo
+      await photosController
+        .addPhoto(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
+        .catch((error): void => mockNextFunction(error));
 
-    //   expect(mockResponse.status).toBeCalledWith(404);
-    //   expect(mockNextFunction).toBeCalledWith(
-    //     expect.objectContaining({
-    //       message: 'Tag not found from Image Tags',
-    //     }),
-    //   );
-    // });
+      expect(mockResponse.status).toBeCalledWith(404);
+      expect(mockNextFunction).toBeCalledWith(
+        expect.objectContaining({
+          message: 'Tag not found from Image Tags',
+        }),
+      );
+    });
 
     test('Expect to return 400 photo validation failed', async () => {
       const mockRequest: Partial<Request> = {

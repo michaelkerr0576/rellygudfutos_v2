@@ -3,7 +3,7 @@ import { LeanDocument, Types } from 'mongoose';
 
 import PhotoModel, { IPhoto } from '@/models/Photo.model';
 import photosDbService from '@/services/photosDb.service';
-// import tagsDbService from '@/services/tagsDb.service';
+import tagsDbService from '@/services/tagsDb.service';
 import * as cmn from '@/types/cmn.types';
 import { errorMessageUtils, generalUtils } from '@/utils';
 
@@ -12,20 +12,19 @@ import { errorMessageUtils, generalUtils } from '@/utils';
 // * @access Private
 const addPhoto = (request: Request, response: Response, next: NextFunction): Promise<void> => {
   const { body } = request;
-
-  // Todo : fix no tags handling
-  // const tagIds = body?.details?.imageTags;
-  // const isTagsExist = tagIds ? await tagsDbService.checkTagsExist(tagIds) : false;
-
-  // if (!isTagsExist) {
-  //   response.status(404);
-  //   throw new Error(errorMessageUtils.error404ArrayValueNotFound('Tag', 'Image Tags'));
-  // }
+  const tagIds = body?.details?.imageTags;
 
   const newPhoto = new PhotoModel({
     _id: new Types.ObjectId(),
     ...body,
   });
+
+  const handleIsTagsFound = (isTagsFound: boolean): void => {
+    if (!isTagsFound) {
+      response.status(404);
+      throw new Error(errorMessageUtils.error404ArrayValueNotFound('Tag', 'Image Tags'));
+    }
+  };
 
   const handlePhoto = (photo: IPhoto): void => {
     // Todo : fix push new photo tags
@@ -62,8 +61,10 @@ const addPhoto = (request: Request, response: Response, next: NextFunction): Pro
     throw error;
   };
 
-  return photosDbService
-    .addPhoto(newPhoto)
+  return tagsDbService
+    .checkTagsExist(tagIds)
+    .then((isTagsFound): void => handleIsTagsFound(isTagsFound))
+    .then((): Promise<IPhoto> => photosDbService.addPhoto(newPhoto))
     .then((photo): void => handlePhoto(photo))
     .catch((error): void => handlePhotoError(error))
     .catch((error): void => next(error));
