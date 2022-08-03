@@ -1,4 +1,5 @@
 import controllerUtils from './controller.utils';
-import photoControllerUtils from './photosController.utils';
+import photosControllerUtils from './photosController.utils';
+import tagsControllerUtils from './tagsController.utils';
 
-export { controllerUtils, photoControllerUtils };
+export { controllerUtils, photosControllerUtils, tagsControllerUtils };

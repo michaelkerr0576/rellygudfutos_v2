@@ -3,9 +3,9 @@ import { Response } from 'express';
 import * as cmn from '@/types/cmn.types';
 import { errorMessageUtils } from '@/utils';
 
-const handleEmptyBodyRequest = (response: Response): Error => {
+const handleEmptyBodyRequest = (response: Response, model: string): Error => {
   response.status(400);
-  const newError = new Error(errorMessageUtils.error400EmptyRequestBody('Photo'));
+  const newError = new Error(errorMessageUtils.error400EmptyRequestBody(model));
   return newError;
 };
 

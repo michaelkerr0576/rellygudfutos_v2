@@ -6,7 +6,7 @@ import photosDbService from '@/services/photosDb.service';
 import tagsDbService from '@/services/tagsDb.service';
 import { generalUtils } from '@/utils';
 
-import { controllerUtils, photoControllerUtils } from './utils';
+import { controllerUtils, photosControllerUtils } from './utils';
 
 // * @desc Add photo
 // * @route POST /api/photos
@@ -22,9 +22,9 @@ const addPhoto = (request: Request, response: Response, next: NextFunction): Pro
 
   return tagsDbService
     .checkTagsExist(tagIds)
-    .then((isTagsFound): void => photoControllerUtils.handleIsTagsFound(response, isTagsFound))
+    .then((isTagsFound): void => photosControllerUtils.handleIsTagsFound(response, isTagsFound))
     .then((): Promise<IPhoto> => photosDbService.addPhoto(newPhoto))
-    .then((photo): void => photoControllerUtils.handleAddedPhoto(response, photo))
+    .then((photo): void => photosControllerUtils.handleAddedPhoto(response, photo))
     .catch((error): void => controllerUtils.handleValidationError(response, error))
     .catch((error): void => next(error));
 };
@@ -37,7 +37,7 @@ const deletePhoto = (request: Request, response: Response, next: NextFunction): 
 
   return photosDbService
     .deletePhoto(id)
-    .then((photo): void => photoControllerUtils.handleDeletedPhoto(response, photo))
+    .then((photo): void => photosControllerUtils.handleDeletedPhoto(response, photo))
     .catch((error): void => next(error));
 };
 
@@ -49,7 +49,7 @@ const getPhoto = (request: Request, response: Response, next: NextFunction): Pro
 
   return photosDbService
     .getPhoto(id)
-    .then((photo): void => photoControllerUtils.handlePhoto(response, photo))
+    .then((photo): void => photosControllerUtils.handlePhoto(response, photo))
     .catch((error): void => next(error));
 };
 
@@ -59,7 +59,7 @@ const getPhoto = (request: Request, response: Response, next: NextFunction): Pro
 const getPhotos = (_request: Request, response: Response, next: NextFunction): Promise<void> =>
   photosDbService
     .getPhotos()
-    .then((photos): void => photoControllerUtils.handlePhotos(response, photos))
+    .then((photos): void => photosControllerUtils.handlePhotos(response, photos))
     .catch((error): void => next(error));
 
 // * @desc Update photo
@@ -73,12 +73,12 @@ const updatePhoto = (request: Request, response: Response, next: NextFunction): 
 
   const isBodyEmpty = generalUtils.isObjectEmpty(body);
   if (isBodyEmpty) {
-    return Promise.resolve(next(controllerUtils.handleEmptyBodyRequest(response)));
+    return Promise.resolve(next(controllerUtils.handleEmptyBodyRequest(response, 'Photo')));
   }
 
   return photosDbService
     .updatePhoto(id, body)
-    .then((photo): void => photoControllerUtils.handleUpdatedPhoto(response, photo))
+    .then((photo): void => photosControllerUtils.handleUpdatedPhoto(response, photo))
     .catch((error): void => controllerUtils.handleValidationError(response, error))
     .catch((error): void => next(error));
 };
