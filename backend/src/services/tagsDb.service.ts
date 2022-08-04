@@ -1,31 +1,43 @@
-import { LeanDocument, Schema } from 'mongoose';
+import { LeanDocument, Types } from 'mongoose';
 
 import TagModel, { ITag } from '@/models/Tag.model';
+import * as cmn from '@/types/cmn.types';
 import * as enm from '@/types/enum.types';
 
 const addTag = (newTag: ITag): Promise<ITag> => TagModel.create(newTag);
 
-const addTagPhotos = (
-  photoId: Schema.Types.ObjectId,
-  photoTagIds: Schema.Types.ObjectId[],
-): Promise<enm.RequestStatus> =>
+const addTagPhotos = (photoId: Types.ObjectId, photoTagIds: Types.ObjectId[]): Promise<cmn.OperationStatus> =>
   TagModel.updateMany(
     { _id: photoTagIds as any },
     {
       $push: { photos: photoId },
     },
-  ).then((): enm.RequestStatus => enm.RequestStatus.SUCCESS);
+  ).then((): cmn.OperationStatus => ({ status: enm.OperationStatus.SUCCESS }));
 
 const addTags = (newTags: ITag[]): Promise<ITag[]> => TagModel.insertMany(newTags);
 
-const checkTagsExist = (ids: string[]): Promise<boolean> =>
-  TagModel.find({ _id: { $in: ids as any } }).then((tags): boolean => ids.length === tags.length);
+const checkTagPhotosExist = (photoIds: Types.ObjectId[]): Promise<boolean> =>
+  TagModel.exists({ photos: { $in: photoIds } });
+
+const checkTagsExist = (ids: Types.ObjectId[]): Promise<boolean> =>
+  TagModel.find({ _id: { $in: ids } }).then((tags): boolean => ids.length === tags.length);
 
 const deleteTag = (id: string): Promise<LeanDocument<ITag> | null> =>
   TagModel.findByIdAndDelete(id)
     .lean()
     .select('-__v')
     .then((tag): LeanDocument<ITag> | null => tag);
+
+const deleteTagPhotos = (
+  photoId: Types.ObjectId,
+  photoTagIds: Types.ObjectId[],
+): Promise<cmn.OperationStatus> =>
+  TagModel.updateMany(
+    { _id: photoTagIds as any },
+    {
+      $pull: { photos: photoId },
+    },
+  ).then((): cmn.OperationStatus => ({ status: enm.OperationStatus.SUCCESS }));
 
 const findTag = (createdAt: Date): Promise<LeanDocument<ITag> | null> =>
   TagModel.findOne({ createdAt })
@@ -55,8 +67,10 @@ const tagsDbService = {
   addTag,
   addTagPhotos,
   addTags,
+  checkTagPhotosExist,
   checkTagsExist,
   deleteTag,
+  deleteTagPhotos,
   findTag,
   getTag,
   getTags,

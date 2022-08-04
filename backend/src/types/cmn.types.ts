@@ -1,5 +1,7 @@
 import mongoose from 'mongoose';
 
+import * as enm from './enum.types';
+
 // #region Error Types
 export type MongoError = Error & {
   code: number;
@@ -20,3 +22,5 @@ export type ValidationErrorsMessage = {
   };
 };
 // #endregion
+
+export type OperationStatus = { status: enm.OperationStatus };

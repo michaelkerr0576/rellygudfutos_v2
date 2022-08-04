@@ -4,7 +4,7 @@ export enum ImageSize {
   LARGE = 'LARGE',
 }
 
-export enum RequestStatus {
+export enum OperationStatus {
   FAILED = 'FAILED',
   PENDING = 'PENDING',
   SUCCESS = 'SUCCESS',

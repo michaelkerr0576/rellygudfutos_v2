@@ -3,7 +3,6 @@ import { Types } from 'mongoose';
 
 import PhotoModel, { IPhoto } from '@/models/Photo.model';
 import photosDbService from '@/services/photosDb.service';
-import tagsDbService from '@/services/tagsDb.service';
 import { generalUtils } from '@/utils';
 
 import { controllerUtils, photosControllerUtils } from './utils';
@@ -13,19 +12,21 @@ import { controllerUtils, photosControllerUtils } from './utils';
 // * @access Private
 const addPhoto = (request: Request, response: Response, next: NextFunction): Promise<void> => {
   const { body } = request;
-  const tagIds = body?.details?.imageTags;
 
   const newPhoto = new PhotoModel({
     _id: new Types.ObjectId(),
     ...body,
   });
 
-  return tagsDbService
-    .checkTagsExist(tagIds)
-    .then((isTagsFound): void => photosControllerUtils.handleIsTagsFound(response, isTagsFound))
+  const photoId = newPhoto._id;
+  const photoTagIds = newPhoto?.details?.imageTags;
+
+  return photosControllerUtils
+    .handleCheckTagsExist(response, photoTagIds)
     .then((): Promise<IPhoto> => photosDbService.addPhoto(newPhoto))
-    .then((photo): void => photosControllerUtils.handleAddedPhoto(response, photo))
+    .then((photo): Promise<void> => photosControllerUtils.handleAddedPhoto(response, photo))
     .catch((error): void => controllerUtils.handleValidationError(response, error))
+    .catch((error): Promise<void> => photosControllerUtils.handleCancelAddPhoto(error, photoId, photoTagIds))
     .catch((error): void => next(error));
 };
 

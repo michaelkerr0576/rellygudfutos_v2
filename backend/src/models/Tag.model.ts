@@ -1,17 +1,17 @@
-import { Document, model, Schema } from 'mongoose';
+import { Document, model, Schema, Types } from 'mongoose';
 
 export interface ITag extends Document {
-  _id: Schema.Types.ObjectId;
-  photos: Schema.Types.ObjectId[];
+  _id: Types.ObjectId;
+  photos: Types.ObjectId[];
   tag: string;
 }
 
 const tagSchema = new Schema<ITag>(
   {
-    _id: Schema.Types.ObjectId,
+    _id: Types.ObjectId,
     photos: [
       {
-        type: Schema.Types.ObjectId,
+        type: Types.ObjectId,
         ref: 'Photo',
       },
     ],

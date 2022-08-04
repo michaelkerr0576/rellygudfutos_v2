@@ -1,17 +1,17 @@
-import { Date, Document, model, Schema } from 'mongoose';
+import { Date, Document, model, Schema, Types } from 'mongoose';
 
 import * as enm from '@/types/enum.types';
 import { regexUtils } from '@/utils';
 
 export interface IPhoto extends Document {
-  _id: Schema.Types.ObjectId;
+  _id: Types.ObjectId;
   details: {
     captureDate: Date;
     captureLocation: string;
     imageCaption: string;
     imageFile: string;
     imageSize: enm.ImageSize;
-    imageTags: Schema.Types.ObjectId[];
+    imageTags: Types.ObjectId[];
     imageTitle: string;
     originalImageName: string;
     storeLink: string;
@@ -28,7 +28,7 @@ export interface IPhoto extends Document {
 
 const photoSchema = new Schema<IPhoto>(
   {
-    _id: Schema.Types.ObjectId,
+    _id: Types.ObjectId,
     details: {
       captureDate: {
         type: Date,
@@ -61,10 +61,10 @@ const photoSchema = new Schema<IPhoto>(
         default: enm.ImageSize.MEDIUM,
       },
       imageTags: {
-        type: [Schema.Types.ObjectId],
+        type: [Types.ObjectId],
         ref: 'Tag',
         // * Validate: required - "required: true" does not work for array
-        validate: (v: Schema.Types.ObjectId[]): boolean => Array.isArray(v) && v.length > 0,
+        validate: (v: Types.ObjectId[]): boolean => Array.isArray(v) && v.length > 0,
       },
       imageTitle: {
         type: String,

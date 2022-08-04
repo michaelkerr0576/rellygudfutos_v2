@@ -1,10 +1,10 @@
-import { Document, model, Schema } from 'mongoose';
+import { Document, model, Schema, Types } from 'mongoose';
 
 import * as enm from '@/types/enum.types';
 import { regexUtils } from '@/utils';
 
 export interface IUser extends Document {
-  _id: Schema.Types.ObjectId;
+  _id: Types.ObjectId;
   email: string;
   name: string;
   password: string;
@@ -13,7 +13,7 @@ export interface IUser extends Document {
 
 const userSchema = new Schema<IUser>(
   {
-    _id: Schema.Types.ObjectId,
+    _id: Types.ObjectId,
     email: {
       type: String,
       required: true,
