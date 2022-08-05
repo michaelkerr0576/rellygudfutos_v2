@@ -7,6 +7,7 @@ import postPhotoRequiredFixture from './postPhotoRequired.fixture';
 import postPhotoResponseFixture from './postPhotoResponse.fixture';
 import postPhotosFixture from './postPhotos.fixture';
 import postPhotosResponseFixture from './postPhotosResponse.fixture';
+import postPhotoTagsResponseFixture from './postPhotoTagsResponse.fixture';
 import postPhotoTrimFixture from './postPhotoTrim.fixture';
 
 export {
@@ -19,5 +20,6 @@ export {
   postPhotoResponseFixture,
   postPhotosFixture,
   postPhotosResponseFixture,
+  postPhotoTagsResponseFixture,
   postPhotoTrimFixture,
 };

@@ -45,6 +45,12 @@ const findTag = (createdAt: Date): Promise<LeanDocument<ITag> | null> =>
     .select('-__v')
     .then((tag): LeanDocument<ITag> | null => tag);
 
+const findTags = (ids: Types.ObjectId[]): Promise<LeanDocument<ITag[]>> =>
+  TagModel.find({ _id: ids as any })
+    .lean()
+    .select('-__v')
+    .then((tags): LeanDocument<ITag[]> => tags);
+
 const getTag = (id: string): Promise<LeanDocument<ITag> | null> =>
   TagModel.findById(id)
     .lean()
@@ -72,6 +78,7 @@ const tagsDbService = {
   deleteTag,
   deleteTagPhotos,
   findTag,
+  findTags,
   getTag,
   getTags,
   updateTag,

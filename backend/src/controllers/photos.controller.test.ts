@@ -11,8 +11,9 @@ import {
   postPhotoResponseFixture,
   postPhotosFixture,
   postPhotosResponseFixture,
+  postPhotoTagsResponseFixture,
 } from '@/tests/fixtures/photos';
-import { postTagFixture } from '@/tests/fixtures/tags';
+import { postTagFixture, postTagsFixture } from '@/tests/fixtures/tags';
 import utilFixture from '@/tests/fixtures/util.fixture';
 import mongoMemoryServer from '@/tests/mongoMemoryServer';
 
@@ -87,8 +88,8 @@ describe('Photos Controller', () => {
         body: postPhotoFixture,
       };
 
-      // * DB Service: add tag as it is required for addPhoto
-      await tagsDbService.addTag(postTagFixture as any).catch((error): void => console.log(error));
+      // * DB Service: add tags as it is required for addPhoto
+      await tagsDbService.addTags(postTagsFixture as any).catch((error): void => console.log(error));
 
       // * Controller: add photo
       await photosController
@@ -109,6 +110,15 @@ describe('Photos Controller', () => {
 
       expect(addedPhoto).toBeTruthy();
       expect(addedPhoto).toEqual(postPhotoResponseFixture);
+
+      // * DB Service: find tag and check tag photos have been updated
+      const photoTagIds = postPhotoFixture.details.imageTags;
+      const updatedTags = await tagsDbService
+        .findTags(photoTagIds as any)
+        .catch((error): void => console.log(error));
+
+      expect(updatedTags).toBeTruthy();
+      expect(updatedTags).toEqual(postPhotoTagsResponseFixture);
     });
   });
 
@@ -136,8 +146,8 @@ describe('Photos Controller', () => {
         params: { id: postPhotoFixture._id },
       };
 
-      // * DB Service: add tag as it is required for addPhoto
-      await tagsDbService.addTag(postTagFixture as any).catch((error): void => console.log(error));
+      // * DB Service: add tags as it is required for addPhoto
+      await tagsDbService.addTags(postTagsFixture as any).catch((error): void => console.log(error));
 
       // * DB Service: add photo to be deleted
       await photosDbService.addPhoto(postPhotoFixture as any).catch((error): void => console.log(error));
@@ -187,8 +197,8 @@ describe('Photos Controller', () => {
         params: { id: postPhotoFixture._id },
       };
 
-      // * DB Service: add tag as it is required for addPhoto
-      await tagsDbService.addTag(postTagFixture as any).catch((error): void => console.log(error));
+      // * DB Service: add tags as it is required for addPhoto
+      await tagsDbService.addTags(postTagsFixture as any).catch((error): void => console.log(error));
 
       // * DB Service: add photo to be get
       await photosDbService.addPhoto(postPhotoFixture as any).catch((error): void => console.log(error));
@@ -246,8 +256,8 @@ describe('Photos Controller', () => {
         params: { id: postPhotoFixture._id },
       };
 
-      // * DB Service: add tag as it is required for addPhoto
-      await tagsDbService.addTag(postTagFixture as any).catch((error): void => console.log(error));
+      // * DB Service: add tags as it is required for addPhoto
+      await tagsDbService.addTags(postTagsFixture as any).catch((error): void => console.log(error));
 
       // * DB Service: add photo to be updated
       await photosDbService.addPhoto(postPhotoFixture as any).catch((error): void => console.log(error));
@@ -274,8 +284,8 @@ describe('Photos Controller', () => {
         params: { id: postPhotoFixture._id },
       };
 
-      // * DB Service: add tag as it is required for addPhoto
-      await tagsDbService.addTag(postTagFixture as any).catch((error): void => console.log(error));
+      // * DB Service: add tags as it is required for addPhoto
+      await tagsDbService.addTags(postTagsFixture as any).catch((error): void => console.log(error));
 
       // * DB Service: add photo to be updated
       await photosDbService.addPhoto(postPhotoFixture as any).catch((error): void => console.log(error));
@@ -321,8 +331,8 @@ describe('Photos Controller', () => {
         params: { id: postPhotoFixture._id },
       };
 
-      // * DB Service: add tag as it is required for addPhoto
-      await tagsDbService.addTag(postTagFixture as any).catch((error): void => console.log(error));
+      // * DB Service: add tags as it is required for addPhoto
+      await tagsDbService.addTags(postTagsFixture as any).catch((error): void => console.log(error));
 
       // * DB Service: add photo to be updated
       await photosDbService.addPhoto(postPhotoFixture as any).catch((error): void => console.log(error));

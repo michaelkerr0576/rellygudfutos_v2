@@ -12,7 +12,6 @@ const handleAddedPhoto = async (response: Response, photo: IPhoto): Promise<void
     details: { imageTags: photoTagIds },
   } = photo;
 
-  // TODO - test addTagPhotos is working as expected
   await tagsDbService.addTagPhotos(photoId, photoTagIds);
 
   response.status(201).json({
