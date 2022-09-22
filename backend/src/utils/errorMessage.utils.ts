@@ -20,7 +20,7 @@ const error400Validation = (
     };
   });
 
-  return { message, errors };
+  return { errors, message };
 };
 
 const error401 = (): string => 'User not authorized';

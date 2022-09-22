@@ -1,3 +1,4 @@
+/* eslint-disable sort-keys */
 import { Document, model, Schema, Types } from 'mongoose';
 
 export interface ITag extends Document {

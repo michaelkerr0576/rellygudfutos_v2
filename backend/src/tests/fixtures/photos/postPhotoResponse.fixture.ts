@@ -25,10 +25,10 @@ export default {
   ...postPhotoFixture,
   _id: new Types.ObjectId(postPhotoFixture._id),
   createdAt: utilFixture.freezeDate,
-  updatedAt: utilFixture.freezeDate,
   details: {
     ...postPhotoFixture.details,
     captureDate: new Date(postPhotoFixture.details.captureDate),
     imageTags,
   },
+  updatedAt: utilFixture.freezeDate,
 };

@@ -21,22 +21,22 @@ export default [
     ...firstPhoto,
     _id: new Types.ObjectId(firstPhoto._id),
     createdAt: utilFixture.freezeDate,
-    updatedAt: utilFixture.freezeDate,
     details: {
       ...firstPhoto.details,
       captureDate: new Date(firstPhoto.details.captureDate),
       imageTags,
     },
+    updatedAt: utilFixture.freezeDate,
   },
   {
     ...secondPhoto,
     _id: new Types.ObjectId(secondPhoto._id),
     createdAt: utilFixture.freezeDate,
-    updatedAt: utilFixture.freezeDate,
     details: {
       ...secondPhoto.details,
       captureDate: new Date(secondPhoto.details.captureDate),
       imageTags,
     },
+    updatedAt: utilFixture.freezeDate,
   },
 ];

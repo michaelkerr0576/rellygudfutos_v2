@@ -15,8 +15,8 @@ const handleAddedPhoto = async (response: Response, photo: IPhoto): Promise<void
   await tagsDbService.addTagPhotos(photoId, photoTagIds);
 
   response.status(201).json({
-    message: 'Photo added',
     addedPhoto: photo,
+    message: 'Photo added',
   });
 };
 
@@ -64,8 +64,8 @@ const handleDeletedPhoto = (response: Response, photo: LeanDocument<IPhoto> | nu
   }
 
   response.status(200).json({
-    message: 'Photo deleted',
     deletedPhoto: photo,
+    message: 'Photo deleted',
   });
 };
 

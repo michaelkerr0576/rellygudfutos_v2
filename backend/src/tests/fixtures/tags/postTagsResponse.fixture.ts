@@ -9,8 +9,8 @@ export default [
   {
     ...firstTag,
     _id: new Types.ObjectId(firstTag._id),
-    photos: [new Types.ObjectId(firstTag.photos[0])],
     createdAt: utilFixture.freezeDate,
+    photos: [new Types.ObjectId(firstTag.photos[0])],
     updatedAt: utilFixture.freezeDate,
   },
   {

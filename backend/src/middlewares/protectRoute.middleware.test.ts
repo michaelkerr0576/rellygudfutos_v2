@@ -29,8 +29,8 @@ const mockResponseJson = jest.fn();
 const mockNextFunctionError = jest.fn();
 
 const mockResponse: Partial<Response> = {
-  status: mockResponseStatus.mockReturnThis(),
   json: mockResponseJson,
+  status: mockResponseStatus.mockReturnThis(),
 };
 
 const mockNextFunction: NextFunction = mockNextFunctionError;

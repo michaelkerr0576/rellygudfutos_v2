@@ -1,10 +1,10 @@
 module.exports = {
   env: {
-    'jest/globals': true,
     browser: true,
     commonjs: true,
-    es2021: true,
     es6: true,
+    es2021: true,
+    'jest/globals': true,
     node: true,
   },
   extends: [
@@ -18,6 +18,15 @@ module.exports = {
     'prettier',
     'plugin:jest/recommended',
   ],
+  overrides: [
+    {
+      files: ['*test.ts'],
+      rules: {
+        '@typescript-eslint/explicit-function-return-type': 'off',
+        '@typescript-eslint/no-explicit-any': 'off',
+      },
+    },
+  ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 'latest',
@@ -25,6 +34,38 @@ module.exports = {
   },
   plugins: ['@typescript-eslint', 'eslint-plugin-import', 'import', 'prettier', 'simple-import-sort', 'jest'],
   rules: {
+    '@typescript-eslint/explicit-function-return-type': [
+      'error',
+      {
+        allowTypedFunctionExpressions: false,
+      },
+    ],
+    '@typescript-eslint/no-unused-vars': [
+      'error',
+      {
+        argsIgnorePattern: '^_',
+        caughtErrorsIgnorePattern: '^_',
+        varsIgnorePattern: '^_',
+      },
+    ],
+    'import/prefer-default-export': 'off',
+    'jest/no-conditional-expect': 'off',
+    'jest/no-disabled-tests': 'warn',
+    'jest/no-focused-tests': 'error',
+    'jest/no-identical-title': 'error',
+    'jest/prefer-to-have-length': 'warn',
+    'jest/valid-expect': 'error',
+    'no-underscore-dangle': ['error', { allow: ['_id'] }],
+    'no-unused-vars': 'off',
+    // Conflict with importing aliases. Typescript and Eslint have errors to handle missing imports
+    'node/no-missing-import': 'off',
+    'node/no-unsupported-features/es-syntax': [
+      'error',
+      {
+        ignores: ['modules'],
+        version: '>=10.6.0',
+      },
+    ],
     'prettier/prettier': [
       'error',
       {
@@ -36,9 +77,7 @@ module.exports = {
         trailingComma: 'all',
       },
     ],
-    // Conflict with importing aliases. Typescript and Eslint have errors to handle missing imports
-    'node/no-missing-import': 'off',
-    'import/prefer-default-export': 'off',
+    'simple-import-sort/exports': 'error',
     'simple-import-sort/imports': [
       'error',
       {
@@ -56,46 +95,8 @@ module.exports = {
         ],
       },
     ],
-    'simple-import-sort/exports': 'error',
-    'no-underscore-dangle': ['error', { allow: ['_id'] }],
-    'node/no-unsupported-features/es-syntax': [
-      'error',
-      {
-        version: '>=10.6.0',
-        ignores: ['modules'],
-      },
-    ],
-    '@typescript-eslint/explicit-function-return-type': [
-      'error',
-      {
-        allowTypedFunctionExpressions: false,
-      },
-    ],
-    'no-unused-vars': 'off',
-    '@typescript-eslint/no-unused-vars': [
-      'error',
-      {
-        argsIgnorePattern: '^_',
-        varsIgnorePattern: '^_',
-        caughtErrorsIgnorePattern: '^_',
-      },
-    ],
-    'jest/no-conditional-expect': 'off',
-    'jest/no-disabled-tests': 'warn',
-    'jest/no-focused-tests': 'error',
-    'jest/no-identical-title': 'error',
-    'jest/prefer-to-have-length': 'warn',
-    'jest/valid-expect': 'error',
+    'sort-keys': ['error', 'asc', { caseSensitive: false, minKeys: 2, natural: true }],
   },
-  overrides: [
-    {
-      files: ['*test.ts'],
-      rules: {
-        '@typescript-eslint/explicit-function-return-type': 'off',
-        '@typescript-eslint/no-explicit-any': 'off',
-      },
-    },
-  ],
   settings: {
     'import/parsers': {
       '@typescript-eslint/parser': ['.ts'],

@@ -14,8 +14,8 @@ const errorHandler = (
 
   response.status(statusCode);
   response.json({
-    message: error.message,
     errors: error.errors,
+    message: error.message,
     stack: nodeEnv === 'production' ? undefined : error.stack,
   });
 };

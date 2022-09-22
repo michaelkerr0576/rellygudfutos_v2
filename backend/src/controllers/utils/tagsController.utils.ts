@@ -6,8 +6,8 @@ import { errorMessageUtils } from '@/utils';
 
 const handleAddedTag = (response: Response, tag: ITag): void => {
   response.status(201).json({
-    message: 'Tag added',
     addedTag: tag,
+    message: 'Tag added',
   });
 };
 
@@ -18,8 +18,8 @@ const handleDeletedTag = (response: Response, tag: LeanDocument<ITag> | null): v
   }
 
   response.status(200).json({
-    message: 'Tag deleted',
     deletedTag: tag,
+    message: 'Tag deleted',
   });
 };
 

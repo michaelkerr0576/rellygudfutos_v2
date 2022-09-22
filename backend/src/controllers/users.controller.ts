@@ -26,13 +26,13 @@ const addUser = (request: Request, response: Response, next: NextFunction): Prom
 
   const handleUser = (user: IUser): void => {
     response.status(201).json({
-      message: 'User added',
       addedUser: {
         _id: user._id,
         email: user.email,
         name: user.name,
         role: user.role,
       },
+      message: 'User added',
       token: authUtils.generateToken(user._id, user.role),
     });
   };
@@ -118,13 +118,13 @@ const loginUser = (request: Request, response: Response, next: NextFunction): Pr
 
     response.status(200).json({
       message: `${user.name} logged in`,
+      token: authUtils.generateToken(user._id, user.role),
       user: {
         _id: user._id,
         email: user.email,
         name: user.name,
         role: user.role,
       },
-      token: authUtils.generateToken(user._id, user.role),
     });
   };
 
