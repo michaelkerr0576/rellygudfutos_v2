@@ -4,7 +4,7 @@ import { LeanDocument, Types } from 'mongoose';
 import { IPhoto } from '@/models/Photo.model';
 import photosDbService from '@/services/photosDb.service';
 import tagsDbService from '@/services/tagsDb.service';
-import { errorMessageUtils } from '@/utils';
+import { errorMessageUtils, generalUtils } from '@/utils';
 
 const handleAddedPhoto = async (response: Response, photo: IPhoto): Promise<void> => {
   const {
@@ -26,18 +26,18 @@ const handleCancelAddPhoto = async (
   photoId: Types.ObjectId,
   photoTagIds: Types.ObjectId[] | undefined,
 ): Promise<void> => {
-  const photoIdString = photoId.toString();
-  const photoTagObjectIds = photoTagIds ? photoTagIds.map((id): any => new Types.ObjectId(id)) : undefined;
+  const photoIdString = generalUtils.numberToString(photoId);
 
   const isPhotoFound = await photosDbService.checkPhotoExists(photoId);
   if (isPhotoFound) {
     await photosDbService.deletePhoto(photoIdString);
 
-    if (photoTagObjectIds) {
-      const isTagPhotosFound = await tagsDbService.checkTagPhotosExist(photoTagObjectIds);
+    const hasPhotoTagIds = photoTagIds && photoTagIds.length > 0;
+    if (hasPhotoTagIds) {
+      const isTagPhotosFound = await tagsDbService.checkTagPhotosExist(photoTagIds);
 
       if (isTagPhotosFound) {
-        await tagsDbService.deleteTagPhotos(photoId, photoTagObjectIds);
+        await tagsDbService.deleteTagPhotos(photoId, photoTagIds);
       }
     }
   }

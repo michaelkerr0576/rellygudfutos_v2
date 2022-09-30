@@ -16,6 +16,10 @@ import mongoMemoryServer from '@/tests/mongoMemoryServer';
 //   json: mockResponseJson,
 // };
 
+// const mockError = jest.fn();
+
+// const mockError: Error = mockError;
+
 describe('Photos Controller Utils', () => {
   beforeAll(async () => {
     await mongoMemoryServer.connectDB();
@@ -32,10 +36,15 @@ describe('Photos Controller Utils', () => {
 
   // TODO - add tests for hard to reach handlers
   // * Tests for hard to reach handlers - Test from Controller if it can be done
+
+  // error: Error,
+  // photoId: Types.ObjectId,
+  // photoTagIds: Types.ObjectId[] | undefined,
+
   describe('Handle Cancel Add Photo', () => {
-    test.skip('Expect', async () => {
+    test('Expect', async () => {
       // * Controller Utils: handle added photo
-      //  await photosControllerUtils.handleCancelAddPhoto(mockResponse as Response, postPhotoFixture as any);
+      // await photosControllerUtils.handleCancelAddPhoto(mockError, 123, [123]);
     });
   });
 });
