@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from 'express';
-// eslint-disable-next-line node/no-unpublished-import
 import timekeeper from 'timekeeper';
 
 import tagsDbService from '@/services/tagsDb.service';
@@ -28,16 +27,15 @@ const mockNextFunction: NextFunction = mockNextFunctionError;
 
 describe('Tags Controller', () => {
   beforeAll(async () => {
-    mongoMemoryServer.connectDB();
+    await mongoMemoryServer.connectDB();
     timekeeper.freeze(utilFixture.freezeDate);
   });
   afterEach(async () => {
-    mongoMemoryServer.clearDB();
-    mockResponseStatus.mockClear();
-    mockResponseJson.mockClear();
+    await mongoMemoryServer.clearDB();
+    jest.clearAllMocks();
   });
   afterAll(async () => {
-    mongoMemoryServer.disconnectDB();
+    await mongoMemoryServer.disconnectDB();
     timekeeper.reset();
   });
 

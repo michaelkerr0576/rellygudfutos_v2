@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-// eslint-disable-next-line node/no-unpublished-import
+import jwt from 'jsonwebtoken';
 import timekeeper from 'timekeeper';
 
 import usersDbService from '@/services/usersDb.service';
@@ -9,20 +9,8 @@ import mongoMemoryServer from '@/tests/mongoMemoryServer';
 
 import protectRoute from './protectRoute.middleware';
 
-jest.mock('jsonwebtoken', () => ({
-  ...jest.requireActual('jsonwebtoken'),
-  verify: jest
-    .fn()
-    // * Admin Authorisation tests
-    .mockReturnValueOnce({ id: '41224d776a326fb40f000001', role: 'USER' })
-    .mockReturnValueOnce({ id: '41224d776a326fb40f000113', role: 'USER' })
-    .mockReturnValueOnce({ id: '41224d776a326fb40f000003', role: 'ADMIN' })
-    // * User Authorisation tests
-    .mockReturnValueOnce({ id: '41224d776a326fb40f000001', role: 'USER' })
-    .mockReturnValueOnce({ id: '41224d776a326fb40f000113', role: 'USER' })
-    // * Default
-    .mockReturnValue({ id: '41224d776a326fb40f000003', role: 'ADMIN' }),
-}));
+const mockJwtVerify = jest.fn();
+jwt.verify = mockJwtVerify;
 
 const mockResponseStatus = jest.fn();
 const mockResponseJson = jest.fn();
@@ -35,20 +23,17 @@ const mockResponse: Partial<Response> = {
 
 const mockNextFunction: NextFunction = mockNextFunctionError;
 
-// ! Tests must be run all together - it depends on mock data returned from jsonwebtoken
 describe('Protect Route Middleware', () => {
   beforeAll(async () => {
-    mongoMemoryServer.connectDB();
+    await mongoMemoryServer.connectDB();
     timekeeper.freeze(utilFixture.freezeDate);
   });
   afterEach(async () => {
-    mongoMemoryServer.clearDB();
-    mockResponseStatus.mockClear();
-    mockResponseJson.mockClear();
-    mockNextFunctionError.mockClear();
+    await mongoMemoryServer.clearDB();
+    jest.clearAllMocks();
   });
   afterAll(async () => {
-    mongoMemoryServer.disconnectDB();
+    await mongoMemoryServer.disconnectDB();
     timekeeper.reset();
   });
 
@@ -74,6 +59,8 @@ describe('Protect Route Middleware', () => {
     });
 
     test('Expect to return 404 user not found', async () => {
+      mockJwtVerify.mockReturnValueOnce({ id: '41224d776a326fb40f000001', role: 'ADMIN' });
+
       const mockRequest: Partial<Request> = {
         headers: { authorization: utilFixture.bearerToken },
       };
@@ -97,6 +84,8 @@ describe('Protect Route Middleware', () => {
     });
 
     test('Expect to return 401 user not authorized', async () => {
+      mockJwtVerify.mockReturnValueOnce({ id: '41224d776a326fb40f000113', role: 'USER' });
+
       const mockRequest: Partial<Request> = {
         headers: { authorization: utilFixture.bearerToken },
       };
@@ -120,6 +109,8 @@ describe('Protect Route Middleware', () => {
     });
 
     test('Expect user authorized and go to next function', async () => {
+      mockJwtVerify.mockReturnValueOnce({ id: '41224d776a326fb40f000003', role: 'ADMIN' });
+
       const mockRequest: Partial<Request> = {
         headers: { authorization: utilFixture.bearerToken },
       };
@@ -160,6 +151,8 @@ describe('Protect Route Middleware', () => {
     });
 
     test('Expect to return 404 user not found', async () => {
+      mockJwtVerify.mockReturnValueOnce({ id: '41224d776a326fb40f000001', role: 'USER' });
+
       const mockRequest: Partial<Request> = {
         headers: { authorization: utilFixture.bearerToken },
       };
@@ -183,6 +176,7 @@ describe('Protect Route Middleware', () => {
     });
 
     test('Expect user authorized and go to next function', async () => {
+      mockJwtVerify.mockReturnValueOnce({ id: '41224d776a326fb40f000113', role: 'USER' });
       const mockRequest: Partial<Request> = {
         headers: { authorization: utilFixture.bearerToken },
       };

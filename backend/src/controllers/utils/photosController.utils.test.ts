@@ -8,8 +8,8 @@ import mongoMemoryServer from '@/tests/mongoMemoryServer';
 
 // import photosControllerUtils from './photosController.utils';
 
-const mockResponseStatus = jest.fn();
-const mockResponseJson = jest.fn();
+// const mockResponseStatus = jest.fn();
+// const mockResponseJson = jest.fn();
 
 // const mockResponse: Partial<Response> = {
 //   status: mockResponseStatus.mockReturnThis(),
@@ -18,16 +18,15 @@ const mockResponseJson = jest.fn();
 
 describe('Photos Controller Utils', () => {
   beforeAll(async () => {
-    mongoMemoryServer.connectDB();
+    await mongoMemoryServer.connectDB();
     timekeeper.freeze(utilFixture.freezeDate);
   });
   afterEach(async () => {
-    mongoMemoryServer.clearDB();
-    mockResponseStatus.mockClear();
-    mockResponseJson.mockClear();
+    await mongoMemoryServer.clearDB();
+    jest.clearAllMocks();
   });
   afterAll(async () => {
-    mongoMemoryServer.disconnectDB();
+    await mongoMemoryServer.disconnectDB();
     timekeeper.reset();
   });
 

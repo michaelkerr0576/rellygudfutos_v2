@@ -75,8 +75,15 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'no-underscore-dangle': ['error', { allow: ['_id'] }],
     'no-unused-vars': 'off',
-    // Conflict with importing aliases. Typescript and Eslint have errors to handle missing imports
+    // * Conflict with importing aliases. Typescript and Eslint have errors to handle missing imports
     'node/no-missing-import': 'off',
+    'node/no-unpublished-import': [
+      'error',
+      {
+        // * Allow some devDependencies that are only used in tests
+        allowModules: ['jest-when'],
+      },
+    ],
     'node/no-unsupported-features/es-syntax': [
       'error',
       {
@@ -127,17 +134,17 @@ module.exports = {
       'error',
       {
         groups: [
-          // Side effect imports.
+          // * Side effect imports.
           ['^\\u0000'],
-          // Packages.
+          // * Packages.
           ['^react', '^\\w'],
-          // Internal packages.
+          // * Internal packages.
           ['^(@|components)(/.*|$)'],
-          // Parent imports. Put `..` last.
+          // * Parent imports. Put `..` last.
           ['^\\.\\.(?!/?$)', '^\\.\\./?$'],
-          // Other relative imports. Put same-folder imports and `.` last.
+          // * Other relative imports. Put same-folder imports and `.` last.
           ['^\\./(?=.*/)(?!/?$)', '^\\.(?!/?$)', '^\\./?$'],
-          // Style imports.
+          // * Style imports.
           ['^.+\\.?(css)$'],
         ],
       },
