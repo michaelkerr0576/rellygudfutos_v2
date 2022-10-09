@@ -67,7 +67,7 @@ const updateTag = (request: Request, response: Response, next: NextFunction): Pr
     params: { id },
   } = request;
 
-  const isBodyEmpty = generalUtils.isObjectEmpty(body);
+  const isBodyEmpty = generalUtils.checkIsObjectEmpty(body);
   if (isBodyEmpty) {
     return Promise.resolve(next(controllerUtils.handleEmptyBodyRequest(response, 'Tag')));
   }

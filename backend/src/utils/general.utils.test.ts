@@ -2,20 +2,20 @@ import { Types } from 'mongoose';
 
 import generalUtils from './general.utils';
 
-const { isObjectEmpty, numberToString, stringToNumber } = generalUtils;
+const { checkIsObjectEmpty, numberToString, stringToNumber } = generalUtils;
 
 describe('General Utils', () => {
-  describe('Is Object Empty', () => {
+  describe('Check Object Is Empty', () => {
     test('Expect empty object to return true', () => {
       const object = {};
-      const result = isObjectEmpty(object);
+      const result = checkIsObjectEmpty(object);
 
       expect(result).toBe(true);
     });
 
-    test('Expect object with dat to return false', () => {
+    test('Expect object with data to return false', () => {
       const object = { data: 'data' };
-      const result = isObjectEmpty(object);
+      const result = checkIsObjectEmpty(object);
 
       expect(result).toBe(false);
     });

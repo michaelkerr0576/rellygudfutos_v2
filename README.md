@@ -169,19 +169,25 @@ First time round in rellygudfutos_v1 Frontend handled sorting and filtering. Pag
 - [MongoDB Sorting, Filtering and Pagination](https://jeffdevslife.com/p/1-mongodb-query-of-advanced-filtering-sorting-limit-field-and-pagination-with-mongoose/)
 - [Youtube Pagination Tutorial - Web Dev Simplified](https://www.youtube.com/watch?v=ZX3qt0UWifc&ab_channel=WebDevSimplified)
 
-### Next & React Query
+### Next.js
 
-Next.js as server sid rendering that reduces first contentful paint. :drooling_face:
-React Query as server side state that reduces API requests. :drooling_face:
+Next.js as server side rendering that reduces first contentful paint and is superior for SEO purposes. It is outputted in html vs javascript which is easier for search engines to look through. :drooling_face:
 
-**_ LOOK INTO VITE - Can it work with Next _**
+**_ LOOK INTO VITE - Can it work with Next.js _**
 
 **Useful Links:**
 
-- [Setting Up](https://prateeksurana.me/blog/mastering-data-fetching-with-react-query-and-next-js/)
-- [React Query Docs](https://react-query.tanstack.com/)
+- [Setting Up with React Query](https://prateeksurana.me/blog/mastering-data-fetching-with-react-query-and-next-js/)
 - [Youtube Next.js Tutorial - Traversy Media](https://www.youtube.com/watch?v=mTz0GXj8NN0&ab_channel=TraversyMedia)
 - [Youtube Next.js Tutorial - Fireship](https://www.youtube.com/watch?v=Sklc_fQBmcs&ab_channel=Fireship)
+
+### React Query
+
+React Query as server side state that reduces API requests. :drooling_face:
+
+**Useful Links:**
+
+- [React Query Docs](https://react-query.tanstack.com/)
 - [Youtube React Query Tutorial - Codevolution](https://www.youtube.com/watch?v=VtWkSCZX0Ec&list=PLC3y8-rFHvwjTELCrPrcZlo6blLBUspd2&ab_channel=Codevolution)
 
 ### Zustand
@@ -212,10 +218,12 @@ List of commands [Yarn Cli](https://classic.yarnpkg.com/en/docs/cli/)
 ### Git
 
 - Status of staged and unstaged changes - `git status`
+- Number files and line changes with master - `git diff --stat master`
 - Add all changed files to staging area - `git add .`
 - Commit staging area files with commit message - `git commit -m 'commit message'`
 - Push changes to Github repo - `git push`
 - Pull changes from Github repo - `git pull`
+- Merge master into current branch - `git merge master`
 
 ### Node & Nvm
 

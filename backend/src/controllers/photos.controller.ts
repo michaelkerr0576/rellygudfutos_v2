@@ -72,7 +72,7 @@ const updatePhoto = (request: Request, response: Response, next: NextFunction): 
     params: { id },
   } = request;
 
-  const isBodyEmpty = generalUtils.isObjectEmpty(body);
+  const isBodyEmpty = generalUtils.checkIsObjectEmpty(body);
   if (isBodyEmpty) {
     return Promise.resolve(next(controllerUtils.handleEmptyBodyRequest(response, 'Photo')));
   }
