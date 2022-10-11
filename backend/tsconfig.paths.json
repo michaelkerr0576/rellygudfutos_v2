@@ -2,14 +2,22 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
+      "@/config/": ["./src/config/"],
       "@/config/*": ["./src/config/*"],
+      "@/controllers/": ["./src/controllers/"],
       "@/controllers/*": ["./src/controllers/*"],
+      "@/middlewares/": ["./src/middlewares/"],
       "@/middlewares/*": ["./src/middlewares/*"],
+      "@/models/": ["./src/models/"],
       "@/models/*": ["./src/models/*"],
+      "@/routes/": ["./src/routes/"],
       "@/routes/*": ["./src/routes/*"],
+      "@/services/": ["./src/services/"],
       "@/services/*": ["./src/services/*"],
+      "@/tests/": ["./src/tests/"],
       "@/tests/*": ["./src/tests/*"],
-      "@/types/*": ["./src/types/*"],
+      "@/ts/": ["./src/ts/"],
+      "@/ts/*": ["./src/ts/*"],
       "@/utils": ["./src/utils"],
       "@/utils/*": ["./src/utils/*"]
     }

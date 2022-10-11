@@ -1,8 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
 import { Types } from 'mongoose';
 
-import PhotoModel, { IPhoto } from '@/models/Photo.model';
+import PhotoModel from '@/models/Photo.model';
 import photosDbService from '@/services/photosDb.service';
+import * as inf from '@/ts/interfaces/db.interface';
 import { generalUtils } from '@/utils';
 
 import { controllerUtils, photosControllerUtils } from './utils';
@@ -23,7 +24,7 @@ const addPhoto = (request: Request, response: Response, next: NextFunction): Pro
 
   return photosControllerUtils
     .handleCheckTagsExist(response, photoTagIds)
-    .then((): Promise<IPhoto> => photosDbService.addPhoto(newPhoto))
+    .then((): Promise<inf.IPhoto> => photosDbService.addPhoto(newPhoto))
     .then((photo): Promise<void> => photosControllerUtils.handleAddedPhoto(response, photo))
     .catch((error): void => controllerUtils.handleValidationError(response, error))
     .catch((error): Promise<void> => photosControllerUtils.handleCancelAddPhoto(error, photoId, photoTagIds))

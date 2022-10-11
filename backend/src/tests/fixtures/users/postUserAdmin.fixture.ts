@@ -1,4 +1,4 @@
-import * as enm from '@/types/enum.types';
+import * as enm from '@/ts/enums/db.enum';
 
 export default {
   _id: '41224d776a326fb40f000003',

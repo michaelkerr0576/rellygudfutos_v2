@@ -1,26 +1,27 @@
 import { LeanDocument } from 'mongoose';
 
-import UserModel, { IUser } from '@/models/User.model';
+import UserModel from '@/models/User.model';
+import * as inf from '@/ts/interfaces/db.interface';
 
-const addUser = (newUser: IUser): Promise<IUser> => UserModel.create(newUser);
+const addUser = (newUser: inf.IUser): Promise<inf.IUser> => UserModel.create(newUser);
 
-const getUser = (id: string): Promise<LeanDocument<IUser> | null> =>
+const getUser = (id: string): Promise<LeanDocument<inf.IUser> | null> =>
   UserModel.findById(id)
     .lean()
     .select('-__v')
-    .then((user): LeanDocument<IUser> | null => user);
+    .then((user): LeanDocument<inf.IUser> | null => user);
 
-const getUsers = (): Promise<LeanDocument<IUser[]>> =>
+const getUsers = (): Promise<LeanDocument<inf.IUser[]>> =>
   UserModel.find()
     .lean()
     .select('-__v -password')
-    .then((users): LeanDocument<IUser[]> => users);
+    .then((users): LeanDocument<inf.IUser[]> => users);
 
-const findUser = (email: string): Promise<LeanDocument<IUser> | null> =>
+const findUser = (email: string): Promise<LeanDocument<inf.IUser> | null> =>
   UserModel.findOne({ email })
     .lean()
     .select('-__v')
-    .then((user): LeanDocument<IUser> | null => user);
+    .then((user): LeanDocument<inf.IUser> | null => user);
 
 const usersDbService = {
   addUser,

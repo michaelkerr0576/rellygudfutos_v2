@@ -2,9 +2,10 @@ import { NextFunction, Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import { LeanDocument, Types } from 'mongoose';
 
-import UserModel, { IUser } from '@/models/User.model';
+import UserModel from '@/models/User.model';
 import usersDbService from '@/services/usersDb.service';
-import * as cmn from '@/types/cmn.types';
+import * as inf from '@/ts/interfaces/db.interface';
+import * as typ from '@/ts/types/error.types';
 import { authUtils, errorMessageUtils } from '@/utils';
 
 // * @desc Add user
@@ -24,7 +25,7 @@ const addUser = (request: Request, response: Response, next: NextFunction): Prom
     role,
   });
 
-  const handleUser = (user: IUser): void => {
+  const handleUser = (user: inf.IUser): void => {
     response.status(201).json({
       addedUser: {
         _id: user._id,
@@ -37,7 +38,7 @@ const addUser = (request: Request, response: Response, next: NextFunction): Prom
     });
   };
 
-  const handleUserError = (error: cmn.MongoError | cmn.MongooseValidationError): void => {
+  const handleUserError = (error: typ.MongoError | typ.MongooseValidationError): void => {
     const isDuplicateUser = error.name === 'MongoError' && error.code === 11000;
     if (isDuplicateUser) {
       response.status(400);
@@ -46,7 +47,7 @@ const addUser = (request: Request, response: Response, next: NextFunction): Prom
 
     const isValidationError = error.name === 'ValidationError';
     if (isValidationError) {
-      const { message, errors } = errorMessageUtils.error400Validation(error as cmn.MongooseValidationError);
+      const { message, errors } = errorMessageUtils.error400Validation(error as typ.MongooseValidationError);
 
       response.status(400);
       const newError = new Error(message);
@@ -82,7 +83,7 @@ const getUser = (_request: Request, response: Response): void => {
 // * @route GET /api/users
 // * @access Private
 const getUsers = (_request: Request, response: Response, next: NextFunction): Promise<void> => {
-  const handleUsers = (users: LeanDocument<IUser[]>): void => {
+  const handleUsers = (users: LeanDocument<inf.IUser[]>): void => {
     const isUsersEmpty = users.length === 0;
     if (isUsersEmpty) {
       response.status(404);
@@ -104,7 +105,7 @@ const getUsers = (_request: Request, response: Response, next: NextFunction): Pr
 const loginUser = (request: Request, response: Response, next: NextFunction): Promise<void> => {
   const { email, password } = request.body;
 
-  const handleUser = (user: LeanDocument<IUser> | null): void => {
+  const handleUser = (user: LeanDocument<inf.IUser> | null): void => {
     if (!user) {
       response.status(404);
       throw new Error(errorMessageUtils.error404('User'));

@@ -2,9 +2,9 @@ import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import { LeanDocument } from 'mongoose';
 
-import { IUser } from '@/models/User.model';
 import usersDbService from '@/services/usersDb.service';
-import * as enm from '@/types/enum.types';
+import * as enm from '@/ts/enums/db.enum';
+import * as inf from '@/ts/interfaces/db.interface';
 import { errorMessageUtils } from '@/utils';
 
 interface JwtPayload {
@@ -33,7 +33,7 @@ const authenticateUser = (
 
   const decoded = jwt.verify(token, jwtSecret) as JwtPayload;
 
-  const checkUserAuthentication = (user: LeanDocument<IUser> | null): void => {
+  const checkUserAuthentication = (user: LeanDocument<inf.IUser> | null): void => {
     if (!user) {
       response.status(404);
       throw new Error(errorMessageUtils.error404('User'));

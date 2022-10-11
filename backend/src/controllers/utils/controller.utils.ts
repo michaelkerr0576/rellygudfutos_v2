@@ -1,6 +1,6 @@
 import { Response } from 'express';
 
-import * as cmn from '@/types/cmn.types';
+import * as typ from '@/ts/types/error.types';
 import { errorMessageUtils } from '@/utils';
 
 const handleEmptyBodyRequest = (response: Response, model: string): Error => {
@@ -9,7 +9,7 @@ const handleEmptyBodyRequest = (response: Response, model: string): Error => {
   return newError;
 };
 
-const handleValidationError = (response: Response, error: cmn.MongooseValidationError): void => {
+const handleValidationError = (response: Response, error: typ.MongooseValidationError): void => {
   const isValidationError = error.name === 'ValidationError';
   if (isValidationError) {
     const { message, errors } = errorMessageUtils.error400Validation(error);

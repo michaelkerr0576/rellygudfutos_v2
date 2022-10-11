@@ -1,18 +1,11 @@
 /* eslint-disable sort-keys */
-import { Document, model, Schema, Types } from 'mongoose';
+import { model, Schema, Types } from 'mongoose';
 
-import * as enm from '@/types/enum.types';
+import * as enm from '@/ts/enums/db.enum';
+import * as inf from '@/ts/interfaces/db.interface';
 import { regexUtils } from '@/utils';
 
-export interface IUser extends Document {
-  _id: Types.ObjectId;
-  email: string;
-  name: string;
-  password: string;
-  role: enm.UserRole;
-}
-
-const userSchema = new Schema<IUser>(
+const userSchema = new Schema<inf.IUser>(
   {
     _id: Types.ObjectId,
     email: {
@@ -45,6 +38,6 @@ const userSchema = new Schema<IUser>(
   { timestamps: true },
 );
 
-const User = model<IUser>('User', userSchema);
+const User = model<inf.IUser>('User', userSchema);
 
 export default User;

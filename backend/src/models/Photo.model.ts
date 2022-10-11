@@ -1,33 +1,11 @@
 /* eslint-disable sort-keys */
-import { Date, Document, model, Schema, Types } from 'mongoose';
+import { model, Schema, Types } from 'mongoose';
 
-import * as enm from '@/types/enum.types';
+import * as enm from '@/ts/enums/db.enum';
+import * as inf from '@/ts/interfaces/db.interface';
 import { regexUtils } from '@/utils';
 
-export interface IPhoto extends Document {
-  _id: Types.ObjectId;
-  details: {
-    captureDate: Date;
-    captureLocation: string;
-    imageCaption: string;
-    imageFile: string;
-    imageSize: enm.ImageSize;
-    imageTags: Types.ObjectId[];
-    imageTitle: string;
-    originalImageName: string;
-    storeLink: string;
-  };
-  equipment: {
-    cameraIso: string;
-    cameraName: string;
-    lensAperture: string;
-    lensFocalLength: string;
-    lensName: string;
-    lensShutterSpeed: string;
-  };
-}
-
-const photoSchema = new Schema<IPhoto>(
+const photoSchema = new Schema<inf.IPhoto>(
   {
     _id: Types.ObjectId,
     details: {
@@ -139,6 +117,6 @@ const photoSchema = new Schema<IPhoto>(
   { timestamps: true },
 );
 
-const Photo = model<IPhoto>('Photo', photoSchema);
+const Photo = model<inf.IPhoto>('Photo', photoSchema);
 
 export default Photo;

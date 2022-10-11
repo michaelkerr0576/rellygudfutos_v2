@@ -1,17 +1,17 @@
 import { Response } from 'express';
 import { LeanDocument } from 'mongoose';
 
-import { ITag } from '@/models/Tag.model';
+import * as inf from '@/ts/interfaces/db.interface';
 import { errorMessageUtils } from '@/utils';
 
-const handleAddedTag = (response: Response, tag: ITag): void => {
+const handleAddedTag = (response: Response, tag: inf.ITag): void => {
   response.status(201).json({
     addedTag: tag,
     message: 'Tag added',
   });
 };
 
-const handleDeletedTag = (response: Response, tag: LeanDocument<ITag> | null): void => {
+const handleDeletedTag = (response: Response, tag: LeanDocument<inf.ITag> | null): void => {
   if (!tag) {
     response.status(404);
     throw new Error(errorMessageUtils.error404('Tag'));
@@ -23,7 +23,7 @@ const handleDeletedTag = (response: Response, tag: LeanDocument<ITag> | null): v
   });
 };
 
-const handleTag = (response: Response, tag: LeanDocument<ITag> | null): void => {
+const handleTag = (response: Response, tag: LeanDocument<inf.ITag> | null): void => {
   if (!tag) {
     response.status(404);
     throw new Error(errorMessageUtils.error404('Tag'));
@@ -32,7 +32,7 @@ const handleTag = (response: Response, tag: LeanDocument<ITag> | null): void => 
   response.status(200).json(tag);
 };
 
-const handleTags = (response: Response, tags: LeanDocument<ITag[]>): void => {
+const handleTags = (response: Response, tags: LeanDocument<inf.ITag[]>): void => {
   const isTagsEmpty = tags.length === 0;
   if (isTagsEmpty) {
     response.status(404);
@@ -42,7 +42,7 @@ const handleTags = (response: Response, tags: LeanDocument<ITag[]>): void => {
   response.status(200).json(tags);
 };
 
-const handleUpdatedTag = (response: Response, tag: LeanDocument<ITag> | null): void => {
+const handleUpdatedTag = (response: Response, tag: LeanDocument<inf.ITag> | null): void => {
   if (!tag) {
     response.status(404);
     throw new Error(errorMessageUtils.error404('Tag'));

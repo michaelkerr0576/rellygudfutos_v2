@@ -1,12 +1,12 @@
 import { Response } from 'express';
 import { LeanDocument, Types } from 'mongoose';
 
-import { IPhoto } from '@/models/Photo.model';
 import photosDbService from '@/services/photosDb.service';
 import tagsDbService from '@/services/tagsDb.service';
+import * as inf from '@/ts/interfaces/db.interface';
 import { errorMessageUtils, generalUtils } from '@/utils';
 
-const handleAddedPhoto = async (response: Response, photo: IPhoto): Promise<void> => {
+const handleAddedPhoto = async (response: Response, photo: inf.IPhoto): Promise<void> => {
   const {
     _id: photoId,
     details: { imageTags: photoTagIds },
@@ -57,7 +57,7 @@ const handleCheckTagsExist = async (
   }
 };
 
-const handleDeletedPhoto = (response: Response, photo: LeanDocument<IPhoto> | null): void => {
+const handleDeletedPhoto = (response: Response, photo: LeanDocument<inf.IPhoto> | null): void => {
   if (!photo) {
     response.status(404);
     throw new Error(errorMessageUtils.error404('Photo'));
@@ -69,7 +69,7 @@ const handleDeletedPhoto = (response: Response, photo: LeanDocument<IPhoto> | nu
   });
 };
 
-const handlePhoto = (response: Response, photo: LeanDocument<IPhoto> | null): void => {
+const handlePhoto = (response: Response, photo: LeanDocument<inf.IPhoto> | null): void => {
   if (!photo) {
     response.status(404);
     throw new Error(errorMessageUtils.error404('Photo'));
@@ -78,7 +78,7 @@ const handlePhoto = (response: Response, photo: LeanDocument<IPhoto> | null): vo
   response.status(200).json(photo);
 };
 
-const handlePhotos = (response: Response, photos: LeanDocument<IPhoto[]>): void => {
+const handlePhotos = (response: Response, photos: LeanDocument<inf.IPhoto[]>): void => {
   const isPhotosEmpty = photos.length === 0;
   if (isPhotosEmpty) {
     response.status(404);
@@ -88,7 +88,7 @@ const handlePhotos = (response: Response, photos: LeanDocument<IPhoto[]>): void 
   response.status(200).json(photos);
 };
 
-const handleUpdatedPhoto = (response: Response, photo: LeanDocument<IPhoto> | null): void => {
+const handleUpdatedPhoto = (response: Response, photo: LeanDocument<inf.IPhoto> | null): void => {
   if (!photo) {
     response.status(404);
     throw new Error(errorMessageUtils.error404('Photo'));

@@ -1,11 +1,11 @@
 import { NextFunction, Request, Response } from 'express';
 
-import * as cmn from '@/types/cmn.types';
+import * as typ from '@/ts/types/error.types';
 
 const nodeEnv = process.env.NODE_ENV || 'development';
 
 const errorHandler = (
-  error: cmn.MongooseValidationError,
+  error: typ.MongooseValidationError,
   _request: Request,
   response: Response,
   _next: NextFunction,

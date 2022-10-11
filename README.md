@@ -31,12 +31,14 @@ General project structuring. Split into Frontend and Backend. Each folder contai
 
 ### Typescript
 
-Typescript will be used across Frontend and Backend. Can customize behaviour in `tsconfig.json`.
+Typescript will be used across Frontend and Backend. Can customize behaviour in `tsconfig.json`. Organising and storing types, interfaces and enums will be done with a Typed-based approach. I like keeping all the types stored at a central global folder. Otherwise I forget where I have previously created types which leads to duplicate types, interfaces and enums :unamused:
+![image](https://user-images.githubusercontent.com/53580213/194758102-e343e04a-9cd7-4668-9c95-b45ba47af488.png)
 
 **Useful Links:**
 
 - [Typescript Cheat Sheet](https://www.typescriptlang.org/cheatsheets)
 - [Typescript Compiler Options](https://www.typescriptlang.org/tsconfig)
+- [Typescript Organising Types](https://www.becomebetterprogrammer.com/typescript-organizing-and-storing-types-and-interfaces/)
 
 ### Eslint & Airbnb Style Guide
 
@@ -171,7 +173,7 @@ First time round in rellygudfutos_v1 Frontend handled sorting and filtering. Pag
 
 ### Next.js
 
-Next.js as server side rendering that reduces first contentful paint and is superior for SEO purposes. It is outputted in html vs javascript which is easier for search engines to look through. :drooling_face:
+Next.js as server side rendering that reduces first contentful paint and is superior for SEO purposes. It is outputted in html vs javascript which is easier for search engines to look through :drooling_face:
 
 **_ LOOK INTO VITE - Can it work with Next.js _**
 
@@ -183,7 +185,7 @@ Next.js as server side rendering that reduces first contentful paint and is supe
 
 ### React Query
 
-React Query as server side state that reduces API requests. :drooling_face:
+React Query as server side state that reduces API requests :drooling_face:
 
 **Useful Links:**
 

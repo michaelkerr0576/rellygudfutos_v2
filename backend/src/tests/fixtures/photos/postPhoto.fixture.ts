@@ -1,4 +1,4 @@
-import * as enm from '@/types/enum.types';
+import * as enm from '@/ts/enums/db.enum';
 
 import { postTagsFixture } from '../tags';
 

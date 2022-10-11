@@ -1,4 +1,4 @@
-import * as cmn from '@/types/cmn.types';
+import * as typ from '@/ts/types/error.types';
 
 const error400 = (): string => 'Bad Request';
 
@@ -7,10 +7,10 @@ const error400AlreadyExists = (model: string): string => `${model} already exist
 const error400EmptyRequestBody = (model: string): string => `Empty ${model} request body`;
 
 const error400Validation = (
-  error: cmn.MongooseValidationError,
-): { message: string; errors: cmn.ValidationErrorsMessage } => {
+  error: typ.MongooseValidationError,
+): { message: string; errors: typ.ValidationErrorsMessage } => {
   const { _message: message } = error;
-  const errors = {} as cmn.ValidationErrorsMessage;
+  const errors = {} as typ.ValidationErrorsMessage;
 
   Object.keys(error.errors).forEach((key): void => {
     errors[key] = {

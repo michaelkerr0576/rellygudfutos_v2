@@ -1,13 +1,9 @@
 /* eslint-disable sort-keys */
-import { Document, model, Schema, Types } from 'mongoose';
+import { model, Schema, Types } from 'mongoose';
 
-export interface ITag extends Document {
-  _id: Types.ObjectId;
-  photos: Types.ObjectId[];
-  tag: string;
-}
+import * as inf from '@/ts/interfaces/db.interface';
 
-const tagSchema = new Schema<ITag>(
+const tagSchema = new Schema<inf.ITag>(
   {
     _id: Types.ObjectId,
     photos: [
@@ -27,6 +23,6 @@ const tagSchema = new Schema<ITag>(
   { timestamps: true },
 );
 
-const Tag = model<ITag>('Tag', tagSchema);
+const Tag = model<inf.ITag>('Tag', tagSchema);
 
 export default Tag;
