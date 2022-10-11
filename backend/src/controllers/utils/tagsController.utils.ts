@@ -2,7 +2,7 @@ import { Response } from 'express';
 import { LeanDocument } from 'mongoose';
 
 import * as inf from '@/ts/interfaces/db.interface';
-import { errorMessageUtils } from '@/utils';
+import errorMessageUtils from '@/utils/errorMessage.utils';
 
 const handleAddedTag = (response: Response, tag: inf.ITag): void => {
   response.status(201).json({

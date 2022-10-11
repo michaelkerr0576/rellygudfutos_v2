@@ -1,11 +1,9 @@
-import {
-  postPhotoEnumFixture,
-  postPhotoFixture,
-  postPhotoMaxLengthFixture,
-  postPhotoMinLengthFixture,
-  postPhotoRegexFixture,
-  postPhotoTrimFixture,
-} from '@/tests/fixtures/photos';
+import postPhotoEnumFixture from '@/tests/fixtures/photos/postPhotoEnum.fixture';
+import postPhotoFixture from '@/tests/fixtures/photos/postPhoto.fixture';
+import postPhotoMaxLengthFixture from '@/tests/fixtures/photos/postPhotoMaxLength.fixture';
+import postPhotoMinLengthFixture from '@/tests/fixtures/photos/postPhotoMinLength.fixture';
+import postPhotoRegexFixture from '@/tests/fixtures/photos/postPhotoRegex.fixture';
+import postPhotoTrimFixture from '@/tests/fixtures/photos/postPhotoTrim.fixture';
 import utilFixture from '@/tests/fixtures/util.fixture';
 import mongoMemoryServer from '@/tests/mongoMemoryServer';
 

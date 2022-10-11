@@ -3,9 +3,10 @@ import { Types } from 'mongoose';
 
 import TagModel from '@/models/Tag.model';
 import tagsDbService from '@/services/tagsDb.service';
-import { generalUtils } from '@/utils';
+import generalUtils from '@/utils/general.utils';
 
-import { controllerUtils, tagsControllerUtils } from './utils';
+import controllerUtils from './utils/controller.utils';
+import tagsControllerUtils from './utils/tagsController.utils';
 
 // * @desc Add tag
 // * @route POST /api/tags

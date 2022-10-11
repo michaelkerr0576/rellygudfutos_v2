@@ -1,9 +1,7 @@
-import {
-  postTagFixture,
-  postTagMaxLengthFixture,
-  postTagMinLengthFixture,
-  postTagTrimFixture,
-} from '@/tests/fixtures/tags';
+import postTagFixture from '@/tests/fixtures/tags/postTag.fixture';
+import postTagMaxLengthFixture from '@/tests/fixtures/tags/postTagMaxLength.fixture';
+import postTagMinLengthFixture from '@/tests/fixtures/tags/postTagMinLength.fixture';
+import postTagTrimFixture from '@/tests/fixtures/tags/postTagTrim.fixture';
 import utilFixture from '@/tests/fixtures/util.fixture';
 import mongoMemoryServer from '@/tests/mongoMemoryServer';
 

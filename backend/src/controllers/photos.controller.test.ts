@@ -3,16 +3,15 @@ import timekeeper from 'timekeeper';
 
 import photosDbService from '@/services/photosDb.service';
 import tagsDbService from '@/services/tagsDb.service';
-import {
-  postPhotoEnumFixture,
-  postPhotoFixture,
-  postPhotoRequiredFixture,
-  postPhotoResponseFixture,
-  postPhotosFixture,
-  postPhotosResponseFixture,
-  postPhotoTagsResponseFixture,
-} from '@/tests/fixtures/photos';
-import { postTagFixture, postTagsFixture } from '@/tests/fixtures/tags';
+import postPhotoEnumFixture from '@/tests/fixtures/photos/postPhotoEnum.fixture';
+import postPhotoFixture from '@/tests/fixtures/photos/postPhoto.fixture';
+import postPhotoRequiredFixture from '@/tests/fixtures/photos/postPhotoRequired.fixture';
+import postPhotoResponseFixture from '@/tests/fixtures/photos/postPhotoResponse.fixture';
+import postPhotosFixture from '@/tests/fixtures/photos/postPhotos.fixture';
+import postPhotosResponseFixture from '@/tests/fixtures/photos/postPhotosResponse.fixture';
+import postPhotoTagsResponseFixture from '@/tests/fixtures/photos/postPhotoTagsResponse.fixture';
+import postTagFixture from '@/tests/fixtures/tags/postTag.fixture';
+import postTagsFixture from '@/tests/fixtures/tags/postTags.fixture';
 import utilFixture from '@/tests/fixtures/util.fixture';
 import mongoMemoryServer from '@/tests/mongoMemoryServer';
 

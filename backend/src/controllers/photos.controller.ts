@@ -4,9 +4,10 @@ import { Types } from 'mongoose';
 import PhotoModel from '@/models/Photo.model';
 import photosDbService from '@/services/photosDb.service';
 import * as inf from '@/ts/interfaces/db.interface';
-import { generalUtils } from '@/utils';
+import generalUtils from '@/utils/general.utils';
 
-import { controllerUtils, photosControllerUtils } from './utils';
+import controllerUtils from './utils/controller.utils';
+import photosControllerUtils from './utils/photosController.utils';
 
 // * @desc Add photo
 // * @route POST /api/photos

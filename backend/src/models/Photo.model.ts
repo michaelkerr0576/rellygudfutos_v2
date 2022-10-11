@@ -3,7 +3,7 @@ import { model, Schema, Types } from 'mongoose';
 
 import * as enm from '@/ts/enums/db.enum';
 import * as inf from '@/ts/interfaces/db.interface';
-import { regexUtils } from '@/utils';
+import regexUtils from '@/utils/regex.utils';
 
 const photoSchema = new Schema<inf.IPhoto>(
   {

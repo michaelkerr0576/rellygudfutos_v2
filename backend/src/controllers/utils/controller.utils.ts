@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
 import * as typ from '@/ts/types/error.types';
-import { errorMessageUtils } from '@/utils';
+import errorMessageUtils from '@/utils/errorMessage.utils';
 
 const handleEmptyBodyRequest = (response: Response, model: string): Error => {
   response.status(400);

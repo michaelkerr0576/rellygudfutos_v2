@@ -5,7 +5,7 @@ import { LeanDocument } from 'mongoose';
 import usersDbService from '@/services/usersDb.service';
 import * as enm from '@/ts/enums/db.enum';
 import * as inf from '@/ts/interfaces/db.interface';
-import { errorMessageUtils } from '@/utils';
+import errorMessageUtils from '@/utils/errorMessage.utils';
 
 interface JwtPayload {
   id: string;

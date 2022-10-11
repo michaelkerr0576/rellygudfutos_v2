@@ -1,6 +1,6 @@
 import * as enm from '@/ts/enums/db.enum';
 
-import { postTagFixture } from '../tags';
+import postTagFixture from '../tags/postTag.fixture';
 
 export default [
   {

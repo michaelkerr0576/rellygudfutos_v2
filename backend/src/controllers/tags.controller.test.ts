@@ -2,13 +2,11 @@ import { NextFunction, Request, Response } from 'express';
 import timekeeper from 'timekeeper';
 
 import tagsDbService from '@/services/tagsDb.service';
-import {
-  postTagFixture,
-  postTagMinLengthFixture,
-  postTagResponseFixture,
-  postTagsFixture,
-  postTagsResponseFixture,
-} from '@/tests/fixtures/tags';
+import postTagFixture from '@/tests/fixtures/tags/postTag.fixture';
+import postTagMinLengthFixture from '@/tests/fixtures/tags/postTagMinLength.fixture';
+import postTagResponseFixture from '@/tests/fixtures/tags/postTagResponse.fixture';
+import postTagsFixture from '@/tests/fixtures/tags/postTags.fixture';
+import postTagsResponseFixture from '@/tests/fixtures/tags/postTagsResponse.fixture';
 import utilFixture from '@/tests/fixtures/util.fixture';
 import mongoMemoryServer from '@/tests/mongoMemoryServer';
 

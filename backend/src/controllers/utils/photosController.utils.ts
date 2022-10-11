@@ -4,7 +4,8 @@ import { LeanDocument, Types } from 'mongoose';
 import photosDbService from '@/services/photosDb.service';
 import tagsDbService from '@/services/tagsDb.service';
 import * as inf from '@/ts/interfaces/db.interface';
-import { errorMessageUtils, generalUtils } from '@/utils';
+import errorMessageUtils from '@/utils/errorMessage.utils';
+import generalUtils from '@/utils/general.utils';
 
 const handleAddedPhoto = async (response: Response, photo: inf.IPhoto): Promise<void> => {
   const {

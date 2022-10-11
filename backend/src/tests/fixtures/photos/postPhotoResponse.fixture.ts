@@ -1,6 +1,6 @@
 import { Types } from 'mongoose';
 
-import { postTagsFixture } from '../tags';
+import postTagsFixture from '../tags/postTags.fixture';
 import utilFixture from '../util.fixture';
 
 import postPhotoFixture from './postPhoto.fixture';

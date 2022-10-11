@@ -6,7 +6,8 @@ import UserModel from '@/models/User.model';
 import usersDbService from '@/services/usersDb.service';
 import * as inf from '@/ts/interfaces/db.interface';
 import * as typ from '@/ts/types/error.types';
-import { authUtils, errorMessageUtils } from '@/utils';
+import authUtils from '@/utils/auth.utils';
+import errorMessageUtils from '@/utils/errorMessage.utils';
 
 // * @desc Add user
 // * @route POST /api/users

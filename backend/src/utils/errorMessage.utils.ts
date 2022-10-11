@@ -38,7 +38,7 @@ const error404InvalidCredentials = (): string => 'Invalid credentials';
 
 const error500 = (): string => 'Internal Server Error';
 
-const errorMessage = {
+const errorMessageUtils = {
   error400,
   error400AlreadyExists,
   error400EmptyRequestBody,
@@ -52,4 +52,4 @@ const errorMessage = {
   error500,
 };
 
-export default errorMessage;
+export default errorMessageUtils;

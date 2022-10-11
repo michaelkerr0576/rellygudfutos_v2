@@ -3,7 +3,8 @@ import jwt from 'jsonwebtoken';
 import timekeeper from 'timekeeper';
 
 import usersDbService from '@/services/usersDb.service';
-import { postUserAdminFixture, postUserFixture } from '@/tests/fixtures/users';
+import postUserFixture from '@/tests/fixtures/users/postUser.fixture';
+import postUserAdminFixture from '@/tests/fixtures/users/postUserAdmin.fixture';
 import utilFixture from '@/tests/fixtures/util.fixture';
 import mongoMemoryServer from '@/tests/mongoMemoryServer';
 
