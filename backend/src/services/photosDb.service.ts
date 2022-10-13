@@ -28,11 +28,13 @@ const getPhoto = (id: string): Promise<LeanDocument<inf.IPhoto> | null> =>
     .populate('details.imageTags')
     .then((photo): LeanDocument<inf.IPhoto> | null => photo);
 
-const getPhotos = (sortBy: typ.PhotoSortColumnsWithDirection): Promise<LeanDocument<inf.IPhoto[]>> =>
+const getPhotos = (query: typ.PhotosQuery): Promise<LeanDocument<inf.IPhoto[]>> =>
   PhotoModel.find()
+    .sort(query.sortBy)
+    .skip(query.startIndex)
+    .limit(query.limit)
     .lean()
     .populate('details.imageTags')
-    .sort(sortBy)
     .then((photos): LeanDocument<inf.IPhoto[]> => photos);
 
 const getRandomPhotos = (limit: number): Promise<LeanDocument<inf.IPhoto[]>> =>

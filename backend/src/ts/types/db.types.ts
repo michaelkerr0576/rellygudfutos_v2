@@ -7,7 +7,17 @@ export type QueryStatus = { status: enm.QueryStatus };
 export type SortDirection = typeof con.ASCENDING | typeof con.DESCENDING;
 
 // #region Photo Types
-export type PhotoSortColumns = 'details.captureDate' | 'details.imageTitle';
+export type PhotosQuery = {
+  endIndex: number;
+  limit: number;
+  page: number;
+  search: any; // TODO - fix type
+  sortBy: PhotosSortColumnsWithDirection;
+  startIndex: number;
+  tags: any; // TODO - fix type
+};
 
-export type PhotoSortColumnsWithDirection = { [Key in PhotoSortColumns]?: SortDirection };
+export type PhotosSortColumns = 'details.captureDate' | 'details.imageTitle';
+
+export type PhotosSortColumnsWithDirection = { [Key in PhotosSortColumns]?: SortDirection };
 // #endregion

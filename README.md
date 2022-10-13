@@ -31,7 +31,7 @@ General project structuring. Split into Frontend and Backend. Each folder contai
 
 ### Typescript
 
-Typescript will be used across Frontend and Backend. Can customize behaviour in `tsconfig.json`. Organising and storing types, interfaces and enums will be done with a Typed-based approach. I like keeping all the types stored at a central global folder. Otherwise I forget where I have previously created types which leads to duplicate types, interfaces and enums :unamused:
+Typescript will be used across Frontend and Backend. The behaviour can be customised in `tsconfig.json`. Organising and storing types, interfaces and enums will be done with a Typed-based approach. I like keeping all the types stored in a central global folder. Otherwise, I forget where I have previously created types which leads to duplicate types, interfaces and enums :unamused:
 
 ![image](https://user-images.githubusercontent.com/53580213/194758102-e343e04a-9cd7-4668-9c95-b45ba47af488.png)
 
@@ -76,7 +76,7 @@ The goal is to have good enough test coverage that any change I make does not ca
 
 ### Node & Express with Typescript
 
-Setting up Backend to be Typescript. Everything Typescript!
+Setting up the Backend to be Typescript. Everything Typescript!
 
 **Useful Links:**
 
@@ -111,7 +111,7 @@ An example of the Many to Many relationship that Photos and Tags will have:
 **Testing with MongoDB & Mongoose**
 <br/>
 
-Decided to use an in-memory database over mocks. This will allow the tests to be directly executed on the in-memory database. This allows the tests to more closely emulate production instead of using mocks that can be incorrect, incomplete or outdated :nerd_face:
+Decided to use an in-memory database over mocks. This will allow the tests to be directly executed on the in-memory database. This allows the tests to closely emulate production instead of using mocks that can be incorrect, incomplete or outdated :nerd_face:
 
 **Useful Links:**
 
@@ -154,7 +154,7 @@ Depending on the role of the user, they will have different authorisations.
 
 ### Sorting, Filtering and Pagination
 
-First time round in rellygudfutos_v1 Frontend handled sorting and filtering. Pagination wasn't even a thing... As you can guess, this was not a long term solution. Loading up everything upfront did have some pros and cons.
+The first time around in rellygudfutos_v1 Frontend handled sorting and filtering. Pagination wasn't even a thing... As you can guess, this was not a long-term solution. Loading up everything upfront did have some pros and cons.
 
 **Pros:**
 
@@ -166,14 +166,15 @@ First time round in rellygudfutos_v1 Frontend handled sorting and filtering. Pag
 1. Long loading times for the `GET /photos` endpoint
 2. App wont scale well as more photos are added
 
+Sorting and Filtering will also have to be done on the Backend because there will be no front-loading of all the photos. React Query will make the fetching of the sorted/filtered/paginated data more smooth for the user.
+
 **Useful Links:**
 
-- [MongoDB Sorting, Filtering and Pagination](https://jeffdevslife.com/p/1-mongodb-query-of-advanced-filtering-sorting-limit-field-and-pagination-with-mongoose/)
 - [Youtube Pagination Tutorial - Web Dev Simplified](https://www.youtube.com/watch?v=ZX3qt0UWifc&ab_channel=WebDevSimplified)
 
 ### Next.js
 
-Next.js as server side rendering that reduces first contentful paint and is superior for SEO purposes. It is outputted in html vs javascript which is easier for search engines to look through :drooling_face:
+Next.js is a server-side rendering that reduces first contentful paint and is superior for SEO purposes. It is outputted in html vs javascript which is easier for search engines to look through :drooling_face:
 
 **_ LOOK INTO VITE - Can it work with Next.js _**
 
@@ -185,7 +186,7 @@ Next.js as server side rendering that reduces first contentful paint and is supe
 
 ### React Query
 
-React Query as server side state that reduces API requests :drooling_face:
+React Query as a server-side state that reduces API requests :drooling_face:
 
 **Useful Links:**
 
@@ -194,7 +195,7 @@ React Query as server side state that reduces API requests :drooling_face:
 
 ### Zustand
 
-Super light weight client side state. For this application, Redux is overkill when using React Query.
+Super lightweight client-side state. For this application, Redux is overkill when using React Query.
 
 **Useful Links:**
 

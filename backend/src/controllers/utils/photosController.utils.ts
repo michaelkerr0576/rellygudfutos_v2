@@ -1,4 +1,4 @@
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import { LeanDocument, Types } from 'mongoose';
 
 import photosDbService from '@/services/photosDb.service';
@@ -6,7 +6,8 @@ import tagsDbService from '@/services/tagsDb.service';
 import * as enm from '@/ts/enums/db.enum';
 import * as inf from '@/ts/interfaces/db.interface';
 import * as typ from '@/ts/types/db.types';
-import * as con from '@/utils/constants/sorting';
+import * as conPagination from '@/utils/constants/pagination';
+import * as conSorting from '@/utils/constants/sorting';
 import errorMessageUtils from '@/utils/errorMessage.utils';
 import generalUtils from '@/utils/general.utils';
 
@@ -47,19 +48,48 @@ const checkPhotoTagsExist = async (
   }
 };
 
-const getPhotoSortByColumn = (sortBy: enm.PhotoSortOptions): typ.PhotoSortColumnsWithDirection => {
+const getPhotosSortByColumn = (sortBy: enm.PhotoSortOptions): typ.PhotosSortColumnsWithDirection => {
   switch (sortBy) {
     case enm.PhotoSortOptions.NEWEST:
-      return { 'details.captureDate': con.DESCENDING };
+      return { 'details.captureDate': conSorting.DESCENDING };
     case enm.PhotoSortOptions.OLDEST:
-      return { 'details.captureDate': con.ASCENDING };
+      return { 'details.captureDate': conSorting.ASCENDING };
     case enm.PhotoSortOptions.TITLE_AZ:
-      return { 'details.imageTitle': con.DESCENDING };
+      return { 'details.imageTitle': conSorting.DESCENDING };
     case enm.PhotoSortOptions.TITLE_ZA:
-      return { 'details.imageTitle': con.ASCENDING };
+      return { 'details.imageTitle': conSorting.ASCENDING };
     default:
-      return { 'details.captureDate': con.DESCENDING };
+      return { 'details.captureDate': conSorting.DESCENDING };
   }
+};
+
+const getPhotosQuery = (query: Request['query']): typ.PhotosQuery => {
+  const {
+    limit = conPagination.PHOTO_LIMIT,
+    page = conPagination.PAGE,
+    search = '',
+    sortBy = enm.PhotoSortOptions.NEWEST,
+    tags = [],
+  } = query;
+
+  const pageNumber = generalUtils.stringToNumber(page as string | number);
+  const sortByColumn = getPhotosSortByColumn(sortBy as enm.PhotoSortOptions);
+
+  let limitNumber = generalUtils.stringToNumber(limit as string | number);
+  limitNumber = limitNumber > conPagination.PHOTO_MAX_LIMIT ? conPagination.PHOTO_MAX_LIMIT : limitNumber;
+
+  const startIndex = (pageNumber - 1) * limitNumber;
+  const endIndex = pageNumber * limitNumber;
+
+  return {
+    endIndex,
+    limit: limitNumber,
+    page: pageNumber,
+    search,
+    sortBy: sortByColumn,
+    startIndex,
+    tags,
+  };
 };
 
 const handleAddedPhoto = async (response: Response, photo: inf.IPhoto): Promise<void> => {
@@ -122,7 +152,8 @@ const handleUpdatedPhoto = (response: Response, photo: LeanDocument<inf.IPhoto> 
 const photosControllerUtils = {
   cancelAddPhoto,
   checkPhotoTagsExist,
-  getPhotoSortByColumn,
+  getPhotosQuery,
+  getPhotosSortByColumn,
   handleAddedPhoto,
   handleDeletedPhoto,
   handlePhoto,

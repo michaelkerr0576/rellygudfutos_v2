@@ -5,7 +5,6 @@ import PhotoModel from '@/models/Photo.model';
 import photosDbService from '@/services/photosDb.service';
 import * as enm from '@/ts/enums/db.enum';
 import * as inf from '@/ts/interfaces/db.interface';
-import * as con from '@/utils/constants/pagination';
 import generalUtils from '@/utils/general.utils';
 
 import controllerUtils from './utils/controller.utils';
@@ -62,38 +61,20 @@ const getPhoto = (request: Request, response: Response, next: NextFunction): Pro
 // * @route GET /api/photos
 // * @access Public
 const getPhotos = (request: Request, response: Response, next: NextFunction): Promise<void> => {
-  const {
-    limit = con.LIMIT,
-    page = con.PAGE,
-    search = '',
-    sortBy = enm.PhotoSortOptions.NEWEST,
-    tags = [],
-  } = request.query;
+  const photosQuery = photosControllerUtils.getPhotosQuery(request.query);
 
-  const pageNumber = generalUtils.stringToNumber(page as string | number);
-  const limitNumber = generalUtils.stringToNumber(limit as string | number);
-  const sortByColumn = photosControllerUtils.getPhotoSortByColumn(sortBy as enm.PhotoSortOptions);
-
-  const isShuffle = sortBy === enm.PhotoSortOptions.SHUFFLE;
+  const isShuffle = photosQuery.sortBy === enm.PhotoSortOptions.SHUFFLE;
   if (isShuffle) {
     return Promise.resolve(
       photosDbService
-        .getRandomPhotos(limitNumber)
+        .getRandomPhotos(photosQuery.limit)
         .then((photos): void => photosControllerUtils.handlePhotos(response, photos))
         .catch((error): void => next(error)),
     );
   }
 
-  // ! Remove logs when pagination is complete
-  console.log('-> getPhotos');
-  console.log(pageNumber);
-  console.log(limitNumber);
-  console.log(search);
-  console.log(sortByColumn);
-  console.log(tags);
-
   return photosDbService
-    .getPhotos(sortByColumn)
+    .getPhotos(photosQuery)
     .then((photos): void => photosControllerUtils.handlePhotos(response, photos))
     .catch((error): void => next(error));
 };
