@@ -3,7 +3,9 @@ import { Types } from 'mongoose';
 
 import PhotoModel from '@/models/Photo.model';
 import photosDbService from '@/services/photosDb.service';
+import * as enm from '@/ts/enums/db.enum';
 import * as inf from '@/ts/interfaces/db.interface';
+import * as con from '@/utils/constants/pagination';
 import generalUtils from '@/utils/general.utils';
 
 import controllerUtils from './utils/controller.utils';
@@ -24,11 +26,11 @@ const addPhoto = (request: Request, response: Response, next: NextFunction): Pro
   const photoTagIds = newPhoto?.details?.imageTags;
 
   return photosControllerUtils
-    .handleCheckTagsExist(response, photoTagIds)
+    .checkPhotoTagsExist(response, photoTagIds)
     .then((): Promise<inf.IPhoto> => photosDbService.addPhoto(newPhoto))
     .then((photo): Promise<void> => photosControllerUtils.handleAddedPhoto(response, photo))
     .catch((error): void => controllerUtils.handleValidationError(response, error))
-    .catch((error): Promise<void> => photosControllerUtils.handleCancelAddPhoto(error, photoId, photoTagIds))
+    .catch((error): Promise<void> => photosControllerUtils.cancelAddPhoto(error, photoId, photoTagIds))
     .catch((error): void => next(error));
 };
 
@@ -59,11 +61,42 @@ const getPhoto = (request: Request, response: Response, next: NextFunction): Pro
 // * @desc Get photos
 // * @route GET /api/photos
 // * @access Public
-const getPhotos = (_request: Request, response: Response, next: NextFunction): Promise<void> =>
-  photosDbService
-    .getPhotos()
+const getPhotos = (request: Request, response: Response, next: NextFunction): Promise<void> => {
+  const {
+    limit = con.LIMIT,
+    page = con.PAGE,
+    search = '',
+    sortBy = enm.PhotoSortOptions.NEWEST,
+    tags = [],
+  } = request.query;
+
+  const pageNumber = generalUtils.stringToNumber(page as string | number);
+  const limitNumber = generalUtils.stringToNumber(limit as string | number);
+  const sortByColumn = photosControllerUtils.getPhotoSortByColumn(sortBy as enm.PhotoSortOptions);
+
+  const isShuffle = sortBy === enm.PhotoSortOptions.SHUFFLE;
+  if (isShuffle) {
+    return Promise.resolve(
+      photosDbService
+        .getRandomPhotos(limitNumber)
+        .then((photos): void => photosControllerUtils.handlePhotos(response, photos))
+        .catch((error): void => next(error)),
+    );
+  }
+
+  // ! Remove logs when pagination is complete
+  console.log('-> getPhotos');
+  console.log(pageNumber);
+  console.log(limitNumber);
+  console.log(search);
+  console.log(sortByColumn);
+  console.log(tags);
+
+  return photosDbService
+    .getPhotos(sortByColumn)
     .then((photos): void => photosControllerUtils.handlePhotos(response, photos))
     .catch((error): void => next(error));
+};
 
 // * @desc Update photo
 // * @route PUT /api/photos/:id

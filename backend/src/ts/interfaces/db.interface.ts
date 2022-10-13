@@ -2,6 +2,7 @@ import { Date, Document, Types } from 'mongoose';
 
 import * as enm from '@/ts/enums/db.enum';
 
+// #region Photo Interface
 export interface IPhoto extends Document {
   _id: Types.ObjectId;
   details: {
@@ -24,13 +25,17 @@ export interface IPhoto extends Document {
     lensShutterSpeed: string;
   };
 }
+// #endregion
 
+// #region Tag Interface
 export interface ITag extends Document {
   _id: Types.ObjectId;
   photos: Types.ObjectId[];
   tag: string;
 }
+// #endregion
 
+// #region User Interface
 export interface IUser extends Document {
   _id: Types.ObjectId;
   email: string;
@@ -38,3 +43,4 @@ export interface IUser extends Document {
   password: string;
   role: enm.UserRole;
 }
+// #endregion

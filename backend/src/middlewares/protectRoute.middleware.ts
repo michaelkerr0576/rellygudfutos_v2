@@ -31,7 +31,14 @@ const authenticateUser = (
     return Promise.resolve(next(newError));
   }
 
-  const decoded = jwt.verify(token, jwtSecret) as JwtPayload;
+  const decodedToken = jwt.verify(token, jwtSecret, (error, decoded): void | JwtPayload => {
+    if (error) {
+      response.status(401);
+      throw new Error(errorMessageUtils.error401SessionExpired());
+    }
+
+    return decoded as JwtPayload;
+  }) as unknown as JwtPayload;
 
   const checkUserAuthentication = (user: LeanDocument<inf.IUser> | null): void => {
     if (!user) {
@@ -49,7 +56,7 @@ const authenticateUser = (
   };
 
   return usersDbService
-    .getUser(decoded.id)
+    .getUser(decodedToken.id)
     .then((user): void => checkUserAuthentication(user))
     .catch((error): void => next(error));
 };
@@ -60,9 +67,9 @@ const adminAuthorisation = (request: Request, response: Response, next: NextFunc
 const userAuthorisation = (request: Request, response: Response, next: NextFunction): Promise<void> =>
   authenticateUser(request, response, next, [enm.UserRole.ADMIN, enm.UserRole.USER]);
 
-const protectRoute = {
+const protectRouteMiddleware = {
   adminAuthorisation,
   userAuthorisation,
 };
 
-export default protectRoute;
+export default protectRouteMiddleware;

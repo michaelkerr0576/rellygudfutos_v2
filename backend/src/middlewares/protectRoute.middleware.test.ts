@@ -8,7 +8,7 @@ import postUserAdminFixture from '@/tests/fixtures/users/postUserAdmin.fixture';
 import utilFixture from '@/tests/fixtures/util.fixture';
 import mongoMemoryServer from '@/tests/mongoMemoryServer';
 
-import protectRoute from './protectRoute.middleware';
+import protectRouteMiddleware from './protectRoute.middleware';
 
 const mockJwtVerify = jest.fn();
 jwt.verify = mockJwtVerify;
@@ -45,7 +45,7 @@ describe('Protect Route Middleware', () => {
       };
 
       // * Middleware: admin authorisation
-      await protectRoute.adminAuthorisation(
+      await protectRouteMiddleware.adminAuthorisation(
         mockRequest as Request,
         mockResponse as Response,
         mockNextFunction as NextFunction,
@@ -70,7 +70,7 @@ describe('Protect Route Middleware', () => {
       await usersDbService.addUser(postUserFixture as any).catch((error): void => console.log(error));
 
       // * Middleware: admin authorisation
-      await protectRoute.adminAuthorisation(
+      await protectRouteMiddleware.adminAuthorisation(
         mockRequest as Request,
         mockResponse as Response,
         mockNextFunction as NextFunction,
@@ -95,7 +95,7 @@ describe('Protect Route Middleware', () => {
       await usersDbService.addUser(postUserFixture as any).catch((error): void => console.log(error));
 
       // * Middleware: admin authorisation
-      await protectRoute.adminAuthorisation(
+      await protectRouteMiddleware.adminAuthorisation(
         mockRequest as Request,
         mockResponse as Response,
         mockNextFunction as NextFunction,
@@ -120,7 +120,7 @@ describe('Protect Route Middleware', () => {
       await usersDbService.addUser(postUserAdminFixture as any).catch((error): void => console.log(error));
 
       // * Middleware: admin authorisation
-      await protectRoute.adminAuthorisation(
+      await protectRouteMiddleware.adminAuthorisation(
         mockRequest as Request,
         mockResponse as Response,
         mockNextFunction as NextFunction,
@@ -137,7 +137,7 @@ describe('Protect Route Middleware', () => {
       };
 
       // * Middleware: user authorisation
-      await protectRoute.userAuthorisation(
+      await protectRouteMiddleware.userAuthorisation(
         mockRequest as Request,
         mockResponse as Response,
         mockNextFunction as NextFunction,
@@ -162,7 +162,7 @@ describe('Protect Route Middleware', () => {
       await usersDbService.addUser(postUserFixture as any).catch((error): void => console.log(error));
 
       // * Middleware: user authorisation
-      await protectRoute.adminAuthorisation(
+      await protectRouteMiddleware.adminAuthorisation(
         mockRequest as Request,
         mockResponse as Response,
         mockNextFunction as NextFunction,
@@ -186,7 +186,7 @@ describe('Protect Route Middleware', () => {
       await usersDbService.addUser(postUserFixture as any).catch((error): void => console.log(error));
 
       // * Middleware: user authorisation
-      await protectRoute.userAuthorisation(
+      await protectRouteMiddleware.userAuthorisation(
         mockRequest as Request,
         mockResponse as Response,
         mockNextFunction as NextFunction,

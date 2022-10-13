@@ -3,8 +3,8 @@ import timekeeper from 'timekeeper';
 
 import photosDbService from '@/services/photosDb.service';
 import tagsDbService from '@/services/tagsDb.service';
-import postPhotoEnumFixture from '@/tests/fixtures/photos/postPhotoEnum.fixture';
 import postPhotoFixture from '@/tests/fixtures/photos/postPhoto.fixture';
+import postPhotoEnumFixture from '@/tests/fixtures/photos/postPhotoEnum.fixture';
 import postPhotoRequiredFixture from '@/tests/fixtures/photos/postPhotoRequired.fixture';
 import postPhotoResponseFixture from '@/tests/fixtures/photos/postPhotoResponse.fixture';
 import postPhotosFixture from '@/tests/fixtures/photos/postPhotos.fixture';

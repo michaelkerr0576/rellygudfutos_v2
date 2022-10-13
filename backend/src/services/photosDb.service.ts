@@ -2,6 +2,7 @@ import { LeanDocument, Types } from 'mongoose';
 
 import PhotoModel from '@/models/Photo.model';
 import * as inf from '@/ts/interfaces/db.interface';
+import * as typ from '@/ts/types/db.types';
 
 const addPhoto = (newPhoto: inf.IPhoto): Promise<inf.IPhoto> => PhotoModel.create(newPhoto);
 
@@ -12,36 +13,40 @@ const checkPhotoExists = (id: Types.ObjectId): Promise<boolean> => PhotoModel.ex
 const deletePhoto = (id: string): Promise<LeanDocument<inf.IPhoto> | null> =>
   PhotoModel.findByIdAndDelete(id)
     .lean()
-    .select('-__v')
-    .populate('details.imageTags', '-__v -photos')
+    .populate('details.imageTags')
     .then((photo): LeanDocument<inf.IPhoto> | null => photo);
 
 const findPhoto = (createdAt: Date): Promise<LeanDocument<inf.IPhoto> | null> =>
   PhotoModel.findOne({ createdAt })
     .lean()
-    .select('-__v')
-    .populate('details.imageTags', '-__v -photos')
+    .populate('details.imageTags')
     .then((photo): LeanDocument<inf.IPhoto> | null => photo);
 
 const getPhoto = (id: string): Promise<LeanDocument<inf.IPhoto> | null> =>
   PhotoModel.findById(id)
     .lean()
-    .select('-__v')
-    .populate('details.imageTags', '-__v -photos')
+    .populate('details.imageTags')
     .then((photo): LeanDocument<inf.IPhoto> | null => photo);
 
-const getPhotos = (): Promise<LeanDocument<inf.IPhoto[]>> =>
+const getPhotos = (sortBy: typ.PhotoSortColumnsWithDirection): Promise<LeanDocument<inf.IPhoto[]>> =>
   PhotoModel.find()
     .lean()
-    .select('-__v')
-    .populate('details.imageTags', '-__v -photos')
+    .populate('details.imageTags')
+    .sort(sortBy)
     .then((photos): LeanDocument<inf.IPhoto[]> => photos);
+
+const getRandomPhotos = (limit: number): Promise<LeanDocument<inf.IPhoto[]>> =>
+  PhotoModel.aggregate([{ $sample: { size: limit } }]).then(
+    (randomPhotos): Promise<LeanDocument<inf.IPhoto[]>> =>
+      PhotoModel.populate(randomPhotos, {
+        path: 'details.imageTags',
+      }).then((photos): LeanDocument<inf.IPhoto[]> => photos),
+  );
 
 const updatePhoto = (id: string, updatedPhoto: inf.IPhoto): Promise<LeanDocument<inf.IPhoto> | null> =>
   PhotoModel.findByIdAndUpdate(id, updatedPhoto, { new: true, runValidators: true })
     .lean()
-    .select('-__v')
-    .populate('details.imageTags', '-__v -photos')
+    .populate('details.imageTags')
     .then((photo): LeanDocument<inf.IPhoto> | null => photo);
 
 const photosDbService = {
@@ -52,6 +57,7 @@ const photosDbService = {
   findPhoto,
   getPhoto,
   getPhotos,
+  getRandomPhotos,
   updatePhoto,
 };
 

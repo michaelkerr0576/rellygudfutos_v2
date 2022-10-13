@@ -3,26 +3,15 @@ import { LeanDocument, Types } from 'mongoose';
 
 import photosDbService from '@/services/photosDb.service';
 import tagsDbService from '@/services/tagsDb.service';
+import * as enm from '@/ts/enums/db.enum';
 import * as inf from '@/ts/interfaces/db.interface';
+import * as typ from '@/ts/types/db.types';
+import * as con from '@/utils/constants/sorting';
 import errorMessageUtils from '@/utils/errorMessage.utils';
 import generalUtils from '@/utils/general.utils';
 
-const handleAddedPhoto = async (response: Response, photo: inf.IPhoto): Promise<void> => {
-  const {
-    _id: photoId,
-    details: { imageTags: photoTagIds },
-  } = photo;
-
-  await tagsDbService.addTagPhotos(photoId, photoTagIds);
-
-  response.status(201).json({
-    addedPhoto: photo,
-    message: 'Photo added',
-  });
-};
-
 // TODO - add tests
-const handleCancelAddPhoto = async (
+const cancelAddPhoto = async (
   error: Error,
   photoId: Types.ObjectId,
   photoTagIds: Types.ObjectId[] | undefined,
@@ -46,7 +35,7 @@ const handleCancelAddPhoto = async (
   throw error;
 };
 
-const handleCheckTagsExist = async (
+const checkPhotoTagsExist = async (
   response: Response,
   photoTagIds: Types.ObjectId[] | undefined,
 ): Promise<void> => {
@@ -56,6 +45,35 @@ const handleCheckTagsExist = async (
     response.status(404);
     throw new Error(errorMessageUtils.error404ArrayValueNotFound('Tag', 'Image Tags'));
   }
+};
+
+const getPhotoSortByColumn = (sortBy: enm.PhotoSortOptions): typ.PhotoSortColumnsWithDirection => {
+  switch (sortBy) {
+    case enm.PhotoSortOptions.NEWEST:
+      return { 'details.captureDate': con.DESCENDING };
+    case enm.PhotoSortOptions.OLDEST:
+      return { 'details.captureDate': con.ASCENDING };
+    case enm.PhotoSortOptions.TITLE_AZ:
+      return { 'details.imageTitle': con.DESCENDING };
+    case enm.PhotoSortOptions.TITLE_ZA:
+      return { 'details.imageTitle': con.ASCENDING };
+    default:
+      return { 'details.captureDate': con.DESCENDING };
+  }
+};
+
+const handleAddedPhoto = async (response: Response, photo: inf.IPhoto): Promise<void> => {
+  const {
+    _id: photoId,
+    details: { imageTags: photoTagIds },
+  } = photo;
+
+  await tagsDbService.addTagPhotos(photoId, photoTagIds);
+
+  response.status(201).json({
+    addedPhoto: photo,
+    message: 'Photo added',
+  });
 };
 
 const handleDeletedPhoto = (response: Response, photo: LeanDocument<inf.IPhoto> | null): void => {
@@ -102,9 +120,10 @@ const handleUpdatedPhoto = (response: Response, photo: LeanDocument<inf.IPhoto> 
 };
 
 const photosControllerUtils = {
+  cancelAddPhoto,
+  checkPhotoTagsExist,
+  getPhotoSortByColumn,
   handleAddedPhoto,
-  handleCancelAddPhoto,
-  handleCheckTagsExist,
   handleDeletedPhoto,
   handlePhoto,
   handlePhotos,

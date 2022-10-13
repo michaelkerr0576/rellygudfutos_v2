@@ -10,6 +10,14 @@ export enum ImageSize {
   MEDIUM = 'MEDIUM',
   LARGE = 'LARGE',
 }
+
+export enum PhotoSortOptions {
+  NEWEST = 'NEWEST',
+  OLDEST = 'OLDEST',
+  TITLE_AZ = 'TITLE_AZ',
+  TITLE_ZA = 'TITLE_ZA',
+  SHUFFLE = 'SHUFFLE',
+}
 // #endregion
 
 // #region User Enum

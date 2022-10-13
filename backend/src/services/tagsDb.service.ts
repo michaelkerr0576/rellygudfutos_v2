@@ -26,7 +26,6 @@ const checkTagsExist = (ids: Types.ObjectId[]): Promise<boolean> =>
 const deleteTag = (id: string): Promise<LeanDocument<inf.ITag> | null> =>
   TagModel.findByIdAndDelete(id)
     .lean()
-    .select('-__v')
     .then((tag): LeanDocument<inf.ITag> | null => tag);
 
 const deleteTagPhotos = (photoId: Types.ObjectId, photoTagIds: Types.ObjectId[]): Promise<typ.QueryStatus> =>
@@ -40,31 +39,26 @@ const deleteTagPhotos = (photoId: Types.ObjectId, photoTagIds: Types.ObjectId[])
 const findTag = (createdAt: Date): Promise<LeanDocument<inf.ITag> | null> =>
   TagModel.findOne({ createdAt })
     .lean()
-    .select('-__v')
     .then((tag): LeanDocument<inf.ITag> | null => tag);
 
 const findTags = (ids: Types.ObjectId[]): Promise<LeanDocument<inf.ITag[]>> =>
   TagModel.find({ _id: ids as any })
     .lean()
-    .select('-__v')
     .then((tags): LeanDocument<inf.ITag[]> => tags);
 
 const getTag = (id: string): Promise<LeanDocument<inf.ITag> | null> =>
   TagModel.findById(id)
     .lean()
-    .select('-__v')
     .then((tag): LeanDocument<inf.ITag> | null => tag);
 
 const getTags = (): Promise<LeanDocument<inf.ITag[]>> =>
   TagModel.find()
     .lean()
-    .select('-__v')
     .then((tags): LeanDocument<inf.ITag[]> => tags);
 
 const updateTag = (id: string, updatedTag: inf.ITag): Promise<LeanDocument<inf.ITag> | null> =>
   TagModel.findByIdAndUpdate(id, updatedTag, { new: true, runValidators: true })
     .lean()
-    .select('-__v')
     .then((tag): LeanDocument<inf.ITag> | null => tag);
 
 const tagsDbService = {

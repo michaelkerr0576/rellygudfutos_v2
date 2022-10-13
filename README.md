@@ -32,6 +32,7 @@ General project structuring. Split into Frontend and Backend. Each folder contai
 ### Typescript
 
 Typescript will be used across Frontend and Backend. Can customize behaviour in `tsconfig.json`. Organising and storing types, interfaces and enums will be done with a Typed-based approach. I like keeping all the types stored at a central global folder. Otherwise I forget where I have previously created types which leads to duplicate types, interfaces and enums :unamused:
+
 ![image](https://user-images.githubusercontent.com/53580213/194758102-e343e04a-9cd7-4668-9c95-b45ba47af488.png)
 
 **Useful Links:**
@@ -110,7 +111,7 @@ An example of the Many to Many relationship that Photos and Tags will have:
 **Testing with MongoDB & Mongoose**
 <br/>
 
-Decided to use an in-memory database over mocks. This will allow the tests to be directly executed on the in-memory database. This allows the tests to more closely emulate production instead of using mocks that can be incorrect, incomplete or outdated. :nerd_face:
+Decided to use an in-memory database over mocks. This will allow the tests to be directly executed on the in-memory database. This allows the tests to more closely emulate production instead of using mocks that can be incorrect, incomplete or outdated :nerd_face:
 
 **Useful Links:**
 
@@ -167,7 +168,6 @@ First time round in rellygudfutos_v1 Frontend handled sorting and filtering. Pag
 
 **Useful Links:**
 
-- [Node Sorting, Filtering and Pagination](https://medium.com/swlh/node-js-api-add-crud-operations-with-pagination-filtering-grouping-and-sorting-capabilities-55375ad0b774)
 - [MongoDB Sorting, Filtering and Pagination](https://jeffdevslife.com/p/1-mongodb-query-of-advanced-filtering-sorting-limit-field-and-pagination-with-mongoose/)
 - [Youtube Pagination Tutorial - Web Dev Simplified](https://www.youtube.com/watch?v=ZX3qt0UWifc&ab_channel=WebDevSimplified)
 
@@ -202,7 +202,7 @@ Super light weight client side state. For this application, Redux is overkill wh
 
 ## Terminal
 
-Some useful commands and what they do because I will forget.
+Some useful commands I regularly use and what they do because I will forget.
 
 ### General
 

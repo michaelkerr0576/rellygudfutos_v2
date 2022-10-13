@@ -8,19 +8,17 @@ const addUser = (newUser: inf.IUser): Promise<inf.IUser> => UserModel.create(new
 const getUser = (id: string): Promise<LeanDocument<inf.IUser> | null> =>
   UserModel.findById(id)
     .lean()
-    .select('-__v')
     .then((user): LeanDocument<inf.IUser> | null => user);
 
 const getUsers = (): Promise<LeanDocument<inf.IUser[]>> =>
   UserModel.find()
     .lean()
-    .select('-__v -password')
+    .select('-password')
     .then((users): LeanDocument<inf.IUser[]> => users);
 
 const findUser = (email: string): Promise<LeanDocument<inf.IUser> | null> =>
   UserModel.findOne({ email })
     .lean()
-    .select('-__v')
     .then((user): LeanDocument<inf.IUser> | null => user);
 
 const usersDbService = {
