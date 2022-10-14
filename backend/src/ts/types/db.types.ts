@@ -9,12 +9,11 @@ export type SortDirection = typeof con.ASCENDING | typeof con.DESCENDING;
 // #region Photo Types
 export type PhotosQuery = {
   endIndex: number;
+  filter: any; // TODO - fix type
   limit: number;
   page: number;
-  search: any; // TODO - fix type
-  sortBy: PhotosSortColumnsWithDirection;
+  sortBy: PhotosSortColumnsWithDirection | enm.PhotoSortOptions.RANDOM;
   startIndex: number;
-  tags: any; // TODO - fix type
 };
 
 export type PhotosSortColumns = 'details.captureDate' | 'details.imageTitle';

@@ -12,8 +12,8 @@ const getUser = (id: string): Promise<LeanDocument<inf.IUser> | null> =>
 
 const getUsers = (): Promise<LeanDocument<inf.IUser[]>> =>
   UserModel.find()
-    .lean()
     .select('-password')
+    .lean()
     .then((users): LeanDocument<inf.IUser[]> => users);
 
 const findUser = (email: string): Promise<LeanDocument<inf.IUser> | null> =>

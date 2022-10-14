@@ -16,7 +16,7 @@ export enum PhotoSortOptions {
   OLDEST = 'OLDEST',
   TITLE_AZ = 'TITLE_AZ',
   TITLE_ZA = 'TITLE_ZA',
-  SHUFFLE = 'SHUFFLE',
+  RANDOM = 'RANDOM',
 }
 // #endregion
 

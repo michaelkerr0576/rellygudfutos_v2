@@ -221,7 +221,7 @@ describe('Photos Controller', () => {
       expect(mockResponse.status).toBeCalledWith(404);
       expect(mockNextFunction).toHaveBeenCalledWith(
         expect.objectContaining({
-          message: 'Photos not found. Add Photos',
+          message: 'Photos not found. Remove filter or add Photos',
         }),
       );
     });

@@ -63,8 +63,8 @@ const getPhoto = (request: Request, response: Response, next: NextFunction): Pro
 const getPhotos = (request: Request, response: Response, next: NextFunction): Promise<void> => {
   const photosQuery = photosControllerUtils.getPhotosQuery(request.query);
 
-  const isShuffle = photosQuery.sortBy === enm.PhotoSortOptions.SHUFFLE;
-  if (isShuffle) {
+  const isRandomSort = photosQuery.sortBy === enm.PhotoSortOptions.RANDOM;
+  if (isRandomSort) {
     return Promise.resolve(
       photosDbService
         .getRandomPhotos(photosQuery.limit)

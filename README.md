@@ -170,6 +170,10 @@ Sorting and Filtering will also have to be done on the Backend because there wil
 
 **Useful Links:**
 
+- [Node Sorting, Filtering and Pagination](https://medium.com/swlh/node-js-api-add-crud-operations-with-pagination-filtering-grouping-and-sorting-capabilities-55375ad0b774)
+- [MongoDB Sorting, Filtering and Pagination](https://jeffdevslife.com/p/1-mongodb-query-of-advanced-filtering-sorting-limit-field-and-pagination-with-mongoose/)
+- [MongoDB Filtering Query 1](https://www.mongodb.com/docs/manual/reference/operator/query/all/)
+- [MongoDB Filtering Query 2](https://www.mongodb.com/docs/manual/reference/operator/query/regex/)
 - [Youtube Pagination Tutorial - Web Dev Simplified](https://www.youtube.com/watch?v=ZX3qt0UWifc&ab_channel=WebDevSimplified)
 
 ### Next.js

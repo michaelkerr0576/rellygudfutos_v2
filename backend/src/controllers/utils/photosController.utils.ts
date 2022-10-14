@@ -48,8 +48,12 @@ const checkPhotoTagsExist = async (
   }
 };
 
-const getPhotosSortByColumn = (sortBy: enm.PhotoSortOptions): typ.PhotosSortColumnsWithDirection => {
-  switch (sortBy) {
+const getPhotosSortBy = (
+  sortBy: enm.PhotoSortOptions,
+): typ.PhotosSortColumnsWithDirection | enm.PhotoSortOptions.RANDOM => {
+  const sortByUpperCase = sortBy.toUpperCase();
+
+  switch (sortByUpperCase) {
     case enm.PhotoSortOptions.NEWEST:
       return { 'details.captureDate': conSorting.DESCENDING };
     case enm.PhotoSortOptions.OLDEST:
@@ -58,6 +62,8 @@ const getPhotosSortByColumn = (sortBy: enm.PhotoSortOptions): typ.PhotosSortColu
       return { 'details.imageTitle': conSorting.DESCENDING };
     case enm.PhotoSortOptions.TITLE_ZA:
       return { 'details.imageTitle': conSorting.ASCENDING };
+    case enm.PhotoSortOptions.RANDOM:
+      return enm.PhotoSortOptions.RANDOM;
     default:
       return { 'details.captureDate': conSorting.DESCENDING };
   }
@@ -73,7 +79,7 @@ const getPhotosQuery = (query: Request['query']): typ.PhotosQuery => {
   } = query;
 
   const pageNumber = generalUtils.stringToNumber(page as string | number);
-  const sortByColumn = getPhotosSortByColumn(sortBy as enm.PhotoSortOptions);
+  const sortByColumn = getPhotosSortBy(sortBy as enm.PhotoSortOptions);
 
   let limitNumber = generalUtils.stringToNumber(limit as string | number);
   limitNumber = limitNumber > conPagination.PHOTO_MAX_LIMIT ? conPagination.PHOTO_MAX_LIMIT : limitNumber;
@@ -81,14 +87,35 @@ const getPhotosQuery = (query: Request['query']): typ.PhotosQuery => {
   const startIndex = (pageNumber - 1) * limitNumber;
   const endIndex = pageNumber * limitNumber;
 
+  let filter = {};
+
+  const tagIds = Array.isArray(tags) ? tags : [];
+  if (tagIds.length > 0) {
+    filter = { ...filter, 'details.imageTags': { _id: tagIds } };
+  }
+
+  const searchString = search.toString();
+  if (searchString.length > 3) {
+    const pattern = new RegExp(searchString, 'i');
+
+    filter = {
+      ...filter,
+      $or: [
+        { 'details.captureLocation': { $regex: pattern } },
+        { 'details.imageTags.tag': { $regex: pattern } },
+        { 'details.imageCaption': { $regex: pattern } },
+        { 'details.imageTitle': { $regex: pattern } },
+      ],
+    };
+  }
+
   return {
     endIndex,
+    filter,
     limit: limitNumber,
     page: pageNumber,
-    search,
     sortBy: sortByColumn,
     startIndex,
-    tags,
   };
 };
 
@@ -153,7 +180,7 @@ const photosControllerUtils = {
   cancelAddPhoto,
   checkPhotoTagsExist,
   getPhotosQuery,
-  getPhotosSortByColumn,
+  getPhotosSortBy,
   handleAddedPhoto,
   handleDeletedPhoto,
   handlePhoto,

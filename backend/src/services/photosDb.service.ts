@@ -12,29 +12,29 @@ const checkPhotoExists = (id: Types.ObjectId): Promise<boolean> => PhotoModel.ex
 
 const deletePhoto = (id: string): Promise<LeanDocument<inf.IPhoto> | null> =>
   PhotoModel.findByIdAndDelete(id)
-    .lean()
     .populate('details.imageTags')
+    .lean()
     .then((photo): LeanDocument<inf.IPhoto> | null => photo);
 
 const findPhoto = (createdAt: Date): Promise<LeanDocument<inf.IPhoto> | null> =>
   PhotoModel.findOne({ createdAt })
-    .lean()
     .populate('details.imageTags')
+    .lean()
     .then((photo): LeanDocument<inf.IPhoto> | null => photo);
 
 const getPhoto = (id: string): Promise<LeanDocument<inf.IPhoto> | null> =>
   PhotoModel.findById(id)
-    .lean()
     .populate('details.imageTags')
+    .lean()
     .then((photo): LeanDocument<inf.IPhoto> | null => photo);
 
 const getPhotos = (query: typ.PhotosQuery): Promise<LeanDocument<inf.IPhoto[]>> =>
-  PhotoModel.find()
+  PhotoModel.find(query.filter)
     .sort(query.sortBy)
     .skip(query.startIndex)
     .limit(query.limit)
-    .lean()
     .populate('details.imageTags')
+    .lean()
     .then((photos): LeanDocument<inf.IPhoto[]> => photos);
 
 const getRandomPhotos = (limit: number): Promise<LeanDocument<inf.IPhoto[]>> =>
@@ -47,8 +47,8 @@ const getRandomPhotos = (limit: number): Promise<LeanDocument<inf.IPhoto[]>> =>
 
 const updatePhoto = (id: string, updatedPhoto: inf.IPhoto): Promise<LeanDocument<inf.IPhoto> | null> =>
   PhotoModel.findByIdAndUpdate(id, updatedPhoto, { new: true, runValidators: true })
-    .lean()
     .populate('details.imageTags')
+    .lean()
     .then((photo): LeanDocument<inf.IPhoto> | null => photo);
 
 const photosDbService = {

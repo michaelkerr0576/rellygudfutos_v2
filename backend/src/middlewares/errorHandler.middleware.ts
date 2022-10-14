@@ -10,7 +10,8 @@ const errorHandler = (
   response: Response,
   _next: NextFunction,
 ): void => {
-  const statusCode = response.statusCode ? response.statusCode : 500;
+  // * Changing Express' default error status code from 200 to 500
+  const statusCode = response.statusCode && response.statusCode !== 200 ? response.statusCode : 500;
 
   response.status(statusCode);
   response.json({
