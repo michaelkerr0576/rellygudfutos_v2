@@ -11,6 +11,8 @@ import * as conSorting from '@/utils/constants/sorting';
 import errorMessageUtils from '@/utils/errorMessage.utils';
 import generalUtils from '@/utils/general.utils';
 
+import controllerUtils from './controller.utils';
+
 // TODO - add tests
 const cancelAddPhoto = async (
   error: Error,
@@ -48,12 +50,38 @@ const checkPhotoTagsExist = async (
   }
 };
 
-const getPhotosSortBy = (
-  sortBy: enm.PhotoSortOptions,
-): typ.PhotosSortColumnsWithDirection | enm.PhotoSortOptions.RANDOM => {
-  const sortByUpperCase = sortBy.toUpperCase();
+const getPhotosFilter = (search: string, tags: string[]): typ.PhotosFilterColumnsWithPattern => {
+  let filter = {};
 
-  switch (sortByUpperCase) {
+  const tagIds = Array.isArray(tags) ? tags : [];
+  if (tagIds.length > 0) {
+    filter = { ...filter, 'details.imageTags': { _id: tagIds } };
+  }
+
+  const searchString = search.toString();
+  if (searchString.length > 3) {
+    const pattern = new RegExp(searchString, 'i');
+
+    filter = {
+      ...filter,
+      $or: [
+        { 'details.captureLocation': { $regex: pattern } },
+        { 'details.imageCaption': { $regex: pattern } },
+        { 'details.imageTags.tag': { $regex: pattern } },
+        { 'details.imageTitle': { $regex: pattern } },
+      ],
+    };
+  }
+
+  return filter;
+};
+
+const getPhotosSort = (
+  sort: enm.PhotoSortOptions,
+): typ.PhotosSortColumnsWithDirection | enm.PhotoSortOptions.RANDOM => {
+  const sortUpperCase = sort.toUpperCase();
+
+  switch (sortUpperCase) {
     case enm.PhotoSortOptions.NEWEST:
       return { 'details.captureDate': conSorting.DESCENDING };
     case enm.PhotoSortOptions.OLDEST:
@@ -74,48 +102,27 @@ const getPhotosQuery = (query: Request['query']): typ.PhotosQuery => {
     limit = conPagination.PHOTO_LIMIT,
     page = conPagination.PAGE,
     search = '',
-    sortBy = enm.PhotoSortOptions.NEWEST,
+    sort = enm.PhotoSortOptions.NEWEST,
     tags = [],
   } = query;
 
-  const pageNumber = generalUtils.stringToNumber(page as string | number);
-  const sortByColumn = getPhotosSortBy(sortBy as enm.PhotoSortOptions);
+  const filter = getPhotosFilter(search as string, tags as string[]);
 
-  let limitNumber = generalUtils.stringToNumber(limit as string | number);
-  limitNumber = limitNumber > conPagination.PHOTO_MAX_LIMIT ? conPagination.PHOTO_MAX_LIMIT : limitNumber;
+  const pagination = controllerUtils.getPaginationQuery(
+    limit as string,
+    conPagination.PHOTO_MAX_LIMIT,
+    page as string,
+  );
 
-  const startIndex = (pageNumber - 1) * limitNumber;
-  const endIndex = pageNumber * limitNumber;
-
-  let filter = {};
-
-  const tagIds = Array.isArray(tags) ? tags : [];
-  if (tagIds.length > 0) {
-    filter = { ...filter, 'details.imageTags': { _id: tagIds } };
-  }
-
-  const searchString = search.toString();
-  if (searchString.length > 3) {
-    const pattern = new RegExp(searchString, 'i');
-
-    filter = {
-      ...filter,
-      $or: [
-        { 'details.captureLocation': { $regex: pattern } },
-        { 'details.imageTags.tag': { $regex: pattern } },
-        { 'details.imageCaption': { $regex: pattern } },
-        { 'details.imageTitle': { $regex: pattern } },
-      ],
-    };
-  }
+  const sortBy = getPhotosSort(sort as enm.PhotoSortOptions);
 
   return {
-    endIndex,
+    endIndex: pagination.endIndex,
     filter,
-    limit: limitNumber,
-    page: pageNumber,
-    sortBy: sortByColumn,
-    startIndex,
+    limit: pagination.limit,
+    page: pagination.page,
+    sort: sortBy,
+    startIndex: pagination.startIndex,
   };
 };
 
@@ -179,8 +186,9 @@ const handleUpdatedPhoto = (response: Response, photo: LeanDocument<inf.IPhoto> 
 const photosControllerUtils = {
   cancelAddPhoto,
   checkPhotoTagsExist,
+  getPhotosFilter,
   getPhotosQuery,
-  getPhotosSortBy,
+  getPhotosSort,
   handleAddedPhoto,
   handleDeletedPhoto,
   handlePhoto,

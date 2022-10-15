@@ -1,7 +1,25 @@
 import { Response } from 'express';
 
-import * as typ from '@/ts/types/error.types';
+import * as typDb from '@/ts/types/db.types';
+import * as typError from '@/ts/types/error.types';
 import errorMessageUtils from '@/utils/errorMessage.utils';
+import generalUtils from '@/utils/general.utils';
+
+const getPaginationQuery = (limit: string, maxLimit: number, page: string): typDb.PaginationQuery => {
+  const pageNumber = generalUtils.stringToNumber(page);
+  let limitNumber = generalUtils.stringToNumber(limit);
+  limitNumber = limitNumber > maxLimit ? maxLimit : limitNumber;
+
+  const startIndex = (pageNumber - 1) * limitNumber;
+  const endIndex = pageNumber * limitNumber;
+
+  return {
+    endIndex,
+    limit: limitNumber,
+    page: pageNumber,
+    startIndex,
+  };
+};
 
 const handleEmptyBodyRequest = (response: Response, model: string): Error => {
   response.status(400);
@@ -9,7 +27,7 @@ const handleEmptyBodyRequest = (response: Response, model: string): Error => {
   return newError;
 };
 
-const handleValidationError = (response: Response, error: typ.MongooseValidationError): void => {
+const handleValidationError = (response: Response, error: typError.MongooseValidationError): void => {
   const isValidationError = error.name === 'ValidationError';
   if (isValidationError) {
     const { message, errors } = errorMessageUtils.error400Validation(error);
@@ -24,6 +42,7 @@ const handleValidationError = (response: Response, error: typ.MongooseValidation
 };
 
 const controllerUtils = {
+  getPaginationQuery,
   handleEmptyBodyRequest,
   handleValidationError,
 };

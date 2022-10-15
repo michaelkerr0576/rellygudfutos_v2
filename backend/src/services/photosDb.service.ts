@@ -30,7 +30,7 @@ const getPhoto = (id: string): Promise<LeanDocument<inf.IPhoto> | null> =>
 
 const getPhotos = (query: typ.PhotosQuery): Promise<LeanDocument<inf.IPhoto[]>> =>
   PhotoModel.find(query.filter)
-    .sort(query.sortBy)
+    .sort(query.sort)
     .skip(query.startIndex)
     .limit(query.limit)
     .populate('details.imageTags')
