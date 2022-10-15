@@ -14,19 +14,19 @@ const countPhotos = (): Promise<number> => PhotoModel.countDocuments().then((cou
 
 const deletePhoto = (id: string): Promise<LeanDocument<inf.IPhoto> | null> =>
   PhotoModel.findByIdAndDelete(id)
-    .populate('details.imageTags')
+    .populate('details.imageTags', '-__v -photos -createdAt -updatedAt')
     .lean()
     .then((photo): LeanDocument<inf.IPhoto> | null => photo);
 
 const findPhoto = (createdAt: Date): Promise<LeanDocument<inf.IPhoto> | null> =>
   PhotoModel.findOne({ createdAt })
-    .populate('details.imageTags')
+    .populate('details.imageTags', '-__v -photos -createdAt -updatedAt')
     .lean()
     .then((photo): LeanDocument<inf.IPhoto> | null => photo);
 
 const getPhoto = (id: string): Promise<LeanDocument<inf.IPhoto> | null> =>
   PhotoModel.findById(id)
-    .populate('details.imageTags')
+    .populate('details.imageTags', '-__v -photos -createdAt -updatedAt')
     .lean()
     .then((photo): LeanDocument<inf.IPhoto> | null => photo);
 
@@ -35,7 +35,7 @@ const getPhotos = (query: typ.PhotosQuery): Promise<LeanDocument<inf.IPhoto[]>> 
     .sort(query.sort)
     .skip(query.startIndex)
     .limit(query.limit)
-    .populate('details.imageTags')
+    .populate('details.imageTags', '-__v -photos -createdAt -updatedAt')
     .lean()
     .then((photos): LeanDocument<inf.IPhoto[]> => photos);
 
@@ -44,12 +44,13 @@ const getRandomPhotos = (limit: number): Promise<LeanDocument<inf.IPhoto[]>> =>
     (randomPhotos): Promise<LeanDocument<inf.IPhoto[]>> =>
       PhotoModel.populate(randomPhotos, {
         path: 'details.imageTags',
+        select: '-__v -photos -createdAt -updatedAt',
       }).then((photos): LeanDocument<inf.IPhoto[]> => photos),
   );
 
 const updatePhoto = (id: string, updatedPhoto: inf.IPhoto): Promise<LeanDocument<inf.IPhoto> | null> =>
   PhotoModel.findByIdAndUpdate(id, updatedPhoto, { new: true, runValidators: true })
-    .populate('details.imageTags')
+    .populate('details.imageTags', '-__v -photos -createdAt -updatedAt')
     .lean()
     .then((photo): LeanDocument<inf.IPhoto> | null => photo);
 

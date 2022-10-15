@@ -175,9 +175,14 @@ const handlePhotos = async (
     throw new Error(errorMessageUtils.error404EmptyResult('Photos'));
   }
 
-  const { startIndex, page, limit, endIndex } = photosQuery;
-  const total = await photosDbService.countPhotos();
-  const pagination = controllerUtils.getPaginatedResponse(endIndex, limit, page, startIndex, total);
+  let pagination;
+  const isRandomSort = photosQuery.sort === enm.PhotoSortOptions.RANDOM;
+  if (!isRandomSort) {
+    const { startIndex, page, limit, endIndex } = photosQuery;
+
+    const total = await photosDbService.countPhotos();
+    pagination = controllerUtils.getPaginatedResponse(endIndex, limit, page, startIndex, total);
+  }
 
   response.status(200).json({
     data: photos,
