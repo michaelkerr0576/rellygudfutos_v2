@@ -2,6 +2,21 @@ import * as con from '@/utils/constants/sorting';
 
 import * as enm from '../enums/db.enum';
 
+export type PaginatedResponse = {
+  limit: number;
+  page: number;
+  pages: number;
+  total: number;
+  previous?: {
+    limit: number;
+    page: number;
+  };
+  next?: {
+    limit: number;
+    page: number;
+  };
+};
+
 export type PaginationQuery = {
   endIndex: number;
   limit: number;

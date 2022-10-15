@@ -68,14 +68,14 @@ const getPhotos = (request: Request, response: Response, next: NextFunction): Pr
     return Promise.resolve(
       photosDbService
         .getRandomPhotos(photosQuery.limit)
-        .then((photos): void => photosControllerUtils.handlePhotos(response, photos))
+        .then((photos): Promise<void> => photosControllerUtils.handlePhotos(response, photos, photosQuery))
         .catch((error): void => next(error)),
     );
   }
 
   return photosDbService
     .getPhotos(photosQuery)
-    .then((photos): void => photosControllerUtils.handlePhotos(response, photos))
+    .then((photos): Promise<void> => photosControllerUtils.handlePhotos(response, photos, photosQuery))
     .catch((error): void => next(error));
 };
 

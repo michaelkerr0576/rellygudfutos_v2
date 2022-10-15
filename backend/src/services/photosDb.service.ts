@@ -10,6 +10,8 @@ const addPhotos = (newPhotos: inf.IPhoto[]): Promise<inf.IPhoto[]> => PhotoModel
 
 const checkPhotoExists = (id: Types.ObjectId): Promise<boolean> => PhotoModel.exists({ _id: id });
 
+const countPhotos = (): Promise<number> => PhotoModel.countDocuments().then((count): number => count);
+
 const deletePhoto = (id: string): Promise<LeanDocument<inf.IPhoto> | null> =>
   PhotoModel.findByIdAndDelete(id)
     .populate('details.imageTags')
@@ -55,6 +57,7 @@ const photosDbService = {
   addPhoto,
   addPhotos,
   checkPhotoExists,
+  countPhotos,
   deletePhoto,
   findPhoto,
   getPhoto,

@@ -135,7 +135,7 @@ const handleAddedPhoto = async (response: Response, photo: inf.IPhoto): Promise<
   await tagsDbService.addTagPhotos(photoId, photoTagIds);
 
   response.status(201).json({
-    addedPhoto: photo,
+    data: photo,
     message: 'Photo added',
   });
 };
@@ -147,7 +147,7 @@ const handleDeletedPhoto = (response: Response, photo: LeanDocument<inf.IPhoto> 
   }
 
   response.status(200).json({
-    deletedPhoto: photo,
+    data: photo,
     message: 'Photo deleted',
   });
 };
@@ -158,17 +158,32 @@ const handlePhoto = (response: Response, photo: LeanDocument<inf.IPhoto> | null)
     throw new Error(errorMessageUtils.error404('Photo'));
   }
 
-  response.status(200).json(photo);
+  response.status(200).json({
+    data: photo,
+    message: 'Photo fetched successfully',
+  });
 };
 
-const handlePhotos = (response: Response, photos: LeanDocument<inf.IPhoto[]>): void => {
+const handlePhotos = async (
+  response: Response,
+  photos: LeanDocument<inf.IPhoto[]>,
+  photosQuery: typ.PhotosQuery,
+): Promise<void> => {
   const isPhotosEmpty = photos.length === 0;
   if (isPhotosEmpty) {
     response.status(404);
     throw new Error(errorMessageUtils.error404EmptyResult('Photos'));
   }
 
-  response.status(200).json(photos);
+  const { startIndex, page, limit, endIndex } = photosQuery;
+  const total = await photosDbService.countPhotos();
+  const pagination = controllerUtils.getPaginatedResponse(endIndex, limit, page, startIndex, total);
+
+  response.status(200).json({
+    data: photos,
+    message: 'Photos fetched successfully',
+    pagination,
+  });
 };
 
 const handleUpdatedPhoto = (response: Response, photo: LeanDocument<inf.IPhoto> | null): void => {
@@ -178,8 +193,8 @@ const handleUpdatedPhoto = (response: Response, photo: LeanDocument<inf.IPhoto> 
   }
 
   response.status(200).json({
+    data: photo,
     message: 'Photo updated',
-    updatedPhoto: photo,
   });
 };
 

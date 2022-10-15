@@ -91,7 +91,10 @@ const getUsers = (_request: Request, response: Response, next: NextFunction): Pr
       throw new Error(errorMessageUtils.error404EmptyResult('Users'));
     }
 
-    response.status(200).json(users);
+    response.status(200).json({
+      data: users,
+      message: 'Users fetched successfully',
+    });
   };
 
   return usersDbService
@@ -119,14 +122,14 @@ const loginUser = (request: Request, response: Response, next: NextFunction): Pr
     }
 
     response.status(200).json({
-      message: `${user.name} logged in`,
-      token: authUtils.generateToken(user._id, user.role),
-      user: {
+      data: {
         _id: user._id,
         email: user.email,
         name: user.name,
         role: user.role,
       },
+      message: `${user.name} logged in`,
+      token: authUtils.generateToken(user._id, user.role),
     });
   };
 

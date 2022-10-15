@@ -18,7 +18,7 @@ const handleDeletedTag = (response: Response, tag: LeanDocument<inf.ITag> | null
   }
 
   response.status(200).json({
-    deletedTag: tag,
+    data: tag,
     message: 'Tag deleted',
   });
 };
@@ -29,7 +29,10 @@ const handleTag = (response: Response, tag: LeanDocument<inf.ITag> | null): void
     throw new Error(errorMessageUtils.error404('Tag'));
   }
 
-  response.status(200).json(tag);
+  response.status(200).json({
+    data: tag,
+    message: 'Tag fetched successfully',
+  });
 };
 
 const handleTags = (response: Response, tags: LeanDocument<inf.ITag[]>): void => {
@@ -39,7 +42,10 @@ const handleTags = (response: Response, tags: LeanDocument<inf.ITag[]>): void =>
     throw new Error(errorMessageUtils.error404EmptyResult('Tags'));
   }
 
-  response.status(200).json(tags);
+  response.status(200).json({
+    data: tags,
+    message: 'Tags fetched successfully',
+  });
 };
 
 const handleUpdatedTag = (response: Response, tag: LeanDocument<inf.ITag> | null): void => {
@@ -49,8 +55,8 @@ const handleUpdatedTag = (response: Response, tag: LeanDocument<inf.ITag> | null
   }
 
   response.status(200).json({
+    data: tag,
     message: 'Tag updated',
-    updatedTag: tag,
   });
 };
 

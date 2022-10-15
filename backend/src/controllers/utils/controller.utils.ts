@@ -5,6 +5,37 @@ import * as typError from '@/ts/types/error.types';
 import errorMessageUtils from '@/utils/errorMessage.utils';
 import generalUtils from '@/utils/general.utils';
 
+const getPaginatedResponse = (
+  endIndex: number,
+  limit: number,
+  page: number,
+  startIndex: number,
+  total: number,
+): typDb.PaginatedResponse => {
+  const pagination = {
+    limit,
+    page,
+    pages: Math.ceil(total / limit),
+    total,
+  } as typDb.PaginatedResponse;
+
+  if (startIndex > 0) {
+    pagination.previous = {
+      limit,
+      page: page - 1,
+    };
+  }
+
+  if (endIndex < total) {
+    pagination.next = {
+      limit,
+      page: page + 1,
+    };
+  }
+
+  return pagination;
+};
+
 const getPaginationQuery = (limit: string, maxLimit: number, page: string): typDb.PaginationQuery => {
   const pageNumber = generalUtils.stringToNumber(page);
   let limitNumber = generalUtils.stringToNumber(limit);
@@ -42,6 +73,7 @@ const handleValidationError = (response: Response, error: typError.MongooseValid
 };
 
 const controllerUtils = {
+  getPaginatedResponse,
   getPaginationQuery,
   handleEmptyBodyRequest,
   handleValidationError,
