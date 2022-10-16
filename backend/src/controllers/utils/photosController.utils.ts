@@ -194,7 +194,7 @@ const handlePhotos = async (
     const { startIndex, page, limit, endIndex, filter } = photosQuery;
 
     const total = await photosDbService.countPhotos(filter);
-    pagination = controllerUtils.getPaginatedResponse(endIndex, limit, page, startIndex, total);
+    pagination = controllerUtils.getPaginationResponse(endIndex, limit, page, startIndex, total);
   }
 
   response.status(200).json({
