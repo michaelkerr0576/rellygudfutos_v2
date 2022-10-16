@@ -34,7 +34,10 @@ const error404 = (model: string): string => `${model} not found`;
 const error404ArrayValueNotFound = (model: string, array: string): string =>
   `${model} not found from ${array}`;
 
-const error404EmptyResult = (model: string): string => `${model} not found. Remove filter or add ${model}`;
+const error404EmptyResult = (model: string): string => `${model} not found. Add ${model}`;
+
+const error404EmptyResultFilter = (model: string): string =>
+  `${model} not found. Remove filter or add ${model}`;
 
 const error404InvalidCredentials = (): string => 'Invalid credentials';
 
@@ -51,6 +54,7 @@ const errorMessageUtils = {
   error404,
   error404ArrayValueNotFound,
   error404EmptyResult,
+  error404EmptyResultFilter,
   error404InvalidCredentials,
   error500,
 };

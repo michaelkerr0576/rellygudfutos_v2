@@ -4,9 +4,23 @@ import PhotoModel from '@/models/Photo.model';
 import * as inf from '@/ts/interfaces/db.interface';
 import * as typ from '@/ts/types/db.types';
 
-const addPhoto = (newPhoto: inf.IPhoto): Promise<inf.IPhoto> => PhotoModel.create(newPhoto);
+const addPhoto = (newPhoto: inf.IPhoto): Promise<LeanDocument<inf.IPhoto> | null> =>
+  PhotoModel.create(newPhoto).then(
+    (photo): Promise<LeanDocument<inf.IPhoto> | null> =>
+      PhotoModel.findById(photo._id)
+        .populate('details.imageTags', '-__v -photos -createdAt -updatedAt')
+        .lean()
+        .then((addedPhoto): LeanDocument<inf.IPhoto> | null => addedPhoto),
+  );
 
-const addPhotos = (newPhotos: inf.IPhoto[]): Promise<inf.IPhoto[]> => PhotoModel.insertMany(newPhotos);
+const addPhotos = (newPhotos: inf.IPhoto[]): Promise<LeanDocument<inf.IPhoto[]> | null> =>
+  PhotoModel.insertMany(newPhotos).then(
+    (photos): Promise<LeanDocument<inf.IPhoto[]> | null> =>
+      PhotoModel.find({ _id: photos.map((photo): any => photo._id) as any })
+        .populate('details.imageTags', '-__v -photos -createdAt -updatedAt')
+        .lean()
+        .then((addedPhotos): LeanDocument<inf.IPhoto[]> | null => addedPhotos),
+  );
 
 const checkPhotoExists = (id: Types.ObjectId): Promise<boolean> => PhotoModel.exists({ _id: id });
 

@@ -8,9 +8,7 @@ import postPhotosFixture from './postPhotos.fixture';
 const imageTags = [
   {
     _id: new Types.ObjectId(postTagFixture._id),
-    createdAt: utilFixture.freezeDate,
     tag: postTagFixture.tag,
-    updatedAt: utilFixture.freezeDate,
   },
 ];
 
@@ -19,6 +17,7 @@ const [firstPhoto, secondPhoto] = postPhotosFixture;
 export default [
   {
     ...firstPhoto,
+    __v: 0,
     _id: new Types.ObjectId(firstPhoto._id),
     createdAt: utilFixture.freezeDate,
     details: {
@@ -30,6 +29,7 @@ export default [
   },
   {
     ...secondPhoto,
+    __v: 0,
     _id: new Types.ObjectId(secondPhoto._id),
     createdAt: utilFixture.freezeDate,
     details: {

@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { Types } from 'mongoose';
+import { LeanDocument, Types } from 'mongoose';
 
 import PhotoModel from '@/models/Photo.model';
 import photosDbService from '@/services/photosDb.service';
@@ -26,7 +26,7 @@ const addPhoto = (request: Request, response: Response, next: NextFunction): Pro
 
   return photosControllerUtils
     .checkPhotoTagsExist(response, photoTagIds)
-    .then((): Promise<inf.IPhoto> => photosDbService.addPhoto(newPhoto))
+    .then((): Promise<LeanDocument<inf.IPhoto> | null> => photosDbService.addPhoto(newPhoto))
     .then((photo): Promise<void> => photosControllerUtils.handleAddedPhoto(response, photo))
     .catch((error): void => controllerUtils.handleValidationError(response, error))
     .catch((error): Promise<void> => photosControllerUtils.cancelAddPhoto(error, photoId, photoTagIds))

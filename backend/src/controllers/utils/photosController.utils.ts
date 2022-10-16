@@ -126,7 +126,15 @@ const getPhotosQuery = (query: Request['query']): typ.PhotosQuery => {
   };
 };
 
-const handleAddedPhoto = async (response: Response, photo: inf.IPhoto): Promise<void> => {
+const handleAddedPhoto = async (
+  response: Response,
+  photo: LeanDocument<inf.IPhoto> | null,
+): Promise<void> => {
+  if (!photo) {
+    response.status(404);
+    throw new Error(errorMessageUtils.error404('Photo'));
+  }
+
   const {
     _id: photoId,
     details: { imageTags: photoTagIds },
@@ -172,7 +180,7 @@ const handlePhotos = async (
   const isPhotosEmpty = photos.length === 0;
   if (isPhotosEmpty) {
     response.status(404);
-    throw new Error(errorMessageUtils.error404EmptyResult('Photos'));
+    throw new Error(errorMessageUtils.error404EmptyResultFilter('Photos'));
   }
 
   let pagination;

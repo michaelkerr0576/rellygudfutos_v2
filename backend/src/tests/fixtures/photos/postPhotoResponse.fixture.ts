@@ -9,20 +9,17 @@ const [firstTag, secondTag] = postTagsFixture;
 const imageTags = [
   {
     _id: new Types.ObjectId(firstTag._id),
-    createdAt: utilFixture.freezeDate,
     tag: firstTag.tag,
-    updatedAt: utilFixture.freezeDate,
   },
   {
     _id: new Types.ObjectId(secondTag._id),
-    createdAt: utilFixture.freezeDate,
     tag: secondTag.tag,
-    updatedAt: utilFixture.freezeDate,
   },
 ];
 
 export default {
   ...postPhotoFixture,
+  __v: 0,
   _id: new Types.ObjectId(postPhotoFixture._id),
   createdAt: utilFixture.freezeDate,
   details: {

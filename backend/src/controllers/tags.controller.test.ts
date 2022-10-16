@@ -67,11 +67,10 @@ describe('Tags Controller', () => {
         .catch((error): void => mockNextFunction(error));
 
       expect(mockResponse.status).toBeCalledWith(201);
-      expect(mockResponse.json).toHaveBeenCalledWith(
-        expect.objectContaining({
-          message: 'Tag added',
-        }),
-      );
+      expect(mockResponse.json).toHaveBeenCalledWith({
+        data: postTagResponseFixture,
+        message: 'Tag added',
+      });
 
       // * DB Service: find tag just added
       const addedTag = await tagsDbService
@@ -116,11 +115,10 @@ describe('Tags Controller', () => {
         .catch((error): void => mockNextFunction(error));
 
       expect(mockResponse.status).toBeCalledWith(200);
-      expect(mockResponse.json).toHaveBeenCalledWith(
-        expect.objectContaining({
-          message: 'Tag deleted',
-        }),
-      );
+      expect(mockResponse.json).toHaveBeenCalledWith({
+        data: postTagResponseFixture,
+        message: 'Tag deleted',
+      });
 
       // * DB Service: expect to not find tag just deleted
       const deletedTag = await tagsDbService
@@ -164,7 +162,10 @@ describe('Tags Controller', () => {
         .catch((error): void => mockNextFunction(error));
 
       expect(mockResponse.status).toBeCalledWith(200);
-      expect(mockResponse.json).toHaveBeenCalledWith(postTagResponseFixture);
+      expect(mockResponse.json).toHaveBeenCalledWith({
+        data: postTagResponseFixture,
+        message: 'Tag fetched successfully',
+      });
     });
   });
 
@@ -197,7 +198,10 @@ describe('Tags Controller', () => {
         .catch((error): void => mockNextFunction(error));
 
       expect(mockResponse.status).toBeCalledWith(200);
-      expect(mockResponse.json).toHaveBeenCalledWith(postTagsResponseFixture);
+      expect(mockResponse.json).toHaveBeenCalledWith({
+        data: postTagsResponseFixture,
+        message: 'Tags fetched successfully',
+      });
     });
   });
 
@@ -286,11 +290,10 @@ describe('Tags Controller', () => {
         .catch((error): void => mockNextFunction(error));
 
       expect(mockResponse.status).toBeCalledWith(200);
-      expect(mockResponse.json).toHaveBeenCalledWith(
-        expect.objectContaining({
-          message: 'Tag updated',
-        }),
-      );
+      expect(mockResponse.json).toHaveBeenCalledWith({
+        data: { ...postTagResponseFixture, tag: 'Test updated tag' },
+        message: 'Tag updated',
+      });
 
       // * DB Service: find tag just updated
       const addedTag = await tagsDbService

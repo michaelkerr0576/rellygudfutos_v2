@@ -93,11 +93,10 @@ describe('Photos Controller', () => {
         .catch((error): void => mockNextFunction(error));
 
       expect(mockResponse.status).toBeCalledWith(201);
-      expect(mockResponse.json).toHaveBeenCalledWith(
-        expect.objectContaining({
-          message: 'Photo added',
-        }),
-      );
+      expect(mockResponse.json).toHaveBeenCalledWith({
+        data: postPhotoResponseFixture,
+        message: 'Photo added',
+      });
 
       // * DB Service: find photo just added
       const addedPhoto = await photosDbService
@@ -154,11 +153,10 @@ describe('Photos Controller', () => {
         .catch((error): void => mockNextFunction(error));
 
       expect(mockResponse.status).toBeCalledWith(200);
-      expect(mockResponse.json).toHaveBeenCalledWith(
-        expect.objectContaining({
-          message: 'Photo deleted',
-        }),
-      );
+      expect(mockResponse.json).toHaveBeenCalledWith({
+        data: postPhotoResponseFixture,
+        message: 'Photo deleted',
+      });
 
       // * DB Service: expect to not find photo just deleted
       const deletedPhoto = await photosDbService
@@ -205,13 +203,18 @@ describe('Photos Controller', () => {
         .catch((error): void => mockNextFunction(error));
 
       expect(mockResponse.status).toBeCalledWith(200);
-      expect(mockResponse.json).toHaveBeenCalledWith(postPhotoResponseFixture);
+      expect(mockResponse.json).toHaveBeenCalledWith({
+        data: postPhotoResponseFixture,
+        message: 'Photo fetched successfully',
+      });
     });
   });
 
   describe('Get Photos', () => {
     test('Expect to return 404 photos not found', async () => {
-      const mockRequest: Partial<Request> = {};
+      const mockRequest: Partial<Request> = {
+        query: {},
+      };
 
       // * Controller: get photos
       await photosController
@@ -226,8 +229,10 @@ describe('Photos Controller', () => {
       );
     });
 
-    test('Expect to return 200 get photos', async () => {
-      const mockRequest: Partial<Request> = {};
+    test('Expect to return 200 get photos with default pagination', async () => {
+      const mockRequest: Partial<Request> = {
+        query: {},
+      };
 
       // * DB Service: add tag as it is required for addPhotos
       await tagsDbService.addTag(postTagFixture as any).catch((error): void => console.log(error));
@@ -241,7 +246,16 @@ describe('Photos Controller', () => {
         .catch((error): void => mockNextFunction(error));
 
       expect(mockResponse.status).toBeCalledWith(200);
-      expect(mockResponse.json).toHaveBeenCalledWith(postPhotosResponseFixture);
+      expect(mockResponse.json).toHaveBeenCalledWith({
+        data: postPhotosResponseFixture,
+        message: 'Photos fetched successfully',
+        pagination: {
+          limit: 5,
+          page: 1,
+          pages: 1,
+          total: 2,
+        },
+      });
     });
   });
 
@@ -339,11 +353,13 @@ describe('Photos Controller', () => {
         .catch((error): void => mockNextFunction(error));
 
       expect(mockResponse.status).toBeCalledWith(200);
-      expect(mockResponse.json).toHaveBeenCalledWith(
-        expect.objectContaining({
-          message: 'Photo updated',
-        }),
-      );
+      expect(mockResponse.json).toHaveBeenCalledWith({
+        data: {
+          ...postPhotoResponseFixture,
+          details: { ...postPhotoResponseFixture.details, imageCaption: 'Test updated caption' },
+        },
+        message: 'Photo updated',
+      });
 
       // * DB Service: find photo just updated
       const addedPhoto = await photosDbService

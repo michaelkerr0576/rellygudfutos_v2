@@ -5,7 +5,13 @@ import * as enm from '@/ts/enums/db.enum';
 import * as inf from '@/ts/interfaces/db.interface';
 import * as typ from '@/ts/types/db.types';
 
-const addTag = (newTag: inf.ITag): Promise<inf.ITag> => TagModel.create(newTag);
+const addTag = (newTag: inf.ITag): Promise<LeanDocument<inf.ITag> | null> =>
+  TagModel.create(newTag).then(
+    (tag): Promise<LeanDocument<inf.ITag> | null> =>
+      TagModel.findById(tag._id)
+        .lean()
+        .then((addedTag): LeanDocument<inf.ITag> | null => addedTag),
+  );
 
 const addTagPhotos = (photoId: Types.ObjectId, photoTagIds: Types.ObjectId[]): Promise<typ.QueryStatus> =>
   TagModel.updateMany(
@@ -15,7 +21,13 @@ const addTagPhotos = (photoId: Types.ObjectId, photoTagIds: Types.ObjectId[]): P
     },
   ).then((): typ.QueryStatus => ({ status: enm.QueryStatus.SUCCESS }));
 
-const addTags = (newTags: inf.ITag[]): Promise<inf.ITag[]> => TagModel.insertMany(newTags);
+const addTags = (newTags: inf.ITag[]): Promise<LeanDocument<inf.ITag[]> | null> =>
+  TagModel.insertMany(newTags).then(
+    (tags): Promise<LeanDocument<inf.ITag[]> | null> =>
+      TagModel.find({ _id: tags.map((tag): any => tag._id) as any })
+        .lean()
+        .then((addedTags): LeanDocument<inf.ITag[]> | null => addedTags),
+  );
 
 const checkTagPhotosExist = (photoIds: Types.ObjectId[]): Promise<boolean> =>
   TagModel.exists({ photos: { $in: photoIds } });

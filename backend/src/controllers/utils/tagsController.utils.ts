@@ -4,9 +4,14 @@ import { LeanDocument } from 'mongoose';
 import * as inf from '@/ts/interfaces/db.interface';
 import errorMessageUtils from '@/utils/errorMessage.utils';
 
-const handleAddedTag = (response: Response, tag: inf.ITag): void => {
+const handleAddedTag = (response: Response, tag: LeanDocument<inf.ITag> | null): void => {
+  if (!tag) {
+    response.status(404);
+    throw new Error(errorMessageUtils.error404('Tag'));
+  }
+
   response.status(201).json({
-    addedTag: tag,
+    data: tag,
     message: 'Tag added',
   });
 };
