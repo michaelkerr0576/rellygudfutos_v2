@@ -10,10 +10,10 @@ import postPhotoResponseFixture from '@/tests/fixtures/photos/postPhotoResponse.
 import postPhotosFixture from '@/tests/fixtures/photos/postPhotos.fixture';
 import postPhotosResponseFixture from '@/tests/fixtures/photos/postPhotosResponse.fixture';
 import postPhotoTagsResponseFixture from '@/tests/fixtures/photos/postPhotoTagsResponse.fixture';
-import postTagFixture from '@/tests/fixtures/tags/postTag.fixture';
 import postTagsFixture from '@/tests/fixtures/tags/postTags.fixture';
 import utilFixture from '@/tests/fixtures/util.fixture';
 import mongoMemoryServer from '@/tests/mongoMemoryServer';
+import * as enm from '@/ts/enums/db.enum';
 
 import photosController from './photos.controller';
 
@@ -229,13 +229,13 @@ describe('Photos Controller', () => {
       );
     });
 
-    test('Expect to return 200 get photos with default pagination', async () => {
+    test('Expect to return 200 get photos default pagination', async () => {
       const mockRequest: Partial<Request> = {
         query: {},
       };
 
-      // * DB Service: add tag as it is required for addPhotos
-      await tagsDbService.addTag(postTagFixture as any).catch((error): void => console.log(error));
+      // * DB Service: add tags as it is required for addPhotos
+      await tagsDbService.addTags(postTagsFixture as any).catch((error): void => console.log(error));
 
       // * DB Service: add photos to be get
       await photosDbService.addPhotos(postPhotosFixture as any).catch((error): void => console.log(error));
@@ -253,7 +253,178 @@ describe('Photos Controller', () => {
           limit: 5,
           page: 1,
           pages: 1,
+          total: 3,
+        },
+      });
+    });
+
+    test('Expect to return 200 get photos pagination page two, next and previous', async () => {
+      const mockRequest: Partial<Request> = {
+        query: { limit: '1', page: '2' },
+      };
+
+      // * DB Service: add tags as it is required for addPhotos
+      await tagsDbService.addTags(postTagsFixture as any).catch((error): void => console.log(error));
+
+      // * DB Service: add photos to be get
+      await photosDbService.addPhotos(postPhotosFixture as any).catch((error): void => console.log(error));
+
+      // * Controller: get photos
+      await photosController
+        .getPhotos(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
+        .catch((error): void => mockNextFunction(error));
+
+      expect(mockResponse.status).toBeCalledWith(200);
+      expect(mockResponse.json).toHaveBeenCalledWith({
+        data: [postPhotosResponseFixture[1]],
+        message: 'Photos fetched successfully',
+        pagination: {
+          limit: 1,
+          next: { limit: 1, page: 3 },
+          page: 2,
+          pages: 3,
+          previous: { limit: 1, page: 1 },
+          total: 3,
+        },
+      });
+    });
+
+    test('Expect to return 200 get photos filtered by tags', async () => {
+      const mockRequest: Partial<Request> = {
+        query: { tags: ['21224d776a326fb40f000003'] },
+      };
+
+      // * DB Service: add tags as it is required for addPhotos
+      await tagsDbService.addTags(postTagsFixture as any).catch((error): void => console.log(error));
+
+      // * DB Service: add photos to be get
+      await photosDbService.addPhotos(postPhotosFixture as any).catch((error): void => console.log(error));
+
+      // * Controller: get photos
+      await photosController
+        .getPhotos(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
+        .catch((error): void => mockNextFunction(error));
+
+      expect(mockResponse.status).toBeCalledWith(200);
+      expect(mockResponse.json).toHaveBeenCalledWith({
+        data: [postPhotosResponseFixture[0], postPhotosResponseFixture[1]],
+        message: 'Photos fetched successfully',
+        pagination: {
+          limit: 5,
+          page: 1,
+          pages: 1,
           total: 2,
+        },
+      });
+    });
+
+    test('Expect to return 200 get photos filtered by search', async () => {
+      const mockRequest: Partial<Request> = {
+        query: { search: 'TiTlE 3' },
+      };
+
+      // * DB Service: add tags as it is required for addPhotos
+      await tagsDbService.addTags(postTagsFixture as any).catch((error): void => console.log(error));
+
+      // * DB Service: add photos to be get
+      await photosDbService.addPhotos(postPhotosFixture as any).catch((error): void => console.log(error));
+
+      // * Controller: get photos
+      await photosController
+        .getPhotos(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
+        .catch((error): void => mockNextFunction(error));
+
+      expect(mockResponse.status).toBeCalledWith(200);
+      expect(mockResponse.json).toHaveBeenCalledWith({
+        data: [postPhotosResponseFixture[2]],
+        message: 'Photos fetched successfully',
+        pagination: {
+          limit: 5,
+          page: 1,
+          pages: 1,
+          total: 1,
+        },
+      });
+    });
+
+    test('Expect to return 200 get photos sort random', async () => {
+      const mockRequest: Partial<Request> = {
+        query: { sort: enm.PhotoSortOptions.RANDOM },
+      };
+
+      // * DB Service: add tags as it is required for addPhotos
+      await tagsDbService.addTags(postTagsFixture as any).catch((error): void => console.log(error));
+
+      // * DB Service: add photo to be get
+      await photosDbService.addPhoto(postPhotoFixture as any).catch((error): void => console.log(error));
+
+      // * Controller: get photos
+      await photosController
+        .getPhotos(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
+        .catch((error): void => mockNextFunction(error));
+
+      expect(mockResponse.status).toBeCalledWith(200);
+      expect(mockResponse.json).toHaveBeenCalledWith({
+        data: [postPhotoResponseFixture],
+        message: 'Photos fetched successfully',
+        pagination: undefined,
+      });
+    });
+
+    test('Expect to return 200 get photos sort title za', async () => {
+      const mockRequest: Partial<Request> = {
+        query: { sort: enm.PhotoSortOptions.TITLE_ZA },
+      };
+
+      // * DB Service: add tags as it is required for addPhotos
+      await tagsDbService.addTags(postTagsFixture as any).catch((error): void => console.log(error));
+
+      // * DB Service: add photos to be get
+      await photosDbService.addPhotos(postPhotosFixture as any).catch((error): void => console.log(error));
+
+      // * Controller: get photos
+      await photosController
+        .getPhotos(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
+        .catch((error): void => mockNextFunction(error));
+
+      expect(mockResponse.status).toBeCalledWith(200);
+      expect(mockResponse.json).toHaveBeenCalledWith({
+        data: [postPhotosResponseFixture[2], postPhotosResponseFixture[1], postPhotosResponseFixture[0]],
+        message: 'Photos fetched successfully',
+        pagination: {
+          limit: 5,
+          page: 1,
+          pages: 1,
+          total: 3,
+        },
+      });
+    });
+
+    test('Expect to return 200 get photos sort oldest', async () => {
+      const mockRequest: Partial<Request> = {
+        query: { sort: enm.PhotoSortOptions.OLDEST },
+      };
+
+      // * DB Service: add tags as it is required for addPhotos
+      await tagsDbService.addTags(postTagsFixture as any).catch((error): void => console.log(error));
+
+      // * DB Service: add photos to be get
+      await photosDbService.addPhotos(postPhotosFixture as any).catch((error): void => console.log(error));
+
+      // * Controller: get photos
+      await photosController
+        .getPhotos(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
+        .catch((error): void => mockNextFunction(error));
+
+      expect(mockResponse.status).toBeCalledWith(200);
+      expect(mockResponse.json).toHaveBeenCalledWith({
+        data: [postPhotosResponseFixture[2], postPhotosResponseFixture[1], postPhotosResponseFixture[0]],
+        message: 'Photos fetched successfully',
+        pagination: {
+          limit: 5,
+          page: 1,
+          pages: 1,
+          total: 3,
         },
       });
     });

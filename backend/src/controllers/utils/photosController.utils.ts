@@ -87,9 +87,9 @@ const getPhotosSort = (
     case enm.PhotoSortOptions.OLDEST:
       return { 'details.captureDate': conSorting.ASCENDING };
     case enm.PhotoSortOptions.TITLE_AZ:
-      return { 'details.imageTitle': conSorting.DESCENDING };
-    case enm.PhotoSortOptions.TITLE_ZA:
       return { 'details.imageTitle': conSorting.ASCENDING };
+    case enm.PhotoSortOptions.TITLE_ZA:
+      return { 'details.imageTitle': conSorting.DESCENDING };
     case enm.PhotoSortOptions.RANDOM:
       return enm.PhotoSortOptions.RANDOM;
     default:
@@ -131,8 +131,8 @@ const handleAddedPhoto = async (
   photo: LeanDocument<inf.IPhoto> | null,
 ): Promise<void> => {
   if (!photo) {
-    response.status(404);
-    throw new Error(errorMessageUtils.error404('Photo'));
+    response.status(500);
+    throw new Error(errorMessageUtils.error500());
   }
 
   const {
@@ -174,10 +174,15 @@ const handlePhoto = (response: Response, photo: LeanDocument<inf.IPhoto> | null)
 
 const handlePhotos = async (
   response: Response,
-  photos: LeanDocument<inf.IPhoto[]>,
+  photos: LeanDocument<inf.IPhoto[]> | null,
   photosQuery: typ.PhotosQuery,
 ): Promise<void> => {
-  const isPhotosEmpty = photos.length === 0;
+  if (!photos) {
+    response.status(500);
+    throw new Error(errorMessageUtils.error500());
+  }
+
+  const isPhotosEmpty = Array.isArray(photos) && photos.length === 0;
   if (isPhotosEmpty) {
     response.status(404);
     throw new Error(errorMessageUtils.error404EmptyResultFilter('Photos'));
@@ -186,9 +191,9 @@ const handlePhotos = async (
   let pagination;
   const isRandomSort = photosQuery.sort === enm.PhotoSortOptions.RANDOM;
   if (!isRandomSort) {
-    const { startIndex, page, limit, endIndex } = photosQuery;
+    const { startIndex, page, limit, endIndex, filter } = photosQuery;
 
-    const total = await photosDbService.countPhotos();
+    const total = await photosDbService.countPhotos(filter);
     pagination = controllerUtils.getPaginatedResponse(endIndex, limit, page, startIndex, total);
   }
 

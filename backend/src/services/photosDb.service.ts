@@ -24,7 +24,8 @@ const addPhotos = (newPhotos: inf.IPhoto[]): Promise<LeanDocument<inf.IPhoto[]> 
 
 const checkPhotoExists = (id: Types.ObjectId): Promise<boolean> => PhotoModel.exists({ _id: id });
 
-const countPhotos = (): Promise<number> => PhotoModel.countDocuments().then((count): number => count);
+const countPhotos = (filter: typ.PhotosQuery['filter']): Promise<number> =>
+  PhotoModel.countDocuments(filter).then((count): number => count);
 
 const deletePhoto = (id: string): Promise<LeanDocument<inf.IPhoto> | null> =>
   PhotoModel.findByIdAndDelete(id)
@@ -53,13 +54,13 @@ const getPhotos = (query: typ.PhotosQuery): Promise<LeanDocument<inf.IPhoto[]>> 
     .lean()
     .then((photos): LeanDocument<inf.IPhoto[]> => photos);
 
-const getRandomPhotos = (limit: number): Promise<LeanDocument<inf.IPhoto[]>> =>
+const getRandomPhotos = (limit: number): Promise<LeanDocument<inf.IPhoto[]> | null> =>
   PhotoModel.aggregate([{ $sample: { size: limit } }]).then(
-    (randomPhotos): Promise<LeanDocument<inf.IPhoto[]>> =>
-      PhotoModel.populate(randomPhotos, {
-        path: 'details.imageTags',
-        select: '-__v -photos -createdAt -updatedAt',
-      }).then((photos): LeanDocument<inf.IPhoto[]> => photos),
+    (randomPhotos): Promise<LeanDocument<inf.IPhoto[]> | null> =>
+      PhotoModel.find({ _id: randomPhotos.map((photo): any => photo._id) as any })
+        .populate('details.imageTags', '-__v -photos -createdAt -updatedAt')
+        .lean()
+        .then((addedPhotos): LeanDocument<inf.IPhoto[]> | null => addedPhotos),
   );
 
 const updatePhoto = (id: string, updatedPhoto: inf.IPhoto): Promise<LeanDocument<inf.IPhoto> | null> =>
