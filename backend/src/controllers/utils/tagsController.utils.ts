@@ -3,6 +3,7 @@ import { LeanDocument } from 'mongoose';
 
 import * as inf from '@/ts/interfaces/db.interface';
 import errorMessageUtils from '@/utils/errorMessage.utils';
+import responseMessageUtils from '@/utils/responseMessage.utils';
 
 const handleAddedTag = (response: Response, tag: LeanDocument<inf.ITag> | null): void => {
   if (!tag) {
@@ -12,7 +13,7 @@ const handleAddedTag = (response: Response, tag: LeanDocument<inf.ITag> | null):
 
   response.status(201).json({
     data: tag,
-    message: 'Tag added',
+    message: responseMessageUtils.dataAdded('Tag'),
   });
 };
 
@@ -24,7 +25,7 @@ const handleDeletedTag = (response: Response, tag: LeanDocument<inf.ITag> | null
 
   response.status(200).json({
     data: tag,
-    message: 'Tag deleted',
+    message: responseMessageUtils.dataDeleted('Tag'),
   });
 };
 
@@ -36,7 +37,7 @@ const handleTag = (response: Response, tag: LeanDocument<inf.ITag> | null): void
 
   response.status(200).json({
     data: tag,
-    message: 'Tag fetched successfully',
+    message: responseMessageUtils.dataFetched('Tag'),
   });
 };
 
@@ -49,7 +50,7 @@ const handleTags = (response: Response, tags: LeanDocument<inf.ITag[]>): void =>
 
   response.status(200).json({
     data: tags,
-    message: 'Tags fetched successfully',
+    message: responseMessageUtils.dataFetched('Tags'),
   });
 };
 
@@ -61,7 +62,7 @@ const handleUpdatedTag = (response: Response, tag: LeanDocument<inf.ITag> | null
 
   response.status(200).json({
     data: tag,
-    message: 'Tag updated',
+    message: responseMessageUtils.dataUpdated('Tag'),
   });
 };
 

@@ -8,6 +8,7 @@ import * as inf from '@/ts/interfaces/db.interface';
 import * as typ from '@/ts/types/error.types';
 import authUtils from '@/utils/auth.utils';
 import errorMessageUtils from '@/utils/errorMessage.utils';
+import responseMessageUtils from '@/utils/responseMessage.utils';
 
 // * @desc Add user
 // * @route POST /api/users
@@ -34,7 +35,7 @@ const addUser = (request: Request, response: Response, next: NextFunction): Prom
         name: user.name,
         role: user.role,
       },
-      message: 'User added',
+      message: responseMessageUtils.dataAdded('User'),
       token: authUtils.generateToken(user._id, user.role),
     });
   };
@@ -93,7 +94,7 @@ const getUsers = (_request: Request, response: Response, next: NextFunction): Pr
 
     response.status(200).json({
       data: users,
-      message: 'Users fetched successfully',
+      message: responseMessageUtils.dataFetched('Users'),
     });
   };
 
@@ -128,7 +129,7 @@ const loginUser = (request: Request, response: Response, next: NextFunction): Pr
         name: user.name,
         role: user.role,
       },
-      message: `${user.name} logged in`,
+      message: responseMessageUtils.userLoggedIn(user.name),
       token: authUtils.generateToken(user._id, user.role),
     });
   };

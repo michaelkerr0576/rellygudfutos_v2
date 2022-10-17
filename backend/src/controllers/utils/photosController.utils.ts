@@ -10,6 +10,7 @@ import * as conPagination from '@/utils/constants/pagination';
 import * as conSorting from '@/utils/constants/sorting';
 import errorMessageUtils from '@/utils/errorMessage.utils';
 import generalUtils from '@/utils/general.utils';
+import responseMessageUtils from '@/utils/responseMessage.utils';
 
 import controllerUtils from './controller.utils';
 
@@ -144,7 +145,7 @@ const handleAddedPhoto = async (
 
   response.status(201).json({
     data: photo,
-    message: 'Photo added',
+    message: responseMessageUtils.dataAdded('Photo'),
   });
 };
 
@@ -156,7 +157,7 @@ const handleDeletedPhoto = (response: Response, photo: LeanDocument<inf.IPhoto> 
 
   response.status(200).json({
     data: photo,
-    message: 'Photo deleted',
+    message: responseMessageUtils.dataDeleted('Photo'),
   });
 };
 
@@ -168,7 +169,7 @@ const handlePhoto = (response: Response, photo: LeanDocument<inf.IPhoto> | null)
 
   response.status(200).json({
     data: photo,
-    message: 'Photo fetched successfully',
+    message: responseMessageUtils.dataFetched('Photo'),
   });
 };
 
@@ -199,7 +200,7 @@ const handlePhotos = async (
 
   response.status(200).json({
     data: photos,
-    message: 'Photos fetched successfully',
+    message: responseMessageUtils.dataFetched('Photos'),
     pagination,
   });
 };
@@ -212,7 +213,7 @@ const handleUpdatedPhoto = (response: Response, photo: LeanDocument<inf.IPhoto> 
 
   response.status(200).json({
     data: photo,
-    message: 'Photo updated',
+    message: responseMessageUtils.dataUpdated('Photo'),
   });
 };
 
