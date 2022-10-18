@@ -1,24 +1,16 @@
-// import { Response } from 'express';
-// eslint-disable-next-line node/no-unpublished-import
+import { Types } from 'mongoose';
 import timekeeper from 'timekeeper';
 
-// import { postPhotoFixture } from '@/tests/fixtures/photos';
+import photosDbService from '@/services/photosDb.service';
+import tagsDbService from '@/services/tagsDb.service';
+import postPhotoFixture from '@/tests/fixtures/photos/postPhoto.fixture';
+import postTagsFixture from '@/tests/fixtures/tags/postTags.fixture';
 import utilFixture from '@/tests/fixtures/util.fixture';
 import mongoMemoryServer from '@/tests/mongoMemoryServer';
 
-// import photosControllerUtils from './photosController.utils';
+import photosControllerUtils from './photosController.utils';
 
-// const mockResponseStatus = jest.fn();
-// const mockResponseJson = jest.fn();
-
-// const mockResponse: Partial<Response> = {
-//   status: mockResponseStatus.mockReturnThis(),
-//   json: mockResponseJson,
-// };
-
-// const mockError = jest.fn();
-
-// const mockError: Error = mockError;
+const mockError = new Error('test error');
 
 describe('Photos Controller Utils', () => {
   beforeAll(async () => {
@@ -34,17 +26,51 @@ describe('Photos Controller Utils', () => {
     timekeeper.reset();
   });
 
-  // TODO - add tests for hard to reach handlers
-  // * Tests for hard to reach handlers - Test from Controller if it can be done
+  describe('Cancel Add Photo', () => {
+    const [firstTag, secondTag, thirdTag] = postTagsFixture;
 
-  // error: Error,
-  // photoId: Types.ObjectId,
-  // photoTagIds: Types.ObjectId[] | undefined,
+    const photoId = new Types.ObjectId(postPhotoFixture._id);
+    const photoTagIds = [
+      new Types.ObjectId(firstTag._id),
+      new Types.ObjectId(secondTag._id),
+      new Types.ObjectId(thirdTag._id),
+    ];
 
-  describe('Handle Cancel Add Photo', () => {
-    test('Expect', async () => {
-      // * Controller Utils: handle added photo
-      // await photosControllerUtils.handleCancelAddPhoto(mockError, 123, [123]);
+    test('Expect to continue error state if photo not found', async () => {
+      // * Controller Utils: cancel added photo
+      await expect(photosControllerUtils.cancelAddPhoto(mockError, photoId, photoTagIds)).rejects.toThrow(
+        'test error',
+      );
+    });
+
+    test('Expect to cancel photo added and continue error state', async () => {
+      // * DB Service: add tags as it is required for addPhoto
+      await tagsDbService.addTags(postTagsFixture as any).catch((error): void => console.log(error));
+
+      // * DB Service: add photo to be cancelled
+      await photosDbService.addPhoto(postPhotoFixture as any).catch((error): void => console.log(error));
+
+      // * DB Service: add tags photos to be cancelled
+      await tagsDbService.addTagPhotos(photoId, photoTagIds);
+
+      // * Controller Utils: cancel added photo
+      await expect(photosControllerUtils.cancelAddPhoto(mockError, photoId, photoTagIds)).rejects.toThrow(
+        'test error',
+      );
+
+      // * DB Service: expect to not find photo just cancelled
+      const cancelledPhoto = await photosDbService
+        .findPhoto(utilFixture.freezeDate)
+        .catch((error): void => console.log(error));
+
+      expect(cancelledPhoto).not.toBeTruthy();
+
+      // * DB Service: expect to not find photo in tags that was just cancelled
+      const isTagPhotosFound = await tagsDbService
+        .checkTagsPhotoExist(photoId)
+        .catch((error): void => console.log(error));
+
+      expect(isTagPhotosFound).toBe(false);
     });
   });
 });

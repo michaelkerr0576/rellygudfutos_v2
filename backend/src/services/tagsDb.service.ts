@@ -29,11 +29,11 @@ const addTags = (newTags: inf.ITag[]): Promise<LeanDocument<inf.ITag[]> | null> 
         .then((addedTags): LeanDocument<inf.ITag[]> | null => addedTags),
   );
 
-const checkTagPhotosExist = (photoIds: Types.ObjectId[]): Promise<boolean> =>
-  TagModel.exists({ photos: { $in: photoIds } });
-
 const checkTagsExist = (ids: Types.ObjectId[]): Promise<boolean> =>
   TagModel.find({ _id: { $in: ids } }).then((tags): boolean => ids.length === tags.length);
+
+const checkTagsPhotoExist = (photoId: Types.ObjectId): Promise<boolean> =>
+  TagModel.exists({ photos: photoId });
 
 const deleteTag = (id: string): Promise<LeanDocument<inf.ITag> | null> =>
   TagModel.findByIdAndDelete(id)
@@ -77,8 +77,8 @@ const tagsDbService = {
   addTag,
   addTagPhotos,
   addTags,
-  checkTagPhotosExist,
   checkTagsExist,
+  checkTagsPhotoExist,
   deleteTag,
   deleteTagPhotos,
   findTag,

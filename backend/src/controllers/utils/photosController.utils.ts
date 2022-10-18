@@ -14,7 +14,6 @@ import responseMessageUtils from '@/utils/responseMessage.utils';
 
 import controllerUtils from './controller.utils';
 
-// TODO - add tests
 const cancelAddPhoto = async (
   error: Error,
   photoId: Types.ObjectId,
@@ -23,19 +22,18 @@ const cancelAddPhoto = async (
   const photoIdString = generalUtils.numberToString(photoId);
 
   const isPhotoFound = await photosDbService.checkPhotoExists(photoId);
-  if (isPhotoFound) {
-    await photosDbService.deletePhoto(photoIdString);
-
-    const hasPhotoTagIds = photoTagIds && photoTagIds.length > 0;
-    if (hasPhotoTagIds) {
-      const isTagPhotosFound = await tagsDbService.checkTagPhotosExist(photoTagIds);
-
-      if (isTagPhotosFound) {
-        await tagsDbService.deleteTagPhotos(photoId, photoTagIds);
-      }
-    }
+  if (!isPhotoFound) {
+    throw error;
   }
 
+  await photosDbService.deletePhoto(photoIdString);
+
+  const isTagPhotosFound = photoTagIds && (await tagsDbService.checkTagsPhotoExist(photoId));
+  if (!isTagPhotosFound) {
+    throw error;
+  }
+
+  await tagsDbService.deleteTagPhotos(photoId, photoTagIds);
   throw error;
 };
 
