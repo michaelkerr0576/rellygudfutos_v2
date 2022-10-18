@@ -1,3 +1,4 @@
+import { Response } from 'express';
 import { Types } from 'mongoose';
 import timekeeper from 'timekeeper';
 
@@ -10,7 +11,24 @@ import mongoMemoryServer from '@/tests/mongoMemoryServer';
 
 import photosControllerUtils from './photosController.utils';
 
+const mockResponseStatus = jest.fn();
+const mockResponseJson = jest.fn();
+
+const mockResponse: Partial<Response> = {
+  json: mockResponseJson,
+  status: mockResponseStatus.mockReturnThis(),
+};
+
 const mockError = new Error('test error');
+
+const [firstTag, secondTag, thirdTag] = postTagsFixture;
+
+const photoId = new Types.ObjectId(postPhotoFixture._id);
+const photoTagIds = [
+  new Types.ObjectId(firstTag._id),
+  new Types.ObjectId(secondTag._id),
+  new Types.ObjectId(thirdTag._id),
+];
 
 describe('Photos Controller Utils', () => {
   beforeAll(async () => {
@@ -27,15 +45,6 @@ describe('Photos Controller Utils', () => {
   });
 
   describe('Cancel Add Photo', () => {
-    const [firstTag, secondTag, thirdTag] = postTagsFixture;
-
-    const photoId = new Types.ObjectId(postPhotoFixture._id);
-    const photoTagIds = [
-      new Types.ObjectId(firstTag._id),
-      new Types.ObjectId(secondTag._id),
-      new Types.ObjectId(thirdTag._id),
-    ];
-
     test('Expect to continue error state if photo not found', async () => {
       // * Controller Utils: cancel added photo
       await expect(photosControllerUtils.cancelAddPhoto(mockError, photoId, photoTagIds)).rejects.toThrow(
@@ -71,6 +80,36 @@ describe('Photos Controller Utils', () => {
         .catch((error): void => console.log(error));
 
       expect(isTagPhotosFound).toBe(false);
+    });
+  });
+
+  describe('Check Photo Tags Exist', () => {
+    test('Expect to throw 404 error if tags are not found', async () => {
+      // * Controller Utils: check photo tags exist
+      await expect(
+        photosControllerUtils.checkPhotoTagsExist(mockResponse as Response, photoTagIds),
+      ).rejects.toThrow('Tag not found from Image Tags');
+
+      expect(mockResponse.status).toBeCalledWith(404);
+    });
+
+    test('Expect to resolve the check if tags are found', async () => {
+      // * DB Service: add tags as it is required for addPhoto
+      await tagsDbService.addTags(postTagsFixture as any).catch((error): void => console.log(error));
+
+      // * DB Service: add photo
+      await photosDbService.addPhoto(postPhotoFixture as any).catch((error): void => console.log(error));
+
+      // * DB Service: add tags photos
+      await tagsDbService.addTagPhotos(photoId, photoTagIds);
+
+      // * Controller Utils: check photo tags exist
+      const checkPhotoTagsExist = await photosControllerUtils.checkPhotoTagsExist(
+        mockResponse as Response,
+        photoTagIds,
+      );
+
+      expect(checkPhotoTagsExist).toBeUndefined();
     });
   });
 });
