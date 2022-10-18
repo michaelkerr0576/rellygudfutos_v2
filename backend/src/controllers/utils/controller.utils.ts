@@ -72,11 +72,9 @@ const handleValidationError = (response: Response, error: typError.MongooseValid
   throw error;
 };
 
-const controllerUtils = {
+export default {
   getPaginationQuery,
   getPaginationResponse,
   handleEmptyBodyRequest,
   handleValidationError,
 };
-
-export default controllerUtils;

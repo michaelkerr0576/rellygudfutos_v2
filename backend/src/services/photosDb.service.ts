@@ -69,7 +69,7 @@ const updatePhoto = (id: string, updatedPhoto: inf.IPhoto): Promise<LeanDocument
     .lean()
     .then((photo): LeanDocument<inf.IPhoto> | null => photo);
 
-const photosDbService = {
+export default {
   addPhoto,
   addPhotos,
   checkPhotoExists,
@@ -81,5 +81,3 @@ const photosDbService = {
   getRandomPhotos,
   updatePhoto,
 };
-
-export default photosDbService;

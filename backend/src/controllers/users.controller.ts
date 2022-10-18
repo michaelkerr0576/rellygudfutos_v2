@@ -147,7 +147,7 @@ const updateUser = (_request: Request, response: Response): void => {
   response.json({ message: 'Yeah put' });
 };
 
-const usersController = {
+export default {
   addUser,
   deleteUser,
   getUser,
@@ -155,5 +155,3 @@ const usersController = {
   loginUser,
   updateUser,
 };
-
-export default usersController;

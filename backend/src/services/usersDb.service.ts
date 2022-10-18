@@ -21,11 +21,9 @@ const findUser = (email: string): Promise<LeanDocument<inf.IUser> | null> =>
     .lean()
     .then((user): LeanDocument<inf.IUser> | null => user);
 
-const usersDbService = {
+export default {
   addUser,
   findUser,
   getUser,
   getUsers,
 };
-
-export default usersDbService;

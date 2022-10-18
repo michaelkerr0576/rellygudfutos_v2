@@ -80,12 +80,10 @@ const updateTag = (request: Request, response: Response, next: NextFunction): Pr
     .catch((error): void => next(error));
 };
 
-const tagsController = {
+export default {
   addTag,
   deleteTag,
   getTag,
   getTags,
   updateTag,
 };
-
-export default tagsController;

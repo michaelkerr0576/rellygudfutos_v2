@@ -8,12 +8,10 @@ const dataUpdated = (model: string): string => `${model} updated`;
 
 const userLoggedIn = (username: string): string => `${username} logged in`;
 
-const responseMessageUtils = {
+export default {
   dataAdded,
   dataDeleted,
   dataFetched,
   dataUpdated,
   userLoggedIn,
 };
-
-export default responseMessageUtils;

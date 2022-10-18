@@ -33,10 +33,8 @@ const disconnectDB = async (): Promise<void> => {
   await (await mongoServer).stop();
 };
 
-const mongoMemoryServer = {
+export default {
   clearDB,
   connectDB,
   disconnectDB,
 };
-
-export default mongoMemoryServer;

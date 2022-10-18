@@ -215,7 +215,7 @@ const handleUpdatedPhoto = (response: Response, photo: LeanDocument<inf.IPhoto> 
   });
 };
 
-const photosControllerUtils = {
+export default {
   cancelAddPhoto,
   checkPhotoTagsExist,
   getPhotosFilter,
@@ -227,5 +227,3 @@ const photosControllerUtils = {
   handlePhotos,
   handleUpdatedPhoto,
 };
-
-export default photosControllerUtils;

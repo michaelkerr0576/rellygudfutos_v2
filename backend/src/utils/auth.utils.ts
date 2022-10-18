@@ -9,8 +9,6 @@ const jwtSecret = process.env.JWT_SECRET || '';
 const generateToken = (id: Types.ObjectId, role: enm.UserRole): string =>
   jwt.sign({ id, role }, jwtSecret, { expiresIn: con.EXPIRES_IN });
 
-const authUtils = {
+export default {
   generateToken,
 };
-
-export default authUtils;

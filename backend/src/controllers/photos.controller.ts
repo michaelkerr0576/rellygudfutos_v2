@@ -100,12 +100,10 @@ const updatePhoto = (request: Request, response: Response, next: NextFunction): 
     .catch((error): void => next(error));
 };
 
-const photosController = {
+export default {
   addPhoto,
   deletePhoto,
   getPhoto,
   getPhotos,
   updatePhoto,
 };
-
-export default photosController;

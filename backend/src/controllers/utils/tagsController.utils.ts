@@ -66,12 +66,10 @@ const handleUpdatedTag = (response: Response, tag: LeanDocument<inf.ITag> | null
   });
 };
 
-const tagsControllerUtils = {
+export default {
   handleAddedTag,
   handleDeletedTag,
   handleTag,
   handleTags,
   handleUpdatedTag,
 };
-
-export default tagsControllerUtils;

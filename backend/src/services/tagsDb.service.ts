@@ -73,7 +73,7 @@ const updateTag = (id: string, updatedTag: inf.ITag): Promise<LeanDocument<inf.I
     .lean()
     .then((tag): LeanDocument<inf.ITag> | null => tag);
 
-const tagsDbService = {
+export default {
   addTag,
   addTagPhotos,
   addTags,
@@ -87,5 +87,3 @@ const tagsDbService = {
   getTags,
   updateTag,
 };
-
-export default tagsDbService;

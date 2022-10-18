@@ -10,10 +10,8 @@ const numberToString = (value: string | number | Types.ObjectId): string =>
 const stringToNumber = (value: string | number): number =>
   typeof value === 'string' ? parseInt(value, con.RADIX) : value;
 
-const generalUtils = {
+export default {
   checkIsObjectEmpty,
   numberToString,
   stringToNumber,
 };
-
-export default generalUtils;

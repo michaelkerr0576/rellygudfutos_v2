@@ -67,9 +67,7 @@ const adminAuthorisation = (request: Request, response: Response, next: NextFunc
 const userAuthorisation = (request: Request, response: Response, next: NextFunction): Promise<void> =>
   authenticateUser(request, response, next, [enm.UserRole.ADMIN, enm.UserRole.USER]);
 
-const protectRouteMiddleware = {
+export default {
   adminAuthorisation,
   userAuthorisation,
 };
-
-export default protectRouteMiddleware;
