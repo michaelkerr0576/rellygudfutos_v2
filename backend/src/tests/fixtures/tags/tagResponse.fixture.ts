@@ -2,7 +2,7 @@ import { Types } from 'mongoose';
 
 import utilFixture from '../util.fixture';
 
-import postTagFixture from './postTag.fixture';
+import postTagFixture from './tagRequest.fixture';
 
 export default {
   ...postTagFixture,

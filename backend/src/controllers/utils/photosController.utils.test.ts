@@ -1,13 +1,14 @@
 import { Response } from 'express';
-import { Types } from 'mongoose';
 import timekeeper from 'timekeeper';
 
 import photosDbService from '@/services/photosDb.service';
 import tagsDbService from '@/services/tagsDb.service';
-import photoQuery from '@/tests/fixtures/photos/photoQuery';
-import photoQueryResponse from '@/tests/fixtures/photos/photoQueryResponse';
-import postPhotoFixture from '@/tests/fixtures/photos/postPhoto.fixture';
-import postTagsFixture from '@/tests/fixtures/tags/postTags.fixture';
+import photoIdFixture from '@/tests/fixtures/photos/photoId.fixture';
+import photoQueryFixture from '@/tests/fixtures/photos/photoQuery.fixture';
+import photoQueryResponseFixture from '@/tests/fixtures/photos/photoQueryResponse.fixture';
+import photoRequestFixture from '@/tests/fixtures/photos/photoRequest.fixture';
+import photoTagIdsFixture from '@/tests/fixtures/photos/photoTagIds.fixture';
+import tagsRequestFixture from '@/tests/fixtures/tags/tagsRequest.fixture';
 import utilFixture from '@/tests/fixtures/util.fixture';
 import mongoMemoryServer from '@/tests/mongoMemoryServer';
 import * as enm from '@/ts/enums/db.enum';
@@ -23,15 +24,6 @@ const mockResponse: Partial<Response> = {
 };
 
 const mockError = new Error('test error');
-
-const [firstTag, secondTag, thirdTag] = postTagsFixture;
-
-const photoId = new Types.ObjectId(postPhotoFixture._id);
-const photoTagIds = [
-  new Types.ObjectId(firstTag._id),
-  new Types.ObjectId(secondTag._id),
-  new Types.ObjectId(thirdTag._id),
-];
 
 describe('Photos Controller Utils', () => {
   beforeAll(async () => {
@@ -49,25 +41,25 @@ describe('Photos Controller Utils', () => {
 
   describe('Cancel Add Photo', () => {
     test('Expect to continue error state if photo not found', async () => {
-      await expect(photosControllerUtils.cancelAddPhoto(mockError, photoId, photoTagIds)).rejects.toThrow(
-        'test error',
-      );
+      await expect(
+        photosControllerUtils.cancelAddPhoto(mockError, photoIdFixture, photoTagIdsFixture),
+      ).rejects.toThrow('test error');
     });
 
     test('Expect to cancel photo added and continue error state', async () => {
       // * DB Service: add tags as it is required for addPhoto
-      await tagsDbService.addTags(postTagsFixture as any).catch((error): void => console.log(error));
+      await tagsDbService.addTags(tagsRequestFixture as any).catch((error): void => console.log(error));
 
       // * DB Service: add photo to be cancelled
-      await photosDbService.addPhoto(postPhotoFixture as any).catch((error): void => console.log(error));
+      await photosDbService.addPhoto(photoRequestFixture as any).catch((error): void => console.log(error));
 
       // * DB Service: add tags photos to be cancelled
-      await tagsDbService.addTagPhotos(photoId, photoTagIds);
+      await tagsDbService.addTagPhotos(photoIdFixture, photoTagIdsFixture);
 
       // * Controller Utils: cancel added photo
-      await expect(photosControllerUtils.cancelAddPhoto(mockError, photoId, photoTagIds)).rejects.toThrow(
-        'test error',
-      );
+      await expect(
+        photosControllerUtils.cancelAddPhoto(mockError, photoIdFixture, photoTagIdsFixture),
+      ).rejects.toThrow('test error');
 
       // * DB Service: expect to not find photo just cancelled
       const cancelledPhoto = await photosDbService
@@ -78,7 +70,7 @@ describe('Photos Controller Utils', () => {
 
       // * DB Service: expect to not find photo in tags that was just cancelled
       const isTagPhotosFound = await tagsDbService
-        .checkTagsPhotoExist(photoId)
+        .checkTagsPhotoExist(photoIdFixture)
         .catch((error): void => console.log(error));
 
       expect(isTagPhotosFound).toBe(false);
@@ -88,7 +80,7 @@ describe('Photos Controller Utils', () => {
   describe('Check Photo Tags Exist', () => {
     test('Expect to throw 404 error if tags are not found', async () => {
       await expect(
-        photosControllerUtils.checkPhotoTagsExist(mockResponse as Response, photoTagIds),
+        photosControllerUtils.checkPhotoTagsExist(mockResponse as Response, photoTagIdsFixture),
       ).rejects.toThrow('Tag not found from Image Tags');
 
       expect(mockResponse.status).toBeCalledWith(404);
@@ -96,18 +88,18 @@ describe('Photos Controller Utils', () => {
 
     test('Expect to resolve the check if tags are found', async () => {
       // * DB Service: add tags as it is required for addPhoto
-      await tagsDbService.addTags(postTagsFixture as any).catch((error): void => console.log(error));
+      await tagsDbService.addTags(tagsRequestFixture as any).catch((error): void => console.log(error));
 
       // * DB Service: add photo
-      await photosDbService.addPhoto(postPhotoFixture as any).catch((error): void => console.log(error));
+      await photosDbService.addPhoto(photoRequestFixture as any).catch((error): void => console.log(error));
 
       // * DB Service: add tags photos
-      await tagsDbService.addTagPhotos(photoId, photoTagIds);
+      await tagsDbService.addTagPhotos(photoIdFixture, photoTagIdsFixture);
 
       // * Controller Utils: check photo tags exist
       const checkPhotoTagsExist = await photosControllerUtils.checkPhotoTagsExist(
         mockResponse as Response,
-        photoTagIds,
+        photoTagIdsFixture,
       );
 
       expect(checkPhotoTagsExist).toBeUndefined();
@@ -126,11 +118,11 @@ describe('Photos Controller Utils', () => {
 
     test('Expect to return filter with columns and patterns if valid search and tags', () => {
       const search = 'test';
-      const tags = photoQuery.tags as any;
+      const tags = photoQueryFixture.tags as any;
 
       const filter = photosControllerUtils.getPhotosFilter(search, tags);
 
-      expect(filter).toStrictEqual(photoQueryResponse.filter);
+      expect(filter).toStrictEqual(photoQueryResponseFixture.filter);
     });
   });
 
@@ -202,9 +194,9 @@ describe('Photos Controller Utils', () => {
     });
 
     test('Expect to return custom photos query from request', () => {
-      const photosQuery = photosControllerUtils.getPhotosQuery(photoQuery as any);
+      const photosQuery = photosControllerUtils.getPhotosQuery(photoQueryFixture as any);
 
-      expect(photosQuery).toStrictEqual(photoQueryResponse);
+      expect(photosQuery).toStrictEqual(photoQueryResponseFixture);
     });
   });
 });

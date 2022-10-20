@@ -1,9 +1,9 @@
 import { Types } from 'mongoose';
 
-import postTagsFixture from '../tags/postTags.fixture';
+import postTagsFixture from '../tags/tagsRequest.fixture';
 import utilFixture from '../util.fixture';
 
-import postPhotosFixture from './postPhotos.fixture';
+import postPhotosFixture from './photosRequest.fixture';
 
 const [firstPhoto, secondPhoto, thirdPhoto] = postPhotosFixture;
 const [firstTag, secondTag, thirdTag] = postTagsFixture;

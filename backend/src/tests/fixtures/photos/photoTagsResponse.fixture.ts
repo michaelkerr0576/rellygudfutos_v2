@@ -1,28 +1,25 @@
 import { Types } from 'mongoose';
 
+import postTagsFixture from '../tags/tagsRequest.fixture';
 import utilFixture from '../util.fixture';
 
-import postTagsFixture from './postTags.fixture';
+import postPhotoFixture from './photoRequest.fixture';
 
-const [firstTag, secondTag, thirdTag] = postTagsFixture;
+const [firstTag, secondTag] = postTagsFixture;
+
 export default [
   {
     ...firstTag,
     _id: new Types.ObjectId(firstTag._id),
     createdAt: utilFixture.freezeDate,
-    photos: [new Types.ObjectId(firstTag.photos[0])],
+    photos: [new Types.ObjectId(firstTag.photos[0]), new Types.ObjectId(postPhotoFixture._id)],
     updatedAt: utilFixture.freezeDate,
   },
   {
     ...secondTag,
     _id: new Types.ObjectId(secondTag._id),
     createdAt: utilFixture.freezeDate,
-    updatedAt: utilFixture.freezeDate,
-  },
-  {
-    ...thirdTag,
-    _id: new Types.ObjectId(thirdTag._id),
-    createdAt: utilFixture.freezeDate,
+    photos: [new Types.ObjectId(postPhotoFixture._id)],
     updatedAt: utilFixture.freezeDate,
   },
 ];

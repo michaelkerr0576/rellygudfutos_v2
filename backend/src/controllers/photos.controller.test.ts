@@ -3,14 +3,14 @@ import timekeeper from 'timekeeper';
 
 import photosDbService from '@/services/photosDb.service';
 import tagsDbService from '@/services/tagsDb.service';
-import postPhotoEnumFixture from '@/tests/fixtures/photos/negative/postPhotoEnum.fixture';
-import postPhotoRequiredFixture from '@/tests/fixtures/photos/negative/postPhotoRequired.fixture';
-import postPhotoFixture from '@/tests/fixtures/photos/postPhoto.fixture';
-import postPhotoResponseFixture from '@/tests/fixtures/photos/postPhotoResponse.fixture';
-import postPhotosFixture from '@/tests/fixtures/photos/postPhotos.fixture';
-import postPhotosResponseFixture from '@/tests/fixtures/photos/postPhotosResponse.fixture';
-import postPhotoTagsResponseFixture from '@/tests/fixtures/photos/postPhotoTagsResponse.fixture';
-import postTagsFixture from '@/tests/fixtures/tags/postTags.fixture';
+import photoEnumFixture from '@/tests/fixtures/photos/negative/photoEnum.fixture';
+import photoRequiredFixture from '@/tests/fixtures/photos/negative/photoRequired.fixture';
+import photoRequestFixture from '@/tests/fixtures/photos/photoRequest.fixture';
+import photoResponseFixture from '@/tests/fixtures/photos/photoResponse.fixture';
+import photosRequestFixture from '@/tests/fixtures/photos/photosRequest.fixture';
+import photosResponseFixture from '@/tests/fixtures/photos/photosResponse.fixture';
+import tagsResponseFixture from '@/tests/fixtures/photos/photoTagsResponse.fixture';
+import tagsRequestFixture from '@/tests/fixtures/tags/tagsRequest.fixture';
 import utilFixture from '@/tests/fixtures/util.fixture';
 import mongoMemoryServer from '@/tests/mongoMemoryServer';
 import * as enm from '@/ts/enums/db.enum';
@@ -45,7 +45,7 @@ describe('Photos Controller', () => {
   describe('Add Photo', () => {
     test('Expect to return 404 tag not found in image tags', async () => {
       const mockRequest: Partial<Request> = {
-        body: postPhotoFixture,
+        body: photoRequestFixture,
       };
 
       await photosController
@@ -62,7 +62,7 @@ describe('Photos Controller', () => {
 
     test('Expect to return 400 photo validation failed', async () => {
       const mockRequest: Partial<Request> = {
-        body: postPhotoRequiredFixture,
+        body: photoRequiredFixture,
       };
 
       await photosController
@@ -79,11 +79,11 @@ describe('Photos Controller', () => {
 
     test('Expect to return 201 photo added', async () => {
       const mockRequest: Partial<Request> = {
-        body: postPhotoFixture,
+        body: photoRequestFixture,
       };
 
       // * DB Service: add tags as it is required for addPhoto
-      await tagsDbService.addTags(postTagsFixture as any).catch((error): void => console.log(error));
+      await tagsDbService.addTags(tagsRequestFixture as any).catch((error): void => console.log(error));
 
       // * Controller: add photo
       await photosController
@@ -92,7 +92,7 @@ describe('Photos Controller', () => {
 
       expect(mockResponse.status).toBeCalledWith(201);
       expect(mockResponse.json).toHaveBeenCalledWith({
-        data: postPhotoResponseFixture,
+        data: photoResponseFixture,
         message: 'Photo added',
       });
 
@@ -102,23 +102,23 @@ describe('Photos Controller', () => {
         .catch((error): void => console.log(error));
 
       expect(addedPhoto).toBeTruthy();
-      expect(addedPhoto).toEqual(postPhotoResponseFixture);
+      expect(addedPhoto).toEqual(photoResponseFixture);
 
       // * DB Service: find tag and check tag photos have been updated
-      const photoTagIds = postPhotoFixture.details.imageTags;
+      const photoTagIds = photoRequestFixture.details.imageTags;
       const updatedTags = await tagsDbService
         .findTags(photoTagIds as any)
         .catch((error): void => console.log(error));
 
       expect(updatedTags).toBeTruthy();
-      expect(updatedTags).toEqual(postPhotoTagsResponseFixture);
+      expect(updatedTags).toEqual(tagsResponseFixture);
     });
   });
 
   describe('Delete Photo', () => {
     test('Expect to return 404 photo not found', async () => {
       const mockRequest: Partial<Request> = {
-        params: { id: postPhotoFixture._id },
+        params: { id: photoRequestFixture._id },
       };
 
       await photosController
@@ -135,14 +135,14 @@ describe('Photos Controller', () => {
 
     test('Expect to return 200 photo deleted', async () => {
       const mockRequest: Partial<Request> = {
-        params: { id: postPhotoFixture._id },
+        params: { id: photoRequestFixture._id },
       };
 
       // * DB Service: add tags as it is required for addPhoto
-      await tagsDbService.addTags(postTagsFixture as any).catch((error): void => console.log(error));
+      await tagsDbService.addTags(tagsRequestFixture as any).catch((error): void => console.log(error));
 
       // * DB Service: add photo to be deleted
-      await photosDbService.addPhoto(postPhotoFixture as any).catch((error): void => console.log(error));
+      await photosDbService.addPhoto(photoRequestFixture as any).catch((error): void => console.log(error));
 
       // * Controller: delete photo
       await photosController
@@ -151,7 +151,7 @@ describe('Photos Controller', () => {
 
       expect(mockResponse.status).toBeCalledWith(200);
       expect(mockResponse.json).toHaveBeenCalledWith({
-        data: postPhotoResponseFixture,
+        data: photoResponseFixture,
         message: 'Photo deleted',
       });
 
@@ -167,7 +167,7 @@ describe('Photos Controller', () => {
   describe('Get Photo', () => {
     test('Expect to return 404 photo not found', async () => {
       const mockRequest: Partial<Request> = {
-        params: { id: postPhotoFixture._id },
+        params: { id: photoRequestFixture._id },
       };
 
       await photosController
@@ -184,14 +184,14 @@ describe('Photos Controller', () => {
 
     test('Expect to return 200 get photo', async () => {
       const mockRequest: Partial<Request> = {
-        params: { id: postPhotoFixture._id },
+        params: { id: photoRequestFixture._id },
       };
 
       // * DB Service: add tags as it is required for addPhoto
-      await tagsDbService.addTags(postTagsFixture as any).catch((error): void => console.log(error));
+      await tagsDbService.addTags(tagsRequestFixture as any).catch((error): void => console.log(error));
 
       // * DB Service: add photo to be get
-      await photosDbService.addPhoto(postPhotoFixture as any).catch((error): void => console.log(error));
+      await photosDbService.addPhoto(photoRequestFixture as any).catch((error): void => console.log(error));
 
       // * Controller: get photo
       await photosController
@@ -200,7 +200,7 @@ describe('Photos Controller', () => {
 
       expect(mockResponse.status).toBeCalledWith(200);
       expect(mockResponse.json).toHaveBeenCalledWith({
-        data: postPhotoResponseFixture,
+        data: photoResponseFixture,
         message: 'Photo fetched successfully',
       });
     });
@@ -230,10 +230,10 @@ describe('Photos Controller', () => {
       };
 
       // * DB Service: add tags as it is required for addPhotos
-      await tagsDbService.addTags(postTagsFixture as any).catch((error): void => console.log(error));
+      await tagsDbService.addTags(tagsRequestFixture as any).catch((error): void => console.log(error));
 
       // * DB Service: add photos to be get
-      await photosDbService.addPhotos(postPhotosFixture as any).catch((error): void => console.log(error));
+      await photosDbService.addPhotos(photosRequestFixture as any).catch((error): void => console.log(error));
 
       // * Controller: get photos
       await photosController
@@ -242,7 +242,7 @@ describe('Photos Controller', () => {
 
       expect(mockResponse.status).toBeCalledWith(200);
       expect(mockResponse.json).toHaveBeenCalledWith({
-        data: postPhotosResponseFixture,
+        data: photosResponseFixture,
         message: 'Photos fetched successfully',
         pagination: {
           limit: 5,
@@ -259,10 +259,10 @@ describe('Photos Controller', () => {
       };
 
       // * DB Service: add tags as it is required for addPhotos
-      await tagsDbService.addTags(postTagsFixture as any).catch((error): void => console.log(error));
+      await tagsDbService.addTags(tagsRequestFixture as any).catch((error): void => console.log(error));
 
       // * DB Service: add photos to be get
-      await photosDbService.addPhotos(postPhotosFixture as any).catch((error): void => console.log(error));
+      await photosDbService.addPhotos(photosRequestFixture as any).catch((error): void => console.log(error));
 
       // * Controller: get photos
       await photosController
@@ -271,7 +271,7 @@ describe('Photos Controller', () => {
 
       expect(mockResponse.status).toBeCalledWith(200);
       expect(mockResponse.json).toHaveBeenCalledWith({
-        data: [postPhotosResponseFixture[1]],
+        data: [photosResponseFixture[1]],
         message: 'Photos fetched successfully',
         pagination: {
           limit: 1,
@@ -290,10 +290,10 @@ describe('Photos Controller', () => {
       };
 
       // * DB Service: add tags as it is required for addPhotos
-      await tagsDbService.addTags(postTagsFixture as any).catch((error): void => console.log(error));
+      await tagsDbService.addTags(tagsRequestFixture as any).catch((error): void => console.log(error));
 
       // * DB Service: add photos to be get
-      await photosDbService.addPhotos(postPhotosFixture as any).catch((error): void => console.log(error));
+      await photosDbService.addPhotos(photosRequestFixture as any).catch((error): void => console.log(error));
 
       // * Controller: get photos
       await photosController
@@ -302,7 +302,7 @@ describe('Photos Controller', () => {
 
       expect(mockResponse.status).toBeCalledWith(200);
       expect(mockResponse.json).toHaveBeenCalledWith({
-        data: [postPhotosResponseFixture[0], postPhotosResponseFixture[1]],
+        data: [photosResponseFixture[0], photosResponseFixture[1]],
         message: 'Photos fetched successfully',
         pagination: {
           limit: 5,
@@ -319,10 +319,10 @@ describe('Photos Controller', () => {
       };
 
       // * DB Service: add tags as it is required for addPhotos
-      await tagsDbService.addTags(postTagsFixture as any).catch((error): void => console.log(error));
+      await tagsDbService.addTags(tagsRequestFixture as any).catch((error): void => console.log(error));
 
       // * DB Service: add photos to be get
-      await photosDbService.addPhotos(postPhotosFixture as any).catch((error): void => console.log(error));
+      await photosDbService.addPhotos(photosRequestFixture as any).catch((error): void => console.log(error));
 
       // * Controller: get photos
       await photosController
@@ -331,7 +331,7 @@ describe('Photos Controller', () => {
 
       expect(mockResponse.status).toBeCalledWith(200);
       expect(mockResponse.json).toHaveBeenCalledWith({
-        data: [postPhotosResponseFixture[2]],
+        data: [photosResponseFixture[2]],
         message: 'Photos fetched successfully',
         pagination: {
           limit: 5,
@@ -348,10 +348,10 @@ describe('Photos Controller', () => {
       };
 
       // * DB Service: add tags as it is required for addPhotos
-      await tagsDbService.addTags(postTagsFixture as any).catch((error): void => console.log(error));
+      await tagsDbService.addTags(tagsRequestFixture as any).catch((error): void => console.log(error));
 
       // * DB Service: add photo to be get
-      await photosDbService.addPhoto(postPhotoFixture as any).catch((error): void => console.log(error));
+      await photosDbService.addPhoto(photoRequestFixture as any).catch((error): void => console.log(error));
 
       // * Controller: get photos
       await photosController
@@ -360,7 +360,7 @@ describe('Photos Controller', () => {
 
       expect(mockResponse.status).toBeCalledWith(200);
       expect(mockResponse.json).toHaveBeenCalledWith({
-        data: [postPhotoResponseFixture],
+        data: [photoResponseFixture],
         message: 'Photos fetched successfully',
         pagination: undefined,
       });
@@ -372,10 +372,10 @@ describe('Photos Controller', () => {
       };
 
       // * DB Service: add tags as it is required for addPhotos
-      await tagsDbService.addTags(postTagsFixture as any).catch((error): void => console.log(error));
+      await tagsDbService.addTags(tagsRequestFixture as any).catch((error): void => console.log(error));
 
       // * DB Service: add photos to be get
-      await photosDbService.addPhotos(postPhotosFixture as any).catch((error): void => console.log(error));
+      await photosDbService.addPhotos(photosRequestFixture as any).catch((error): void => console.log(error));
 
       // * Controller: get photos
       await photosController
@@ -384,7 +384,7 @@ describe('Photos Controller', () => {
 
       expect(mockResponse.status).toBeCalledWith(200);
       expect(mockResponse.json).toHaveBeenCalledWith({
-        data: [postPhotosResponseFixture[2], postPhotosResponseFixture[1], postPhotosResponseFixture[0]],
+        data: [photosResponseFixture[2], photosResponseFixture[1], photosResponseFixture[0]],
         message: 'Photos fetched successfully',
         pagination: {
           limit: 5,
@@ -401,10 +401,10 @@ describe('Photos Controller', () => {
       };
 
       // * DB Service: add tags as it is required for addPhotos
-      await tagsDbService.addTags(postTagsFixture as any).catch((error): void => console.log(error));
+      await tagsDbService.addTags(tagsRequestFixture as any).catch((error): void => console.log(error));
 
       // * DB Service: add photos to be get
-      await photosDbService.addPhotos(postPhotosFixture as any).catch((error): void => console.log(error));
+      await photosDbService.addPhotos(photosRequestFixture as any).catch((error): void => console.log(error));
 
       // * Controller: get photos
       await photosController
@@ -413,7 +413,7 @@ describe('Photos Controller', () => {
 
       expect(mockResponse.status).toBeCalledWith(200);
       expect(mockResponse.json).toHaveBeenCalledWith({
-        data: [postPhotosResponseFixture[2], postPhotosResponseFixture[1], postPhotosResponseFixture[0]],
+        data: [photosResponseFixture[2], photosResponseFixture[1], photosResponseFixture[0]],
         message: 'Photos fetched successfully',
         pagination: {
           limit: 5,
@@ -429,14 +429,14 @@ describe('Photos Controller', () => {
     test('Expect to return 400 empty request body', async () => {
       const mockRequest: Partial<Request> = {
         body: {},
-        params: { id: postPhotoFixture._id },
+        params: { id: photoRequestFixture._id },
       };
 
       // * DB Service: add tags as it is required for addPhoto
-      await tagsDbService.addTags(postTagsFixture as any).catch((error): void => console.log(error));
+      await tagsDbService.addTags(tagsRequestFixture as any).catch((error): void => console.log(error));
 
       // * DB Service: add photo to be updated
-      await photosDbService.addPhoto(postPhotoFixture as any).catch((error): void => console.log(error));
+      await photosDbService.addPhoto(photoRequestFixture as any).catch((error): void => console.log(error));
 
       // * Controller: update photo
       await photosController
@@ -454,17 +454,17 @@ describe('Photos Controller', () => {
     test('Expect to return 400 photo validation failed', async () => {
       const mockRequest: Partial<Request> = {
         body: {
-          ...postPhotoFixture,
-          details: { ...postPhotoFixture.details, imageSize: postPhotoEnumFixture.details.imageSize },
+          ...photoRequestFixture,
+          details: { ...photoRequestFixture.details, imageSize: photoEnumFixture.details.imageSize },
         },
-        params: { id: postPhotoFixture._id },
+        params: { id: photoRequestFixture._id },
       };
 
       // * DB Service: add tags as it is required for addPhoto
-      await tagsDbService.addTags(postTagsFixture as any).catch((error): void => console.log(error));
+      await tagsDbService.addTags(tagsRequestFixture as any).catch((error): void => console.log(error));
 
       // * DB Service: add photo to be updated
-      await photosDbService.addPhoto(postPhotoFixture as any).catch((error): void => console.log(error));
+      await photosDbService.addPhoto(photoRequestFixture as any).catch((error): void => console.log(error));
 
       // * Controller: update photo
       await photosController
@@ -481,8 +481,8 @@ describe('Photos Controller', () => {
 
     test('Expect to return 404 photo not found', async () => {
       const mockRequest: Partial<Request> = {
-        body: postPhotoFixture,
-        params: { id: postPhotoFixture._id },
+        body: photoRequestFixture,
+        params: { id: photoRequestFixture._id },
       };
 
       await photosController
@@ -500,17 +500,17 @@ describe('Photos Controller', () => {
     test('Expect to return 200 photo updated', async () => {
       const mockRequest: Partial<Request> = {
         body: {
-          ...postPhotoFixture,
-          details: { ...postPhotoFixture.details, imageCaption: 'Test updated caption' },
+          ...photoRequestFixture,
+          details: { ...photoRequestFixture.details, imageCaption: 'Test updated caption' },
         },
-        params: { id: postPhotoFixture._id },
+        params: { id: photoRequestFixture._id },
       };
 
       // * DB Service: add tags as it is required for addPhoto
-      await tagsDbService.addTags(postTagsFixture as any).catch((error): void => console.log(error));
+      await tagsDbService.addTags(tagsRequestFixture as any).catch((error): void => console.log(error));
 
       // * DB Service: add photo to be updated
-      await photosDbService.addPhoto(postPhotoFixture as any).catch((error): void => console.log(error));
+      await photosDbService.addPhoto(photoRequestFixture as any).catch((error): void => console.log(error));
 
       // * Controller: update photo
       await photosController
@@ -520,8 +520,8 @@ describe('Photos Controller', () => {
       expect(mockResponse.status).toBeCalledWith(200);
       expect(mockResponse.json).toHaveBeenCalledWith({
         data: {
-          ...postPhotoResponseFixture,
-          details: { ...postPhotoResponseFixture.details, imageCaption: 'Test updated caption' },
+          ...photoResponseFixture,
+          details: { ...photoResponseFixture.details, imageCaption: 'Test updated caption' },
         },
         message: 'Photo updated',
       });
@@ -533,8 +533,8 @@ describe('Photos Controller', () => {
 
       expect(addedPhoto).toBeTruthy();
       expect(addedPhoto).toEqual({
-        ...postPhotoResponseFixture,
-        details: { ...postPhotoResponseFixture.details, imageCaption: 'Test updated caption' },
+        ...photoResponseFixture,
+        details: { ...photoResponseFixture.details, imageCaption: 'Test updated caption' },
       });
     });
   });

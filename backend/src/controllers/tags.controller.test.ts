@@ -2,11 +2,11 @@ import { NextFunction, Request, Response } from 'express';
 import timekeeper from 'timekeeper';
 
 import tagsDbService from '@/services/tagsDb.service';
-import postTagMinLengthFixture from '@/tests/fixtures/tags/negative/postTagMinLength.fixture';
-import postTagFixture from '@/tests/fixtures/tags/postTag.fixture';
-import postTagResponseFixture from '@/tests/fixtures/tags/postTagResponse.fixture';
-import postTagsFixture from '@/tests/fixtures/tags/postTags.fixture';
-import postTagsResponseFixture from '@/tests/fixtures/tags/postTagsResponse.fixture';
+import tagMinLengthFixture from '@/tests/fixtures/tags/negative/tagMinLength.fixture';
+import tagRequestFixture from '@/tests/fixtures/tags/tagRequest.fixture';
+import tagResponseFixture from '@/tests/fixtures/tags/tagResponse.fixture';
+import tagsRequestFixture from '@/tests/fixtures/tags/tagsRequest.fixture';
+import tagsResponseFixture from '@/tests/fixtures/tags/tagsResponse.fixture';
 import utilFixture from '@/tests/fixtures/util.fixture';
 import mongoMemoryServer from '@/tests/mongoMemoryServer';
 
@@ -57,7 +57,7 @@ describe('Tags Controller', () => {
 
     test('Expect to return 201 tag added', async () => {
       const mockRequest: Partial<Request> = {
-        body: postTagFixture,
+        body: tagRequestFixture,
       };
 
       // * Controller: add tag
@@ -67,7 +67,7 @@ describe('Tags Controller', () => {
 
       expect(mockResponse.status).toBeCalledWith(201);
       expect(mockResponse.json).toHaveBeenCalledWith({
-        data: postTagResponseFixture,
+        data: tagResponseFixture,
         message: 'Tag added',
       });
 
@@ -77,14 +77,14 @@ describe('Tags Controller', () => {
         .catch((error): void => console.log(error));
 
       expect(addedTag).toBeTruthy();
-      expect(addedTag).toEqual(postTagResponseFixture);
+      expect(addedTag).toEqual(tagResponseFixture);
     });
   });
 
   describe('Delete Tag', () => {
     test('Expect to return 404 tag not found', async () => {
       const mockRequest: Partial<Request> = {
-        params: { id: postTagFixture._id },
+        params: { id: tagRequestFixture._id },
       };
 
       await tagsController
@@ -101,11 +101,11 @@ describe('Tags Controller', () => {
 
     test('Expect to return 200 tag deleted', async () => {
       const mockRequest: Partial<Request> = {
-        params: { id: postTagFixture._id },
+        params: { id: tagRequestFixture._id },
       };
 
       // * DB Service: add tag to be deleted
-      await tagsDbService.addTag(postTagFixture as any).catch((error): void => console.log(error));
+      await tagsDbService.addTag(tagRequestFixture as any).catch((error): void => console.log(error));
 
       // * Controller: delete tag
       await tagsController
@@ -114,7 +114,7 @@ describe('Tags Controller', () => {
 
       expect(mockResponse.status).toBeCalledWith(200);
       expect(mockResponse.json).toHaveBeenCalledWith({
-        data: postTagResponseFixture,
+        data: tagResponseFixture,
         message: 'Tag deleted',
       });
 
@@ -130,7 +130,7 @@ describe('Tags Controller', () => {
   describe('Get Tag', () => {
     test('Expect to return 404 tag not found', async () => {
       const mockRequest: Partial<Request> = {
-        params: { id: postTagFixture._id },
+        params: { id: tagRequestFixture._id },
       };
 
       await tagsController
@@ -147,11 +147,11 @@ describe('Tags Controller', () => {
 
     test('Expect to return 200 get tag', async () => {
       const mockRequest: Partial<Request> = {
-        params: { id: postTagFixture._id },
+        params: { id: tagRequestFixture._id },
       };
 
       // * DB Service: add tag to be get
-      await tagsDbService.addTag(postTagFixture as any).catch((error): void => console.log(error));
+      await tagsDbService.addTag(tagRequestFixture as any).catch((error): void => console.log(error));
 
       // * Controller: get tag
       await tagsController
@@ -160,7 +160,7 @@ describe('Tags Controller', () => {
 
       expect(mockResponse.status).toBeCalledWith(200);
       expect(mockResponse.json).toHaveBeenCalledWith({
-        data: postTagResponseFixture,
+        data: tagResponseFixture,
         message: 'Tag fetched successfully',
       });
     });
@@ -186,7 +186,7 @@ describe('Tags Controller', () => {
       const mockRequest: Partial<Request> = {};
 
       // * DB Service: add tags to be get
-      await tagsDbService.addTags(postTagsFixture as any).catch((error): void => console.log(error));
+      await tagsDbService.addTags(tagsRequestFixture as any).catch((error): void => console.log(error));
 
       // * Controller: get tags
       await tagsController
@@ -195,7 +195,7 @@ describe('Tags Controller', () => {
 
       expect(mockResponse.status).toBeCalledWith(200);
       expect(mockResponse.json).toHaveBeenCalledWith({
-        data: postTagsResponseFixture,
+        data: tagsResponseFixture,
         message: 'Tags fetched successfully',
       });
     });
@@ -205,11 +205,11 @@ describe('Tags Controller', () => {
     test('Expect to return 400 empty request body', async () => {
       const mockRequest: Partial<Request> = {
         body: {},
-        params: { id: postTagFixture._id },
+        params: { id: tagRequestFixture._id },
       };
 
       // * DB Service: add tag to be updated
-      await tagsDbService.addTag(postTagFixture as any).catch((error): void => console.log(error));
+      await tagsDbService.addTag(tagRequestFixture as any).catch((error): void => console.log(error));
 
       // * Controller: update tag
       await tagsController
@@ -227,14 +227,14 @@ describe('Tags Controller', () => {
     test('Expect to return 400 tag validation failed', async () => {
       const mockRequest: Partial<Request> = {
         body: {
-          ...postTagFixture,
-          tag: postTagMinLengthFixture.tag,
+          ...tagRequestFixture,
+          tag: tagMinLengthFixture.tag,
         },
-        params: { id: postTagFixture._id },
+        params: { id: tagRequestFixture._id },
       };
 
       // * DB Service: add tag to be updated
-      await tagsDbService.addTag(postTagFixture as any).catch((error): void => console.log(error));
+      await tagsDbService.addTag(tagRequestFixture as any).catch((error): void => console.log(error));
 
       // * Controller: update tag
       await tagsController
@@ -251,8 +251,8 @@ describe('Tags Controller', () => {
 
     test('Expect to return 404 tag not found', async () => {
       const mockRequest: Partial<Request> = {
-        body: postTagFixture,
-        params: { id: postTagFixture._id },
+        body: tagRequestFixture,
+        params: { id: tagRequestFixture._id },
       };
 
       await tagsController
@@ -270,14 +270,14 @@ describe('Tags Controller', () => {
     test('Expect to return 200 tag updated', async () => {
       const mockRequest: Partial<Request> = {
         body: {
-          ...postTagFixture,
+          ...tagRequestFixture,
           tag: 'Test updated tag',
         },
-        params: { id: postTagFixture._id },
+        params: { id: tagRequestFixture._id },
       };
 
       // * DB Service: add tag to be updated
-      await tagsDbService.addTag(postTagFixture as any).catch((error): void => console.log(error));
+      await tagsDbService.addTag(tagRequestFixture as any).catch((error): void => console.log(error));
 
       // * Controller: update tag
       await tagsController
@@ -286,7 +286,7 @@ describe('Tags Controller', () => {
 
       expect(mockResponse.status).toBeCalledWith(200);
       expect(mockResponse.json).toHaveBeenCalledWith({
-        data: { ...postTagResponseFixture, tag: 'Test updated tag' },
+        data: { ...tagResponseFixture, tag: 'Test updated tag' },
         message: 'Tag updated',
       });
 
@@ -297,7 +297,7 @@ describe('Tags Controller', () => {
 
       expect(addedTag).toBeTruthy();
       expect(addedTag).toEqual({
-        ...postTagResponseFixture,
+        ...tagResponseFixture,
         tag: 'Test updated tag',
       });
     });

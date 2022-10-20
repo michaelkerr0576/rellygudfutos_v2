@@ -1,9 +1,9 @@
-import postPhotoEnumFixture from '@/tests/fixtures/photos/negative/postPhotoEnum.fixture';
-import postPhotoMaxLengthFixture from '@/tests/fixtures/photos/negative/postPhotoMaxLength.fixture';
-import postPhotoMinLengthFixture from '@/tests/fixtures/photos/negative/postPhotoMinLength.fixture';
-import postPhotoRegexFixture from '@/tests/fixtures/photos/negative/postPhotoRegex.fixture';
-import postPhotoTrimFixture from '@/tests/fixtures/photos/negative/postPhotoTrim.fixture';
-import postPhotoFixture from '@/tests/fixtures/photos/postPhoto.fixture';
+import photoEnumFixture from '@/tests/fixtures/photos/negative/photoEnum.fixture';
+import photoMaxLengthFixture from '@/tests/fixtures/photos/negative/photoMaxLength.fixture';
+import photoMinLengthFixture from '@/tests/fixtures/photos/negative/photoMinLength.fixture';
+import photoRegexFixture from '@/tests/fixtures/photos/negative/photoRegex.fixture';
+import photoTrimFixture from '@/tests/fixtures/photos/negative/photoTrim.fixture';
+import photoRequestFixture from '@/tests/fixtures/photos/photoRequest.fixture';
 import utilFixture from '@/tests/fixtures/util.fixture';
 import mongoMemoryServer from '@/tests/mongoMemoryServer';
 
@@ -51,7 +51,7 @@ describe('Photo Model', () => {
     });
 
     test('Expect to validate minLength for the relevant properties in PhotoModel', async () => {
-      const invalidPhoto = new PhotoModel(postPhotoMinLengthFixture);
+      const invalidPhoto = new PhotoModel(photoMinLengthFixture);
 
       const expectedMinLengthPaths = [
         'details.captureLocation',
@@ -82,7 +82,7 @@ describe('Photo Model', () => {
     });
 
     test('Expect to validate maxLength for the relevant properties in PhotoModel', async () => {
-      const invalidPhoto = new PhotoModel(postPhotoMaxLengthFixture);
+      const invalidPhoto = new PhotoModel(photoMaxLengthFixture);
 
       const expectedMaxLength8Paths = [
         'equipment.cameraIso',
@@ -122,7 +122,7 @@ describe('Photo Model', () => {
     });
 
     test('Expect to validate enum for the relevant properties in PhotoModel', async () => {
-      const invalidPhoto = new PhotoModel(postPhotoEnumFixture);
+      const invalidPhoto = new PhotoModel(photoEnumFixture);
 
       try {
         await invalidPhoto.save();
@@ -139,7 +139,7 @@ describe('Photo Model', () => {
     });
 
     test('Expect to validate regex for the relevant properties in PhotoModel', async () => {
-      const invalidPhoto = new PhotoModel(postPhotoRegexFixture);
+      const invalidPhoto = new PhotoModel(photoRegexFixture);
 
       try {
         await invalidPhoto.save();
@@ -174,7 +174,7 @@ describe('Photo Model', () => {
     });
 
     test('Expect to validate and trim the relevant properties in PhotoModel', async () => {
-      const invalidPhoto = new PhotoModel(postPhotoTrimFixture);
+      const invalidPhoto = new PhotoModel(photoTrimFixture);
 
       const expectedRequiredPaths = [
         'details.captureLocation',
@@ -214,11 +214,11 @@ describe('Photo Model', () => {
     });
 
     test('Expect no validation errors for a valid PhotoModel', async () => {
-      const validPhoto = new PhotoModel(postPhotoFixture);
+      const validPhoto = new PhotoModel(photoRequestFixture);
 
       const savedValidPhoto = await validPhoto.save();
 
-      const { _id: expectedId, details: expectedDetails, equipment: expectedEquipment } = postPhotoFixture;
+      const { _id: expectedId, details: expectedDetails, equipment: expectedEquipment } = photoRequestFixture;
       const { _id: actualId, details: actualDetails, equipment: actualEquipment } = savedValidPhoto;
 
       expect(savedValidPhoto).toBeTruthy();

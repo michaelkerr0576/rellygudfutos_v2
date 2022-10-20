@@ -1,7 +1,7 @@
-import postTagMaxLengthFixture from '@/tests/fixtures/tags/negative/postTagMaxLength.fixture';
-import postTagMinLengthFixture from '@/tests/fixtures/tags/negative/postTagMinLength.fixture';
-import postTagTrimFixture from '@/tests/fixtures/tags/negative/postTagTrim.fixture';
-import postTagFixture from '@/tests/fixtures/tags/postTag.fixture';
+import tagMaxLengthFixture from '@/tests/fixtures/tags/negative/tagMaxLength.fixture';
+import tagMinLengthFixture from '@/tests/fixtures/tags/negative/tagMinLength.fixture';
+import tagTrimFixture from '@/tests/fixtures/tags/negative/tagTrim.fixture';
+import tagRequestFixture from '@/tests/fixtures/tags/tagRequest.fixture';
 import utilFixture from '@/tests/fixtures/util.fixture';
 import mongoMemoryServer from '@/tests/mongoMemoryServer';
 
@@ -28,7 +28,7 @@ describe('Tag Model', () => {
     });
 
     test('Expect to validate minLength for the relevant properties in TagModel', async () => {
-      const invalidTag = new TagModel(postTagMinLengthFixture);
+      const invalidTag = new TagModel(tagMinLengthFixture);
 
       try {
         await invalidTag.save();
@@ -45,7 +45,7 @@ describe('Tag Model', () => {
     });
 
     test('Expect to validate maxLength for the relevant properties in TagModel', async () => {
-      const invalidTag = new TagModel(postTagMaxLengthFixture);
+      const invalidTag = new TagModel(tagMaxLengthFixture);
 
       try {
         await invalidTag.save();
@@ -62,7 +62,7 @@ describe('Tag Model', () => {
     });
 
     test('Expect to validate and trim the relevant properties in TagModel', async () => {
-      const invalidTag = new TagModel(postTagTrimFixture);
+      const invalidTag = new TagModel(tagTrimFixture);
 
       try {
         await invalidTag.save();
@@ -77,11 +77,11 @@ describe('Tag Model', () => {
     });
 
     test('Expect no validation errors for a valid TagModel', async () => {
-      const validTag = new TagModel(postTagFixture);
+      const validTag = new TagModel(tagRequestFixture);
 
       const savedValidTag = await validTag.save();
 
-      const { _id: expectedId, tag: expectedTag, photos: expectedPhotos } = postTagFixture;
+      const { _id: expectedId, tag: expectedTag, photos: expectedPhotos } = tagRequestFixture;
       const { _id: actualId, tag: actualTag, photos: actualPhotos } = savedValidTag;
 
       expect(savedValidTag).toBeTruthy();

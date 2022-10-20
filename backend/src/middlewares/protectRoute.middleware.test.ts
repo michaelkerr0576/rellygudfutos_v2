@@ -3,8 +3,8 @@ import jwt from 'jsonwebtoken';
 import timekeeper from 'timekeeper';
 
 import usersDbService from '@/services/usersDb.service';
-import postUserFixture from '@/tests/fixtures/users/postUser.fixture';
-import postUserAdminFixture from '@/tests/fixtures/users/postUserAdmin.fixture';
+import userAdminFixture from '@/tests/fixtures/users/userAdminRequest.fixture';
+import userFixture from '@/tests/fixtures/users/userRequest.fixture';
 import utilFixture from '@/tests/fixtures/util.fixture';
 import mongoMemoryServer from '@/tests/mongoMemoryServer';
 
@@ -67,7 +67,7 @@ describe('Protect Route Middleware', () => {
       };
 
       // * DB Service: add user as it is required for checkUserAuthorisation
-      await usersDbService.addUser(postUserFixture as any).catch((error): void => console.log(error));
+      await usersDbService.addUser(userFixture as any).catch((error): void => console.log(error));
 
       // * Middleware: admin authorisation
       await protectRouteMiddleware.adminAuthorisation(
@@ -92,7 +92,7 @@ describe('Protect Route Middleware', () => {
       };
 
       // * DB Service: add user as it is required for checkUserAuthorisation
-      await usersDbService.addUser(postUserFixture as any).catch((error): void => console.log(error));
+      await usersDbService.addUser(userFixture as any).catch((error): void => console.log(error));
 
       // * Middleware: admin authorisation
       await protectRouteMiddleware.adminAuthorisation(
@@ -117,7 +117,7 @@ describe('Protect Route Middleware', () => {
       };
 
       // * DB Service: add user as it is required for checkUserAuthorisation
-      await usersDbService.addUser(postUserAdminFixture as any).catch((error): void => console.log(error));
+      await usersDbService.addUser(userAdminFixture as any).catch((error): void => console.log(error));
 
       // * Middleware: admin authorisation
       await protectRouteMiddleware.adminAuthorisation(
@@ -159,7 +159,7 @@ describe('Protect Route Middleware', () => {
       };
 
       // * DB Service: add user as it is required for checkUserAuthorisation
-      await usersDbService.addUser(postUserFixture as any).catch((error): void => console.log(error));
+      await usersDbService.addUser(userFixture as any).catch((error): void => console.log(error));
 
       // * Middleware: user authorisation
       await protectRouteMiddleware.adminAuthorisation(
@@ -183,7 +183,7 @@ describe('Protect Route Middleware', () => {
       };
 
       // * DB Service: add user as it is required for checkUserAuthorisation
-      await usersDbService.addUser(postUserFixture as any).catch((error): void => console.log(error));
+      await usersDbService.addUser(userFixture as any).catch((error): void => console.log(error));
 
       // * Middleware: user authorisation
       await protectRouteMiddleware.userAuthorisation(

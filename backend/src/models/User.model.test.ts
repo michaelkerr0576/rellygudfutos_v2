@@ -1,8 +1,8 @@
-import postUserEnumFixture from '@/tests/fixtures/users/negative/postUserEnum.fixture';
-import postUserMaxLengthFixture from '@/tests/fixtures/users/negative/postUserMaxLength.fixture';
-import postUserRegexFixture from '@/tests/fixtures/users/negative/postUserRegex.fixture';
-import postUserTrimFixture from '@/tests/fixtures/users/negative/postUserTrim.fixture';
-import postUserFixture from '@/tests/fixtures/users/postUser.fixture';
+import userEnumFixture from '@/tests/fixtures/users/negative/userEnum.fixture';
+import userMaxLengthFixture from '@/tests/fixtures/users/negative/userMaxLength.fixture';
+import userRegexFixture from '@/tests/fixtures/users/negative/userRegex.fixture';
+import userTrimFixture from '@/tests/fixtures/users/negative/userTrim.fixture';
+import userRequestFixture from '@/tests/fixtures/users/userRequest.fixture';
 import utilFixture from '@/tests/fixtures/util.fixture';
 import mongoMemoryServer from '@/tests/mongoMemoryServer';
 
@@ -31,7 +31,7 @@ describe('User Model', () => {
     });
 
     test('Expect to validate maxLength for the relevant properties in UserModel', async () => {
-      const invalidUser = new UserModel(postUserMaxLengthFixture);
+      const invalidUser = new UserModel(userMaxLengthFixture);
 
       try {
         await invalidUser.save();
@@ -54,7 +54,7 @@ describe('User Model', () => {
     });
 
     test('Expect to validate enum for the relevant properties in UserModel', async () => {
-      const invalidPhoto = new UserModel(postUserEnumFixture);
+      const invalidPhoto = new UserModel(userEnumFixture);
 
       try {
         await invalidPhoto.save();
@@ -71,7 +71,7 @@ describe('User Model', () => {
     });
 
     test('Expect to validate regex for the relevant properties in UserModel', async () => {
-      const invalidUser = new UserModel(postUserRegexFixture);
+      const invalidUser = new UserModel(userRegexFixture);
 
       try {
         await invalidUser.save();
@@ -87,7 +87,7 @@ describe('User Model', () => {
     });
 
     test('Expect to validate and trim the relevant properties in UserModel', async () => {
-      const invalidUser = new UserModel(postUserTrimFixture);
+      const invalidUser = new UserModel(userTrimFixture);
 
       try {
         await invalidUser.save();
@@ -103,11 +103,11 @@ describe('User Model', () => {
     });
 
     test('Expect no validation errors for a valid UserModel', async () => {
-      const validUser = new UserModel(postUserFixture);
+      const validUser = new UserModel(userRequestFixture);
 
       const savedValidUser = await validUser.save();
 
-      const { _id: expectedId, email: expectedEmail, password: expectedPassword } = postUserFixture;
+      const { _id: expectedId, email: expectedEmail, password: expectedPassword } = userRequestFixture;
       const { _id: actualId, email: actualEmail, password: actualPassword } = savedValidUser;
 
       expect(savedValidUser).toBeTruthy();
