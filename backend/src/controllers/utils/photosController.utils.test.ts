@@ -176,6 +176,16 @@ describe('Photos Controller Utils', () => {
 
       expect(photosSort).toStrictEqual(enm.PhotoSortOptions.RANDOM);
     });
+
+    test('Expect to return default sort if not in PhotoSortOptions', () => {
+      const sort = 'notInSortOptions' as any;
+
+      const photosSort = photosControllerUtils.getPhotosSort(sort);
+
+      expect(photosSort).toStrictEqual({
+        'details.captureDate': -1,
+      });
+    });
   });
 
   describe('Get Photos Query', () => {
