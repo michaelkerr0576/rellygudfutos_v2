@@ -2,8 +2,8 @@ import { NextFunction, Request, Response } from 'express';
 import timekeeper from 'timekeeper';
 
 import tagsDbService from '@/services/tagsDb.service';
+import postTagMinLengthFixture from '@/tests/fixtures/tags/negative/postTagMinLength.fixture';
 import postTagFixture from '@/tests/fixtures/tags/postTag.fixture';
-import postTagMinLengthFixture from '@/tests/fixtures/tags/postTagMinLength.fixture';
 import postTagResponseFixture from '@/tests/fixtures/tags/postTagResponse.fixture';
 import postTagsFixture from '@/tests/fixtures/tags/postTags.fixture';
 import postTagsResponseFixture from '@/tests/fixtures/tags/postTagsResponse.fixture';
@@ -43,7 +43,6 @@ describe('Tags Controller', () => {
         body: {},
       };
 
-      // * Controller: add tag
       await tagsController
         .addTag(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
         .catch((error): void => mockNextFunction(error));
@@ -88,7 +87,6 @@ describe('Tags Controller', () => {
         params: { id: postTagFixture._id },
       };
 
-      // * Controller: delete tag
       await tagsController
         .deleteTag(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
         .catch((error): void => mockNextFunction(error));
@@ -135,7 +133,6 @@ describe('Tags Controller', () => {
         params: { id: postTagFixture._id },
       };
 
-      // * Controller: get tag
       await tagsController
         .getTag(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
         .catch((error): void => mockNextFunction(error));
@@ -173,7 +170,6 @@ describe('Tags Controller', () => {
     test('Expect to return 404 tags not found', async () => {
       const mockRequest: Partial<Request> = {};
 
-      // * Controller: get tags
       await tagsController
         .getTags(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
         .catch((error): void => mockNextFunction(error));
@@ -259,7 +255,6 @@ describe('Tags Controller', () => {
         params: { id: postTagFixture._id },
       };
 
-      // * Controller: update tag
       await tagsController
         .updateTag(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
         .catch((error): void => mockNextFunction(error));

@@ -1,8 +1,8 @@
+import postUserEnumFixture from '@/tests/fixtures/users/negative/postUserEnum.fixture';
+import postUserMaxLengthFixture from '@/tests/fixtures/users/negative/postUserMaxLength.fixture';
+import postUserRegexFixture from '@/tests/fixtures/users/negative/postUserRegex.fixture';
+import postUserTrimFixture from '@/tests/fixtures/users/negative/postUserTrim.fixture';
 import postUserFixture from '@/tests/fixtures/users/postUser.fixture';
-import postUserEnumFixture from '@/tests/fixtures/users/postUserEnum.fixture';
-import postUserMaxLengthFixture from '@/tests/fixtures/users/postUserMaxLength.fixture';
-import postUserRegexFixture from '@/tests/fixtures/users/postUserRegex.fixture';
-import postUserTrimFixture from '@/tests/fixtures/users/postUserTrim.fixture';
 import utilFixture from '@/tests/fixtures/util.fixture';
 import mongoMemoryServer from '@/tests/mongoMemoryServer';
 

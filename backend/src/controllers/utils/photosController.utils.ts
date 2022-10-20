@@ -131,7 +131,7 @@ const handleAddedPhoto = async (
 ): Promise<void> => {
   if (!photo) {
     response.status(500);
-    throw new Error(errorMessageUtils.error500());
+    throw new Error(errorMessageUtils.error500NotFound('Photo'));
   }
 
   const {
@@ -178,7 +178,7 @@ const handlePhotos = async (
 ): Promise<void> => {
   if (!photos) {
     response.status(500);
-    throw new Error(errorMessageUtils.error500());
+    throw new Error(errorMessageUtils.error500NotFound('Photos'));
   }
 
   const isPhotosEmpty = Array.isArray(photos) && photos.length === 0;

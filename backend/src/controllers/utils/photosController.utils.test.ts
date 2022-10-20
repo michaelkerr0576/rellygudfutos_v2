@@ -4,10 +4,13 @@ import timekeeper from 'timekeeper';
 
 import photosDbService from '@/services/photosDb.service';
 import tagsDbService from '@/services/tagsDb.service';
+import photoQuery from '@/tests/fixtures/photos/photoQuery';
+import photoQueryResponse from '@/tests/fixtures/photos/photoQueryResponse';
 import postPhotoFixture from '@/tests/fixtures/photos/postPhoto.fixture';
 import postTagsFixture from '@/tests/fixtures/tags/postTags.fixture';
 import utilFixture from '@/tests/fixtures/util.fixture';
 import mongoMemoryServer from '@/tests/mongoMemoryServer';
+import * as enm from '@/ts/enums/db.enum';
 
 import photosControllerUtils from './photosController.utils';
 
@@ -46,7 +49,6 @@ describe('Photos Controller Utils', () => {
 
   describe('Cancel Add Photo', () => {
     test('Expect to continue error state if photo not found', async () => {
-      // * Controller Utils: cancel added photo
       await expect(photosControllerUtils.cancelAddPhoto(mockError, photoId, photoTagIds)).rejects.toThrow(
         'test error',
       );
@@ -85,7 +87,6 @@ describe('Photos Controller Utils', () => {
 
   describe('Check Photo Tags Exist', () => {
     test('Expect to throw 404 error if tags are not found', async () => {
-      // * Controller Utils: check photo tags exist
       await expect(
         photosControllerUtils.checkPhotoTagsExist(mockResponse as Response, photoTagIds),
       ).rejects.toThrow('Tag not found from Image Tags');
@@ -110,6 +111,100 @@ describe('Photos Controller Utils', () => {
       );
 
       expect(checkPhotoTagsExist).toBeUndefined();
+    });
+  });
+
+  describe('Get Photos Filter', () => {
+    test('Expect to return empty filter if no search and tags', () => {
+      const search = '';
+      const tags = [] as any;
+
+      const filter = photosControllerUtils.getPhotosFilter(search, tags);
+
+      expect(filter).toStrictEqual({});
+    });
+
+    test('Expect to return filter with columns and patterns if valid search and tags', () => {
+      const search = 'test';
+      const tags = photoQuery.tags as any;
+
+      const filter = photosControllerUtils.getPhotosFilter(search, tags);
+
+      expect(filter).toStrictEqual(photoQueryResponse.filter);
+    });
+  });
+
+  describe('Get Photos Sort', () => {
+    test('Expect to return capture date sorted by newest', () => {
+      const sort = enm.PhotoSortOptions.NEWEST;
+
+      const photosSort = photosControllerUtils.getPhotosSort(sort);
+
+      expect(photosSort).toStrictEqual({
+        'details.captureDate': -1,
+      });
+    });
+
+    test('Expect to return capture date sorted by oldest', () => {
+      const sort = 'oldest' as any;
+
+      const photosSort = photosControllerUtils.getPhotosSort(sort);
+
+      expect(photosSort).toStrictEqual({
+        'details.captureDate': 1,
+      });
+    });
+
+    test('Expect to return image title sorted by a - z', () => {
+      const sort = enm.PhotoSortOptions.TITLE_AZ;
+
+      const photosSort = photosControllerUtils.getPhotosSort(sort);
+
+      expect(photosSort).toStrictEqual({
+        'details.imageTitle': 1,
+      });
+    });
+
+    test('Expect to return image title sorted by z - a', () => {
+      const sort = 'title_za' as any;
+
+      const photosSort = photosControllerUtils.getPhotosSort(sort);
+
+      expect(photosSort).toStrictEqual({
+        'details.imageTitle': -1,
+      });
+    });
+
+    test('Expect to return random sort', () => {
+      const sort = enm.PhotoSortOptions.RANDOM;
+
+      const photosSort = photosControllerUtils.getPhotosSort(sort);
+
+      expect(photosSort).toStrictEqual(enm.PhotoSortOptions.RANDOM);
+    });
+  });
+
+  describe('Get Photos Query', () => {
+    test('Expect to return default photos query', () => {
+      const customPhotoQuery = {} as any;
+      const photosQuery = photosControllerUtils.getPhotosQuery(customPhotoQuery);
+
+      expect(photosQuery).toStrictEqual({
+        endIndex: 5,
+        filter: {},
+        limit: 5,
+        page: 1,
+        sort: {
+          'details.captureDate': -1,
+        },
+        startIndex: 0,
+      });
+    });
+
+    test('Expect to return custom photos query from request', () => {
+      const photosQuery = photosControllerUtils.getPhotosQuery(photoQuery as any);
+
+      expect(photosQuery).toStrictEqual(photoQueryResponse);
     });
   });
 });

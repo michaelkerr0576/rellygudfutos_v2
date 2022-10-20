@@ -3,9 +3,9 @@ import timekeeper from 'timekeeper';
 
 import photosDbService from '@/services/photosDb.service';
 import tagsDbService from '@/services/tagsDb.service';
+import postPhotoEnumFixture from '@/tests/fixtures/photos/negative/postPhotoEnum.fixture';
+import postPhotoRequiredFixture from '@/tests/fixtures/photos/negative/postPhotoRequired.fixture';
 import postPhotoFixture from '@/tests/fixtures/photos/postPhoto.fixture';
-import postPhotoEnumFixture from '@/tests/fixtures/photos/postPhotoEnum.fixture';
-import postPhotoRequiredFixture from '@/tests/fixtures/photos/postPhotoRequired.fixture';
 import postPhotoResponseFixture from '@/tests/fixtures/photos/postPhotoResponse.fixture';
 import postPhotosFixture from '@/tests/fixtures/photos/postPhotos.fixture';
 import postPhotosResponseFixture from '@/tests/fixtures/photos/postPhotosResponse.fixture';
@@ -48,7 +48,6 @@ describe('Photos Controller', () => {
         body: postPhotoFixture,
       };
 
-      // * Controller: add photo
       await photosController
         .addPhoto(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
         .catch((error): void => mockNextFunction(error));
@@ -66,7 +65,6 @@ describe('Photos Controller', () => {
         body: postPhotoRequiredFixture,
       };
 
-      // * Controller: add photo
       await photosController
         .addPhoto(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
         .catch((error): void => mockNextFunction(error));
@@ -123,7 +121,6 @@ describe('Photos Controller', () => {
         params: { id: postPhotoFixture._id },
       };
 
-      // * Controller: delete photo
       await photosController
         .deletePhoto(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
         .catch((error): void => mockNextFunction(error));
@@ -173,7 +170,6 @@ describe('Photos Controller', () => {
         params: { id: postPhotoFixture._id },
       };
 
-      // * Controller: get photo
       await photosController
         .getPhoto(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
         .catch((error): void => mockNextFunction(error));
@@ -216,7 +212,6 @@ describe('Photos Controller', () => {
         query: {},
       };
 
-      // * Controller: get photos
       await photosController
         .getPhotos(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
         .catch((error): void => mockNextFunction(error));
@@ -490,7 +485,6 @@ describe('Photos Controller', () => {
         params: { id: postPhotoFixture._id },
       };
 
-      // * Controller: update photo
       await photosController
         .updatePhoto(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
         .catch((error): void => mockNextFunction(error));

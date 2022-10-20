@@ -43,6 +43,8 @@ const error404InvalidCredentials = (): string => 'Invalid credentials';
 
 const error500 = (): string => 'Internal Server Error';
 
+const error500NotFound = (model: string): string => `Cannot find ${model} just added`;
+
 export default {
   error400,
   error400AlreadyExists,
@@ -57,4 +59,5 @@ export default {
   error404EmptyResultFilter,
   error404InvalidCredentials,
   error500,
+  error500NotFound,
 };

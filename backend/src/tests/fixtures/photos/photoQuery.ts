@@ -1,10 +1,13 @@
 import * as enm from '@/ts/enums/db.enum';
 
+import postTagsFixture from '../tags/postTags.fixture';
+
+const [firstTag, secondTag] = postTagsFixture;
+
 export default {
-  endIndex: 5,
-  filter: {},
-  limit: 5,
-  page: 1,
+  limit: 3,
+  page: 2,
+  search: 'test',
   sort: enm.PhotoSortOptions.RANDOM,
-  startIndex: 0,
+  tags: [firstTag._id, secondTag._id],
 };
