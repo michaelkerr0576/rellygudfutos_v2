@@ -1,11 +1,7 @@
 import { Types } from 'mongoose';
 
-import postTagsFixture from '@/tests/fixtures/tags/tagsRequest.fixture';
+import postPhotoFixture from '@/tests/fixtures/photos/photoRequest.fixture';
 
-const [firstTag, secondTag, thirdTag] = postTagsFixture;
+const [firstTag, secondTag] = postPhotoFixture.details.imageTags;
 
-export default [
-  new Types.ObjectId(firstTag._id),
-  new Types.ObjectId(secondTag._id),
-  new Types.ObjectId(thirdTag._id),
-];
+export default [new Types.ObjectId(firstTag), new Types.ObjectId(secondTag)];
