@@ -7,7 +7,9 @@ import photoIdFixture from '@/tests/fixtures/photos/photoId.fixture';
 import photoQueryFixture from '@/tests/fixtures/photos/photoQuery.fixture';
 import photoQueryResponseFixture from '@/tests/fixtures/photos/photoQueryResponse.fixture';
 import photoRequestFixture from '@/tests/fixtures/photos/photoRequest.fixture';
+import photoResponseFixture from '@/tests/fixtures/photos/photoResponse.fixture';
 import photoTagIdsFixture from '@/tests/fixtures/photos/photoTagIds.fixture';
+import photoTagsResponseFixture from '@/tests/fixtures/photos/photoTagsResponse.fixture';
 import tagsRequestFixture from '@/tests/fixtures/tags/tagsRequest.fixture';
 import utilFixture from '@/tests/fixtures/util.fixture';
 import mongoMemoryServer from '@/tests/mongoMemoryServer';
@@ -197,6 +199,41 @@ describe('Photos Controller Utils', () => {
       const photosQuery = photosControllerUtils.getPhotosQuery(photoQueryFixture as any);
 
       expect(photosQuery).toStrictEqual(photoQueryResponseFixture);
+    });
+  });
+
+  describe('Handle Added Photo', () => {
+    test('Expect to return 500 server error if photo that was added can not be found', async () => {
+      const photo = null;
+
+      await expect(photosControllerUtils.handleAddedPhoto(mockResponse as Response, photo)).rejects.toThrow(
+        'Cannot find Photo just added',
+      );
+
+      expect(mockResponse.status).toBeCalledWith(500);
+    });
+
+    test('Expect to return 201 photo added', async () => {
+      // * DB Service: add tags as it is required for handleAddedPhoto
+      await tagsDbService.addTags(tagsRequestFixture as any).catch((error): void => console.log(error));
+
+      // * Controller Utils: handle added photo
+      await photosControllerUtils.handleAddedPhoto(mockResponse as Response, photoResponseFixture as any);
+
+      // * DB Service: find tag and check tag photos have been updated
+      const photoTagIds = photoResponseFixture.details.imageTags;
+      const updatedTags = await tagsDbService
+        .findTags(photoTagIds as any)
+        .catch((error): void => console.log(error));
+
+      expect(updatedTags).toBeTruthy();
+      expect(updatedTags).toEqual(photoTagsResponseFixture);
+
+      expect(mockResponse.status).toBeCalledWith(201);
+      expect(mockResponse.json).toHaveBeenCalledWith({
+        data: photoResponseFixture,
+        message: 'Photo added',
+      });
     });
   });
 });

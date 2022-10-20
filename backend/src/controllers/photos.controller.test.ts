@@ -9,7 +9,7 @@ import photoRequestFixture from '@/tests/fixtures/photos/photoRequest.fixture';
 import photoResponseFixture from '@/tests/fixtures/photos/photoResponse.fixture';
 import photosRequestFixture from '@/tests/fixtures/photos/photosRequest.fixture';
 import photosResponseFixture from '@/tests/fixtures/photos/photosResponse.fixture';
-import tagsResponseFixture from '@/tests/fixtures/photos/photoTagsResponse.fixture';
+import photoTagsResponseFixture from '@/tests/fixtures/photos/photoTagsResponse.fixture';
 import tagsRequestFixture from '@/tests/fixtures/tags/tagsRequest.fixture';
 import utilFixture from '@/tests/fixtures/util.fixture';
 import mongoMemoryServer from '@/tests/mongoMemoryServer';
@@ -111,7 +111,7 @@ describe('Photos Controller', () => {
         .catch((error): void => console.log(error));
 
       expect(updatedTags).toBeTruthy();
-      expect(updatedTags).toEqual(tagsResponseFixture);
+      expect(updatedTags).toEqual(photoTagsResponseFixture);
     });
   });
 

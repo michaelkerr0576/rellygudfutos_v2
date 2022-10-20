@@ -6,6 +6,7 @@ import utilFixture from '../util.fixture';
 import postPhotoFixture from './photoRequest.fixture';
 
 const [firstTag, secondTag] = postTagsFixture;
+
 const imageTags = [
   {
     _id: new Types.ObjectId(firstTag._id),
