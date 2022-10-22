@@ -147,11 +147,21 @@ const handleAddedPhoto = async (
   });
 };
 
-const handleDeletedPhoto = (response: Response, photo: LeanDocument<inf.IPhoto> | null): void => {
+const handleDeletedPhoto = async (
+  response: Response,
+  photo: LeanDocument<inf.IPhoto> | null,
+): Promise<void> => {
   if (!photo) {
     response.status(404);
     throw new Error(errorMessageUtils.error404('Photo'));
   }
+
+  const {
+    _id: photoId,
+    details: { imageTags: photoTagIds },
+  } = photo;
+
+  await tagsDbService.deleteTagPhotos(photoId, photoTagIds);
 
   response.status(200).json({
     data: photo,

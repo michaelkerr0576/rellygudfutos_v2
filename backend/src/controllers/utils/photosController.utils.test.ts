@@ -71,11 +71,11 @@ describe('Photos Controller Utils', () => {
       expect(cancelledPhoto).not.toBeTruthy();
 
       // * DB Service: expect to not find photo in tags that was just cancelled
-      const isTagPhotosFound = await tagsDbService
+      const isTagsPhotoFound = await tagsDbService
         .checkTagsPhotoExist(photoIdFixture)
         .catch((error): void => console.log(error));
 
-      expect(isTagPhotosFound).toBe(false);
+      expect(isTagsPhotoFound).toBe(false);
     });
   });
 
@@ -243,6 +243,42 @@ describe('Photos Controller Utils', () => {
       expect(mockResponse.json).toHaveBeenCalledWith({
         data: photoResponseFixture,
         message: 'Photo added',
+      });
+    });
+  });
+
+  describe('Handle Deleted Photo', () => {
+    test('Expect to return 404 photo not found', async () => {
+      const photo = null;
+
+      await expect(photosControllerUtils.handleDeletedPhoto(mockResponse as Response, photo)).rejects.toThrow(
+        'Photo not found',
+      );
+
+      expect(mockResponse.status).toBeCalledWith(404);
+    });
+
+    test('Expect to return 200 photo deleted', async () => {
+      // * DB Service: add tags as it is required for handleDeletedPhoto
+      await tagsDbService.addTags(tagsRequestFixture as any).catch((error): void => console.log(error));
+
+      // * DB Service: add tags photos to be deleted
+      await tagsDbService.addTagPhotos(photoIdFixture, photoTagIdsFixture);
+
+      // * Controller Utils: handle deleted photo
+      await photosControllerUtils.handleDeletedPhoto(mockResponse as Response, photoResponseFixture as any);
+
+      // * DB Service: expect to not find photo in tags that was just deleted
+      const isTagsPhotoFound = await tagsDbService
+        .checkTagsPhotoExist(photoIdFixture)
+        .catch((error): void => console.log(error));
+
+      expect(isTagsPhotoFound).toBe(false);
+
+      expect(mockResponse.status).toBeCalledWith(200);
+      expect(mockResponse.json).toHaveBeenCalledWith({
+        data: photoResponseFixture,
+        message: 'Photo deleted',
       });
     });
   });

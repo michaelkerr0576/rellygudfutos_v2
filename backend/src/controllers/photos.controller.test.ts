@@ -5,10 +5,12 @@ import photosDbService from '@/services/photosDb.service';
 import tagsDbService from '@/services/tagsDb.service';
 import photoEnumFixture from '@/tests/fixtures/photos/negative/photoEnum.fixture';
 import photoRequiredFixture from '@/tests/fixtures/photos/negative/photoRequired.fixture';
+import photoIdFixture from '@/tests/fixtures/photos/photoId.fixture';
 import photoRequestFixture from '@/tests/fixtures/photos/photoRequest.fixture';
 import photoResponseFixture from '@/tests/fixtures/photos/photoResponse.fixture';
 import photosRequestFixture from '@/tests/fixtures/photos/photosRequest.fixture';
 import photosResponseFixture from '@/tests/fixtures/photos/photosResponse.fixture';
+import photoTagIdsFixture from '@/tests/fixtures/photos/photoTagIds.fixture';
 import photoTagsResponseFixture from '@/tests/fixtures/photos/photoTagsResponse.fixture';
 import tagsRequestFixture from '@/tests/fixtures/tags/tagsRequest.fixture';
 import utilFixture from '@/tests/fixtures/util.fixture';
@@ -90,12 +92,6 @@ describe('Photos Controller', () => {
         .addPhoto(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
         .catch((error): void => mockNextFunction(error));
 
-      expect(mockResponse.status).toBeCalledWith(201);
-      expect(mockResponse.json).toHaveBeenCalledWith({
-        data: photoResponseFixture,
-        message: 'Photo added',
-      });
-
       // * DB Service: find photo just added
       const addedPhoto = await photosDbService
         .findPhoto(utilFixture.freezeDate)
@@ -105,13 +101,18 @@ describe('Photos Controller', () => {
       expect(addedPhoto).toEqual(photoResponseFixture);
 
       // * DB Service: find tag and check tag photos have been updated
-      const photoTagIds = photoRequestFixture.details.imageTags;
       const updatedTags = await tagsDbService
-        .findTags(photoTagIds as any)
+        .findTags(photoTagIdsFixture)
         .catch((error): void => console.log(error));
 
       expect(updatedTags).toBeTruthy();
       expect(updatedTags).toEqual(photoTagsResponseFixture);
+
+      expect(mockResponse.status).toBeCalledWith(201);
+      expect(mockResponse.json).toHaveBeenCalledWith({
+        data: photoResponseFixture,
+        message: 'Photo added',
+      });
     });
   });
 
@@ -144,10 +145,20 @@ describe('Photos Controller', () => {
       // * DB Service: add photo to be deleted
       await photosDbService.addPhoto(photoRequestFixture as any).catch((error): void => console.log(error));
 
+      // * DB Service: add tags photos to be deleted
+      await tagsDbService.addTagPhotos(photoIdFixture, photoTagIdsFixture);
+
       // * Controller: delete photo
       await photosController
         .deletePhoto(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
         .catch((error): void => mockNextFunction(error));
+
+      // * DB Service: expect to not find photo in tags that was just deleted
+      const isTagsPhotoFound = await tagsDbService
+        .checkTagsPhotoExist(photoIdFixture)
+        .catch((error): void => console.log(error));
+
+      expect(isTagsPhotoFound).toBe(false);
 
       expect(mockResponse.status).toBeCalledWith(200);
       expect(mockResponse.json).toHaveBeenCalledWith({

@@ -41,7 +41,7 @@ const deletePhoto = (request: Request, response: Response, next: NextFunction): 
 
   return photosDbService
     .deletePhoto(id)
-    .then((photo): void => photosControllerUtils.handleDeletedPhoto(response, photo))
+    .then((photo): Promise<void> => photosControllerUtils.handleDeletedPhoto(response, photo))
     .catch((error): void => next(error));
 };
 
