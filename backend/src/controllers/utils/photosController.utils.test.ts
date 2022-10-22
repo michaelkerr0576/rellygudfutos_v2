@@ -282,4 +282,26 @@ describe('Photos Controller Utils', () => {
       });
     });
   });
+
+  describe('Handle Photo', () => {
+    test('Expect to return 404 photo not found', async () => {
+      const photo = null;
+
+      await expect(photosControllerUtils.handlePhoto(mockResponse as Response, photo)).rejects.toThrow(
+        'Photo not found',
+      );
+
+      expect(mockResponse.status).toBeCalledWith(404);
+    });
+
+    test('Expect to return 200 get photo', async () => {
+      await photosControllerUtils.handlePhoto(mockResponse as Response, photoResponseFixture as any);
+
+      expect(mockResponse.status).toBeCalledWith(200);
+      expect(mockResponse.json).toHaveBeenCalledWith({
+        data: photoResponseFixture,
+        message: 'Photo fetched successfully',
+      });
+    });
+  });
 });

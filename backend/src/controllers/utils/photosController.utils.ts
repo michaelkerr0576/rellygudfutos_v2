@@ -169,7 +169,7 @@ const handleDeletedPhoto = async (
   });
 };
 
-const handlePhoto = (response: Response, photo: LeanDocument<inf.IPhoto> | null): void => {
+const handlePhoto = async (response: Response, photo: LeanDocument<inf.IPhoto> | null): Promise<void> => {
   if (!photo) {
     response.status(404);
     throw new Error(errorMessageUtils.error404('Photo'));
