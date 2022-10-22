@@ -53,7 +53,7 @@ const getPhoto = (request: Request, response: Response, next: NextFunction): Pro
 
   return photosDbService
     .getPhoto(id)
-    .then((photo): void => photosControllerUtils.handlePhoto(response, photo))
+    .then((photo): Promise<void> => photosControllerUtils.handlePhoto(response, photo))
     .catch((error): void => next(error));
 };
 

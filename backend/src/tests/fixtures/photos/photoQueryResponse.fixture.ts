@@ -1,11 +1,9 @@
-import * as enm from '@/ts/enums/db.enum';
-
 import postTagsFixture from '../tags/tagsRequest.fixture';
 
 const [firstTag, secondTag] = postTagsFixture;
 
 export default {
-  endIndex: 6,
+  endIndex: 2,
   filter: {
     $or: [
       {
@@ -33,8 +31,10 @@ export default {
       _id: [firstTag._id, secondTag._id],
     },
   },
-  limit: 3,
+  limit: 1,
   page: 2,
-  sort: enm.PhotoSortOptions.RANDOM,
-  startIndex: 3,
+  sort: {
+    'details.captureDate': 1,
+  },
+  startIndex: 1,
 };

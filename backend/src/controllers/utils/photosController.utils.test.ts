@@ -8,6 +8,7 @@ import photoQueryFixture from '@/tests/fixtures/photos/photoQuery.fixture';
 import photoQueryResponseFixture from '@/tests/fixtures/photos/photoQueryResponse.fixture';
 import photoRequestFixture from '@/tests/fixtures/photos/photoRequest.fixture';
 import photoResponseFixture from '@/tests/fixtures/photos/photoResponse.fixture';
+import photosRequestFixture from '@/tests/fixtures/photos/photosRequest.fixture';
 import photoTagIdsFixture from '@/tests/fixtures/photos/photoTagIds.fixture';
 import photoTagsResponseFixture from '@/tests/fixtures/photos/photoTagsResponse.fixture';
 import tagsRequestFixture from '@/tests/fixtures/tags/tagsRequest.fixture';
@@ -301,6 +302,66 @@ describe('Photos Controller Utils', () => {
       expect(mockResponse.json).toHaveBeenCalledWith({
         data: photoResponseFixture,
         message: 'Photo fetched successfully',
+      });
+    });
+  });
+
+  describe('Handle Photos', () => {
+    test('Expect to return 500 server error', async () => {
+      const photos = null;
+
+      await expect(
+        photosControllerUtils.handlePhotos(
+          mockResponse as Response,
+          photos,
+          photoQueryResponseFixture as any,
+        ),
+      ).rejects.toThrow('Cannot find Photos just added');
+
+      expect(mockResponse.status).toBeCalledWith(500);
+    });
+
+    test('Expect to return 404 photos not found', async () => {
+      const photos = [] as any;
+
+      await expect(
+        photosControllerUtils.handlePhotos(
+          mockResponse as Response,
+          photos,
+          photoQueryResponseFixture as any,
+        ),
+      ).rejects.toThrow('Photos not found. Remove filter or add Photos');
+
+      expect(mockResponse.status).toBeCalledWith(404);
+    });
+
+    test('Expect to return 200 get photos pagination page two, next and previous', async () => {
+      // * DB Service: add tags as it is required for addPhotos
+      await tagsDbService.addTags(tagsRequestFixture as any).catch((error): void => console.log(error));
+
+      // * DB Service: add photos to be get
+      await photosDbService.addPhotos(photosRequestFixture as any).catch((error): void => console.log(error));
+
+      // * Controller: get photos
+      const photoQuery = { ...photoQueryResponseFixture, filter: {} } as any;
+      await photosControllerUtils.handlePhotos(
+        mockResponse as Response,
+        photosRequestFixture as any,
+        photoQuery,
+      );
+
+      expect(mockResponse.status).toBeCalledWith(200);
+      expect(mockResponse.json).toHaveBeenCalledWith({
+        data: photosRequestFixture,
+        message: 'Photos fetched successfully',
+        pagination: {
+          limit: 1,
+          next: { limit: 1, page: 3 },
+          page: 2,
+          pages: 3,
+          previous: { limit: 1, page: 1 },
+          total: 3,
+        },
       });
     });
   });

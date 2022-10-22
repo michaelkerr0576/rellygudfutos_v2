@@ -5,9 +5,9 @@ import postTagsFixture from '../tags/tagsRequest.fixture';
 const [firstTag, secondTag] = postTagsFixture;
 
 export default {
-  limit: 3,
+  limit: 1,
   page: 2,
   search: 'test',
-  sort: enm.PhotoSortOptions.RANDOM,
+  sort: enm.PhotoSortOptions.OLDEST,
   tags: [firstTag._id, secondTag._id],
 };
