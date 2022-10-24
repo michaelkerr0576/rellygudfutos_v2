@@ -53,11 +53,14 @@ const getTag = (request: Request, response: Response, next: NextFunction): Promi
 // * @desc Get tags
 // * @route GET /api/tags
 // * @access Public
-const getTags = (_request: Request, response: Response, next: NextFunction): Promise<void> =>
-  tagsDbService
-    .getTags()
-    .then((tags): void => tagsControllerUtils.handleTags(response, tags))
+const getTags = (request: Request, response: Response, next: NextFunction): Promise<void> => {
+  const tagsQuery = tagsControllerUtils.getTagsQuery(request.query);
+
+  return tagsDbService
+    .getTags(tagsQuery)
+    .then((photos): Promise<void> => tagsControllerUtils.handleTags(response, photos, tagsQuery))
     .catch((error): void => next(error));
+};
 
 // * @desc Update tag
 // * @route PUT /api/tags/:id

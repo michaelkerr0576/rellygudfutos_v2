@@ -171,7 +171,9 @@ describe('Tags Controller', () => {
 
   describe('Get Tags', () => {
     test('Expect to return 404 tags not found', async () => {
-      const mockRequest: Partial<Request> = {};
+      const mockRequest: Partial<Request> = {
+        query: {},
+      };
 
       await tagsController
         .getTags(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
@@ -185,8 +187,10 @@ describe('Tags Controller', () => {
       );
     });
 
-    test('Expect to return 200 get tags', async () => {
-      const mockRequest: Partial<Request> = {};
+    test('Expect to return 200 get tags default pagination', async () => {
+      const mockRequest: Partial<Request> = {
+        query: {},
+      };
 
       // * DB Service: add tags to be get
       await tagsDbService.addTags(tagsRequestFixture as any).catch((error): void => console.log(error));
@@ -201,6 +205,12 @@ describe('Tags Controller', () => {
       expect(mockResponse.json).toHaveBeenCalledWith({
         data: tagsResponseFixture,
         message: 'Tags fetched successfully',
+        pagination: {
+          limit: 50,
+          page: 1,
+          pages: 1,
+          total: 3,
+        },
       });
     });
   });

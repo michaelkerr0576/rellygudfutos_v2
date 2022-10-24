@@ -35,6 +35,8 @@ const checkTagsExist = (ids: Types.ObjectId[]): Promise<boolean> =>
 const checkTagsPhotoExist = (photoId: Types.ObjectId): Promise<boolean> =>
   TagModel.exists({ photos: photoId });
 
+const countTags = (): Promise<number> => TagModel.countDocuments().then((count): number => count);
+
 const deleteTag = (id: string): Promise<LeanDocument<inf.ITag> | null> =>
   TagModel.findByIdAndDelete(id)
     .lean()
@@ -63,8 +65,10 @@ const getTag = (id: string): Promise<LeanDocument<inf.ITag> | null> =>
     .lean()
     .then((tag): LeanDocument<inf.ITag> | null => tag);
 
-const getTags = (): Promise<LeanDocument<inf.ITag[]>> =>
+const getTags = (query: typ.PaginationQuery): Promise<LeanDocument<inf.ITag[]>> =>
   TagModel.find()
+    .skip(query.startIndex)
+    .limit(query.limit)
     .lean()
     .then((tags): LeanDocument<inf.ITag[]> => tags);
 
@@ -82,6 +86,7 @@ export default {
   addTags,
   checkTagsExist,
   checkTagsPhotoExist,
+  countTags,
   deleteTag,
   deleteTagPhotos,
   findTag,
