@@ -65,12 +65,6 @@ describe('Tags Controller', () => {
         .addTag(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
         .catch((error): void => mockNextFunction(error));
 
-      expect(mockResponse.status).toBeCalledWith(201);
-      expect(mockResponse.json).toHaveBeenCalledWith({
-        data: tagResponseFixture,
-        message: 'Tag added',
-      });
-
       // * DB Service: find tag just added
       const addedTag = await tagsDbService
         .findTag(utilFixture.freezeDate)
@@ -78,6 +72,13 @@ describe('Tags Controller', () => {
 
       expect(addedTag).toBeTruthy();
       expect(addedTag).toEqual(tagResponseFixture);
+
+      // * Response
+      expect(mockResponse.status).toBeCalledWith(201);
+      expect(mockResponse.json).toHaveBeenCalledWith({
+        data: tagResponseFixture,
+        message: 'Tag added',
+      });
     });
   });
 
@@ -112,18 +113,19 @@ describe('Tags Controller', () => {
         .deleteTag(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
         .catch((error): void => mockNextFunction(error));
 
-      expect(mockResponse.status).toBeCalledWith(200);
-      expect(mockResponse.json).toHaveBeenCalledWith({
-        data: tagResponseFixture,
-        message: 'Tag deleted',
-      });
-
       // * DB Service: expect to not find tag just deleted
       const deletedTag = await tagsDbService
         .findTag(utilFixture.freezeDate)
         .catch((error): void => console.log(error));
 
       expect(deletedTag).not.toBeTruthy();
+
+      // * Response
+      expect(mockResponse.status).toBeCalledWith(200);
+      expect(mockResponse.json).toHaveBeenCalledWith({
+        data: tagResponseFixture,
+        message: 'Tag deleted',
+      });
     });
   });
 
@@ -158,6 +160,7 @@ describe('Tags Controller', () => {
         .getTag(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
         .catch((error): void => mockNextFunction(error));
 
+      // * Response
       expect(mockResponse.status).toBeCalledWith(200);
       expect(mockResponse.json).toHaveBeenCalledWith({
         data: tagResponseFixture,
@@ -193,6 +196,7 @@ describe('Tags Controller', () => {
         .getTags(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
         .catch((error): void => mockNextFunction(error));
 
+      // * Response
       expect(mockResponse.status).toBeCalledWith(200);
       expect(mockResponse.json).toHaveBeenCalledWith({
         data: tagsResponseFixture,
@@ -216,6 +220,7 @@ describe('Tags Controller', () => {
         .updateTag(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
         .catch((error): void => mockNextFunction(error));
 
+      // * Response
       expect(mockResponse.status).toBeCalledWith(400);
       expect(mockNextFunction).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -241,6 +246,7 @@ describe('Tags Controller', () => {
         .updateTag(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
         .catch((error): void => mockNextFunction(error));
 
+      // * Response
       expect(mockResponse.status).toBeCalledWith(400);
       expect(mockNextFunction).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -284,12 +290,6 @@ describe('Tags Controller', () => {
         .updateTag(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
         .catch((error): void => mockNextFunction(error));
 
-      expect(mockResponse.status).toBeCalledWith(200);
-      expect(mockResponse.json).toHaveBeenCalledWith({
-        data: { ...tagResponseFixture, tag: 'Test updated tag' },
-        message: 'Tag updated',
-      });
-
       // * DB Service: find tag just updated
       const addedTag = await tagsDbService
         .findTag(utilFixture.freezeDate)
@@ -299,6 +299,13 @@ describe('Tags Controller', () => {
       expect(addedTag).toEqual({
         ...tagResponseFixture,
         tag: 'Test updated tag',
+      });
+
+      // * Response
+      expect(mockResponse.status).toBeCalledWith(200);
+      expect(mockResponse.json).toHaveBeenCalledWith({
+        data: { ...tagResponseFixture, tag: 'Test updated tag' },
+        message: 'Tag updated',
       });
     });
   });

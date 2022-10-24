@@ -57,7 +57,9 @@ describe('Photos Controller Utils', () => {
       await photosDbService.addPhoto(photoRequestFixture as any).catch((error): void => console.log(error));
 
       // * DB Service: add tags photos to be cancelled
-      await tagsDbService.addTagPhotos(photoIdFixture, photoTagIdsFixture);
+      await tagsDbService
+        .addTagPhotos(photoIdFixture, photoTagIdsFixture)
+        .catch((error): void => console.log(error));
 
       // * Controller Utils: cancel added photo
       await expect(
@@ -97,7 +99,9 @@ describe('Photos Controller Utils', () => {
       await photosDbService.addPhoto(photoRequestFixture as any).catch((error): void => console.log(error));
 
       // * DB Service: add tags photos
-      await tagsDbService.addTagPhotos(photoIdFixture, photoTagIdsFixture);
+      await tagsDbService
+        .addTagPhotos(photoIdFixture, photoTagIdsFixture)
+        .catch((error): void => console.log(error));
 
       // * Controller Utils: check photo tags exist
       const checkPhotoTagsExist = await photosControllerUtils.checkPhotoTagsExist(
@@ -231,15 +235,15 @@ describe('Photos Controller Utils', () => {
       // * Controller Utils: handle added photo
       await photosControllerUtils.handleAddedPhoto(mockResponse as Response, photoResponseFixture as any);
 
-      // * DB Service: find tag and check tag photos have been updated
-      const photoTagIds = photoResponseFixture.details.imageTags;
-      const updatedTags = await tagsDbService
-        .findTags(photoTagIds as any)
+      // * DB Service: find tag and check tag photos have been added
+      const addedTags = await tagsDbService
+        .findTags(photoTagIdsFixture)
         .catch((error): void => console.log(error));
 
-      expect(updatedTags).toBeTruthy();
-      expect(updatedTags).toEqual(photoTagsResponseFixture);
+      expect(addedTags).toBeTruthy();
+      expect(addedTags).toEqual(photoTagsResponseFixture);
 
+      // * Response
       expect(mockResponse.status).toBeCalledWith(201);
       expect(mockResponse.json).toHaveBeenCalledWith({
         data: photoResponseFixture,
@@ -264,10 +268,14 @@ describe('Photos Controller Utils', () => {
       await tagsDbService.addTags(tagsRequestFixture as any).catch((error): void => console.log(error));
 
       // * DB Service: add tags photos to be deleted
-      await tagsDbService.addTagPhotos(photoIdFixture, photoTagIdsFixture);
+      await tagsDbService
+        .addTagPhotos(photoIdFixture, photoTagIdsFixture)
+        .catch((error): void => console.log(error));
 
       // * Controller Utils: handle deleted photo
-      await photosControllerUtils.handleDeletedPhoto(mockResponse as Response, photoResponseFixture as any);
+      await photosControllerUtils
+        .handleDeletedPhoto(mockResponse as Response, photoResponseFixture as any)
+        .catch((error): void => console.log(error));
 
       // * DB Service: expect to not find photo in tags that was just deleted
       const isTagsPhotoFound = await tagsDbService
@@ -276,6 +284,7 @@ describe('Photos Controller Utils', () => {
 
       expect(isTagsPhotoFound).toBe(false);
 
+      // * Response
       expect(mockResponse.status).toBeCalledWith(200);
       expect(mockResponse.json).toHaveBeenCalledWith({
         data: photoResponseFixture,
@@ -342,7 +351,7 @@ describe('Photos Controller Utils', () => {
       // * DB Service: add photos to be get
       await photosDbService.addPhotos(photosRequestFixture as any).catch((error): void => console.log(error));
 
-      // * Controller: get photos
+      // * Controller Utils: handle photos
       const photoQuery = { ...photoQueryResponseFixture, filter: {} } as any;
       await photosControllerUtils.handlePhotos(
         mockResponse as Response,
@@ -350,6 +359,7 @@ describe('Photos Controller Utils', () => {
         photoQuery,
       );
 
+      // * Response
       expect(mockResponse.status).toBeCalledWith(200);
       expect(mockResponse.json).toHaveBeenCalledWith({
         data: photosRequestFixture,
@@ -363,6 +373,42 @@ describe('Photos Controller Utils', () => {
           total: 3,
         },
       });
+    });
+  });
+
+  describe('Handle Updated Photo', () => {
+    test('Expect to return 404 photos not found', async () => {
+      const photo = null;
+
+      await expect(photosControllerUtils.handleUpdatedPhoto(mockResponse as Response, photo)).rejects.toThrow(
+        'Photo not found',
+      );
+
+      expect(mockResponse.status).toBeCalledWith(404);
+    });
+
+    test('Expect to return 200 photo updated', async () => {
+      // * DB Service: add tags as it is required for updatePhoto
+      await tagsDbService.addTags(tagsRequestFixture as any).catch((error): void => console.log(error));
+
+      // * DB Service: add tags photos to be updated
+      await tagsDbService
+        .addTagPhotos(photoIdFixture, photoTagIdsFixture)
+        .catch((error): void => console.log(error));
+
+      // * Controller Utils: handle updated photo
+      await photosControllerUtils.handleUpdatedPhoto(mockResponse as Response, photoRequestFixture as any);
+
+      // * DB Service: find tag and check tag photos have been updated
+      const updatedTags = await tagsDbService
+        .findTags(photoTagIdsFixture)
+        .catch((error): void => console.log(error));
+
+      expect(updatedTags).toBeTruthy();
+      expect(updatedTags).toEqual(photoTagsResponseFixture);
+
+      // * Response
+      expect(mockResponse.status).toBeCalledWith(200);
     });
   });
 });

@@ -100,14 +100,15 @@ describe('Photos Controller', () => {
       expect(addedPhoto).toBeTruthy();
       expect(addedPhoto).toEqual(photoResponseFixture);
 
-      // * DB Service: find tag and check tag photos have been updated
-      const updatedTags = await tagsDbService
+      // * DB Service: find tag and check tag photos have been added
+      const addedTags = await tagsDbService
         .findTags(photoTagIdsFixture)
         .catch((error): void => console.log(error));
 
-      expect(updatedTags).toBeTruthy();
-      expect(updatedTags).toEqual(photoTagsResponseFixture);
+      expect(addedTags).toBeTruthy();
+      expect(addedTags).toEqual(photoTagsResponseFixture);
 
+      // * Response
       expect(mockResponse.status).toBeCalledWith(201);
       expect(mockResponse.json).toHaveBeenCalledWith({
         data: photoResponseFixture,
@@ -146,7 +147,9 @@ describe('Photos Controller', () => {
       await photosDbService.addPhoto(photoRequestFixture as any).catch((error): void => console.log(error));
 
       // * DB Service: add tags photos to be deleted
-      await tagsDbService.addTagPhotos(photoIdFixture, photoTagIdsFixture);
+      await tagsDbService
+        .addTagPhotos(photoIdFixture, photoTagIdsFixture)
+        .catch((error): void => console.log(error));
 
       // * Controller: delete photo
       await photosController
@@ -160,18 +163,19 @@ describe('Photos Controller', () => {
 
       expect(isTagsPhotoFound).toBe(false);
 
-      expect(mockResponse.status).toBeCalledWith(200);
-      expect(mockResponse.json).toHaveBeenCalledWith({
-        data: photoResponseFixture,
-        message: 'Photo deleted',
-      });
-
       // * DB Service: expect to not find photo just deleted
       const deletedPhoto = await photosDbService
         .findPhoto(utilFixture.freezeDate)
         .catch((error): void => console.log(error));
 
       expect(deletedPhoto).not.toBeTruthy();
+
+      // * Response
+      expect(mockResponse.status).toBeCalledWith(200);
+      expect(mockResponse.json).toHaveBeenCalledWith({
+        data: photoResponseFixture,
+        message: 'Photo deleted',
+      });
     });
   });
 
@@ -209,6 +213,7 @@ describe('Photos Controller', () => {
         .getPhoto(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
         .catch((error): void => mockNextFunction(error));
 
+      // * Response
       expect(mockResponse.status).toBeCalledWith(200);
       expect(mockResponse.json).toHaveBeenCalledWith({
         data: photoResponseFixture,
@@ -251,6 +256,7 @@ describe('Photos Controller', () => {
         .getPhotos(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
         .catch((error): void => mockNextFunction(error));
 
+      // * Response
       expect(mockResponse.status).toBeCalledWith(200);
       expect(mockResponse.json).toHaveBeenCalledWith({
         data: photosResponseFixture,
@@ -280,6 +286,7 @@ describe('Photos Controller', () => {
         .getPhotos(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
         .catch((error): void => mockNextFunction(error));
 
+      // * Response
       expect(mockResponse.status).toBeCalledWith(200);
       expect(mockResponse.json).toHaveBeenCalledWith({
         data: [photosResponseFixture[1]],
@@ -311,6 +318,7 @@ describe('Photos Controller', () => {
         .getPhotos(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
         .catch((error): void => mockNextFunction(error));
 
+      // * Response
       expect(mockResponse.status).toBeCalledWith(200);
       expect(mockResponse.json).toHaveBeenCalledWith({
         data: [photosResponseFixture[0], photosResponseFixture[1]],
@@ -340,6 +348,7 @@ describe('Photos Controller', () => {
         .getPhotos(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
         .catch((error): void => mockNextFunction(error));
 
+      // * Response
       expect(mockResponse.status).toBeCalledWith(200);
       expect(mockResponse.json).toHaveBeenCalledWith({
         data: [photosResponseFixture[2]],
@@ -369,6 +378,7 @@ describe('Photos Controller', () => {
         .getPhotos(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
         .catch((error): void => mockNextFunction(error));
 
+      // * Response
       expect(mockResponse.status).toBeCalledWith(200);
       expect(mockResponse.json).toHaveBeenCalledWith({
         data: [photoResponseFixture],
@@ -393,6 +403,7 @@ describe('Photos Controller', () => {
         .getPhotos(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
         .catch((error): void => mockNextFunction(error));
 
+      // * Response
       expect(mockResponse.status).toBeCalledWith(200);
       expect(mockResponse.json).toHaveBeenCalledWith({
         data: [photosResponseFixture[2], photosResponseFixture[1], photosResponseFixture[0]],
@@ -422,6 +433,7 @@ describe('Photos Controller', () => {
         .getPhotos(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
         .catch((error): void => mockNextFunction(error));
 
+      // * Response
       expect(mockResponse.status).toBeCalledWith(200);
       expect(mockResponse.json).toHaveBeenCalledWith({
         data: [photosResponseFixture[2], photosResponseFixture[1], photosResponseFixture[0]],
@@ -454,6 +466,7 @@ describe('Photos Controller', () => {
         .updatePhoto(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
         .catch((error): void => mockNextFunction(error));
 
+      // * Response
       expect(mockResponse.status).toBeCalledWith(400);
       expect(mockNextFunction).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -482,6 +495,7 @@ describe('Photos Controller', () => {
         .updatePhoto(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
         .catch((error): void => mockNextFunction(error));
 
+      // * Response
       expect(mockResponse.status).toBeCalledWith(400);
       expect(mockNextFunction).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -528,15 +542,6 @@ describe('Photos Controller', () => {
         .updatePhoto(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
         .catch((error): void => mockNextFunction(error));
 
-      expect(mockResponse.status).toBeCalledWith(200);
-      expect(mockResponse.json).toHaveBeenCalledWith({
-        data: {
-          ...photoResponseFixture,
-          details: { ...photoResponseFixture.details, imageCaption: 'Test updated caption' },
-        },
-        message: 'Photo updated',
-      });
-
       // * DB Service: find photo just updated
       const addedPhoto = await photosDbService
         .findPhoto(utilFixture.freezeDate)
@@ -546,6 +551,24 @@ describe('Photos Controller', () => {
       expect(addedPhoto).toEqual({
         ...photoResponseFixture,
         details: { ...photoResponseFixture.details, imageCaption: 'Test updated caption' },
+      });
+
+      // * DB Service: find tag and check tag photos have been updated
+      const updatedTags = await tagsDbService
+        .findTags(photoTagIdsFixture)
+        .catch((error): void => console.log(error));
+
+      expect(updatedTags).toBeTruthy();
+      expect(updatedTags).toEqual(photoTagsResponseFixture);
+
+      // * Response
+      expect(mockResponse.status).toBeCalledWith(200);
+      expect(mockResponse.json).toHaveBeenCalledWith({
+        data: {
+          ...photoResponseFixture,
+          details: { ...photoResponseFixture.details, imageCaption: 'Test updated caption' },
+        },
+        message: 'Photo updated',
       });
     });
   });

@@ -44,7 +44,6 @@ describe('Protect Route Middleware', () => {
         headers: { authorization: '' },
       };
 
-      // * Middleware: admin authorisation
       await protectRouteMiddleware.adminAuthorisation(
         mockRequest as Request,
         mockResponse as Response,
@@ -76,6 +75,7 @@ describe('Protect Route Middleware', () => {
         mockNextFunction as NextFunction,
       );
 
+      // * Response
       expect(mockResponse.status).toBeCalledWith(404);
       expect(mockNextFunction).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -101,6 +101,7 @@ describe('Protect Route Middleware', () => {
         mockNextFunction as NextFunction,
       );
 
+      // * Response
       expect(mockResponse.status).toBeCalledWith(401);
       expect(mockNextFunction).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -126,6 +127,7 @@ describe('Protect Route Middleware', () => {
         mockNextFunction as NextFunction,
       );
 
+      // * Response
       expect(mockNextFunction).toHaveBeenCalledWith();
     });
   });
@@ -136,7 +138,6 @@ describe('Protect Route Middleware', () => {
         headers: { authorization: '' },
       };
 
-      // * Middleware: user authorisation
       await protectRouteMiddleware.userAuthorisation(
         mockRequest as Request,
         mockResponse as Response,
@@ -168,6 +169,7 @@ describe('Protect Route Middleware', () => {
         mockNextFunction as NextFunction,
       );
 
+      // * Response
       expect(mockResponse.status).toBeCalledWith(404);
       expect(mockNextFunction).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -192,6 +194,7 @@ describe('Protect Route Middleware', () => {
         mockNextFunction as NextFunction,
       );
 
+      // * Response
       expect(mockNextFunction).toHaveBeenCalledWith();
     });
   });

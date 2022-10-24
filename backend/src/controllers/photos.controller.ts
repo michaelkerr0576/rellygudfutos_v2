@@ -95,7 +95,7 @@ const updatePhoto = (request: Request, response: Response, next: NextFunction): 
 
   return photosDbService
     .updatePhoto(id, body)
-    .then((photo): void => photosControllerUtils.handleUpdatedPhoto(response, photo))
+    .then((photo): Promise<void> => photosControllerUtils.handleUpdatedPhoto(response, photo))
     .catch((error): void => controllerUtils.handleValidationError(response, error))
     .catch((error): void => next(error));
 };

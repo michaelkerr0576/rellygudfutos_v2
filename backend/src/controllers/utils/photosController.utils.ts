@@ -33,7 +33,7 @@ const cancelAddPhoto = async (
     throw error;
   }
 
-  await tagsDbService.deleteTagPhotos(photoId, photoTagIds);
+  await tagsDbService.deleteTagPhotos(photoId);
   throw error;
 };
 
@@ -156,12 +156,9 @@ const handleDeletedPhoto = async (
     throw new Error(errorMessageUtils.error404('Photo'));
   }
 
-  const {
-    _id: photoId,
-    details: { imageTags: photoTagIds },
-  } = photo;
+  const { _id: photoId } = photo;
 
-  await tagsDbService.deleteTagPhotos(photoId, photoTagIds);
+  await tagsDbService.deleteTagPhotos(photoId);
 
   response.status(200).json({
     data: photo,
@@ -213,11 +210,21 @@ const handlePhotos = async (
   });
 };
 
-const handleUpdatedPhoto = (response: Response, photo: LeanDocument<inf.IPhoto> | null): void => {
+const handleUpdatedPhoto = async (
+  response: Response,
+  photo: LeanDocument<inf.IPhoto> | null,
+): Promise<void> => {
   if (!photo) {
     response.status(404);
     throw new Error(errorMessageUtils.error404('Photo'));
   }
+
+  const {
+    _id: photoId,
+    details: { imageTags: photoTagIds },
+  } = photo;
+
+  await tagsDbService.updateTagPhotos(photoId, photoTagIds);
 
   response.status(200).json({
     data: photo,

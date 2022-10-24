@@ -40,9 +40,9 @@ const deleteTag = (id: string): Promise<LeanDocument<inf.ITag> | null> =>
     .lean()
     .then((tag): LeanDocument<inf.ITag> | null => tag);
 
-const deleteTagPhotos = (photoId: Types.ObjectId, photoTagIds: Types.ObjectId[]): Promise<typ.QueryStatus> =>
+const deleteTagPhotos = (photoId: Types.ObjectId): Promise<typ.QueryStatus> =>
   TagModel.updateMany(
-    { _id: photoTagIds as any },
+    { photos: photoId },
     {
       $pull: { photos: photoId },
     },
@@ -73,6 +73,9 @@ const updateTag = (id: string, updatedTag: inf.ITag): Promise<LeanDocument<inf.I
     .lean()
     .then((tag): LeanDocument<inf.ITag> | null => tag);
 
+const updateTagPhotos = (photoId: Types.ObjectId, photoTagIds: Types.ObjectId[]): Promise<typ.QueryStatus> =>
+  deleteTagPhotos(photoId).then((): Promise<typ.QueryStatus> => addTagPhotos(photoId, photoTagIds));
+
 export default {
   addTag,
   addTagPhotos,
@@ -86,4 +89,5 @@ export default {
   getTag,
   getTags,
   updateTag,
+  updateTagPhotos,
 };
