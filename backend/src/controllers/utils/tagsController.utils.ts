@@ -23,10 +23,10 @@ const getTagsQuery = (query: Request['query']): typ.PaginationQuery => {
   };
 };
 
-const handleAddedTag = (response: Response, tag: LeanDocument<inf.ITag> | null): void => {
+const handleAddedTag = async (response: Response, tag: LeanDocument<inf.ITag> | null): Promise<void> => {
   if (!tag) {
-    response.status(404);
-    throw new Error(errorMessageUtils.error404('Tag'));
+    response.status(500);
+    throw new Error(errorMessageUtils.error500NotFound('Tag'));
   }
 
   response.status(201).json({
@@ -35,7 +35,7 @@ const handleAddedTag = (response: Response, tag: LeanDocument<inf.ITag> | null):
   });
 };
 
-const handleDeletedTag = (response: Response, tag: LeanDocument<inf.ITag> | null): void => {
+const handleDeletedTag = async (response: Response, tag: LeanDocument<inf.ITag> | null): Promise<void> => {
   if (!tag) {
     response.status(404);
     throw new Error(errorMessageUtils.error404('Tag'));
@@ -47,7 +47,7 @@ const handleDeletedTag = (response: Response, tag: LeanDocument<inf.ITag> | null
   });
 };
 
-const handleTag = (response: Response, tag: LeanDocument<inf.ITag> | null): void => {
+const handleTag = async (response: Response, tag: LeanDocument<inf.ITag> | null): Promise<void> => {
   if (!tag) {
     response.status(404);
     throw new Error(errorMessageUtils.error404('Tag'));
@@ -82,7 +82,7 @@ const handleTags = async (
   });
 };
 
-const handleUpdatedTag = (response: Response, tag: LeanDocument<inf.ITag> | null): void => {
+const handleUpdatedTag = async (response: Response, tag: LeanDocument<inf.ITag> | null): Promise<void> => {
   if (!tag) {
     response.status(404);
     throw new Error(errorMessageUtils.error404('Tag'));

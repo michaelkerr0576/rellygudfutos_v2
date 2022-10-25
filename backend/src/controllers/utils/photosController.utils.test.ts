@@ -195,8 +195,8 @@ describe('Photos Controller Utils', () => {
 
   describe('Get Photos Query', () => {
     test('Expect to return default photos query', () => {
-      const customPhotoQuery = {} as any;
-      const photosQuery = photosControllerUtils.getPhotosQuery(customPhotoQuery);
+      const query = {} as any;
+      const photosQuery = photosControllerUtils.getPhotosQuery(query);
 
       expect(photosQuery).toStrictEqual({
         endIndex: 5,

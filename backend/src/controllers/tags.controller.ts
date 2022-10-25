@@ -21,7 +21,7 @@ const addTag = (request: Request, response: Response, next: NextFunction): Promi
 
   return tagsDbService
     .addTag(newTag)
-    .then((tag): void => tagsControllerUtils.handleAddedTag(response, tag))
+    .then((tag): Promise<void> => tagsControllerUtils.handleAddedTag(response, tag))
     .catch((error): void => controllerUtils.handleValidationError(response, error))
     .catch((error): void => next(error));
 };
@@ -34,7 +34,7 @@ const deleteTag = (request: Request, response: Response, next: NextFunction): Pr
 
   return tagsDbService
     .deleteTag(id)
-    .then((tag): void => tagsControllerUtils.handleDeletedTag(response, tag))
+    .then((tag): Promise<void> => tagsControllerUtils.handleDeletedTag(response, tag))
     .catch((error): void => next(error));
 };
 
@@ -46,7 +46,7 @@ const getTag = (request: Request, response: Response, next: NextFunction): Promi
 
   return tagsDbService
     .getTag(id)
-    .then((tag): void => tagsControllerUtils.handleTag(response, tag))
+    .then((tag): Promise<void> => tagsControllerUtils.handleTag(response, tag))
     .catch((error): void => next(error));
 };
 
@@ -78,7 +78,7 @@ const updateTag = (request: Request, response: Response, next: NextFunction): Pr
 
   return tagsDbService
     .updateTag(id, body)
-    .then((tag): void => tagsControllerUtils.handleUpdatedTag(response, tag))
+    .then((tag): Promise<void> => tagsControllerUtils.handleUpdatedTag(response, tag))
     .catch((error): void => controllerUtils.handleValidationError(response, error))
     .catch((error): void => next(error));
 };
