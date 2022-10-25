@@ -377,7 +377,7 @@ describe('Photos Controller Utils', () => {
   });
 
   describe('Handle Updated Photo', () => {
-    test('Expect to return 404 photos not found', async () => {
+    test('Expect to return 404 photo not found', async () => {
       const photo = null;
 
       await expect(photosControllerUtils.handleUpdatedPhoto(mockResponse as Response, photo)).rejects.toThrow(
