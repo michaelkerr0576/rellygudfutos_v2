@@ -31,13 +31,14 @@ const authenticateUser = (
     return Promise.resolve(next(newError));
   }
 
-  const decodedToken = jwt.verify(token, jwtSecret, (error, decoded): void | JwtPayload => {
+  const decodedToken = jwt.verify(token, jwtSecret, (error, decoded): Promise<void | JwtPayload> => {
     if (error) {
       response.status(401);
-      throw new Error(errorMessageUtils.error401SessionExpired());
+      const newError = new Error(errorMessageUtils.error401SessionExpired());
+      return Promise.resolve(next(newError));
     }
 
-    return decoded as JwtPayload;
+    return decoded as Promise<JwtPayload>;
   }) as unknown as JwtPayload;
 
   const checkUserAuthentication = (user: LeanDocument<inf.IUser> | null): void => {

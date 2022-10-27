@@ -10,6 +10,7 @@ import mongoMemoryServer from '@/tests/mongoMemoryServer';
 
 import protectRouteMiddleware from './protectRoute.middleware';
 
+const actualJwtVerify = jest.requireActual('jsonwebtoken').verify;
 const mockJwtVerify = jest.fn();
 jwt.verify = mockJwtVerify;
 
@@ -54,6 +55,27 @@ describe('Protect Route Middleware', () => {
       expect(mockNextFunction).toHaveBeenCalledWith(
         expect.objectContaining({
           message: 'No token provided',
+        }),
+      );
+    });
+
+    test('Expect to return 401 session expired', async () => {
+      mockJwtVerify.mockImplementation(actualJwtVerify);
+
+      const mockRequest: Partial<Request> = {
+        headers: { authorization: utilFixture.bearerToken },
+      };
+
+      await protectRouteMiddleware.adminAuthorisation(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNextFunction as NextFunction,
+      );
+
+      expect(mockResponse.status).toBeCalledWith(401);
+      expect(mockNextFunction).toHaveBeenCalledWith(
+        expect.objectContaining({
+          message: 'Session has expired',
         }),
       );
     });
@@ -148,6 +170,27 @@ describe('Protect Route Middleware', () => {
       expect(mockNextFunction).toHaveBeenCalledWith(
         expect.objectContaining({
           message: 'No token provided',
+        }),
+      );
+    });
+
+    test('Expect to return 401 session expired', async () => {
+      mockJwtVerify.mockImplementation(actualJwtVerify);
+
+      const mockRequest: Partial<Request> = {
+        headers: { authorization: utilFixture.bearerToken },
+      };
+
+      await protectRouteMiddleware.userAuthorisation(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNextFunction as NextFunction,
+      );
+
+      expect(mockResponse.status).toBeCalledWith(401);
+      expect(mockNextFunction).toHaveBeenCalledWith(
+        expect.objectContaining({
+          message: 'Session has expired',
         }),
       );
     });
