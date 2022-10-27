@@ -21,13 +21,13 @@ import photosController from './photos.controller';
 
 const mockResponseStatus = jest.fn();
 const mockResponseJson = jest.fn();
-const mockNextFunctionError = jest.fn();
 
 const mockResponse: Partial<Response> = {
   json: mockResponseJson,
   status: mockResponseStatus.mockReturnThis(),
 };
 
+const mockNextFunctionError = jest.fn();
 const mockNextFunction: NextFunction = mockNextFunctionError;
 
 describe('Photos Controller', () => {

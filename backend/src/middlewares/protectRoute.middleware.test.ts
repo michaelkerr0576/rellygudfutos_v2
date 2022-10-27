@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
+import { Types } from 'mongoose';
 import timekeeper from 'timekeeper';
 
 import usersDbService from '@/services/usersDb.service';
@@ -16,13 +17,14 @@ jwt.verify = mockJwtVerify;
 
 const mockResponseStatus = jest.fn();
 const mockResponseJson = jest.fn();
-const mockNextFunctionError = jest.fn();
 
 const mockResponse: Partial<Response> = {
   json: mockResponseJson,
+  locals: {},
   status: mockResponseStatus.mockReturnThis(),
 };
 
+const mockNextFunctionError = jest.fn();
 const mockNextFunction: NextFunction = mockNextFunctionError;
 
 describe('Protect Route Middleware', () => {
@@ -81,14 +83,14 @@ describe('Protect Route Middleware', () => {
     });
 
     test('Expect to return 404 user not found', async () => {
-      mockJwtVerify.mockReturnValueOnce({ id: '41224d776a326fb40f000001', role: 'ADMIN' });
+      mockJwtVerify.mockReturnValueOnce({ id: '41224d776a326fb40f000001', role: userAdminFixture.role });
 
       const mockRequest: Partial<Request> = {
         headers: { authorization: utilFixture.bearerToken },
       };
 
       // * DB Service: add user as it is required for checkUserAuthorisation
-      await usersDbService.addUser(userFixture as any).catch((error): void => console.log(error));
+      await usersDbService.addUser(userAdminFixture as any).catch((error): void => console.log(error));
 
       // * Middleware: admin authorisation
       await protectRouteMiddleware.adminAuthorisation(
@@ -107,7 +109,7 @@ describe('Protect Route Middleware', () => {
     });
 
     test('Expect to return 401 user not authorized', async () => {
-      mockJwtVerify.mockReturnValueOnce({ id: '41224d776a326fb40f000113', role: 'USER' });
+      mockJwtVerify.mockReturnValueOnce({ id: userFixture._id, role: userFixture.role });
 
       const mockRequest: Partial<Request> = {
         headers: { authorization: utilFixture.bearerToken },
@@ -132,8 +134,8 @@ describe('Protect Route Middleware', () => {
       );
     });
 
-    test('Expect user authorized and go to next function', async () => {
-      mockJwtVerify.mockReturnValueOnce({ id: '41224d776a326fb40f000003', role: 'ADMIN' });
+    test('Expect user authorized and go to next function with user ID set in response locals', async () => {
+      mockJwtVerify.mockReturnValueOnce({ id: userAdminFixture._id, role: userAdminFixture.role });
 
       const mockRequest: Partial<Request> = {
         headers: { authorization: utilFixture.bearerToken },
@@ -150,6 +152,7 @@ describe('Protect Route Middleware', () => {
       );
 
       // * Response
+      expect(mockResponse.locals).toEqual({ user: { _id: new Types.ObjectId(userAdminFixture._id) } });
       expect(mockNextFunction).toHaveBeenCalledWith();
     });
   });
@@ -196,7 +199,7 @@ describe('Protect Route Middleware', () => {
     });
 
     test('Expect to return 404 user not found', async () => {
-      mockJwtVerify.mockReturnValueOnce({ id: '41224d776a326fb40f000001', role: 'USER' });
+      mockJwtVerify.mockReturnValueOnce({ id: '41224d776a326fb40f000001', role: userFixture.role });
 
       const mockRequest: Partial<Request> = {
         headers: { authorization: utilFixture.bearerToken },
@@ -221,8 +224,8 @@ describe('Protect Route Middleware', () => {
       );
     });
 
-    test('Expect user authorized and go to next function', async () => {
-      mockJwtVerify.mockReturnValueOnce({ id: '41224d776a326fb40f000113', role: 'USER' });
+    test('Expect user authorized and go to next function with user ID set in response locals', async () => {
+      mockJwtVerify.mockReturnValueOnce({ id: userFixture._id, role: userFixture.role });
       const mockRequest: Partial<Request> = {
         headers: { authorization: utilFixture.bearerToken },
       };
@@ -238,6 +241,7 @@ describe('Protect Route Middleware', () => {
       );
 
       // * Response
+      expect(mockResponse.locals).toEqual({ user: { _id: new Types.ObjectId(userFixture._id) } });
       expect(mockNextFunction).toHaveBeenCalledWith();
     });
   });

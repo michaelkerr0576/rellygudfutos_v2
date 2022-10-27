@@ -53,6 +53,7 @@ const authenticateUser = (
       throw new Error(errorMessageUtils.error401());
     }
 
+    response.locals.user = { _id: user._id };
     next();
   };
 
