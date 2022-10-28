@@ -5,10 +5,10 @@ import tagsDbService from '@/services/tagsDb.service';
 import tagMinLengthFixture from '@/tests/fixtures/tags/negative/tagMinLength.fixture';
 import tagRequestFixture from '@/tests/fixtures/tags/tagRequest.fixture';
 import tagResponseFixture from '@/tests/fixtures/tags/tagResponse.fixture';
-import tagsRequestFixture from '@/tests/fixtures/tags/tagsRequest.fixture';
 import tagsResponseFixture from '@/tests/fixtures/tags/tagsResponse.fixture';
 import utilFixture from '@/tests/fixtures/util.fixture';
 import mongoMemoryServer from '@/tests/mongoMemoryServer';
+import tagsScripts from '@/tests/scripts/tags.scripts';
 
 import tagsController from './tags.controller';
 
@@ -105,8 +105,8 @@ describe('Tags Controller', () => {
         params: { id: tagRequestFixture._id },
       };
 
-      // * DB Service: add tag to be deleted
-      await tagsDbService.addTag(tagRequestFixture as any).catch((error): void => console.log(error));
+      // * Script: populate memory server with test data
+      await tagsScripts.prepTagData();
 
       // * Controller: delete tag
       await tagsController
@@ -152,8 +152,8 @@ describe('Tags Controller', () => {
         params: { id: tagRequestFixture._id },
       };
 
-      // * DB Service: add tag to be get
-      await tagsDbService.addTag(tagRequestFixture as any).catch((error): void => console.log(error));
+      // * Script: populate memory server with test data
+      await tagsScripts.prepTagData();
 
       // * Controller: get tag
       await tagsController
@@ -192,8 +192,8 @@ describe('Tags Controller', () => {
         query: {},
       };
 
-      // * DB Service: add tags to be get
-      await tagsDbService.addTags(tagsRequestFixture as any).catch((error): void => console.log(error));
+      // * Script: populate memory server with test data
+      await tagsScripts.prepTagsData();
 
       // * Controller: get tags
       await tagsController
@@ -222,8 +222,8 @@ describe('Tags Controller', () => {
         params: { id: tagRequestFixture._id },
       };
 
-      // * DB Service: add tag to be updated
-      await tagsDbService.addTag(tagRequestFixture as any).catch((error): void => console.log(error));
+      // * Script: populate memory server with test data
+      await tagsScripts.prepTagData();
 
       // * Controller: update tag
       await tagsController
@@ -248,8 +248,8 @@ describe('Tags Controller', () => {
         params: { id: tagRequestFixture._id },
       };
 
-      // * DB Service: add tag to be updated
-      await tagsDbService.addTag(tagRequestFixture as any).catch((error): void => console.log(error));
+      // * Script: populate memory server with test data
+      await tagsScripts.prepTagData();
 
       // * Controller: update tag
       await tagsController
@@ -292,8 +292,8 @@ describe('Tags Controller', () => {
         params: { id: tagRequestFixture._id },
       };
 
-      // * DB Service: add tag to be updated
-      await tagsDbService.addTag(tagRequestFixture as any).catch((error): void => console.log(error));
+      // * Script: populate memory server with test data
+      await tagsScripts.prepTagData();
 
       // * Controller: update tag
       await tagsController

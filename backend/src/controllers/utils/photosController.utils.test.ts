@@ -3,7 +3,6 @@ import timekeeper from 'timekeeper';
 
 import photosDbService from '@/services/photosDb.service';
 import tagsDbService from '@/services/tagsDb.service';
-import usersDbService from '@/services/usersDb.service';
 import photoIdFixture from '@/tests/fixtures/photos/photoId.fixture';
 import photoQueryFixture from '@/tests/fixtures/photos/photoQuery.fixture';
 import photoQueryResponseFixture from '@/tests/fixtures/photos/photoQueryResponse.fixture';
@@ -12,10 +11,10 @@ import photoResponseFixture from '@/tests/fixtures/photos/photoResponse.fixture'
 import photosRequestFixture from '@/tests/fixtures/photos/photosRequest.fixture';
 import photoTagIdsFixture from '@/tests/fixtures/photos/photoTagIds.fixture';
 import photoTagsResponseFixture from '@/tests/fixtures/photos/photoTagsResponse.fixture';
-import tagsRequestFixture from '@/tests/fixtures/tags/tagsRequest.fixture';
 import userAdminRequestFixture from '@/tests/fixtures/users/userAdminRequest.fixture';
 import utilFixture from '@/tests/fixtures/util.fixture';
 import mongoMemoryServer from '@/tests/mongoMemoryServer';
+import photosScripts from '@/tests/scripts/photos.scripts';
 import * as enm from '@/ts/enums/db.enum';
 
 import photosControllerUtils from './photosController.utils';
@@ -53,19 +52,8 @@ describe('Photos Controller Utils', () => {
     });
 
     test('Expect to cancel photo added and continue error state', async () => {
-      // * DB Service: add tags as it is required for addPhoto
-      await tagsDbService.addTags(tagsRequestFixture as any).catch((error): void => console.log(error));
-
-      // * DB Service: add user as it is required for addPhoto
-      await usersDbService.addUser(userAdminRequestFixture as any).catch((error): void => console.log(error));
-
-      // * DB Service: add photo to be cancelled
-      await photosDbService.addPhoto(photoRequestFixture as any).catch((error): void => console.log(error));
-
-      // * DB Service: add tags photos to be cancelled
-      await tagsDbService
-        .addTagPhotos(photoIdFixture, photoTagIdsFixture)
-        .catch((error): void => console.log(error));
+      // * Script: populate memory server with test data
+      await photosScripts.prepPhotoData();
 
       // * Controller Utils: cancel added photo
       await expect(
@@ -98,16 +86,8 @@ describe('Photos Controller Utils', () => {
     });
 
     test('Expect to resolve the check if tags are found', async () => {
-      // * DB Service: add tags as it is required for addPhoto
-      await tagsDbService.addTags(tagsRequestFixture as any).catch((error): void => console.log(error));
-
-      // * DB Service: add photo
-      await photosDbService.addPhoto(photoRequestFixture as any).catch((error): void => console.log(error));
-
-      // * DB Service: add tags photos
-      await tagsDbService
-        .addTagPhotos(photoIdFixture, photoTagIdsFixture)
-        .catch((error): void => console.log(error));
+      // * Script: populate memory server with test data
+      await photosScripts.prepPhotosData();
 
       // * Controller Utils: check photo tags exist
       const checkPhotoTagsExist = await photosControllerUtils.checkPhotoTagsExist(
@@ -235,8 +215,8 @@ describe('Photos Controller Utils', () => {
     });
 
     test('Expect to return 201 photo added', async () => {
-      // * DB Service: add tags as it is required for handleAddedPhoto
-      await tagsDbService.addTags(tagsRequestFixture as any).catch((error): void => console.log(error));
+      // * Script: populate memory server with test data
+      await photosScripts.prepTagsAndUserData();
 
       // * Controller Utils: handle added photo
       await photosControllerUtils.handleAddedPhoto(mockResponse as Response, photoResponseFixture as any);
@@ -270,13 +250,8 @@ describe('Photos Controller Utils', () => {
     });
 
     test('Expect to return 200 photo deleted', async () => {
-      // * DB Service: add tags as it is required for handleDeletedPhoto
-      await tagsDbService.addTags(tagsRequestFixture as any).catch((error): void => console.log(error));
-
-      // * DB Service: add tags photos to be deleted
-      await tagsDbService
-        .addTagPhotos(photoIdFixture, photoTagIdsFixture)
-        .catch((error): void => console.log(error));
+      // * Script: populate memory server with test data
+      await photosScripts.prepPhotoData();
 
       // * Controller Utils: handle deleted photo
       await photosControllerUtils
@@ -351,11 +326,8 @@ describe('Photos Controller Utils', () => {
     });
 
     test('Expect to return 200 get photos pagination page two, next and previous', async () => {
-      // * DB Service: add tags as it is required for addPhotos
-      await tagsDbService.addTags(tagsRequestFixture as any).catch((error): void => console.log(error));
-
-      // * DB Service: add photos to be get
-      await photosDbService.addPhotos(photosRequestFixture as any).catch((error): void => console.log(error));
+      // * Script: populate memory server with test data
+      await photosScripts.prepPhotosData();
 
       // * Controller Utils: handle photos
       const photoQuery = { ...photoQueryResponseFixture, filter: {} } as any;
@@ -394,13 +366,8 @@ describe('Photos Controller Utils', () => {
     });
 
     test('Expect to return 200 photo updated', async () => {
-      // * DB Service: add tags as it is required for updatePhoto
-      await tagsDbService.addTags(tagsRequestFixture as any).catch((error): void => console.log(error));
-
-      // * DB Service: add tags photos to be updated
-      await tagsDbService
-        .addTagPhotos(photoIdFixture, photoTagIdsFixture)
-        .catch((error): void => console.log(error));
+      // * Script: populate memory server with test data
+      await photosScripts.prepPhotoData();
 
       // * Controller Utils: handle updated photo
       await photosControllerUtils.handleUpdatedPhoto(mockResponse as Response, photoRequestFixture as any);

@@ -3,11 +3,11 @@ import jwt from 'jsonwebtoken';
 import { Types } from 'mongoose';
 import timekeeper from 'timekeeper';
 
-import usersDbService from '@/services/usersDb.service';
 import userAdminFixture from '@/tests/fixtures/users/userAdminRequest.fixture';
 import userFixture from '@/tests/fixtures/users/userRequest.fixture';
 import utilFixture from '@/tests/fixtures/util.fixture';
 import mongoMemoryServer from '@/tests/mongoMemoryServer';
+import usersScripts from '@/tests/scripts/users.scripts';
 
 import protectRouteMiddleware from './protectRoute.middleware';
 
@@ -89,8 +89,8 @@ describe('Protect Route Middleware', () => {
         headers: { authorization: utilFixture.bearerToken },
       };
 
-      // * DB Service: add user as it is required for checkUserAuthorisation
-      await usersDbService.addUser(userAdminFixture as any).catch((error): void => console.log(error));
+      // * Script: populate memory server with test data
+      await usersScripts.prepAdminUserData();
 
       // * Middleware: admin authorisation
       await protectRouteMiddleware.adminAuthorisation(
@@ -115,8 +115,8 @@ describe('Protect Route Middleware', () => {
         headers: { authorization: utilFixture.bearerToken },
       };
 
-      // * DB Service: add user as it is required for checkUserAuthorisation
-      await usersDbService.addUser(userFixture as any).catch((error): void => console.log(error));
+      // * Script: populate memory server with test data
+      await usersScripts.prepUserData();
 
       // * Middleware: admin authorisation
       await protectRouteMiddleware.adminAuthorisation(
@@ -141,8 +141,8 @@ describe('Protect Route Middleware', () => {
         headers: { authorization: utilFixture.bearerToken },
       };
 
-      // * DB Service: add user as it is required for checkUserAuthorisation
-      await usersDbService.addUser(userAdminFixture as any).catch((error): void => console.log(error));
+      // * Script: populate memory server with test data
+      await usersScripts.prepAdminUserData();
 
       // * Middleware: admin authorisation
       await protectRouteMiddleware.adminAuthorisation(
@@ -205,8 +205,8 @@ describe('Protect Route Middleware', () => {
         headers: { authorization: utilFixture.bearerToken },
       };
 
-      // * DB Service: add user as it is required for checkUserAuthorisation
-      await usersDbService.addUser(userFixture as any).catch((error): void => console.log(error));
+      // * Script: populate memory server with test data
+      await usersScripts.prepUserData();
 
       // * Middleware: user authorisation
       await protectRouteMiddleware.adminAuthorisation(
@@ -230,8 +230,8 @@ describe('Protect Route Middleware', () => {
         headers: { authorization: utilFixture.bearerToken },
       };
 
-      // * DB Service: add user as it is required for checkUserAuthorisation
-      await usersDbService.addUser(userFixture as any).catch((error): void => console.log(error));
+      // * Script: populate memory server with test data
+      await usersScripts.prepUserData();
 
       // * Middleware: user authorisation
       await protectRouteMiddleware.userAuthorisation(

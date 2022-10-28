@@ -1,10 +1,9 @@
 import { Response } from 'express';
 import timekeeper from 'timekeeper';
 
-import tagsDbService from '@/services/tagsDb.service';
-import tagsRequestFixture from '@/tests/fixtures/tags/tagsRequest.fixture';
 import utilFixture from '@/tests/fixtures/util.fixture';
 import mongoMemoryServer from '@/tests/mongoMemoryServer';
+import tagsScripts from '@/tests/scripts/tags.scripts';
 
 import tagsControllerUtils from './tagsController.utils';
 
@@ -144,8 +143,8 @@ describe('Tags Controller Utils', () => {
       const tags = [{ test: 'test' }] as any;
       const query = { endIndex: 2, limit: 1, page: 2, startIndex: 1 } as any;
 
-      // * DB Service: add tags as it is required for countTags
-      await tagsDbService.addTags(tagsRequestFixture as any).catch((error): void => console.log(error));
+      // * Script: populate memory server with test data
+      await tagsScripts.prepTagsData();
 
       // * Controller Utils: handle tags
       await tagsControllerUtils.handleTags(mockResponse as Response, tags, query);
