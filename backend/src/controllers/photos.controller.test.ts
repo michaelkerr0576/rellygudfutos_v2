@@ -3,20 +3,18 @@ import timekeeper from 'timekeeper';
 
 import photosDbService from '@/services/photosDb.service';
 import tagsDbService from '@/services/tagsDb.service';
-import usersDbService from '@/services/usersDb.service';
 import photoEnumFixture from '@/tests/fixtures/photos/negative/photoEnum.fixture';
 import photoRequiredFixture from '@/tests/fixtures/photos/negative/photoRequired.fixture';
 import photoIdFixture from '@/tests/fixtures/photos/photoId.fixture';
 import photoRequestFixture from '@/tests/fixtures/photos/photoRequest.fixture';
 import photoResponseFixture from '@/tests/fixtures/photos/photoResponse.fixture';
-import photosRequestFixture from '@/tests/fixtures/photos/photosRequest.fixture';
 import photosResponseFixture from '@/tests/fixtures/photos/photosResponse.fixture';
 import photoTagIdsFixture from '@/tests/fixtures/photos/photoTagIds.fixture';
 import photoTagsResponseFixture from '@/tests/fixtures/photos/photoTagsResponse.fixture';
-import tagsRequestFixture from '@/tests/fixtures/tags/tagsRequest.fixture';
 import userAdminRequestFixture from '@/tests/fixtures/users/userAdminRequest.fixture';
 import utilFixture from '@/tests/fixtures/util.fixture';
 import mongoMemoryServer from '@/tests/mongoMemoryServer';
+import photosScripts from '@/tests/scripts/photos.scripts';
 import * as enm from '@/ts/enums/db.enum';
 
 import photosController from './photos.controller';
@@ -87,11 +85,8 @@ describe('Photos Controller', () => {
         body: photoRequestFixture,
       };
 
-      // * DB Service: add tags as it is required for addPhoto
-      await tagsDbService.addTags(tagsRequestFixture as any).catch((error): void => console.log(error));
-
-      // * DB Service: add user as it is required for addPhoto
-      await usersDbService.addUser(userAdminRequestFixture as any).catch((error): void => console.log(error));
+      // * Script: populate memory server with test data
+      await photosScripts.prepTagsAndUserData();
 
       // * Controller: add photo
       await photosController
@@ -146,19 +141,8 @@ describe('Photos Controller', () => {
         params: { id: photoRequestFixture._id },
       };
 
-      // * DB Service: add tags as it is required for addPhoto
-      await tagsDbService.addTags(tagsRequestFixture as any).catch((error): void => console.log(error));
-
-      // * DB Service: add user as it is required for addPhoto
-      await usersDbService.addUser(userAdminRequestFixture as any).catch((error): void => console.log(error));
-
-      // * DB Service: add photo to be deleted
-      await photosDbService.addPhoto(photoRequestFixture as any).catch((error): void => console.log(error));
-
-      // * DB Service: add tags photos to be deleted
-      await tagsDbService
-        .addTagPhotos(photoIdFixture, photoTagIdsFixture)
-        .catch((error): void => console.log(error));
+      // * Script: populate memory server with test data
+      await photosScripts.prepPhotoData();
 
       // * Controller: delete photo
       await photosController
@@ -211,14 +195,8 @@ describe('Photos Controller', () => {
         params: { id: photoRequestFixture._id },
       };
 
-      // * DB Service: add tags as it is required for addPhoto
-      await tagsDbService.addTags(tagsRequestFixture as any).catch((error): void => console.log(error));
-
-      // * DB Service: add user as it is required for addPhoto
-      await usersDbService.addUser(userAdminRequestFixture as any).catch((error): void => console.log(error));
-
-      // * DB Service: add photo to be get
-      await photosDbService.addPhoto(photoRequestFixture as any).catch((error): void => console.log(error));
+      // * Script: populate memory server with test data
+      await photosScripts.prepPhotoData();
 
       // * Controller: get photo
       await photosController
@@ -257,14 +235,8 @@ describe('Photos Controller', () => {
         query: {},
       };
 
-      // * DB Service: add tags as it is required for addPhotos
-      await tagsDbService.addTags(tagsRequestFixture as any).catch((error): void => console.log(error));
-
-      // * DB Service: add user as it is required for addPhotos
-      await usersDbService.addUser(userAdminRequestFixture as any).catch((error): void => console.log(error));
-
-      // * DB Service: add photos to be get
-      await photosDbService.addPhotos(photosRequestFixture as any).catch((error): void => console.log(error));
+      // * Script: populate memory server with test data
+      await photosScripts.prepPhotosData();
 
       // * Controller: get photos
       await photosController
@@ -290,14 +262,8 @@ describe('Photos Controller', () => {
         query: { limit: '1', page: '2' },
       };
 
-      // * DB Service: add tags as it is required for addPhotos
-      await tagsDbService.addTags(tagsRequestFixture as any).catch((error): void => console.log(error));
-
-      // * DB Service: add user as it is required for addPhotos
-      await usersDbService.addUser(userAdminRequestFixture as any).catch((error): void => console.log(error));
-
-      // * DB Service: add photos to be get
-      await photosDbService.addPhotos(photosRequestFixture as any).catch((error): void => console.log(error));
+      // * Script: populate memory server with test data
+      await photosScripts.prepPhotosData();
 
       // * Controller: get photos
       await photosController
@@ -325,14 +291,8 @@ describe('Photos Controller', () => {
         query: { tags: ['21224d776a326fb40f000003'] },
       };
 
-      // * DB Service: add tags as it is required for addPhotos
-      await tagsDbService.addTags(tagsRequestFixture as any).catch((error): void => console.log(error));
-
-      // * DB Service: add user as it is required for addPhotos
-      await usersDbService.addUser(userAdminRequestFixture as any).catch((error): void => console.log(error));
-
-      // * DB Service: add photos to be get
-      await photosDbService.addPhotos(photosRequestFixture as any).catch((error): void => console.log(error));
+      // * Script: populate memory server with test data
+      await photosScripts.prepPhotosData();
 
       // * Controller: get photos
       await photosController
@@ -358,14 +318,8 @@ describe('Photos Controller', () => {
         query: { search: 'TiTlE 3' },
       };
 
-      // * DB Service: add tags as it is required for addPhotos
-      await tagsDbService.addTags(tagsRequestFixture as any).catch((error): void => console.log(error));
-
-      // * DB Service: add user as it is required for addPhotos
-      await usersDbService.addUser(userAdminRequestFixture as any).catch((error): void => console.log(error));
-
-      // * DB Service: add photos to be get
-      await photosDbService.addPhotos(photosRequestFixture as any).catch((error): void => console.log(error));
+      // * Script: populate memory server with test data
+      await photosScripts.prepPhotosData();
 
       // * Controller: get photos
       await photosController
@@ -391,14 +345,8 @@ describe('Photos Controller', () => {
         query: { sort: enm.PhotoSortOptions.RANDOM },
       };
 
-      // * DB Service: add tags as it is required for addPhotos
-      await tagsDbService.addTags(tagsRequestFixture as any).catch((error): void => console.log(error));
-
-      // * DB Service: add user as it is required for addPhotos
-      await usersDbService.addUser(userAdminRequestFixture as any).catch((error): void => console.log(error));
-
-      // * DB Service: add photo to be get
-      await photosDbService.addPhoto(photoRequestFixture as any).catch((error): void => console.log(error));
+      // * Script: populate memory server with test data
+      await photosScripts.prepPhotoData();
 
       // * Controller: get photos
       await photosController
@@ -419,14 +367,8 @@ describe('Photos Controller', () => {
         query: { sort: enm.PhotoSortOptions.TITLE_ZA },
       };
 
-      // * DB Service: add tags as it is required for addPhotos
-      await tagsDbService.addTags(tagsRequestFixture as any).catch((error): void => console.log(error));
-
-      // * DB Service: add user as it is required for addPhotos
-      await usersDbService.addUser(userAdminRequestFixture as any).catch((error): void => console.log(error));
-
-      // * DB Service: add photos to be get
-      await photosDbService.addPhotos(photosRequestFixture as any).catch((error): void => console.log(error));
+      // * Script: populate memory server with test data
+      await photosScripts.prepPhotosData();
 
       // * Controller: get photos
       await photosController
@@ -452,14 +394,8 @@ describe('Photos Controller', () => {
         query: { sort: enm.PhotoSortOptions.OLDEST },
       };
 
-      // * DB Service: add tags as it is required for addPhotos
-      await tagsDbService.addTags(tagsRequestFixture as any).catch((error): void => console.log(error));
-
-      // * DB Service: add user as it is required for addPhotos
-      await usersDbService.addUser(userAdminRequestFixture as any).catch((error): void => console.log(error));
-
-      // * DB Service: add photos to be get
-      await photosDbService.addPhotos(photosRequestFixture as any).catch((error): void => console.log(error));
+      // * Script: populate memory server with test data
+      await photosScripts.prepPhotosData();
 
       // * Controller: get photos
       await photosController
@@ -488,11 +424,8 @@ describe('Photos Controller', () => {
         params: { id: photoRequestFixture._id },
       };
 
-      // * DB Service: add tags as it is required for addPhoto
-      await tagsDbService.addTags(tagsRequestFixture as any).catch((error): void => console.log(error));
-
-      // * DB Service: add photo to be updated
-      await photosDbService.addPhoto(photoRequestFixture as any).catch((error): void => console.log(error));
+      // * Script: populate memory server with test data
+      await photosScripts.prepPhotoData();
 
       // * Controller: update photo
       await photosController
@@ -517,11 +450,8 @@ describe('Photos Controller', () => {
         params: { id: photoRequestFixture._id },
       };
 
-      // * DB Service: add tags as it is required for addPhoto
-      await tagsDbService.addTags(tagsRequestFixture as any).catch((error): void => console.log(error));
-
-      // * DB Service: add photo to be updated
-      await photosDbService.addPhoto(photoRequestFixture as any).catch((error): void => console.log(error));
+      // * Script: populate memory server with test data
+      await photosScripts.prepPhotoData();
 
       // * Controller: update photo
       await photosController
@@ -564,14 +494,8 @@ describe('Photos Controller', () => {
         params: { id: photoRequestFixture._id },
       };
 
-      // * DB Service: add tags as it is required for addPhoto
-      await tagsDbService.addTags(tagsRequestFixture as any).catch((error): void => console.log(error));
-
-      // * DB Service: add user as it is required for addPhoto
-      await usersDbService.addUser(userAdminRequestFixture as any).catch((error): void => console.log(error));
-
-      // * DB Service: add photo to be updated
-      await photosDbService.addPhoto(photoRequestFixture as any).catch((error): void => console.log(error));
+      // * Script: populate memory server with test data
+      await photosScripts.prepPhotoData();
 
       // * Controller: update photo
       await photosController

@@ -13,6 +13,4 @@ const chars301 =
 
 const freezeDate = new Date('2011-11-11T00:00:00.000Z');
 
-const utilFixture = { bearerToken, chars8, chars51, chars101, chars301, freezeDate };
-
-export default utilFixture;
+export default { bearerToken, chars8, chars51, chars101, chars301, freezeDate };

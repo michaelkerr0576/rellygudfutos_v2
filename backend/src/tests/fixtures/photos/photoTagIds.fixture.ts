@@ -1,6 +1,6 @@
 import { Types } from 'mongoose';
 
-import photoRequestFixture from '@/tests/fixtures/photos/photoRequest.fixture';
+import photoRequestFixture from './photoRequest.fixture';
 
 const [firstTag, secondTag] = photoRequestFixture.details.imageTags;
 
