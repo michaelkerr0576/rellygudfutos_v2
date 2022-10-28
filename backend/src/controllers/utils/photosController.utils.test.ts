@@ -3,6 +3,7 @@ import timekeeper from 'timekeeper';
 
 import photosDbService from '@/services/photosDb.service';
 import tagsDbService from '@/services/tagsDb.service';
+import usersDbService from '@/services/usersDb.service';
 import photoIdFixture from '@/tests/fixtures/photos/photoId.fixture';
 import photoQueryFixture from '@/tests/fixtures/photos/photoQuery.fixture';
 import photoQueryResponseFixture from '@/tests/fixtures/photos/photoQueryResponse.fixture';
@@ -12,6 +13,7 @@ import photosRequestFixture from '@/tests/fixtures/photos/photosRequest.fixture'
 import photoTagIdsFixture from '@/tests/fixtures/photos/photoTagIds.fixture';
 import photoTagsResponseFixture from '@/tests/fixtures/photos/photoTagsResponse.fixture';
 import tagsRequestFixture from '@/tests/fixtures/tags/tagsRequest.fixture';
+import userAdminRequestFixture from '@/tests/fixtures/users/userAdminRequest.fixture';
 import utilFixture from '@/tests/fixtures/util.fixture';
 import mongoMemoryServer from '@/tests/mongoMemoryServer';
 import * as enm from '@/ts/enums/db.enum';
@@ -23,6 +25,7 @@ const mockResponseJson = jest.fn();
 
 const mockResponse: Partial<Response> = {
   json: mockResponseJson,
+  locals: { user: { _id: userAdminRequestFixture._id } },
   status: mockResponseStatus.mockReturnThis(),
 };
 
@@ -52,6 +55,9 @@ describe('Photos Controller Utils', () => {
     test('Expect to cancel photo added and continue error state', async () => {
       // * DB Service: add tags as it is required for addPhoto
       await tagsDbService.addTags(tagsRequestFixture as any).catch((error): void => console.log(error));
+
+      // * DB Service: add user as it is required for addPhoto
+      await usersDbService.addUser(userAdminRequestFixture as any).catch((error): void => console.log(error));
 
       // * DB Service: add photo to be cancelled
       await photosDbService.addPhoto(photoRequestFixture as any).catch((error): void => console.log(error));

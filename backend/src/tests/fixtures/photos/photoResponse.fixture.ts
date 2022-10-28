@@ -1,11 +1,12 @@
 import { Types } from 'mongoose';
 
-import postTagsFixture from '../tags/tagsRequest.fixture';
+import tagsRequestFixture from '../tags/tagsRequest.fixture';
+import userAdminRequestFixture from '../users/userAdminRequest.fixture';
 import utilFixture from '../util.fixture';
 
 import postPhotoFixture from './photoRequest.fixture';
 
-const [firstTag, secondTag] = postTagsFixture;
+const [firstTag, secondTag] = tagsRequestFixture;
 
 const imageTags = [
   {
@@ -18,6 +19,12 @@ const imageTags = [
   },
 ];
 
+const photographer = {
+  _id: new Types.ObjectId(userAdminRequestFixture._id),
+  email: userAdminRequestFixture.email.toLowerCase(),
+  name: userAdminRequestFixture.name,
+};
+
 export default {
   ...postPhotoFixture,
   __v: 0,
@@ -27,6 +34,7 @@ export default {
     ...postPhotoFixture.details,
     captureDate: new Date(postPhotoFixture.details.captureDate),
     imageTags,
+    photographer,
   },
   updatedAt: utilFixture.freezeDate,
 };

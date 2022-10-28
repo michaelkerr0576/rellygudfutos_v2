@@ -19,6 +19,7 @@ const addPhoto = (request: Request, response: Response, next: NextFunction): Pro
   const newPhoto = new PhotoModel({
     _id: new Types.ObjectId(),
     ...body,
+    details: { ...body?.details, photographer: response.locals.user._id },
   });
 
   const photoId = newPhoto._id;

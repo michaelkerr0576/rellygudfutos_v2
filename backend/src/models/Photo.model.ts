@@ -58,6 +58,10 @@ const photoSchema = new Schema<inf.IPhoto>(
         trim: true,
         match: regexUtils.imageFile,
       },
+      photographer: {
+        type: Types.ObjectId,
+        ref: 'User',
+      },
       storeLink: {
         type: String,
         required: true,

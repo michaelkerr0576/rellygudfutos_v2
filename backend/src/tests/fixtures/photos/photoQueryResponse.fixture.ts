@@ -1,6 +1,6 @@
-import postTagsFixture from '../tags/tagsRequest.fixture';
+import tagsRequestFixture from '../tags/tagsRequest.fixture';
 
-const [firstTag, secondTag] = postTagsFixture;
+const [firstTag, secondTag] = tagsRequestFixture;
 
 export default {
   endIndex: 2,

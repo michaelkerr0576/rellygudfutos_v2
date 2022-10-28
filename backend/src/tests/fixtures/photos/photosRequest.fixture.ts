@@ -1,8 +1,9 @@
 import * as enm from '@/ts/enums/db.enum';
 
-import postTagsFixture from '../tags/tagsRequest.fixture';
+import tagsRequestFixture from '../tags/tagsRequest.fixture';
+import userAdminRequestFixture from '../users/userAdminRequest.fixture';
 
-const [firstTag, secondTag, thirdTag] = postTagsFixture;
+const [firstTag, secondTag, thirdTag] = tagsRequestFixture;
 
 export default [
   {
@@ -16,6 +17,7 @@ export default [
       imageTags: [firstTag._id, secondTag._id],
       imageTitle: 'Test image title 1',
       originalImageName: 'testOriginalImageName.jpeg',
+      photographer: userAdminRequestFixture._id,
       storeLink: 'https:www.testStoreLink.html',
     },
     equipment: {
@@ -38,6 +40,7 @@ export default [
       imageTags: [secondTag._id],
       imageTitle: 'Test image title 2',
       originalImageName: 'testOriginalImageName.jpeg',
+      photographer: userAdminRequestFixture._id,
       storeLink: 'https:www.testStoreLink.html',
     },
     equipment: {
@@ -60,6 +63,7 @@ export default [
       imageTags: [thirdTag._id],
       imageTitle: 'Test image title 3',
       originalImageName: 'testOriginalImageName.jpeg',
+      photographer: userAdminRequestFixture._id,
       storeLink: 'https:www.testStoreLink.html',
     },
     equipment: {

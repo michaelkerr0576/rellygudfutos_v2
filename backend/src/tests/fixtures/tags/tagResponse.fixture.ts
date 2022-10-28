@@ -2,12 +2,12 @@ import { Types } from 'mongoose';
 
 import utilFixture from '../util.fixture';
 
-import postTagFixture from './tagRequest.fixture';
+import tagRequestFixture from './tagRequest.fixture';
 
 export default {
-  ...postTagFixture,
+  ...tagRequestFixture,
   __v: 0,
-  _id: new Types.ObjectId(postTagFixture._id),
+  _id: new Types.ObjectId(tagRequestFixture._id),
   createdAt: utilFixture.freezeDate,
   updatedAt: utilFixture.freezeDate,
 };

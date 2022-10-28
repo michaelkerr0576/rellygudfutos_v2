@@ -1,8 +1,9 @@
 import * as enm from '@/ts/enums/db.enum';
 
-import postTagsFixture from '../tags/tagsRequest.fixture';
+import tagsRequestFixture from '../tags/tagsRequest.fixture';
+import userAdminRequestFixture from '../users/userAdminRequest.fixture';
 
-const [firstTag, secondTag] = postTagsFixture;
+const [firstTag, secondTag] = tagsRequestFixture;
 
 export default {
   _id: '41224d776a326fb40f000002',
@@ -15,6 +16,7 @@ export default {
     imageTags: [firstTag._id, secondTag._id],
     imageTitle: 'Test image title',
     originalImageName: 'testOriginalImageName.jpeg',
+    photographer: userAdminRequestFixture._id,
     storeLink: 'https:www.testStoreLink.html',
   },
   equipment: {

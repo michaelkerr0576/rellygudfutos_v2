@@ -14,6 +14,7 @@ export interface IPhoto extends Document {
     imageTags: Types.ObjectId[];
     imageTitle: string;
     originalImageName: string;
+    photographer: Types.ObjectId;
     storeLink: string;
   };
   equipment: {

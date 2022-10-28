@@ -2,9 +2,10 @@ import { Types } from 'mongoose';
 
 import utilFixture from '../util.fixture';
 
-import postTagsFixture from './tagsRequest.fixture';
+import tagsRequestFixture from './tagsRequest.fixture';
 
-const [firstTag, secondTag, thirdTag] = postTagsFixture;
+const [firstTag, secondTag, thirdTag] = tagsRequestFixture;
+
 export default [
   {
     ...firstTag,
