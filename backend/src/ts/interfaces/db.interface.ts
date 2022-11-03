@@ -11,10 +11,10 @@ export interface IPhoto extends Document {
     imageCaption: string;
     imageFile: string;
     imageSize: enm.ImageSize;
-    imageTags: Types.ObjectId[];
+    imageTags: IPhotoImageTags[] | Types.ObjectId[];
     imageTitle: string;
     originalImageName: string;
-    photographer: Types.ObjectId;
+    photographer: IPhotoPhotographer | Types.ObjectId;
     storeLink: string;
   };
   equipment: {
@@ -25,6 +25,17 @@ export interface IPhoto extends Document {
     lensName: string;
     lensShutterSpeed: string;
   };
+}
+
+export interface IPhotoImageTags {
+  _id: Types.ObjectId;
+  tag: string;
+}
+
+export interface IPhotoPhotographer {
+  _id: Types.ObjectId;
+  email: string;
+  name: string;
 }
 // #endregion
 
@@ -42,6 +53,7 @@ export interface IUser extends Document {
   email: string;
   name: string;
   password: string;
+  photos: Types.ObjectId[];
   role: enm.UserRole;
 }
 // #endregion

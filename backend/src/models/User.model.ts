@@ -29,6 +29,12 @@ const userSchema = new Schema<inf.IUser>(
       required: true,
       maxLength: 100,
     },
+    photos: [
+      {
+        type: Types.ObjectId,
+        ref: 'Photo',
+      },
+    ],
     role: {
       type: String,
       enum: enm.UserRole,

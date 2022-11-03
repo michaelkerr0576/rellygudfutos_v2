@@ -3,6 +3,7 @@ import timekeeper from 'timekeeper';
 
 import photosDbService from '@/services/photosDb.service';
 import tagsDbService from '@/services/tagsDb.service';
+import usersDbService from '@/services/usersDb.service';
 import photoEnumFixture from '@/tests/fixtures/photos/negative/photoEnum.fixture';
 import photoRequiredFixture from '@/tests/fixtures/photos/negative/photoRequired.fixture';
 import photoIdFixture from '@/tests/fixtures/photos/photoId.fixture';
@@ -11,6 +12,8 @@ import photoResponseFixture from '@/tests/fixtures/photos/photoResponse.fixture'
 import photosResponseFixture from '@/tests/fixtures/photos/photosResponse.fixture';
 import photoTagIdsFixture from '@/tests/fixtures/photos/photoTagIds.fixture';
 import photoTagsResponseFixture from '@/tests/fixtures/photos/photoTagsResponse.fixture';
+import photoUserIdFixture from '@/tests/fixtures/photos/photoUserId.fixture';
+import photoUserResponseFixture from '@/tests/fixtures/photos/photoUserResponse.fixture';
 import userAdminRequestFixture from '@/tests/fixtures/users/userAdminRequest.fixture';
 import utilFixture from '@/tests/fixtures/util.fixture';
 import mongoMemoryServer from '@/tests/mongoMemoryServer';
@@ -109,6 +112,14 @@ describe('Photos Controller', () => {
       expect(addedTags).toBeTruthy();
       expect(addedTags).toEqual(photoTagsResponseFixture);
 
+      // * DB Service: find user and check user photo has been added
+      const addedUser = await usersDbService
+        .getUser(photoUserIdFixture)
+        .catch((error): void => console.log(error));
+
+      expect(addedUser).toBeTruthy();
+      expect(addedUser).toEqual(photoUserResponseFixture);
+
       // * Response
       expect(mockResponse.status).toBeCalledWith(201);
       expect(mockResponse.json).toHaveBeenCalledWith({
@@ -149,6 +160,13 @@ describe('Photos Controller', () => {
         .deletePhoto(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
         .catch((error): void => mockNextFunction(error));
 
+      // * DB Service: expect to not find photo just deleted
+      const deletedPhoto = await photosDbService
+        .findPhoto(utilFixture.freezeDate)
+        .catch((error): void => console.log(error));
+
+      expect(deletedPhoto).not.toBeTruthy();
+
       // * DB Service: expect to not find photo in tags that was just deleted
       const isTagsPhotoFound = await tagsDbService
         .checkTagsPhotoExist(photoIdFixture)
@@ -156,12 +174,12 @@ describe('Photos Controller', () => {
 
       expect(isTagsPhotoFound).toBe(false);
 
-      // * DB Service: expect to not find photo just deleted
-      const deletedPhoto = await photosDbService
-        .findPhoto(utilFixture.freezeDate)
+      // * DB Service: expect to not find photo in user that was just deleted
+      const isUserPhotoFound = await usersDbService
+        .checkUserPhotoExists(photoIdFixture)
         .catch((error): void => console.log(error));
 
-      expect(deletedPhoto).not.toBeTruthy();
+      expect(isUserPhotoFound).toBe(false);
 
       // * Response
       expect(mockResponse.status).toBeCalledWith(200);

@@ -13,9 +13,9 @@ const addTag = (newTag: inf.ITag): Promise<LeanDocument<inf.ITag> | null> =>
         .then((addedTag): LeanDocument<inf.ITag> | null => addedTag),
   );
 
-const addTagPhotos = (photoId: Types.ObjectId, photoTagIds: Types.ObjectId[]): Promise<typ.QueryStatus> =>
+const addTagPhotos = (tagIds: Types.ObjectId[], photoId: Types.ObjectId): Promise<typ.QueryStatus> =>
   TagModel.updateMany(
-    { _id: photoTagIds as any },
+    { _id: tagIds as any },
     {
       $push: { photos: photoId },
     },
@@ -24,7 +24,7 @@ const addTagPhotos = (photoId: Types.ObjectId, photoTagIds: Types.ObjectId[]): P
 const addTags = (newTags: inf.ITag[]): Promise<LeanDocument<inf.ITag[]> | null> =>
   TagModel.insertMany(newTags).then(
     (tags): Promise<LeanDocument<inf.ITag[]> | null> =>
-      TagModel.find({ _id: tags.map((tag): any => tag._id) as any })
+      TagModel.find({ _id: tags.map((tag): Types.ObjectId => tag._id) as any })
         .lean()
         .then((addedTags): LeanDocument<inf.ITag[]> | null => addedTags),
   );
@@ -77,8 +77,8 @@ const updateTag = (id: string, updatedTag: inf.ITag): Promise<LeanDocument<inf.I
     .lean()
     .then((tag): LeanDocument<inf.ITag> | null => tag);
 
-const updateTagPhotos = (photoId: Types.ObjectId, photoTagIds: Types.ObjectId[]): Promise<typ.QueryStatus> =>
-  deleteTagPhotos(photoId).then((): Promise<typ.QueryStatus> => addTagPhotos(photoId, photoTagIds));
+const updateTagPhotos = (tagIds: Types.ObjectId[], photoId: Types.ObjectId): Promise<typ.QueryStatus> =>
+  deleteTagPhotos(photoId).then((): Promise<typ.QueryStatus> => addTagPhotos(tagIds, photoId));
 
 export default {
   addTag,

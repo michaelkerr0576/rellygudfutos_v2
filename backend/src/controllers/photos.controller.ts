@@ -23,7 +23,7 @@ const addPhoto = (request: Request, response: Response, next: NextFunction): Pro
   });
 
   const photoId = newPhoto._id;
-  const photoTagIds = newPhoto?.details?.imageTags;
+  const photoTagIds = newPhoto?.details?.imageTags as Types.ObjectId[];
 
   return photosControllerUtils
     .checkPhotoTagsExist(response, photoTagIds)

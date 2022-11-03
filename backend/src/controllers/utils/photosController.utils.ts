@@ -3,6 +3,7 @@ import { LeanDocument, Types } from 'mongoose';
 
 import photosDbService from '@/services/photosDb.service';
 import tagsDbService from '@/services/tagsDb.service';
+import usersDbService from '@/services/usersDb.service';
 import * as enm from '@/ts/enums/db.enum';
 import * as inf from '@/ts/interfaces/db.interface';
 import * as typ from '@/ts/types/db.types';
@@ -134,12 +135,15 @@ const handleAddedPhoto = async (
     throw new Error(errorMessageUtils.error500NotFound('Photo'));
   }
 
-  const {
-    _id: photoId,
-    details: { imageTags: photoTagIds },
-  } = photo;
+  const imageTags = photo.details.imageTags as inf.IPhotoImageTags[];
+  const photographer = photo.details.photographer as inf.IPhotoPhotographer;
 
-  await tagsDbService.addTagPhotos(photoId, photoTagIds);
+  const photoId = photo._id;
+  const tagIds = imageTags.map((tag): Types.ObjectId => tag._id);
+  const userId = photographer._id;
+
+  await tagsDbService.addTagPhotos(tagIds, photoId);
+  await usersDbService.addUserPhoto(userId, photoId);
 
   response.status(201).json({
     data: photo,
@@ -156,9 +160,13 @@ const handleDeletedPhoto = async (
     throw new Error(errorMessageUtils.error404('Photo'));
   }
 
-  const { _id: photoId } = photo;
+  const photographer = photo.details.photographer as inf.IPhotoPhotographer;
+
+  const photoId = photo._id;
+  const userId = photographer._id;
 
   await tagsDbService.deleteTagPhotos(photoId);
+  await usersDbService.deleteUserPhoto(userId, photoId);
 
   response.status(200).json({
     data: photo,
@@ -219,12 +227,12 @@ const handleUpdatedPhoto = async (
     throw new Error(errorMessageUtils.error404('Photo'));
   }
 
-  const {
-    _id: photoId,
-    details: { imageTags: photoTagIds },
-  } = photo;
+  const imageTags = photo.details.imageTags as inf.IPhotoImageTags[];
 
-  await tagsDbService.updateTagPhotos(photoId, photoTagIds);
+  const photoId = photo._id;
+  const tagIds = imageTags.map((tag): Types.ObjectId => tag._id);
+
+  await tagsDbService.updateTagPhotos(tagIds, photoId);
 
   response.status(200).json({
     data: photo,

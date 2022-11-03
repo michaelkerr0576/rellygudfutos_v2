@@ -27,7 +27,12 @@ const addUser = (request: Request, response: Response, next: NextFunction): Prom
     role,
   });
 
-  const handleUser = (user: inf.IUser): void => {
+  const handleUser = async (user: LeanDocument<inf.IUser> | null): Promise<void> => {
+    if (!user) {
+      response.status(500);
+      throw new Error(errorMessageUtils.error500NotFound('User'));
+    }
+
     response.status(201).json({
       addedUser: {
         _id: user._id,
@@ -41,7 +46,7 @@ const addUser = (request: Request, response: Response, next: NextFunction): Prom
   };
 
   const handleUserError = (error: typ.MongoError | typ.MongooseValidationError): void => {
-    const isDuplicateUser = error.name === 'MongoError' && error.code === 11000;
+    const isDuplicateUser = error.name === 'MongoError' && error.code === 11000; // 11000 is a MongoDb duplicate key error
     if (isDuplicateUser) {
       response.status(400);
       throw new Error(errorMessageUtils.error400AlreadyExists('User'));
@@ -62,7 +67,7 @@ const addUser = (request: Request, response: Response, next: NextFunction): Prom
 
   return usersDbService
     .addUser(newUser)
-    .then((user): void => handleUser(user))
+    .then((user): Promise<void> => handleUser(user))
     .catch((error): void => handleUserError(error))
     .catch((error): void => next(error));
 };

@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
-import { LeanDocument } from 'mongoose';
+import { LeanDocument, Types } from 'mongoose';
 
 import usersDbService from '@/services/usersDb.service';
 import * as enm from '@/ts/enums/db.enum';
@@ -8,7 +8,7 @@ import * as inf from '@/ts/interfaces/db.interface';
 import errorMessageUtils from '@/utils/errorMessage.utils';
 
 interface JwtPayload {
-  id: string;
+  id: Types.ObjectId;
   role: string;
 }
 

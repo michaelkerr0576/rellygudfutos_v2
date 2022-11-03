@@ -3,14 +3,16 @@ import timekeeper from 'timekeeper';
 
 import photosDbService from '@/services/photosDb.service';
 import tagsDbService from '@/services/tagsDb.service';
+import usersDbService from '@/services/usersDb.service';
 import photoIdFixture from '@/tests/fixtures/photos/photoId.fixture';
 import photoQueryFixture from '@/tests/fixtures/photos/photoQuery.fixture';
 import photoQueryResponseFixture from '@/tests/fixtures/photos/photoQueryResponse.fixture';
-import photoRequestFixture from '@/tests/fixtures/photos/photoRequest.fixture';
 import photoResponseFixture from '@/tests/fixtures/photos/photoResponse.fixture';
 import photosRequestFixture from '@/tests/fixtures/photos/photosRequest.fixture';
 import photoTagIdsFixture from '@/tests/fixtures/photos/photoTagIds.fixture';
 import photoTagsResponseFixture from '@/tests/fixtures/photos/photoTagsResponse.fixture';
+import photoUserIdFixture from '@/tests/fixtures/photos/photoUserId.fixture';
+import photoUserResponseFixture from '@/tests/fixtures/photos/photoUserResponse.fixture';
 import userAdminRequestFixture from '@/tests/fixtures/users/userAdminRequest.fixture';
 import utilFixture from '@/tests/fixtures/util.fixture';
 import mongoMemoryServer from '@/tests/mongoMemoryServer';
@@ -229,6 +231,14 @@ describe('Photos Controller Utils', () => {
       expect(addedTags).toBeTruthy();
       expect(addedTags).toEqual(photoTagsResponseFixture);
 
+      // * DB Service: find user and check user photo has been added
+      const addedUser = await usersDbService
+        .getUser(photoUserIdFixture)
+        .catch((error): void => console.log(error));
+
+      expect(addedUser).toBeTruthy();
+      expect(addedUser).toEqual(photoUserResponseFixture);
+
       // * Response
       expect(mockResponse.status).toBeCalledWith(201);
       expect(mockResponse.json).toHaveBeenCalledWith({
@@ -370,7 +380,7 @@ describe('Photos Controller Utils', () => {
       await photosScripts.prepPhotoData();
 
       // * Controller Utils: handle updated photo
-      await photosControllerUtils.handleUpdatedPhoto(mockResponse as Response, photoRequestFixture as any);
+      await photosControllerUtils.handleUpdatedPhoto(mockResponse as Response, photoResponseFixture as any);
 
       // * DB Service: find tag and check tag photos have been updated
       const updatedTags = await tagsDbService
