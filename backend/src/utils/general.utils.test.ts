@@ -19,10 +19,10 @@ describe('General Utils', () => {
     });
   });
 
-  describe('Get Flattened Object', () => {
+  describe('Flatten Object', () => {
     test('Expect empty object to return an empty object', () => {
       const object = {};
-      const getFlattenedObject = generalUtils.getFlattenedObject(object);
+      const getFlattenedObject = generalUtils.flattenObject(object);
 
       expect(getFlattenedObject).toStrictEqual({});
     });
@@ -33,7 +33,7 @@ describe('General Utils', () => {
         test2: { test21: 123, test22: [1, 2, 3] },
         test3: { test31: 'test3' },
       };
-      const getFlattenedObject = generalUtils.getFlattenedObject(object);
+      const getFlattenedObject = generalUtils.flattenObject(object);
 
       expect(getFlattenedObject).toStrictEqual({
         test1: 'test1',

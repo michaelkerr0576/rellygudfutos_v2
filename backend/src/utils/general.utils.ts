@@ -4,7 +4,7 @@ import * as con from '@/utils/constants/parsing';
 
 const checkIsObjectEmpty = (object: Record<string, unknown>): boolean => Object.keys(object).length === 0;
 
-const getFlattenedObject = (object: Record<string, unknown>): Record<string, unknown> => {
+const flattenObject = (object: Record<string, unknown>): Record<string, unknown> => {
   let flattenedObject: Record<string, unknown> = {};
 
   Object.entries(object).forEach((entry): void => {
@@ -33,7 +33,7 @@ const stringToNumber = (value: string | number): number =>
 
 export default {
   checkIsObjectEmpty,
-  getFlattenedObject,
+  flattenObject,
   numberToString,
   stringToNumber,
 };

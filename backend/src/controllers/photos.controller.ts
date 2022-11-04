@@ -94,7 +94,7 @@ const updatePhoto = (request: Request, response: Response, next: NextFunction): 
     return Promise.resolve(next(controllerUtils.handleEmptyBodyRequest(response, 'Photo')));
   }
 
-  const updateQuery = generalUtils.getFlattenedObject(body);
+  const updateQuery = generalUtils.flattenObject(body);
 
   return photosDbService
     .updatePhoto(id, updateQuery)
