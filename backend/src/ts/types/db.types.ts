@@ -41,6 +41,12 @@ export type PhotosFilterColumnsWithPattern = {
   $or?: [{ [Key in PhotosSearchColumns]?: RegexPattern }];
 };
 
+export type PhotosImmutableFields =
+  | 'details.captureDate'
+  | 'details.imageFile'
+  | 'details.originalImageName'
+  | 'details.photographer';
+
 export type PhotosSearchColumns =
   | 'details.captureLocation'
   | 'details.imageCaption'

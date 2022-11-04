@@ -8,8 +8,8 @@ const addPhoto = (newPhoto: inf.IPhoto): Promise<LeanDocument<inf.IPhoto> | null
   PhotoModel.create(newPhoto).then(
     (photo): Promise<LeanDocument<inf.IPhoto> | null> =>
       PhotoModel.findById(photo._id)
-        .populate('details.imageTags', '-__v -photos -createdAt -updatedAt')
-        .populate('details.photographer', '-__v -password -photos -role -createdAt -updatedAt')
+        .populate('details.imageTags', 'tag')
+        .populate('details.photographer', 'email name')
         .lean()
         .then((addedPhoto): LeanDocument<inf.IPhoto> | null => addedPhoto),
   );
@@ -18,8 +18,8 @@ const addPhotos = (newPhotos: inf.IPhoto[]): Promise<LeanDocument<inf.IPhoto[]> 
   PhotoModel.insertMany(newPhotos).then(
     (photos): Promise<LeanDocument<inf.IPhoto[]> | null> =>
       PhotoModel.find({ _id: photos.map((photo): Types.ObjectId => photo._id) as any })
-        .populate('details.imageTags', '-__v -photos -createdAt -updatedAt')
-        .populate('details.photographer', '-__v -password -photos -role -createdAt -updatedAt')
+        .populate('details.imageTags', 'tag')
+        .populate('details.photographer', 'email name')
         .lean()
         .then((addedPhotos): LeanDocument<inf.IPhoto[]> | null => addedPhotos),
   );
@@ -31,22 +31,22 @@ const countPhotos = (filter: typ.PhotosQuery['filter']): Promise<number> =>
 
 const deletePhoto = (id: string): Promise<LeanDocument<inf.IPhoto> | null> =>
   PhotoModel.findByIdAndDelete(id)
-    .populate('details.imageTags', '-__v -photos -createdAt -updatedAt')
-    .populate('details.photographer', '-__v -password -photos -role -createdAt -updatedAt')
+    .populate('details.imageTags', 'tag')
+    .populate('details.photographer', 'email name')
     .lean()
     .then((photo): LeanDocument<inf.IPhoto> | null => photo);
 
 const findPhoto = (createdAt: Date): Promise<LeanDocument<inf.IPhoto> | null> =>
   PhotoModel.findOne({ createdAt })
-    .populate('details.imageTags', '-__v -photos -createdAt -updatedAt')
-    .populate('details.photographer', '-__v -password -photos -role -createdAt -updatedAt')
+    .populate('details.imageTags', 'tag')
+    .populate('details.photographer', 'email name')
     .lean()
     .then((photo): LeanDocument<inf.IPhoto> | null => photo);
 
 const getPhoto = (id: string): Promise<LeanDocument<inf.IPhoto> | null> =>
   PhotoModel.findById(id)
-    .populate('details.imageTags', '-__v -photos -createdAt -updatedAt')
-    .populate('details.photographer', '-__v -password -photos -role -createdAt -updatedAt')
+    .populate('details.imageTags', 'tag')
+    .populate('details.photographer', 'email name')
     .lean()
     .then((photo): LeanDocument<inf.IPhoto> | null => photo);
 
@@ -55,8 +55,8 @@ const getPhotos = (query: typ.PhotosQuery): Promise<LeanDocument<inf.IPhoto[]>> 
     .sort(query.sort)
     .skip(query.startIndex)
     .limit(query.limit)
-    .populate('details.imageTags', '-__v -photos -createdAt -updatedAt')
-    .populate('details.photographer', '-__v -password -photos -role -createdAt -updatedAt')
+    .populate('details.imageTags', 'tag')
+    .populate('details.photographer', 'email name')
     .lean()
     .then((photos): LeanDocument<inf.IPhoto[]> => photos);
 
@@ -64,16 +64,19 @@ const getRandomPhotos = (limit: number): Promise<LeanDocument<inf.IPhoto[]> | nu
   PhotoModel.aggregate([{ $sample: { size: limit } }]).then(
     (randomPhotos): Promise<LeanDocument<inf.IPhoto[]> | null> =>
       PhotoModel.find({ _id: randomPhotos.map((photo): Types.ObjectId => photo._id) as any })
-        .populate('details.imageTags', '-__v -photos -createdAt -updatedAt')
-        .populate('details.photographer', '-__v -password -photos -role -createdAt -updatedAt')
+        .populate('details.imageTags', 'tag')
+        .populate('details.photographer', 'email name')
         .lean()
         .then((addedPhotos): LeanDocument<inf.IPhoto[]> | null => addedPhotos),
   );
 
-const updatePhoto = (id: string, updatedPhoto: inf.IPhoto): Promise<LeanDocument<inf.IPhoto> | null> =>
-  PhotoModel.findByIdAndUpdate(id, updatedPhoto, { new: true, runValidators: true })
-    .populate('details.imageTags', '-__v -photos -createdAt -updatedAt')
-    .populate('details.photographer', '-__v -password -photos -role -createdAt -updatedAt')
+const updatePhoto = (
+  id: string,
+  updateQuery: Record<string, unknown>,
+): Promise<LeanDocument<inf.IPhoto> | null> =>
+  PhotoModel.findByIdAndUpdate(id, updateQuery, { new: true, runValidators: true })
+    .populate('details.imageTags', 'tag')
+    .populate('details.photographer', 'email name')
     .lean()
     .then((photo): LeanDocument<inf.IPhoto> | null => photo);
 

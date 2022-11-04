@@ -94,8 +94,10 @@ const updatePhoto = (request: Request, response: Response, next: NextFunction): 
     return Promise.resolve(next(controllerUtils.handleEmptyBodyRequest(response, 'Photo')));
   }
 
+  const updateQuery = generalUtils.getFlattenedObject(body);
+
   return photosDbService
-    .updatePhoto(id, body)
+    .updatePhoto(id, updateQuery)
     .then((photo): Promise<void> => photosControllerUtils.handleUpdatedPhoto(response, photo))
     .catch((error): void => controllerUtils.handleValidationError(response, error))
     .catch((error): void => next(error));

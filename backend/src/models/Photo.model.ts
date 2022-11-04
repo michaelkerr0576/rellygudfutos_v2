@@ -13,6 +13,7 @@ const photoSchema = new Schema<inf.IPhoto>(
         type: Date,
         required: true,
         default: '1900-01-01T10:10:10.123Z',
+        immutable: true,
       },
       captureLocation: {
         type: String,
@@ -33,6 +34,7 @@ const photoSchema = new Schema<inf.IPhoto>(
         required: true,
         trim: true,
         match: regexUtils.imageFile,
+        immutable: true,
       },
       imageSize: {
         type: String,
@@ -57,10 +59,12 @@ const photoSchema = new Schema<inf.IPhoto>(
         required: true,
         trim: true,
         match: regexUtils.imageFile,
+        immutable: true,
       },
       photographer: {
         type: Types.ObjectId,
         ref: 'User',
+        immutable: true,
       },
       storeLink: {
         type: String,
