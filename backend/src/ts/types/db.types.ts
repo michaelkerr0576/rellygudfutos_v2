@@ -47,11 +47,7 @@ export type PhotosImmutableFields =
   | 'details.originalImageName'
   | 'details.photographer';
 
-export type PhotosSearchColumns =
-  | 'details.captureLocation'
-  | 'details.imageCaption'
-  | 'details.imageTags.tag'
-  | 'details.imageTitle';
+export type PhotosSearchColumns = 'details.captureLocation' | 'details.imageCaption' | 'details.imageTitle';
 
 export type PhotosSortColumns = 'details.captureDate' | 'details.imageTitle';
 

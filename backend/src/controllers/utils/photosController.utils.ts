@@ -67,7 +67,6 @@ const getPhotosFilter = (search: string, tags: string[]): typ.PhotosFilterColumn
       $or: [
         { 'details.captureLocation': { $regex: pattern } },
         { 'details.imageCaption': { $regex: pattern } },
-        { 'details.imageTags.tag': { $regex: pattern } },
         { 'details.imageTitle': { $regex: pattern } },
       ],
     };
