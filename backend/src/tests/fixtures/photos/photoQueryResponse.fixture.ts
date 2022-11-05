@@ -1,6 +1,6 @@
-import tagsRequestFixture from '../tags/tagsRequest.fixture';
+import photoQueryFixture from './photoQuery.fixture';
 
-const [firstTag, secondTag] = tagsRequestFixture;
+const [firstTag, secondTag] = photoQueryFixture.tags;
 
 export default {
   endIndex: 2,
@@ -17,18 +17,16 @@ export default {
         },
       },
       {
-        'details.imageTags.tag': {
-          $regex: /test/i,
-        },
-      },
-      {
         'details.imageTitle': {
           $regex: /test/i,
         },
       },
     ],
     'details.imageTags': {
-      _id: [firstTag._id, secondTag._id],
+      _id: [firstTag, secondTag],
+    },
+    'details.photographer': {
+      _id: photoQueryFixture.user,
     },
   },
   limit: 1,

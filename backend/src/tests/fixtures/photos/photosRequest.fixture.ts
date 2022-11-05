@@ -2,6 +2,7 @@ import * as enm from '@/ts/enums/db.enum';
 
 import tagsRequestFixture from '../tags/tagsRequest.fixture';
 import userAdminRequestFixture from '../users/userAdminRequest.fixture';
+import userRequestFixture from '../users/userRequest.fixture';
 
 const [firstTag, secondTag, thirdTag] = tagsRequestFixture;
 
@@ -40,7 +41,7 @@ export default [
       imageTags: [secondTag._id],
       imageTitle: 'Test image title 2',
       originalImageName: 'testOriginalImageName.jpeg',
-      photographer: userAdminRequestFixture._id,
+      photographer: userRequestFixture._id,
       storeLink: 'https:www.testStoreLink.html',
     },
     equipment: {

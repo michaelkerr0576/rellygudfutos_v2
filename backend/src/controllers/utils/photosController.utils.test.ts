@@ -102,20 +102,22 @@ describe('Photos Controller Utils', () => {
   });
 
   describe('Get Photos Filter', () => {
-    test('Expect to return empty filter if no search and tags', () => {
+    test('Expect to return empty filter if no search, tags and user', () => {
       const search = '';
       const tags = [] as any;
+      const user = '';
 
-      const filter = photosControllerUtils.getPhotosFilter(search, tags);
+      const filter = photosControllerUtils.getPhotosFilter(search, tags, user);
 
       expect(filter).toStrictEqual({});
     });
 
-    test('Expect to return filter with columns and patterns if valid search and tags', () => {
+    test('Expect to return filter with columns and patterns if valid search, tags and user', () => {
       const search = 'test';
       const tags = photoQueryFixture.tags as any;
+      const user = photoQueryFixture.user as any;
 
-      const filter = photosControllerUtils.getPhotosFilter(search, tags);
+      const filter = photosControllerUtils.getPhotosFilter(search, tags, user);
 
       expect(filter).toStrictEqual(photoQueryResponseFixture.filter);
     });

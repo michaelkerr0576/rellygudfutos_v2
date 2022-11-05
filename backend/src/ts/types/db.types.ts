@@ -38,6 +38,7 @@ export type PhotosQuery = PaginationQuery & {
 
 export type PhotosFilterColumnsWithPattern = {
   'details.imageTags'?: { _id: string[] };
+  'details.photographer'?: { _id: string };
   $or?: [{ [Key in PhotosSearchColumns]?: RegexPattern }];
 };
 

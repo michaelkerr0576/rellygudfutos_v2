@@ -50,12 +50,20 @@ const checkPhotoTagsExist = async (
   }
 };
 
-const getPhotosFilter = (search: string, tags: string[]): typ.PhotosFilterColumnsWithPattern => {
+const getPhotosFilter = (
+  search: string,
+  tags: string[],
+  user: string,
+): typ.PhotosFilterColumnsWithPattern => {
   let filter = {};
 
   const tagIds = Array.isArray(tags) ? tags : [];
   if (tagIds.length > 0) {
     filter = { ...filter, 'details.imageTags': { _id: tagIds } };
+  }
+
+  if (user) {
+    filter = { ...filter, 'details.photographer': { _id: user } };
   }
 
   const searchString = search.toString();
@@ -103,9 +111,10 @@ const getPhotosQuery = (query: Request['query']): typ.PhotosQuery => {
     search = '',
     sort = enm.PhotoSortOptions.NEWEST,
     tags = [],
+    user = '',
   } = query;
 
-  const filter = getPhotosFilter(search as string, tags as string[]);
+  const filter = getPhotosFilter(search as string, tags as string[], user as string);
 
   const pagination = controllerUtils.getPaginationQuery(
     limit as string,

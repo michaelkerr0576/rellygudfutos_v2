@@ -2,6 +2,7 @@ import { Types } from 'mongoose';
 
 import tagsRequestFixture from '../tags/tagsRequest.fixture';
 import userAdminRequestFixture from '../users/userAdminRequest.fixture';
+import userRequestFixture from '../users/userRequest.fixture';
 import utilFixture from '../util.fixture';
 
 import photosRequestFixture from './photosRequest.fixture';
@@ -9,10 +10,16 @@ import photosRequestFixture from './photosRequest.fixture';
 const [firstPhoto, secondPhoto, thirdPhoto] = photosRequestFixture;
 const [firstTag, secondTag, thirdTag] = tagsRequestFixture;
 
-const photographer = {
+const adminPhotographer = {
   _id: new Types.ObjectId(userAdminRequestFixture._id),
   email: userAdminRequestFixture.email.toLowerCase(),
   name: userAdminRequestFixture.name,
+};
+
+const userPhotographer = {
+  _id: new Types.ObjectId(userRequestFixture._id),
+  email: userRequestFixture.email.toLowerCase(),
+  name: userRequestFixture.name,
 };
 
 export default [
@@ -28,7 +35,7 @@ export default [
         { _id: new Types.ObjectId(firstTag._id), tag: firstTag.tag },
         { _id: new Types.ObjectId(secondTag._id), tag: secondTag.tag },
       ],
-      photographer,
+      photographer: adminPhotographer,
     },
     updatedAt: utilFixture.freezeDate,
   },
@@ -46,7 +53,7 @@ export default [
           tag: secondTag.tag,
         },
       ],
-      photographer,
+      photographer: userPhotographer,
     },
     updatedAt: utilFixture.freezeDate,
   },
@@ -64,7 +71,7 @@ export default [
           tag: thirdTag.tag,
         },
       ],
-      photographer,
+      photographer: adminPhotographer,
     },
     updatedAt: utilFixture.freezeDate,
   },

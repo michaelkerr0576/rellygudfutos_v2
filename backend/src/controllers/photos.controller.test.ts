@@ -14,6 +14,7 @@ import photoTagIdsFixture from '@/tests/fixtures/photos/photoTagIds.fixture';
 import photoTagsResponseFixture from '@/tests/fixtures/photos/photoTagsResponse.fixture';
 import photoUserIdFixture from '@/tests/fixtures/photos/photoUserId.fixture';
 import photoUserResponseFixture from '@/tests/fixtures/photos/photoUserResponse.fixture';
+import tagsRequestFixture from '@/tests/fixtures/tags/tagsRequest.fixture';
 import userAdminRequestFixture from '@/tests/fixtures/users/userAdminRequest.fixture';
 import utilFixture from '@/tests/fixtures/util.fixture';
 import mongoMemoryServer from '@/tests/mongoMemoryServer';
@@ -306,7 +307,7 @@ describe('Photos Controller', () => {
 
     test('Expect to return 200 get photos filtered by tags', async () => {
       const mockRequest: Partial<Request> = {
-        query: { tags: ['21224d776a326fb40f000003'] },
+        query: { tags: [tagsRequestFixture[1]._id] },
       };
 
       // * Script: populate memory server with test data
@@ -321,6 +322,33 @@ describe('Photos Controller', () => {
       expect(mockResponse.status).toBeCalledWith(200);
       expect(mockResponse.json).toHaveBeenCalledWith({
         data: [photosResponseFixture[0], photosResponseFixture[1]],
+        message: 'Photos fetched successfully',
+        pagination: {
+          limit: 5,
+          page: 1,
+          pages: 1,
+          total: 2,
+        },
+      });
+    });
+
+    test('Expect to return 200 get photos filtered by user', async () => {
+      const mockRequest: Partial<Request> = {
+        query: { user: photoUserIdFixture as any },
+      };
+
+      // * Script: populate memory server with test data
+      await photosScripts.prepPhotosData();
+
+      // * Controller: get photos
+      await photosController
+        .getPhotos(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
+        .catch((error): void => mockNextFunction(error));
+
+      // * Response
+      expect(mockResponse.status).toBeCalledWith(200);
+      expect(mockResponse.json).toHaveBeenCalledWith({
+        data: [photosResponseFixture[0], photosResponseFixture[2]],
         message: 'Photos fetched successfully',
         pagination: {
           limit: 5,
