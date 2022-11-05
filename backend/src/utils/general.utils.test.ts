@@ -22,9 +22,9 @@ describe('General Utils', () => {
   describe('Flatten Object', () => {
     test('Expect empty object to return an empty object', () => {
       const object = {};
-      const getFlattenedObject = generalUtils.flattenObject(object);
+      const flattenObject = generalUtils.flattenObject(object);
 
-      expect(getFlattenedObject).toStrictEqual({});
+      expect(flattenObject).toStrictEqual({});
     });
 
     test('Expect nested object to return flattened with object path', () => {
@@ -33,9 +33,9 @@ describe('General Utils', () => {
         test2: { test21: 123, test22: [1, 2, 3] },
         test3: { test31: 'test3' },
       };
-      const getFlattenedObject = generalUtils.flattenObject(object);
+      const flattenObject = generalUtils.flattenObject(object);
 
-      expect(getFlattenedObject).toStrictEqual({
+      expect(flattenObject).toStrictEqual({
         test1: 'test1',
         'test2.test21': 123,
         'test2.test22': [1, 2, 3],
