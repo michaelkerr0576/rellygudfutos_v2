@@ -22,6 +22,14 @@ const addUserPhoto = (userId: Types.ObjectId, photoId: Types.ObjectId): Promise<
     },
   ).then((): typ.QueryStatus => ({ status: enm.QueryStatus.SUCCESS }));
 
+const addUsers = (newUsers: inf.IUser[]): Promise<LeanDocument<inf.IUser[]> | null> =>
+  UserModel.insertMany(newUsers).then(
+    (users): Promise<LeanDocument<inf.IUser[]> | null> =>
+      UserModel.find({ _id: users.map((user): Types.ObjectId => user._id) as any })
+        .lean()
+        .then((addedUsers): LeanDocument<inf.IUser[]> | null => addedUsers),
+  );
+
 const checkUserPhotoExists = (photoId: Types.ObjectId): Promise<boolean> =>
   UserModel.exists({ photos: photoId });
 
@@ -35,7 +43,6 @@ const deleteUserPhoto = (userId: Types.ObjectId, photoId: Types.ObjectId): Promi
 
 const findUser = (email: string): Promise<LeanDocument<inf.IUser> | null> =>
   UserModel.findOne({ email })
-    .select('-password')
     .lean()
     .then((user): LeanDocument<inf.IUser> | null => user);
 
@@ -54,6 +61,7 @@ const getUsers = (): Promise<LeanDocument<inf.IUser[]>> =>
 export default {
   addUser,
   addUserPhoto,
+  addUsers,
   checkUserPhotoExists,
   deleteUserPhoto,
   findUser,

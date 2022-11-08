@@ -52,6 +52,17 @@ const getPaginationResponse = (
   return pagination;
 };
 
+const handleDuplicateError = (response: Response, error: typError.MongoError, model: string): void => {
+  // 11000 is a MongoDb duplicate key error
+  const isDuplicateUser = error.name === 'MongoError' && error.code === 11000;
+  if (isDuplicateUser) {
+    response.status(400);
+    throw new Error(errorMessageUtils.error400AlreadyExists(model));
+  }
+
+  throw error;
+};
+
 const handleEmptyBodyRequest = (response: Response, model: string): Error => {
   response.status(400);
   const newError = new Error(errorMessageUtils.error400EmptyRequestBody(model));
@@ -75,6 +86,7 @@ const handleValidationError = (response: Response, error: typError.MongooseValid
 export default {
   getPaginationQuery,
   getPaginationResponse,
+  handleDuplicateError,
   handleEmptyBodyRequest,
   handleValidationError,
 };

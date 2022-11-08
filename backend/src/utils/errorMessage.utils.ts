@@ -25,6 +25,8 @@ const error400Validation = (
 
 const error401 = (): string => 'User not authorized';
 
+const error401NoPassword = (): string => 'No password provided';
+
 const error401NoToken = (): string => 'No token provided';
 
 const error401SessionExpired = (): string => 'Session has expired';
@@ -51,6 +53,7 @@ export default {
   error400EmptyRequestBody,
   error400Validation,
   error401,
+  error401NoPassword,
   error401NoToken,
   error401SessionExpired,
   error404,

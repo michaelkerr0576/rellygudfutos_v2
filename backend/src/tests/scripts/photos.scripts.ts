@@ -12,7 +12,7 @@ import photoTagIdsFixture from '../fixtures/photos/photoTagIds.fixture';
 import photoUserIdFixture from '../fixtures/photos/photoUserId.fixture';
 import tagsRequestFixture from '../fixtures/tags/tagsRequest.fixture';
 import userAdminRequestFixture from '../fixtures/users/userAdminRequest.fixture';
-import userRequestFixture from '../fixtures/users/userRequest.fixture';
+import usersRequestFixture from '../fixtures/users/usersRequest.fixture';
 
 const prepPhotoData = async (): Promise<void> => {
   await tagsDbService.addTags(tagsRequestFixture as any).catch((error): void => console.log(error));
@@ -28,8 +28,7 @@ const prepPhotoData = async (): Promise<void> => {
 
 const prepPhotosData = async (): Promise<void> => {
   await tagsDbService.addTags(tagsRequestFixture as any).catch((error): void => console.log(error));
-  await usersDbService.addUser(userAdminRequestFixture as any).catch((error): void => console.log(error));
-  await usersDbService.addUser(userRequestFixture as any).catch((error): void => console.log(error));
+  await usersDbService.addUsers(usersRequestFixture as any).catch((error): void => console.log(error));
   await photosDbService.addPhotos(photosRequestFixture as any).catch((error): void => console.log(error));
 
   photosIdsFixture.forEach(

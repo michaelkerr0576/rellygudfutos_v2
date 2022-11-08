@@ -4,7 +4,7 @@ import tagsRequestFixture from '../tags/tagsRequest.fixture';
 import userAdminRequestFixture from '../users/userAdminRequest.fixture';
 import utilFixture from '../util.fixture';
 
-import postPhotoFixture from './photoRequest.fixture';
+import photoRequestFixture from './photoRequest.fixture';
 
 const [firstTag, secondTag] = tagsRequestFixture;
 
@@ -26,13 +26,13 @@ const photographer = {
 };
 
 export default {
-  ...postPhotoFixture,
+  ...photoRequestFixture,
   __v: 0,
-  _id: new Types.ObjectId(postPhotoFixture._id),
+  _id: new Types.ObjectId(photoRequestFixture._id),
   createdAt: utilFixture.freezeDate,
   details: {
-    ...postPhotoFixture.details,
-    captureDate: new Date(postPhotoFixture.details.captureDate),
+    ...photoRequestFixture.details,
+    captureDate: new Date(photoRequestFixture.details.captureDate),
     imageTags,
     photographer,
   },

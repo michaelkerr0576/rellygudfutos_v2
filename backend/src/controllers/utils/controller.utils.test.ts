@@ -157,6 +157,34 @@ describe('Controller Utils', () => {
     });
   });
 
+  describe('Handle Duplicate Error', () => {
+    test('Expect to return duplicate error', async () => {
+      const mockMongoError = {
+        code: 11000,
+        name: 'MongoError',
+      };
+      const model = 'test';
+
+      const mockPromise = new Promise((_resolve, reject) => {
+        reject(controllerUtils.handleDuplicateError(mockResponse as Response, mockMongoError as any, model));
+      });
+
+      expect(mockResponse.status).toBeCalledWith(400);
+      await expect(mockPromise).rejects.toThrowError('test already exists');
+    });
+
+    test('Expect to return default error', async () => {
+      const mockError = new Error('test error');
+      const model = 'test';
+
+      const mockPromise = new Promise((_resolve, reject) => {
+        reject(controllerUtils.handleDuplicateError(mockResponse as Response, mockError as any, model));
+      });
+
+      await expect(mockPromise).rejects.toThrowError('test error');
+    });
+  });
+
   describe('Handle Empty Body Request', () => {
     test('Expect to return empty body request error', async () => {
       const model = 'Test';

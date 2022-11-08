@@ -1,74 +1,43 @@
 import { NextFunction, Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
-import { LeanDocument, Types } from 'mongoose';
+import { Types } from 'mongoose';
 
 import UserModel from '@/models/User.model';
 import usersDbService from '@/services/usersDb.service';
-import * as inf from '@/ts/interfaces/db.interface';
-import * as typ from '@/ts/types/error.types';
-import authUtils from '@/utils/auth.utils';
 import errorMessageUtils from '@/utils/errorMessage.utils';
-import responseMessageUtils from '@/utils/responseMessage.utils';
+
+import controllerUtils from './utils/controller.utils';
+import userControllerUtils from './utils/userController.utils';
 
 // * @desc Add user
 // * @route POST /api/users
 // * @access Private
 const addUser = (request: Request, response: Response, next: NextFunction): Promise<void> => {
-  const { email, name, password, role } = request.body;
+  const {
+    body: { password },
+    body,
+  } = request;
+
+  if (!password) {
+    response.status(401);
+    const newError = new Error(errorMessageUtils.error401NoPassword());
+    return Promise.resolve(next(newError));
+  }
 
   const passwordSalt = bcrypt.genSaltSync(10);
   const hashedPassword = bcrypt.hashSync(password, passwordSalt);
 
   const newUser = new UserModel({
     _id: new Types.ObjectId(),
-    email,
-    name,
+    ...body,
     password: hashedPassword,
-    role,
   });
-
-  const handleUser = async (user: LeanDocument<inf.IUser> | null): Promise<void> => {
-    if (!user) {
-      response.status(500);
-      throw new Error(errorMessageUtils.error500NotFound('User'));
-    }
-
-    response.status(201).json({
-      addedUser: {
-        _id: user._id,
-        email: user.email,
-        name: user.name,
-        role: user.role,
-      },
-      message: responseMessageUtils.dataAdded('User'),
-      token: authUtils.generateToken(user._id, user.role),
-    });
-  };
-
-  const handleUserError = (error: typ.MongoError | typ.MongooseValidationError): void => {
-    const isDuplicateUser = error.name === 'MongoError' && error.code === 11000; // 11000 is a MongoDb duplicate key error
-    if (isDuplicateUser) {
-      response.status(400);
-      throw new Error(errorMessageUtils.error400AlreadyExists('User'));
-    }
-
-    const isValidationError = error.name === 'ValidationError';
-    if (isValidationError) {
-      const { message, errors } = errorMessageUtils.error400Validation(error as typ.MongooseValidationError);
-
-      response.status(400);
-      const newError = new Error(message);
-      const validationError = Object.assign(newError, { errors });
-      throw validationError;
-    }
-
-    throw error;
-  };
 
   return usersDbService
     .addUser(newUser)
-    .then((user): Promise<void> => handleUser(user))
-    .catch((error): void => handleUserError(error))
+    .then((user): Promise<void> => userControllerUtils.handleAddedUser(response, user))
+    .catch((error): void => controllerUtils.handleDuplicateError(response, error, 'User'))
+    .catch((error): void => controllerUtils.handleValidationError(response, error))
     .catch((error): void => next(error));
 };
 
@@ -89,25 +58,11 @@ const getUser = (_request: Request, response: Response): void => {
 // * @desc Get users
 // * @route GET /api/users
 // * @access Private
-const getUsers = (_request: Request, response: Response, next: NextFunction): Promise<void> => {
-  const handleUsers = (users: LeanDocument<inf.IUser[]>): void => {
-    const isUsersEmpty = users.length === 0;
-    if (isUsersEmpty) {
-      response.status(404);
-      throw new Error(errorMessageUtils.error404EmptyResult('Users'));
-    }
-
-    response.status(200).json({
-      data: users,
-      message: responseMessageUtils.dataFetched('Users'),
-    });
-  };
-
-  return usersDbService
+const getUsers = (_request: Request, response: Response, next: NextFunction): Promise<void> =>
+  usersDbService
     .getUsers()
-    .then((users): void => handleUsers(users))
+    .then((users): Promise<void> => userControllerUtils.handleUsers(response, users))
     .catch((error): void => next(error));
-};
 
 // * @desc Login user
 // * @route POST /api/users/login
@@ -115,33 +70,9 @@ const getUsers = (_request: Request, response: Response, next: NextFunction): Pr
 const loginUser = (request: Request, response: Response, next: NextFunction): Promise<void> => {
   const { email, password } = request.body;
 
-  const handleUser = (user: LeanDocument<inf.IUser> | null): void => {
-    if (!user) {
-      response.status(404);
-      throw new Error(errorMessageUtils.error404('User'));
-    }
-
-    const isInvalidPassword = !bcrypt.compareSync(password, user.password);
-    if (isInvalidPassword) {
-      response.status(404);
-      throw new Error(errorMessageUtils.error404InvalidCredentials());
-    }
-
-    response.status(200).json({
-      data: {
-        _id: user._id,
-        email: user.email,
-        name: user.name,
-        role: user.role,
-      },
-      message: responseMessageUtils.userLoggedIn(user.name),
-      token: authUtils.generateToken(user._id, user.role),
-    });
-  };
-
   return usersDbService
     .findUser(email)
-    .then((user): void => handleUser(user))
+    .then((user): Promise<void> => userControllerUtils.handleLoggedInUser(response, user, password))
     .catch((error): void => next(error));
 };
 
