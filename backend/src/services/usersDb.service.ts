@@ -26,12 +26,19 @@ const addUsers = (newUsers: inf.IUser[]): Promise<LeanDocument<inf.IUser[]> | nu
   UserModel.insertMany(newUsers).then(
     (users): Promise<LeanDocument<inf.IUser[]> | null> =>
       UserModel.find({ _id: users.map((user): Types.ObjectId => user._id) as any })
+        .select('-password')
         .lean()
         .then((addedUsers): LeanDocument<inf.IUser[]> | null => addedUsers),
   );
 
 const checkUserPhotoExists = (photoId: Types.ObjectId): Promise<boolean> =>
   UserModel.exists({ photos: photoId });
+
+const deleteUser = (id: Types.ObjectId | string): Promise<LeanDocument<inf.IUser> | null> =>
+  UserModel.findByIdAndDelete(id)
+    .select('-password')
+    .lean()
+    .then((user): LeanDocument<inf.IUser> | null => user);
 
 const deleteUserPhoto = (userId: Types.ObjectId, photoId: Types.ObjectId): Promise<typ.QueryStatus> =>
   UserModel.findByIdAndUpdate(
@@ -63,6 +70,7 @@ export default {
   addUserPhoto,
   addUsers,
   checkUserPhotoExists,
+  deleteUser,
   deleteUserPhoto,
   findUser,
   getUser,

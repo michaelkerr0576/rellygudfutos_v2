@@ -44,8 +44,13 @@ const addUser = (request: Request, response: Response, next: NextFunction): Prom
 // * @desc Delete user
 // * @route DELETE /api/users/:id
 // * @access Private
-const deleteUser = (_request: Request, response: Response): void => {
-  response.json({ message: 'Yeah delete' });
+const deleteUser = (request: Request, response: Response, next: NextFunction): Promise<void> => {
+  const { id } = request.params;
+
+  return usersDbService
+    .deleteUser(id)
+    .then((user): Promise<void> => userControllerUtils.handleDeletedUser(response, user))
+    .catch((error): void => next(error));
 };
 
 // * @desc Get user

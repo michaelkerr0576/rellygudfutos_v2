@@ -22,6 +22,18 @@ const handleAddedUser = async (response: Response, user: LeanDocument<inf.IUser>
   });
 };
 
+const handleDeletedUser = async (response: Response, user: LeanDocument<inf.IUser> | null): Promise<void> => {
+  if (!user) {
+    response.status(404);
+    throw new Error(errorMessageUtils.error404('User'));
+  }
+
+  response.status(200).json({
+    data: user,
+    message: responseMessageUtils.dataDeleted('User'),
+  });
+};
+
 const handleLoggedInUser = async (
   response: Response,
   user: LeanDocument<inf.IUser> | null,
@@ -79,6 +91,7 @@ const handleUsers = async (response: Response, users: LeanDocument<inf.IUser[]>)
 
 export default {
   handleAddedUser,
+  handleDeletedUser,
   handleLoggedInUser,
   handleUser,
   handleUsers,

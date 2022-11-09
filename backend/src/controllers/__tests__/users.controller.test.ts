@@ -133,6 +133,53 @@ describe('Users Controller', () => {
     });
   });
 
+  describe('Delete User', () => {
+    test('Expect to return 404 user not found', async () => {
+      const mockRequest: Partial<Request> = {
+        params: { id: userRequestFixture._id },
+      };
+
+      await usersController
+        .deleteUser(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
+        .catch((error): void => mockNextFunction(error));
+
+      expect(mockResponse.status).toBeCalledWith(404);
+      expect(mockNextFunction).toHaveBeenCalledWith(
+        expect.objectContaining({
+          message: 'User not found',
+        }),
+      );
+    });
+
+    test('Expect to return 200 user deleted', async () => {
+      const mockRequest: Partial<Request> = {
+        params: { id: userRequestFixture._id },
+      };
+
+      // * Script: populate memory server with test data
+      await usersScripts.prepUserData();
+
+      // * Controller: delete user
+      await usersController
+        .deleteUser(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
+        .catch((error): void => mockNextFunction(error));
+
+      // * DB Service: expect to not find user just deleted
+      const deletedUser = await usersDbService
+        .findUser(userRequestFixture.email)
+        .catch((error): void => console.log(error));
+
+      expect(deletedUser).not.toBeTruthy();
+
+      // * Response
+      expect(mockResponse.status).toBeCalledWith(200);
+      expect(mockResponse.json).toHaveBeenCalledWith({
+        data: userResponseFixture,
+        message: 'User deleted',
+      });
+    });
+  });
+
   describe('Get User', () => {
     test('Expect to return 404 user not found', async () => {
       const mockRequest: Partial<Request> = {

@@ -64,6 +64,30 @@ describe('Users Controller Utils', () => {
     });
   });
 
+  describe('Handle Deleted User', () => {
+    test('Expect to return 404 user not found', async () => {
+      const user = null;
+
+      await expect(usersControllerUtils.handleDeletedUser(mockResponse as Response, user)).rejects.toThrow(
+        'User not found',
+      );
+
+      expect(mockResponse.status).toBeCalledWith(404);
+    });
+
+    test('Expect to return 200 user deleted', async () => {
+      const user = { test: 'test' } as any;
+
+      await usersControllerUtils.handleDeletedUser(mockResponse as Response, user);
+
+      expect(mockResponse.status).toBeCalledWith(200);
+      expect(mockResponse.json).toHaveBeenCalledWith({
+        data: user,
+        message: 'User deleted',
+      });
+    });
+  });
+
   describe('Handle Logged In User', () => {
     test('Expect to return 404 user not found', async () => {
       const user = null;
