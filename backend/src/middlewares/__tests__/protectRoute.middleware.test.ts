@@ -9,7 +9,7 @@ import utilFixture from '@/tests/fixtures/util.fixture';
 import mongoMemoryServer from '@/tests/mongoMemoryServer';
 import usersScripts from '@/tests/scripts/users.scripts';
 
-import protectRouteMiddleware from './protectRoute.middleware';
+import protectRouteMiddleware from '../protectRoute.middleware';
 
 const actualJwtVerify = jest.requireActual('jsonwebtoken').verify;
 const mockJwtVerify = jest.fn();

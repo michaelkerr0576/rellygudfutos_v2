@@ -6,7 +6,7 @@ import userRequestFixture from '@/tests/fixtures/users/userRequest.fixture';
 import utilFixture from '@/tests/fixtures/util.fixture';
 import mongoMemoryServer from '@/tests/mongoMemoryServer';
 
-import UserModel from './User.model';
+import UserModel from '../User.model';
 
 describe('User Model', () => {
   beforeAll(async () => mongoMemoryServer.connectDB());

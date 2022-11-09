@@ -7,7 +7,7 @@ import photoRequestFixture from '@/tests/fixtures/photos/photoRequest.fixture';
 import utilFixture from '@/tests/fixtures/util.fixture';
 import mongoMemoryServer from '@/tests/mongoMemoryServer';
 
-import PhotoModel from './Photo.model';
+import PhotoModel from '../Photo.model';
 
 describe('Photo Model', () => {
   beforeAll(async () => mongoMemoryServer.connectDB());

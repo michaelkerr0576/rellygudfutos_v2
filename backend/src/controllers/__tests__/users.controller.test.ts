@@ -13,7 +13,7 @@ import utilFixture from '@/tests/fixtures/util.fixture';
 import mongoMemoryServer from '@/tests/mongoMemoryServer';
 import usersScripts from '@/tests/scripts/users.scripts';
 
-import usersController from './users.controller';
+import usersController from '../users.controller';
 
 const mockBcryptCompareSync = jest.fn();
 bcrypt.compareSync = mockBcryptCompareSync;

@@ -19,7 +19,7 @@ import mongoMemoryServer from '@/tests/mongoMemoryServer';
 import photosScripts from '@/tests/scripts/photos.scripts';
 import * as enm from '@/ts/enums/db.enum';
 
-import photosControllerUtils from './photosController.utils';
+import photosControllerUtils from '../photosController.utils';
 
 const mockResponseStatus = jest.fn();
 const mockResponseJson = jest.fn();

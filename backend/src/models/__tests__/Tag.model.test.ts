@@ -5,7 +5,7 @@ import tagRequestFixture from '@/tests/fixtures/tags/tagRequest.fixture';
 import utilFixture from '@/tests/fixtures/util.fixture';
 import mongoMemoryServer from '@/tests/mongoMemoryServer';
 
-import TagModel from './Tag.model';
+import TagModel from '../Tag.model';
 
 describe('Tag Model', () => {
   beforeAll(async () => mongoMemoryServer.connectDB());

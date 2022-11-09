@@ -4,7 +4,7 @@ import 'colors';
 import express from 'express';
 import bodyParser from 'body-parser';
 
-import connectMongoDb from '@/config/connectMongoDb.config';
+import connectMongoDb from '@/configs/connectMongoDb.config';
 import errorHandler from '@/middlewares/errorHandler.middleware';
 import photosRoutes from '@/routes/photos.routes';
 import tagsRoutes from '@/routes/tags.routes';

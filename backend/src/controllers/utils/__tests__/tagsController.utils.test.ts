@@ -5,7 +5,7 @@ import utilFixture from '@/tests/fixtures/util.fixture';
 import mongoMemoryServer from '@/tests/mongoMemoryServer';
 import tagsScripts from '@/tests/scripts/tags.scripts';
 
-import tagsControllerUtils from './tagsController.utils';
+import tagsControllerUtils from '../tagsController.utils';
 
 const mockResponseStatus = jest.fn();
 const mockResponseJson = jest.fn();
