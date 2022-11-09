@@ -52,6 +52,18 @@ const handleLoggedInUser = async (
   });
 };
 
+const handleUser = async (response: Response, user: LeanDocument<inf.IUser> | null): Promise<void> => {
+  if (!user) {
+    response.status(404);
+    throw new Error(errorMessageUtils.error404('User'));
+  }
+
+  response.status(200).json({
+    data: user,
+    message: responseMessageUtils.dataFetched('User'),
+  });
+};
+
 const handleUsers = async (response: Response, users: LeanDocument<inf.IUser[]>): Promise<void> => {
   const isUsersEmpty = users.length === 0;
   if (isUsersEmpty) {
@@ -68,5 +80,6 @@ const handleUsers = async (response: Response, users: LeanDocument<inf.IUser[]>)
 export default {
   handleAddedUser,
   handleLoggedInUser,
+  handleUser,
   handleUsers,
 };

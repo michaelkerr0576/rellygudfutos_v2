@@ -46,7 +46,7 @@ const findUser = (email: string): Promise<LeanDocument<inf.IUser> | null> =>
     .lean()
     .then((user): LeanDocument<inf.IUser> | null => user);
 
-const getUser = (id: Types.ObjectId): Promise<LeanDocument<inf.IUser> | null> =>
+const getUser = (id: Types.ObjectId | string): Promise<LeanDocument<inf.IUser> | null> =>
   UserModel.findById(id)
     .select('-password')
     .lean()

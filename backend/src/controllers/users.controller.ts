@@ -7,7 +7,7 @@ import usersDbService from '@/services/usersDb.service';
 import errorMessageUtils from '@/utils/errorMessage.utils';
 
 import controllerUtils from './utils/controller.utils';
-import userControllerUtils from './utils/userController.utils';
+import userControllerUtils from './utils/usersController.utils';
 
 // * @desc Add user
 // * @route POST /api/users
@@ -51,8 +51,13 @@ const deleteUser = (_request: Request, response: Response): void => {
 // * @desc Get user
 // * @route GET /api/users/:id
 // * @access Private
-const getUser = (_request: Request, response: Response): void => {
-  response.json({ message: 'Yeah get user id' });
+const getUser = (request: Request, response: Response, next: NextFunction): Promise<void> => {
+  const { id } = request.params;
+
+  return usersDbService
+    .getUser(id)
+    .then((user): Promise<void> => userControllerUtils.handleUser(response, user))
+    .catch((error): void => next(error));
 };
 
 // * @desc Get users

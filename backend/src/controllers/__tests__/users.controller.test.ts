@@ -133,7 +133,48 @@ describe('Users Controller', () => {
     });
   });
 
+  describe('Get User', () => {
+    test('Expect to return 404 user not found', async () => {
+      const mockRequest: Partial<Request> = {
+        params: { id: userRequestFixture._id },
+      };
+
+      await usersController
+        .getUser(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
+        .catch((error): void => mockNextFunction(error));
+
+      expect(mockResponse.status).toBeCalledWith(404);
+      expect(mockNextFunction).toHaveBeenCalledWith(
+        expect.objectContaining({
+          message: 'User not found',
+        }),
+      );
+    });
+
+    test('Expect to return 200 get user', async () => {
+      const mockRequest: Partial<Request> = {
+        params: { id: userRequestFixture._id },
+      };
+
+      // * Script: populate memory server with test data
+      await usersScripts.prepUserData();
+
+      // * Controller: get user
+      await usersController
+        .getUser(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
+        .catch((error): void => mockNextFunction(error));
+
+      // * Response
+      expect(mockResponse.status).toBeCalledWith(200);
+      expect(mockResponse.json).toHaveBeenCalledWith({
+        data: userResponseFixture,
+        message: 'User fetched successfully',
+      });
+    });
+  });
+
   describe('Get Users', () => {
+    // TODO - add query to test
     test('Expect to return 404 users not found', async () => {
       const mockRequest: Partial<Request> = {
         query: {},
@@ -151,7 +192,7 @@ describe('Users Controller', () => {
       );
     });
 
-    // TODO - add pagination and test
+    // TODO - add pagination to test
     test('Expect to return 200 get users default pagination', async () => {
       const mockRequest: Partial<Request> = {
         query: {},

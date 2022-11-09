@@ -29,7 +29,7 @@ const checkPhotoExists = (id: Types.ObjectId): Promise<boolean> => PhotoModel.ex
 const countPhotos = (filter: typ.PhotosQuery['filter']): Promise<number> =>
   PhotoModel.countDocuments(filter).then((count): number => count);
 
-const deletePhoto = (id: string): Promise<LeanDocument<inf.IPhoto> | null> =>
+const deletePhoto = (id: Types.ObjectId | string): Promise<LeanDocument<inf.IPhoto> | null> =>
   PhotoModel.findByIdAndDelete(id)
     .populate('details.imageTags', 'tag')
     .populate('details.photographer', 'email name')
@@ -43,7 +43,7 @@ const findPhoto = (createdAt: Date): Promise<LeanDocument<inf.IPhoto> | null> =>
     .lean()
     .then((photo): LeanDocument<inf.IPhoto> | null => photo);
 
-const getPhoto = (id: string): Promise<LeanDocument<inf.IPhoto> | null> =>
+const getPhoto = (id: Types.ObjectId | string): Promise<LeanDocument<inf.IPhoto> | null> =>
   PhotoModel.findById(id)
     .populate('details.imageTags', 'tag')
     .populate('details.photographer', 'email name')
@@ -71,7 +71,7 @@ const getRandomPhotos = (limit: number): Promise<LeanDocument<inf.IPhoto[]> | nu
   );
 
 const updatePhoto = (
-  id: string,
+  id: Types.ObjectId | string,
   updateQuery: Record<string, unknown>,
 ): Promise<LeanDocument<inf.IPhoto> | null> =>
   PhotoModel.findByIdAndUpdate(id, updateQuery, { new: true, runValidators: true })
