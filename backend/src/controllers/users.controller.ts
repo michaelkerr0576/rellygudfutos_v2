@@ -5,9 +5,10 @@ import { Types } from 'mongoose';
 import UserModel from '@/models/User.model';
 import usersDbService from '@/services/usersDb.service';
 import errorMessageUtils from '@/utils/errorMessage.utils';
+import generalUtils from '@/utils/general.utils';
 
 import controllerUtils from './utils/controller.utils';
-import userControllerUtils from './utils/usersController.utils';
+import usersControllerUtils from './utils/usersController.utils';
 
 // * @desc Add user
 // * @route POST /api/users
@@ -35,7 +36,7 @@ const addUser = (request: Request, response: Response, next: NextFunction): Prom
 
   return usersDbService
     .addUser(newUser)
-    .then((user): Promise<void> => userControllerUtils.handleAddedUser(response, user))
+    .then((user): Promise<void> => usersControllerUtils.handleAddedUser(response, user))
     .catch((error): void => controllerUtils.handleDuplicateError(response, error, 'User'))
     .catch((error): void => controllerUtils.handleValidationError(response, error))
     .catch((error): void => next(error));
@@ -49,7 +50,7 @@ const deleteUser = (request: Request, response: Response, next: NextFunction): P
 
   return usersDbService
     .deleteUser(id)
-    .then((user): Promise<void> => userControllerUtils.handleDeletedUser(response, user))
+    .then((user): Promise<void> => usersControllerUtils.handleDeletedUser(response, user))
     .catch((error): void => next(error));
 };
 
@@ -61,7 +62,7 @@ const getUser = (request: Request, response: Response, next: NextFunction): Prom
 
   return usersDbService
     .getUser(id)
-    .then((user): Promise<void> => userControllerUtils.handleUser(response, user))
+    .then((user): Promise<void> => usersControllerUtils.handleUser(response, user))
     .catch((error): void => next(error));
 };
 
@@ -71,7 +72,7 @@ const getUser = (request: Request, response: Response, next: NextFunction): Prom
 const getUsers = (_request: Request, response: Response, next: NextFunction): Promise<void> =>
   usersDbService
     .getUsers()
-    .then((users): Promise<void> => userControllerUtils.handleUsers(response, users))
+    .then((users): Promise<void> => usersControllerUtils.handleUsers(response, users))
     .catch((error): void => next(error));
 
 // * @desc Login user
@@ -82,15 +83,29 @@ const loginUser = (request: Request, response: Response, next: NextFunction): Pr
 
   return usersDbService
     .findUser(email)
-    .then((user): Promise<void> => userControllerUtils.handleLoggedInUser(response, user, password))
+    .then((user): Promise<void> => usersControllerUtils.handleLoggedInUser(response, user, password))
     .catch((error): void => next(error));
 };
 
 // * @desc Update user
 // * @route PUT /api/users/:id
 // * @access Private
-const updateUser = (_request: Request, response: Response): void => {
-  response.json({ message: 'Yeah put' });
+const updateUser = (request: Request, response: Response, next: NextFunction): Promise<void> => {
+  const {
+    body,
+    params: { id },
+  } = request;
+
+  const isBodyEmpty = generalUtils.checkIsObjectEmpty(body);
+  if (isBodyEmpty) {
+    return Promise.resolve(next(controllerUtils.handleEmptyBodyRequest(response, 'User')));
+  }
+
+  return usersDbService
+    .updateUser(id, body)
+    .then((user): Promise<void> => usersControllerUtils.handleUpdatedUser(response, user))
+    .catch((error): void => controllerUtils.handleValidationError(response, error))
+    .catch((error): void => next(error));
 };
 
 export default {

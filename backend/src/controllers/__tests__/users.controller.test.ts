@@ -339,4 +339,109 @@ describe('Users Controller', () => {
       });
     });
   });
+
+  describe('Update User', () => {
+    test('Expect to return 400 empty request body', async () => {
+      const mockRequest: Partial<Request> = {
+        body: {},
+        params: { id: userRequestFixture._id },
+      };
+
+      // * Script: populate memory server with test data
+      await usersScripts.prepUserData();
+
+      // * Controller: update user
+      await usersController
+        .updateUser(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
+        .catch((error): void => mockNextFunction(error));
+
+      // * Response
+      expect(mockResponse.status).toBeCalledWith(400);
+      expect(mockNextFunction).toHaveBeenCalledWith(
+        expect.objectContaining({
+          message: 'Empty User request body',
+        }),
+      );
+    });
+
+    test('Expect to return 400 user validation failed', async () => {
+      const mockRequest: Partial<Request> = {
+        body: {
+          ...userRequestFixture,
+          name: userMaxLengthFixture.name,
+        },
+        params: { id: userRequestFixture._id },
+      };
+
+      // * Script: populate memory server with test data
+      await usersScripts.prepUserData();
+
+      // * Controller: update user
+      await usersController
+        .updateUser(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
+        .catch((error): void => mockNextFunction(error));
+
+      // * Response
+      expect(mockResponse.status).toBeCalledWith(400);
+      expect(mockNextFunction).toHaveBeenCalledWith(
+        expect.objectContaining({
+          message: 'Validation failed',
+        }),
+      );
+    });
+
+    test('Expect to return 404 user not found', async () => {
+      const mockRequest: Partial<Request> = {
+        body: userRequestFixture,
+        params: { id: userRequestFixture._id },
+      };
+
+      await usersController
+        .updateUser(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
+        .catch((error): void => mockNextFunction(error));
+
+      expect(mockResponse.status).toBeCalledWith(404);
+      expect(mockNextFunction).toHaveBeenCalledWith(
+        expect.objectContaining({
+          message: 'User not found',
+        }),
+      );
+    });
+
+    test('Expect to return 200 user updated', async () => {
+      const mockRequest: Partial<Request> = {
+        body: {
+          ...userRequestFixture,
+          name: 'test updated user',
+        },
+        params: { id: userRequestFixture._id },
+      };
+
+      // * Script: populate memory server with test data
+      await usersScripts.prepUserData();
+
+      // * Controller: update user
+      await usersController
+        .updateUser(mockRequest as Request, mockResponse as Response, mockNextFunction as NextFunction)
+        .catch((error): void => mockNextFunction(error));
+
+      // * DB Service: find user just updated
+      const addedUser = await usersDbService
+        .getUser(userRequestFixture._id)
+        .catch((error): void => console.log(error));
+
+      expect(addedUser).toBeTruthy();
+      expect(addedUser).toEqual({
+        ...userResponseFixture,
+        name: 'test updated user',
+      });
+
+      // * Response
+      expect(mockResponse.status).toBeCalledWith(200);
+      expect(mockResponse.json).toHaveBeenCalledWith({
+        data: { ...userResponseFixture, name: 'test updated user' },
+        message: 'User updated',
+      });
+    });
+  });
 });

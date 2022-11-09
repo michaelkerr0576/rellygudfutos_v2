@@ -65,6 +65,15 @@ const getUsers = (): Promise<LeanDocument<inf.IUser[]>> =>
     .lean()
     .then((users): LeanDocument<inf.IUser[]> => users);
 
+const updateUser = (
+  id: Types.ObjectId | string,
+  updatedUser: inf.IUser,
+): Promise<LeanDocument<inf.IUser> | null> =>
+  UserModel.findByIdAndUpdate(id, updatedUser, { new: true, runValidators: true })
+    .select('-password')
+    .lean()
+    .then((user): LeanDocument<inf.IUser> | null => user);
+
 export default {
   addUser,
   addUserPhoto,
@@ -75,4 +84,5 @@ export default {
   findUser,
   getUser,
   getUsers,
+  updateUser,
 };

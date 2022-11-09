@@ -132,6 +132,30 @@ describe('Users Controller Utils', () => {
     });
   });
 
+  describe('Handle Updated User', () => {
+    test('Expect to return 404 user not found', async () => {
+      const user = null;
+
+      await expect(usersControllerUtils.handleUpdatedUser(mockResponse as Response, user)).rejects.toThrow(
+        'User not found',
+      );
+
+      expect(mockResponse.status).toBeCalledWith(404);
+    });
+
+    test('Expect to return 200 user updated', async () => {
+      const user = { name: 'test' } as any;
+
+      await usersControllerUtils.handleUpdatedUser(mockResponse as Response, user);
+
+      expect(mockResponse.status).toBeCalledWith(200);
+      expect(mockResponse.json).toHaveBeenCalledWith({
+        data: user,
+        message: 'User updated',
+      });
+    });
+  });
+
   describe('Handle User', () => {
     test('Expect to return 404 user not found', async () => {
       const user = null;

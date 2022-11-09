@@ -535,7 +535,7 @@ describe('Photos Controller', () => {
       const mockRequest: Partial<Request> = {
         body: {
           ...photoRequestFixture,
-          details: { ...photoRequestFixture.details, imageCaption: 'Test updated caption' },
+          details: { ...photoRequestFixture.details, imageCaption: 'test updated caption' },
         },
         params: { id: photoRequestFixture._id },
       };
@@ -556,7 +556,7 @@ describe('Photos Controller', () => {
       expect(addedPhoto).toBeTruthy();
       expect(addedPhoto).toEqual({
         ...photoResponseFixture,
-        details: { ...photoResponseFixture.details, imageCaption: 'Test updated caption' },
+        details: { ...photoResponseFixture.details, imageCaption: 'test updated caption' },
       });
 
       // * DB Service: find tag and check tag photos have been updated
@@ -572,7 +572,7 @@ describe('Photos Controller', () => {
       expect(mockResponse.json).toHaveBeenCalledWith({
         data: {
           ...photoResponseFixture,
-          details: { ...photoResponseFixture.details, imageCaption: 'Test updated caption' },
+          details: { ...photoResponseFixture.details, imageCaption: 'test updated caption' },
         },
         message: 'Photo updated',
       });

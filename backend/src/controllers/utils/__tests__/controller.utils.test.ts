@@ -187,14 +187,14 @@ describe('Controller Utils', () => {
 
   describe('Handle Empty Body Request', () => {
     test('Expect to return empty body request error', async () => {
-      const model = 'Test';
+      const model = 'test';
 
       const mockPromise = new Promise((_resolve, reject) => {
         reject(controllerUtils.handleEmptyBodyRequest(mockResponse as Response, model));
       });
 
       expect(mockResponse.status).toBeCalledWith(400);
-      await expect(mockPromise).rejects.toThrow('Empty Test request body');
+      await expect(mockPromise).rejects.toThrow('Empty test request body');
     });
   });
 

@@ -287,7 +287,7 @@ describe('Tags Controller', () => {
       const mockRequest: Partial<Request> = {
         body: {
           ...tagRequestFixture,
-          tag: 'Test updated tag',
+          tag: 'test updated tag',
         },
         params: { id: tagRequestFixture._id },
       };
@@ -308,13 +308,13 @@ describe('Tags Controller', () => {
       expect(addedTag).toBeTruthy();
       expect(addedTag).toEqual({
         ...tagResponseFixture,
-        tag: 'Test updated tag',
+        tag: 'test updated tag',
       });
 
       // * Response
       expect(mockResponse.status).toBeCalledWith(200);
       expect(mockResponse.json).toHaveBeenCalledWith({
-        data: { ...tagResponseFixture, tag: 'Test updated tag' },
+        data: { ...tagResponseFixture, tag: 'test updated tag' },
         message: 'Tag updated',
       });
     });
