@@ -13,7 +13,11 @@ import controllerUtils from './controller.utils';
 const getTagsQuery = (query: Request['query']): typ.PaginationQuery => {
   const { limit = con.TAG_LIMIT, page = con.PAGE } = query;
 
-  const pagination = controllerUtils.getPaginationQuery(limit as string, con.TAG_MAX_LIMIT, page as string);
+  const pagination = controllerUtils.getPaginationQuery(
+    limit as string | number,
+    con.TAG_MAX_LIMIT,
+    page as string | number,
+  );
 
   return {
     endIndex: pagination.endIndex,

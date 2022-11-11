@@ -181,42 +181,40 @@ describe('Users Controller Utils', () => {
   });
 
   describe('Handle Users', () => {
-    // TODO - add query to test
     test('Expect to return 404 users not found', async () => {
       const users = [] as any;
-      // const query = {} as any;
+      const query = {} as any;
 
-      await expect(usersControllerUtils.handleUsers(mockResponse as Response, users)).rejects.toThrow(
+      await expect(usersControllerUtils.handleUsers(mockResponse as Response, users, query)).rejects.toThrow(
         'Users not found. Add Users',
       );
 
       expect(mockResponse.status).toBeCalledWith(404);
     });
 
-    // TODO - add pagination to test
     test('Expect to return 200 get users pagination page two, next and previous', async () => {
       const users = [{ test: 'test' }] as any;
-      // const query = { endIndex: 2, limit: 1, page: 2, startIndex: 1 } as any;
+      const query = { endIndex: 2, limit: 1, page: 2, startIndex: 1 } as any;
 
       // * Script: populate memory server with test data
       await usersScripts.prepUsersData();
 
       // * Controller Utils: handle users
-      await usersControllerUtils.handleUsers(mockResponse as Response, users);
+      await usersControllerUtils.handleUsers(mockResponse as Response, users, query);
 
       // * Response
       expect(mockResponse.status).toBeCalledWith(200);
       expect(mockResponse.json).toHaveBeenCalledWith({
         data: users,
         message: 'Users fetched successfully',
-        // pagination: {
-        //   limit: 1,
-        //   next: { limit: 1, page: 3 },
-        //   page: 2,
-        //   pages: 3,
-        //   previous: { limit: 1, page: 1 },
-        //   total: 3,
-        // },
+        pagination: {
+          limit: 1,
+          next: { limit: 1, page: 3 },
+          page: 2,
+          pages: 3,
+          previous: { limit: 1, page: 1 },
+          total: 3,
+        },
       });
     });
   });

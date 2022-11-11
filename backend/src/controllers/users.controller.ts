@@ -77,11 +77,14 @@ const getUser = (request: Request, response: Response, next: NextFunction): Prom
  * @route GET /api/users
  * @access Private
  */
-const getUsers = (_request: Request, response: Response, next: NextFunction): Promise<void> =>
-  usersDbService
-    .getUsers()
-    .then((users): Promise<void> => usersControllerUtils.handleUsers(response, users))
+const getUsers = (request: Request, response: Response, next: NextFunction): Promise<void> => {
+  const usersQuery = usersControllerUtils.getUsersQuery(request.query);
+
+  return usersDbService
+    .getUsers(usersQuery)
+    .then((users): Promise<void> => usersControllerUtils.handleUsers(response, users, usersQuery))
     .catch((error): void => next(error));
+};
 
 /**
  * @desc Login user

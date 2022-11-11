@@ -34,6 +34,8 @@ const addUsers = (newUsers: inf.IUser[]): Promise<LeanDocument<inf.IUser[]> | nu
 const checkUserPhotoExists = (photoId: Types.ObjectId): Promise<boolean> =>
   UserModel.exists({ photos: photoId });
 
+const countUsers = (): Promise<number> => UserModel.countDocuments().then((count): number => count);
+
 const deleteUser = (id: Types.ObjectId | string): Promise<LeanDocument<inf.IUser> | null> =>
   UserModel.findByIdAndDelete(id)
     .select('-password')
@@ -59,8 +61,10 @@ const getUser = (id: Types.ObjectId | string): Promise<LeanDocument<inf.IUser> |
     .lean()
     .then((user): LeanDocument<inf.IUser> | null => user);
 
-const getUsers = (): Promise<LeanDocument<inf.IUser[]>> =>
+const getUsers = (query: typ.PaginationQuery): Promise<LeanDocument<inf.IUser[]>> =>
   UserModel.find()
+    .skip(query.startIndex)
+    .limit(query.limit)
     .select('-password')
     .lean()
     .then((users): LeanDocument<inf.IUser[]> => users);
@@ -79,6 +83,7 @@ export default {
   addUserPhoto,
   addUsers,
   checkUserPhotoExists,
+  countUsers,
   deleteUser,
   deleteUserPhoto,
   findUser,

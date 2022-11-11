@@ -5,7 +5,11 @@ import * as typError from '@/ts/types/error.types';
 import errorMessageUtils from '@/utils/errorMessage.utils';
 import generalUtils from '@/utils/general.utils';
 
-const getPaginationQuery = (limit: string, maxLimit: number, page: string): typDb.PaginationQuery => {
+const getPaginationQuery = (
+  limit: string | number,
+  maxLimit: number,
+  page: string | number,
+): typDb.PaginationQuery => {
   const pageNumber = generalUtils.stringToNumber(page);
   let limitNumber = generalUtils.stringToNumber(limit);
   limitNumber = limitNumber > maxLimit ? maxLimit : limitNumber;

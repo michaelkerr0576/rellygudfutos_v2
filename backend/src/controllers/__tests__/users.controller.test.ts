@@ -239,7 +239,6 @@ describe('Users Controller', () => {
       );
     });
 
-    // TODO - add pagination to test
     test('Expect to return 200 get users default pagination', async () => {
       const mockRequest: Partial<Request> = {
         query: {},
@@ -258,12 +257,12 @@ describe('Users Controller', () => {
       expect(mockResponse.json).toHaveBeenCalledWith({
         data: usersResponseFixture,
         message: 'Users fetched successfully',
-        // pagination: {
-        //   limit: 50,
-        //   page: 1,
-        //   pages: 1,
-        //   total: 3,
-        // },
+        pagination: {
+          limit: 50,
+          page: 1,
+          pages: 1,
+          total: 3,
+        },
       });
     });
   });

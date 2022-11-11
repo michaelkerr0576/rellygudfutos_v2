@@ -117,9 +117,9 @@ const getPhotosQuery = (query: Request['query']): typ.PhotosQuery => {
   const filter = getPhotosFilter(search as string, tags as string[], user as string);
 
   const pagination = controllerUtils.getPaginationQuery(
-    limit as string,
+    limit as string | number,
     conPagination.PHOTO_MAX_LIMIT,
-    page as string,
+    page as string | number,
   );
 
   const sortBy = getPhotosSort(sort as enm.PhotoSortOptions);
