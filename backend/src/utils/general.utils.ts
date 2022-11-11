@@ -4,6 +4,9 @@ import * as con from '@/utils/constants/parsing';
 
 const checkIsObjectEmpty = (object: Record<string, unknown>): boolean => Object.keys(object).length === 0;
 
+const checkStringIsEmpty = (string: string): boolean =>
+  typeof string === 'string' && string.trim().length === 0;
+
 const flattenObject = (object: Record<string, unknown>): Record<string, unknown> => {
   let flattenedObject: Record<string, unknown> = {};
 
@@ -33,6 +36,7 @@ const stringToNumber = (value: string | number): number =>
 
 export default {
   checkIsObjectEmpty,
+  checkStringIsEmpty,
   flattenObject,
   numberToString,
   stringToNumber,

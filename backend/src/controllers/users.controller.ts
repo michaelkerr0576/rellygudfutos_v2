@@ -10,9 +10,11 @@ import generalUtils from '@/utils/general.utils';
 import controllerUtils from './utils/controller.utils';
 import usersControllerUtils from './utils/usersController.utils';
 
-// * @desc Add user
-// * @route POST /api/users
-// * @access Private
+/**
+ * @desc Add user
+ * @route OST /api/users
+ * @access Private
+ */
 const addUser = (request: Request, response: Response, next: NextFunction): Promise<void> => {
   const {
     body: { password },
@@ -42,9 +44,11 @@ const addUser = (request: Request, response: Response, next: NextFunction): Prom
     .catch((error): void => next(error));
 };
 
-// * @desc Delete user
-// * @route DELETE /api/users/:id
-// * @access Private
+/**
+ * @desc Delete user
+ * @route DELETE /api/users/:id
+ * @access Private
+ */
 const deleteUser = (request: Request, response: Response, next: NextFunction): Promise<void> => {
   const { id } = request.params;
 
@@ -54,9 +58,11 @@ const deleteUser = (request: Request, response: Response, next: NextFunction): P
     .catch((error): void => next(error));
 };
 
-// * @desc Get user
-// * @route GET /api/users/:id
-// * @access Private
+/**
+ * @desc Get user
+ * @route GET /api/users/:id
+ * @access Private
+ */
 const getUser = (request: Request, response: Response, next: NextFunction): Promise<void> => {
   const { id } = request.params;
 
@@ -66,18 +72,22 @@ const getUser = (request: Request, response: Response, next: NextFunction): Prom
     .catch((error): void => next(error));
 };
 
-// * @desc Get users
-// * @route GET /api/users
-// * @access Private
+/**
+ * @desc Get users
+ * @route GET /api/users
+ * @access Private
+ */
 const getUsers = (_request: Request, response: Response, next: NextFunction): Promise<void> =>
   usersDbService
     .getUsers()
     .then((users): Promise<void> => usersControllerUtils.handleUsers(response, users))
     .catch((error): void => next(error));
 
-// * @desc Login user
-// * @route POST /api/users/login
-// * @access Public
+/**
+ * @desc Login user
+ * @route POST /api/users/login
+ * @access Public
+ */
 const loginUser = (request: Request, response: Response, next: NextFunction): Promise<void> => {
   const { email, password } = request.body;
 
@@ -87,9 +97,11 @@ const loginUser = (request: Request, response: Response, next: NextFunction): Pr
     .catch((error): void => next(error));
 };
 
-// * @desc Update user
-// * @route PUT /api/users/:id
-// * @access Private
+/**
+ * @desc Update user
+ * @route PUT /api/users/:id
+ * @access Private
+ */
 const updateUser = (request: Request, response: Response, next: NextFunction): Promise<void> => {
   const {
     body,

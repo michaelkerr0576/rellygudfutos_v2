@@ -10,9 +10,11 @@ import generalUtils from '@/utils/general.utils';
 import controllerUtils from './utils/controller.utils';
 import photosControllerUtils from './utils/photosController.utils';
 
-// * @desc Add photo
-// * @route POST /api/photos
-// * @access Private
+/**
+ * @desc Add photo
+ * @route POST /api/photos
+ * @access Private
+ */
 const addPhoto = (request: Request, response: Response, next: NextFunction): Promise<void> => {
   const { body } = request;
 
@@ -34,9 +36,11 @@ const addPhoto = (request: Request, response: Response, next: NextFunction): Pro
     .catch((error): void => next(error));
 };
 
-// * @desc Delete photo
-// * @route DELETE /api/photos/:id
-// * @access Private
+/**
+ * @desc Delete photo
+ * @route DELETE /api/photos/:id
+ * @access Private
+ */
 const deletePhoto = (request: Request, response: Response, next: NextFunction): Promise<void> => {
   const { id } = request.params;
 
@@ -46,9 +50,11 @@ const deletePhoto = (request: Request, response: Response, next: NextFunction): 
     .catch((error): void => next(error));
 };
 
-// * @desc Get photo
-// * @route GET /api/photos/:id
-// * @access Public
+/**
+ * @desc Get photo
+ * @route GET /api/photos/:id
+ * @access Public
+ */
 const getPhoto = (request: Request, response: Response, next: NextFunction): Promise<void> => {
   const { id } = request.params;
 
@@ -58,9 +64,11 @@ const getPhoto = (request: Request, response: Response, next: NextFunction): Pro
     .catch((error): void => next(error));
 };
 
-// * @desc Get photos
-// * @route GET /api/photos
-// * @access Public
+/**
+ * @desc Get photos
+ * @route GET /api/photos
+ * @access Public
+ */
 const getPhotos = (request: Request, response: Response, next: NextFunction): Promise<void> => {
   const photosQuery = photosControllerUtils.getPhotosQuery(request.query);
 
@@ -80,9 +88,11 @@ const getPhotos = (request: Request, response: Response, next: NextFunction): Pr
     .catch((error): void => next(error));
 };
 
-// * @desc Update photo
-// * @route PUT /api/photos/:id
-// * @access Private
+/**
+ * @desc Update photo
+ * @route PUT /api/photos/:id
+ * @access PrivatePrivate
+ */
 const updatePhoto = (request: Request, response: Response, next: NextFunction): Promise<void> => {
   const {
     body,

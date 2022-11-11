@@ -8,9 +8,11 @@ import generalUtils from '@/utils/general.utils';
 import controllerUtils from './utils/controller.utils';
 import tagsControllerUtils from './utils/tagsController.utils';
 
-// * @desc Add tag
-// * @route POST /api/tags
-// * @access Private
+/**
+ * @desc Add tag
+ * @route POST /api/tags
+ * @access Private
+ */
 const addTag = (request: Request, response: Response, next: NextFunction): Promise<void> => {
   const { body } = request;
 
@@ -26,9 +28,11 @@ const addTag = (request: Request, response: Response, next: NextFunction): Promi
     .catch((error): void => next(error));
 };
 
-// * @desc Delete tag
-// * @route DELETE /api/tags/:id
-// * @access Private
+/**
+ * @desc Delete tag
+ * @route DELETE /api/tags/:id
+ * @access Private
+ */
 const deleteTag = (request: Request, response: Response, next: NextFunction): Promise<void> => {
   const { id } = request.params;
 
@@ -38,9 +42,11 @@ const deleteTag = (request: Request, response: Response, next: NextFunction): Pr
     .catch((error): void => next(error));
 };
 
-// * @desc Get tag
-// * @route GET /api/tags/:id
-// * @access Public
+/**
+ * @desc Get tag
+ * @route GET /api/tags/:id
+ * @access Public
+ */
 const getTag = (request: Request, response: Response, next: NextFunction): Promise<void> => {
   const { id } = request.params;
 
@@ -50,9 +56,11 @@ const getTag = (request: Request, response: Response, next: NextFunction): Promi
     .catch((error): void => next(error));
 };
 
-// * @desc Get tags
-// * @route GET /api/tags
-// * @access Public
+/**
+ * @desc Get tags
+ * @route GET /api/tags
+ * @access Public
+ */
 const getTags = (request: Request, response: Response, next: NextFunction): Promise<void> => {
   const tagsQuery = tagsControllerUtils.getTagsQuery(request.query);
 
@@ -62,9 +70,11 @@ const getTags = (request: Request, response: Response, next: NextFunction): Prom
     .catch((error): void => next(error));
 };
 
-// * @desc Update tag
-// * @route PUT /api/tags/:id
-// * @access Private
+/**
+ * @desc Update tag
+ * @route PUT /api/tags/:id
+ * @access Private
+ */
 const updateTag = (request: Request, response: Response, next: NextFunction): Promise<void> => {
   const {
     body,
