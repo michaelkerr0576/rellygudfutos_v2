@@ -51,6 +51,10 @@ export interface ITag extends Document {
 export interface IUser extends Document {
   _id: Types.ObjectId;
   email: string;
+  equipment: {
+    cameras: string[];
+    lenses: string[];
+  };
   name: string;
   password: string;
   photos: Types.ObjectId[];

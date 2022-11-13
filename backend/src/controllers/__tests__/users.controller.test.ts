@@ -221,7 +221,6 @@ describe('Users Controller', () => {
   });
 
   describe('Get Users', () => {
-    // TODO - add query to test
     test('Expect to return 404 users not found', async () => {
       const mockRequest: Partial<Request> = {
         query: {},
@@ -411,6 +410,9 @@ describe('Users Controller', () => {
       const mockRequest: Partial<Request> = {
         body: {
           ...userRequestFixture,
+          equipment: {
+            cameras: ['test updated camera'],
+          },
           name: 'test updated user',
         },
         params: { id: userRequestFixture._id },
@@ -429,16 +431,22 @@ describe('Users Controller', () => {
         .getUser(userRequestFixture._id)
         .catch((error): void => console.log(error));
 
-      expect(addedUser).toBeTruthy();
-      expect(addedUser).toEqual({
+      const expectedUser = {
         ...userResponseFixture,
+        equipment: {
+          ...userRequestFixture.equipment,
+          cameras: ['test updated camera'],
+        },
         name: 'test updated user',
-      });
+      };
+
+      expect(addedUser).toBeTruthy();
+      expect(addedUser).toEqual(expectedUser);
 
       // * Response
       expect(mockResponse.status).toBeCalledWith(200);
       expect(mockResponse.json).toHaveBeenCalledWith({
-        data: { ...userResponseFixture, name: 'test updated user' },
+        data: expectedUser,
         message: 'User updated',
       });
     });

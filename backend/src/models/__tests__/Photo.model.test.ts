@@ -21,6 +21,7 @@ describe('Photo Model', () => {
         'details.captureLocation',
         'details.imageCaption',
         'details.imageFile',
+        'details.imageTags',
         'details.imageTitle',
         'details.originalImageName',
         'details.storeLink',
@@ -43,10 +44,6 @@ describe('Photo Model', () => {
         expectedRequiredPaths.forEach((path) => {
           expect(errors[path].properties.message).toEqual(`Path \`${path}\` is required.`);
         });
-
-        expect(errors['details.imageTags'].properties.message).toEqual(
-          'Validator failed for path `details.imageTags` with value ``',
-        );
       }
     });
 
@@ -180,6 +177,7 @@ describe('Photo Model', () => {
         'details.captureLocation',
         'details.imageCaption',
         'details.imageFile',
+        'details.imageTags',
         'details.imageTitle',
         'details.originalImageName',
         'details.storeLink',

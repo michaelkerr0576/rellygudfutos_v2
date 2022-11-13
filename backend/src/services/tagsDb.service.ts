@@ -74,9 +74,9 @@ const getTags = (query: typ.PaginationQuery): Promise<LeanDocument<inf.ITag[]>> 
 
 const updateTag = (
   id: Types.ObjectId | string,
-  updatedTag: inf.ITag,
+  updateQuery: Record<string, unknown>,
 ): Promise<LeanDocument<inf.ITag> | null> =>
-  TagModel.findByIdAndUpdate(id, updatedTag, { new: true, runValidators: true })
+  TagModel.findByIdAndUpdate(id, updateQuery, { new: true, runValidators: true })
     .lean()
     .then((tag): LeanDocument<inf.ITag> | null => tag);
 

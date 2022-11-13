@@ -531,11 +531,19 @@ describe('Photos Controller', () => {
       );
     });
 
-    test('Expect to return 200 photo updated', async () => {
+    test('Expect to return 200 photo updated and immutable fields to not be updated', async () => {
       const mockRequest: Partial<Request> = {
         body: {
           ...photoRequestFixture,
-          details: { ...photoRequestFixture.details, imageCaption: 'test updated caption' },
+          details: {
+            ...photoRequestFixture.details,
+            captureDate: 'test immutable',
+            imageCaption: 'test updated caption',
+            imageFile: 'test immutable',
+            originalImageName: 'test immutable',
+            photographer: 'test immutable',
+          },
+          equipment: { ...photoRequestFixture.equipment, lensName: 'test updated lens name' },
         },
         params: { id: photoRequestFixture._id },
       };
@@ -553,11 +561,20 @@ describe('Photos Controller', () => {
         .findPhoto(utilFixture.freezeDate)
         .catch((error): void => console.log(error));
 
-      expect(addedPhoto).toBeTruthy();
-      expect(addedPhoto).toEqual({
+      const expectedPhoto = {
         ...photoResponseFixture,
-        details: { ...photoResponseFixture.details, imageCaption: 'test updated caption' },
-      });
+        details: {
+          ...photoResponseFixture.details,
+          imageCaption: 'test updated caption',
+        },
+        equipment: {
+          ...photoResponseFixture.equipment,
+          lensName: 'test updated lens name',
+        },
+      };
+
+      expect(addedPhoto).toBeTruthy();
+      expect(addedPhoto).toEqual(expectedPhoto);
 
       // * DB Service: find tag and check tag photos have been updated
       const updatedTags = await tagsDbService
@@ -570,10 +587,7 @@ describe('Photos Controller', () => {
       // * Response
       expect(mockResponse.status).toBeCalledWith(200);
       expect(mockResponse.json).toHaveBeenCalledWith({
-        data: {
-          ...photoResponseFixture,
-          details: { ...photoResponseFixture.details, imageCaption: 'test updated caption' },
-        },
+        data: expectedPhoto,
         message: 'Photo updated',
       });
     });

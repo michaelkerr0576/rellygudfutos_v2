@@ -5,6 +5,9 @@ import * as enm from '@/ts/enums/db.enum';
 import * as inf from '@/ts/interfaces/db.interface';
 import regexUtils from '@/utils/regex.utils';
 
+import validateUtils from './utils/validate.utils';
+import validateMessageUtils from './utils/validateMessage.utils';
+
 const userSchema = new Schema<inf.IUser>(
   {
     _id: Types.ObjectId,
@@ -16,6 +19,36 @@ const userSchema = new Schema<inf.IUser>(
       unique: true,
       maxLength: 100,
       match: regexUtils.emailAddress,
+    },
+    equipment: {
+      cameras: {
+        type: [String],
+        // * Validate: required | maxLength - validate needed for array
+        validate: [
+          {
+            validator: validateUtils.arrayValuesRequired,
+            message: validateMessageUtils.requiredMessage,
+          },
+          {
+            validator: validateUtils.arrayValuesMaxLength(100),
+            message: validateMessageUtils.maxLengthMessage(100),
+          },
+        ],
+      },
+      lenses: {
+        type: [String],
+        // * Validate: required | maxLength - validate needed for array
+        validate: [
+          {
+            validator: validateUtils.arrayValuesRequired,
+            message: validateMessageUtils.requiredMessage,
+          },
+          {
+            validator: validateUtils.arrayValuesMaxLength(100),
+            message: validateMessageUtils.maxLengthMessage(100),
+          },
+        ],
+      },
     },
     name: {
       type: String,

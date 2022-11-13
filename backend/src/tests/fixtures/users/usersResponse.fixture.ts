@@ -11,6 +11,10 @@ const userThreeResponse = {
   _id: new Types.ObjectId(userThreeRequest._id),
   createdAt: utilFixture.freezeDate,
   email: userThreeRequest.email.toLowerCase(),
+  equipment: {
+    cameras: userThreeRequest.equipment.cameras,
+    lenses: userThreeRequest.equipment.lenses,
+  },
   name: userThreeRequest.name,
   photos: [new Types.ObjectId(userThreeRequest.photos[0])],
   role: userThreeRequest.role,

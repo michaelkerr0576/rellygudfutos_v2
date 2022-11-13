@@ -16,6 +16,8 @@ describe('User Model', () => {
     test('Expect to validate required for the relevant properties in UserModel', async () => {
       const invalidUser = new UserModel({});
 
+      const expectedRequiredPaths = ['email', 'equipment.cameras', 'equipment.lenses', 'name', 'password'];
+
       try {
         await invalidUser.save();
       } catch (error: any) {
@@ -24,15 +26,23 @@ describe('User Model', () => {
         expect(name).toEqual('ValidationError');
         expect(message).toEqual('User validation failed');
 
-        expect(errors.email.properties.message).toEqual('Path `email` is required.');
-        expect(errors.name.properties.message).toEqual('Path `name` is required.');
-        expect(errors.password.properties.message).toEqual('Path `password` is required.');
+        expectedRequiredPaths.forEach((path) => {
+          expect(errors[path].properties.message).toEqual(`Path \`${path}\` is required.`);
+        });
       }
     });
 
     test('Expect to validate maxLength for the relevant properties in UserModel', async () => {
       const invalidUser = new UserModel(userMaxLengthFixture);
 
+      const expectedMaxLength101Paths = [
+        'email',
+        'equipment.cameras',
+        'equipment.lenses',
+        'name',
+        'password',
+      ];
+
       try {
         await invalidUser.save();
       } catch (error: any) {
@@ -41,15 +51,11 @@ describe('User Model', () => {
         expect(name).toEqual('ValidationError');
         expect(message).toEqual('User validation failed');
 
-        expect(errors.email.properties.message).toEqual(
-          `Path \`email\` (\`${utilFixture.chars101}\`) is longer than the maximum allowed length (100).`,
-        );
-        expect(errors.name.properties.message).toEqual(
-          `Path \`name\` (\`${utilFixture.chars101}\`) is longer than the maximum allowed length (100).`,
-        );
-        expect(errors.password.properties.message).toEqual(
-          `Path \`password\` (\`${utilFixture.chars101}\`) is longer than the maximum allowed length (100).`,
-        );
+        expectedMaxLength101Paths.forEach((path) => {
+          expect(errors[path].properties.message).toEqual(
+            `Path \`${path}\` (\`${utilFixture.chars101}\`) is longer than the maximum allowed length (100).`,
+          );
+        });
       }
     });
 

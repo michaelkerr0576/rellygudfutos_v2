@@ -5,6 +5,9 @@ import * as enm from '@/ts/enums/db.enum';
 import * as inf from '@/ts/interfaces/db.interface';
 import regexUtils from '@/utils/regex.utils';
 
+import validateUtils from './utils/validate.utils';
+import validateMessageUtils from './utils/validateMessage.utils';
+
 const photoSchema = new Schema<inf.IPhoto>(
   {
     _id: Types.ObjectId,
@@ -44,8 +47,8 @@ const photoSchema = new Schema<inf.IPhoto>(
       imageTags: {
         type: [Types.ObjectId],
         ref: 'Tag',
-        // * Validate: required - "required: true" does not work for array
-        validate: (v: Types.ObjectId[]): boolean => Array.isArray(v) && v.length > 0,
+        // * Validate: required - validate needed for array
+        validate: [validateUtils.arrayValuesRequired, validateMessageUtils.requiredMessage],
       },
       imageTitle: {
         type: String,

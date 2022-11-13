@@ -305,16 +305,18 @@ describe('Tags Controller', () => {
         .findTag(utilFixture.freezeDate)
         .catch((error): void => console.log(error));
 
-      expect(addedTag).toBeTruthy();
-      expect(addedTag).toEqual({
+      const expectedTag = {
         ...tagResponseFixture,
         tag: 'test updated tag',
-      });
+      };
+
+      expect(addedTag).toBeTruthy();
+      expect(addedTag).toEqual(expectedTag);
 
       // * Response
       expect(mockResponse.status).toBeCalledWith(200);
       expect(mockResponse.json).toHaveBeenCalledWith({
-        data: { ...tagResponseFixture, tag: 'test updated tag' },
+        data: expectedTag,
         message: 'Tag updated',
       });
     });

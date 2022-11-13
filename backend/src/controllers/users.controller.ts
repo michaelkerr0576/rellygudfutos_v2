@@ -116,8 +116,10 @@ const updateUser = (request: Request, response: Response, next: NextFunction): P
     return Promise.resolve(next(controllerUtils.handleEmptyBodyRequest(response, 'User')));
   }
 
+  const updateQuery = generalUtils.flattenObject(body);
+
   return usersDbService
-    .updateUser(id, body)
+    .updateUser(id, updateQuery)
     .then((user): Promise<void> => usersControllerUtils.handleUpdatedUser(response, user))
     .catch((error): void => controllerUtils.handleValidationError(response, error))
     .catch((error): void => next(error));

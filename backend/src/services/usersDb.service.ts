@@ -71,9 +71,9 @@ const getUsers = (query: typ.PaginationQuery): Promise<LeanDocument<inf.IUser[]>
 
 const updateUser = (
   id: Types.ObjectId | string,
-  updatedUser: inf.IUser,
+  updateQuery: Record<string, unknown>,
 ): Promise<LeanDocument<inf.IUser> | null> =>
-  UserModel.findByIdAndUpdate(id, updatedUser, { new: true, runValidators: true })
+  UserModel.findByIdAndUpdate(id, updateQuery, { new: true, runValidators: true })
     .select('-password')
     .lean()
     .then((user): LeanDocument<inf.IUser> | null => user);

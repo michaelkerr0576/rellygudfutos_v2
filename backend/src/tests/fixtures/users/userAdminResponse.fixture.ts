@@ -9,6 +9,10 @@ export default {
   _id: new Types.ObjectId(userAdminRequestFixture._id),
   createdAt: utilFixture.freezeDate,
   email: userAdminRequestFixture.email.toLowerCase(),
+  equipment: {
+    cameras: userAdminRequestFixture.equipment.cameras,
+    lenses: userAdminRequestFixture.equipment.lenses,
+  },
   name: userAdminRequestFixture.name,
   photos: [new Types.ObjectId(userAdminRequestFixture.photos[0])],
   role: userAdminRequestFixture.role,
