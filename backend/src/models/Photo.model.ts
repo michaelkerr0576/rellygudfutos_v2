@@ -32,13 +32,8 @@ const photoSchema = new Schema<inf.IPhoto>(
         minLength: 2,
         maxLength: 300,
       },
-      imageFile: {
-        type: String,
-        required: true,
-        trim: true,
-        match: regexUtils.imageFile,
-        immutable: true,
-      },
+      imageKey: String,
+      imageName: String,
       imageSize: {
         type: String,
         enum: enm.ImageSize,
@@ -57,13 +52,8 @@ const photoSchema = new Schema<inf.IPhoto>(
         minLength: 2,
         maxLength: 50,
       },
-      originalImageName: {
-        type: String,
-        required: true,
-        trim: true,
-        match: regexUtils.imageFile,
-        immutable: true,
-      },
+      imageType: String,
+      imageUrl: String,
       photographer: {
         type: Types.ObjectId,
         ref: 'User',
@@ -124,6 +114,7 @@ const photoSchema = new Schema<inf.IPhoto>(
         match: regexUtils.cameraLensShutterSpeed,
       },
     },
+    image: Object,
   },
   { timestamps: true },
 );

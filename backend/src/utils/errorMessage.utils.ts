@@ -6,6 +6,10 @@ const error400AlreadyExists = (model: string): string => `${model} already exist
 
 const error400EmptyRequestBody = (model: string): string => `Empty ${model} request body`;
 
+const error400InvalidFileType = (fileTypes: string): string => `Only ${fileTypes} file types are allowed`;
+
+const error400Required = (model: string): string => `${model} is required`;
+
 const error400Validation = (
   error: typ.MongooseValidationError,
 ): { message: string; errors: typ.ValidationErrorsMessage } => {
@@ -51,6 +55,8 @@ export default {
   error400,
   error400AlreadyExists,
   error400EmptyRequestBody,
+  error400InvalidFileType,
+  error400Required,
   error400Validation,
   error401,
   error401NoPassword,

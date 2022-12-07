@@ -176,6 +176,62 @@ Sorting and Filtering will also have to be done on the Backend because there wil
 - [MongoDB Filtering Query 2](https://www.mongodb.com/docs/manual/reference/operator/query/regex/)
 - [Youtube Pagination Tutorial - Web Dev Simplified](https://www.youtube.com/watch?v=ZX3qt0UWifc&ab_channel=WebDevSimplified)
 
+### Upload Images
+
+The photos will be uploaded to an image CDN, in this case AWS S3 Bucket.
+
+**Pros:**
+
+1. Performance - Better load time
+2. Optimize - Adjust compression quality, etc
+3. Scalable - Cheaper to host images on S3 than server
+
+**Useful Links:**
+
+- [Youtube AWS S3 Bucket Tutorial - Sam Meech-Ward](https://www.sammeechward.com/storing-images-in-s3-from-node-server)
+
+## Frontend
+
+### React
+
+We all love React but there is a lot of mistakes that can be made. Top things I want to avoid when creating rellygudfutos:
+
+1. **Unnecessary `useStates`**
+
+- If a `useState` value changes it causes a rerender. Most of the time the value can just be stored in a `const`, `useRef` or `useMemo` if it needs to be memorized.
+
+2. **Unnecessary `useEffects`**
+
+- A lot of `useEffects` can be ugly and confusing. Group them up and create custom hooks and avoid using them in the first place if you don't have to, each usage causes a rerender.
+
+3. **Use State Directly After `setState`**
+
+- It will contain the previous render value and not the latest `setState` value. That is why we should use the function version of `useState` if manipulating the state and using it after.
+
+4. **Referential Equality Mistakes**
+
+- An object as a hook side effect will have funny results:
+  - If passed from global state (Zustand, Redux) it will not trigger a rerender despite having different values because it is the same object.
+  - The other side is if you copy the exact same object in a component it will incorrectly trigger a hook because it is a brand new object every render. Basically `const {} === {}` will always be false. They are the same value but different objects.
+
+5. **Not Aborting Fetch Requests**
+
+- Filters and searches can cause a lot of API requests. If the previous request is not finished, it should be aborted for the latest. Will help performance and jumpy UI.
+
+6. **Not Using React Strict Mode**
+
+- Will only be active for development and is useful to spot unintended side effects:
+
+  - It does everything twice. It double renders and runs functions, hooks, dispatches, etc twice
+  - On first render it mounts, unmounts and mounts the component again. This helps spot unintended side effects in `useEffects` where we are not using a cleanup.
+
+- [Youtube React UseEffect Best Practices - Web Dev Simplified](https://www.youtube.com/watch?v=MFj_S0Nof90&ab_channel=WebDevSimplified)
+- [Youtube React Other Hook Best Practices - Web Dev Simplified](https://www.youtube.com/watch?v=GGo3MVBFr1A&ab_channel=WebDevSimplified)
+- [Youtube React Strict Mode - Web Dev Simplified](https://www.youtube.com/watch?v=XUwzASyHr4Q&ab_channel=WebDevSimplified)
+- [Understanding Referential Equality in React](https://blog.bitsrc.io/understanding-referential-equality-in-react-a8fb3769be0)
+- [React Query Fetch Cancellation](https://tanstack.com/query/v4/docs/guides/query-cancellation)
+- [React React useEffect Cleanup](https://blog.logrocket.com/understanding-react-useeffect-cleanup-function/)
+
 ### Next.js
 
 Next.js is a server-side rendering that reduces first contentful paint and is superior for SEO purposes. It is outputted in html vs javascript which is easier for search engines to look through :drooling_face:

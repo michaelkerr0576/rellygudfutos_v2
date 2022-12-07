@@ -17,7 +17,6 @@ jwt.verify = mockJwtVerify;
 
 const mockResponseStatus = jest.fn();
 const mockResponseJson = jest.fn();
-
 const mockResponse: Partial<Response> = {
   json: mockResponseJson,
   locals: {},

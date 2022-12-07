@@ -14,7 +14,6 @@ import tagsController from '../tags.controller';
 
 const mockResponseStatus = jest.fn();
 const mockResponseJson = jest.fn();
-
 const mockResponse: Partial<Response> = {
   json: mockResponseJson,
   status: mockResponseStatus.mockReturnThis(),

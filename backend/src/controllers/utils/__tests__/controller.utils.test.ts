@@ -4,7 +4,6 @@ import controllerUtils from '../controller.utils';
 
 const mockResponseStatus = jest.fn();
 const mockResponseJson = jest.fn();
-
 const mockResponse: Partial<Response> = {
   json: mockResponseJson,
   status: mockResponseStatus.mockReturnThis(),
@@ -195,6 +194,32 @@ describe('Controller Utils', () => {
 
       expect(mockResponse.status).toBeCalledWith(400);
       await expect(mockPromise).rejects.toThrow('Empty test request body');
+    });
+  });
+
+  describe('Handle File Type Error', () => {
+    test('Expect to return file type error', async () => {
+      const fileTypes = 'test1, test2';
+
+      const mockPromise = new Promise((_resolve, reject) => {
+        reject(controllerUtils.handleFileTypeError(mockResponse as Response, fileTypes));
+      });
+
+      expect(mockResponse.status).toBeCalledWith(400);
+      await expect(mockPromise).rejects.toThrow('Only test1, test2 file types are allowed');
+    });
+  });
+
+  describe('Handle Required Error', () => {
+    test('Expect to return required error', async () => {
+      const model = 'test';
+
+      const mockPromise = new Promise((_resolve, reject) => {
+        reject(controllerUtils.handleRequiredError(mockResponse as Response, model));
+      });
+
+      expect(mockResponse.status).toBeCalledWith(400);
+      await expect(mockPromise).rejects.toThrow('test is required');
     });
   });
 

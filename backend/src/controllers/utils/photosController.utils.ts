@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { LeanDocument, Types } from 'mongoose';
 
+import s3Middleware from '@/middlewares/s3.middleware';
 import photosDbService from '@/services/photosDb.service';
 import tagsDbService from '@/services/tagsDb.service';
 import usersDbService from '@/services/usersDb.service';
@@ -172,9 +173,11 @@ const handleDeletedPhoto = async (
 
   const photoId = photo._id;
   const userId = photographer._id;
+  const photoKey = photo.details.imageKey;
 
   await tagsDbService.deleteTagPhotos(photoId);
   await usersDbService.deleteUserPhoto(userId, photoId);
+  await s3Middleware.deleteFile(photoKey);
 
   response.status(200).json({
     data: photo,

@@ -2,6 +2,7 @@ import { Response } from 'express';
 
 import * as typDb from '@/ts/types/db.types';
 import * as typError from '@/ts/types/error.types';
+import * as con from '@/utils/constants/mongoDb';
 import errorMessageUtils from '@/utils/errorMessage.utils';
 import generalUtils from '@/utils/general.utils';
 
@@ -57,8 +58,7 @@ const getPaginationResponse = (
 };
 
 const handleDuplicateError = (response: Response, error: typError.MongoError, model: string): void => {
-  // 11000 is a MongoDb duplicate key error
-  const isDuplicateUser = error.name === 'MongoError' && error.code === 11000;
+  const isDuplicateUser = error.name === 'MongoError' && error.code === con.MONGODB_DUPLICATE_KEY_ERROR;
   if (isDuplicateUser) {
     response.status(400);
     throw new Error(errorMessageUtils.error400AlreadyExists(model));
@@ -70,6 +70,18 @@ const handleDuplicateError = (response: Response, error: typError.MongoError, mo
 const handleEmptyBodyRequest = (response: Response, model: string): Error => {
   response.status(400);
   const newError = new Error(errorMessageUtils.error400EmptyRequestBody(model));
+  return newError;
+};
+
+const handleFileTypeError = (response: Response, fileTypes: string): Error => {
+  response.status(400);
+  const newError = new Error(errorMessageUtils.error400InvalidFileType(fileTypes));
+  return newError;
+};
+
+const handleRequiredError = (response: Response, model: string): Error => {
+  response.status(400);
+  const newError = new Error(errorMessageUtils.error400Required(model));
   return newError;
 };
 
@@ -92,5 +104,7 @@ export default {
   getPaginationResponse,
   handleDuplicateError,
   handleEmptyBodyRequest,
+  handleFileTypeError,
+  handleRequiredError,
   handleValidationError,
 };

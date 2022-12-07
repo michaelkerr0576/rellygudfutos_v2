@@ -4,6 +4,7 @@ import tagsRequestFixture from '../tags/tagsRequest.fixture';
 import userAdminRequestFixture from '../users/userAdminRequest.fixture';
 import utilFixture from '../util.fixture';
 
+import photoImageDetailsFixture from './photoImageDetails.fixture';
 import photoRequestFixture from './photoRequest.fixture';
 
 const [firstTag, secondTag] = tagsRequestFixture;
@@ -32,6 +33,7 @@ export default {
   createdAt: utilFixture.freezeDate,
   details: {
     ...photoRequestFixture.details,
+    ...photoImageDetailsFixture,
     captureDate: new Date(photoRequestFixture.details.captureDate),
     imageTags,
     photographer,

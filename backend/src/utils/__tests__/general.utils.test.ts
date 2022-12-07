@@ -44,6 +44,16 @@ describe('General Utils', () => {
     });
   });
 
+  describe('Generate Key', () => {
+    test('Expect to generate key', () => {
+      const bytes = 3;
+      const generateKey = generalUtils.generateKey(bytes);
+
+      expect(generateKey).toHaveLength(6);
+      expect(typeof generateKey).toBe('string');
+    });
+  });
+
   describe('Number To String', () => {
     test('Expect to change an Number to a String', () => {
       const number = 123123;

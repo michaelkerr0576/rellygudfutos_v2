@@ -1,12 +1,14 @@
 import { NextFunction, Request, Response } from 'express';
 import timekeeper from 'timekeeper';
 
+import s3Middleware from '@/middlewares/s3.middleware';
 import photosDbService from '@/services/photosDb.service';
 import tagsDbService from '@/services/tagsDb.service';
 import usersDbService from '@/services/usersDb.service';
 import photoEnumFixture from '@/tests/fixtures/photos/negative/photoEnum.fixture';
 import photoRequiredFixture from '@/tests/fixtures/photos/negative/photoRequired.fixture';
 import photoIdFixture from '@/tests/fixtures/photos/photoId.fixture';
+import photoImageFixture from '@/tests/fixtures/photos/photoImage.fixture';
 import photoRequestFixture from '@/tests/fixtures/photos/photoRequest.fixture';
 import photoResponseFixture from '@/tests/fixtures/photos/photoResponse.fixture';
 import photosResponseFixture from '@/tests/fixtures/photos/photosResponse.fixture';
@@ -20,12 +22,25 @@ import utilFixture from '@/tests/fixtures/util.fixture';
 import mongoMemoryServer from '@/tests/mongoMemoryServer';
 import photosScripts from '@/tests/scripts/photos.scripts';
 import * as enm from '@/ts/enums/db.enum';
+import generalUtils from '@/utils/general.utils';
 
 import photosController from '../photos.controller';
 
+jest.mock('@aws-sdk/client-s3');
+const mockS3DeleteFile = jest
+  .spyOn(s3Middleware, 'deleteFile')
+  .mockImplementation(() => Promise.resolve() as any);
+const mockS3GetFileUrl = jest
+  .spyOn(s3Middleware, 'getFileUrl')
+  .mockImplementation(() => Promise.resolve(photoResponseFixture.details.imageUrl));
+const mockS3UploadFile = jest
+  .spyOn(s3Middleware, 'uploadFile')
+  .mockImplementation(() => Promise.resolve() as any);
+
+jest.spyOn(generalUtils, 'generateKey').mockReturnValue(photoResponseFixture.details.imageKey);
+
 const mockResponseStatus = jest.fn();
 const mockResponseJson = jest.fn();
-
 const mockResponse: Partial<Response> = {
   json: mockResponseJson,
   locals: { user: { _id: userAdminRequestFixture._id } },
@@ -53,6 +68,7 @@ describe('Photos Controller', () => {
     test('Expect to return 404 tag not found in image tags', async () => {
       const mockRequest: Partial<Request> = {
         body: photoRequestFixture,
+        file: photoImageFixture,
       };
 
       await photosController
@@ -70,6 +86,7 @@ describe('Photos Controller', () => {
     test('Expect to return 400 photo validation failed', async () => {
       const mockRequest: Partial<Request> = {
         body: photoRequiredFixture,
+        file: photoImageFixture,
       };
 
       await photosController
@@ -87,6 +104,7 @@ describe('Photos Controller', () => {
     test('Expect to return 201 photo added', async () => {
       const mockRequest: Partial<Request> = {
         body: photoRequestFixture,
+        file: photoImageFixture,
       };
 
       // * Script: populate memory server with test data
@@ -120,6 +138,12 @@ describe('Photos Controller', () => {
 
       expect(addedUser).toBeTruthy();
       expect(addedUser).toEqual(photoUserResponseFixture);
+
+      // * S3: expect photo to be added to bucket then photoUrl retrieved
+      const { imageKey } = photoResponseFixture.details;
+      const { buffer, mimetype } = photoImageFixture;
+      expect(mockS3UploadFile).toHaveBeenCalledWith(buffer, imageKey, mimetype);
+      expect(mockS3GetFileUrl).toHaveBeenCalledWith(imageKey);
 
       // * Response
       expect(mockResponse.status).toBeCalledWith(201);
@@ -181,6 +205,10 @@ describe('Photos Controller', () => {
         .catch((error): void => console.log(error));
 
       expect(isUserPhotoFound).toBe(false);
+
+      // * S3: expect photo to be deleted from bucket
+      const { imageKey } = photoResponseFixture.details;
+      expect(mockS3DeleteFile).toHaveBeenCalledWith(imageKey);
 
       // * Response
       expect(mockResponse.status).toBeCalledWith(200);

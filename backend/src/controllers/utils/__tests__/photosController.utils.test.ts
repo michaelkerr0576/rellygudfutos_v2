@@ -1,6 +1,7 @@
 import { Response } from 'express';
 import timekeeper from 'timekeeper';
 
+import s3Middleware from '@/middlewares/s3.middleware';
 import photosDbService from '@/services/photosDb.service';
 import tagsDbService from '@/services/tagsDb.service';
 import usersDbService from '@/services/usersDb.service';
@@ -21,9 +22,13 @@ import * as enm from '@/ts/enums/db.enum';
 
 import photosControllerUtils from '../photosController.utils';
 
+jest.mock('@aws-sdk/client-s3');
+const mockS3DeleteFile = jest
+  .spyOn(s3Middleware, 'deleteFile')
+  .mockImplementation(() => Promise.resolve() as any);
+
 const mockResponseStatus = jest.fn();
 const mockResponseJson = jest.fn();
-
 const mockResponse: Partial<Response> = {
   json: mockResponseJson,
   locals: { user: { _id: userAdminRequestFixture._id } },
@@ -276,6 +281,10 @@ describe('Photos Controller Utils', () => {
         .catch((error): void => console.log(error));
 
       expect(isTagsPhotoFound).toBe(false);
+
+      // * S3: expect photo to be deleted from bucket
+      const { imageKey } = photoResponseFixture.details;
+      expect(mockS3DeleteFile).toHaveBeenCalledWith(imageKey);
 
       // * Response
       expect(mockResponse.status).toBeCalledWith(200);

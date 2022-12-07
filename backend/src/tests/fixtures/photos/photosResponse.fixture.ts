@@ -5,6 +5,7 @@ import userAdminRequestFixture from '../users/userAdminRequest.fixture';
 import userRequestFixture from '../users/userRequest.fixture';
 import utilFixture from '../util.fixture';
 
+import photoImageDetailsFixture from './photoImageDetails.fixture';
 import photosRequestFixture from './photosRequest.fixture';
 
 const [firstPhoto, secondPhoto, thirdPhoto] = photosRequestFixture;
@@ -30,6 +31,7 @@ export default [
     createdAt: utilFixture.freezeDate,
     details: {
       ...firstPhoto.details,
+      ...photoImageDetailsFixture,
       captureDate: new Date(firstPhoto.details.captureDate),
       imageTags: [
         { _id: new Types.ObjectId(firstTag._id), tag: firstTag.tag },
@@ -46,6 +48,7 @@ export default [
     createdAt: utilFixture.freezeDate,
     details: {
       ...secondPhoto.details,
+      ...photoImageDetailsFixture,
       captureDate: new Date(secondPhoto.details.captureDate),
       imageTags: [
         {
@@ -64,6 +67,7 @@ export default [
     createdAt: utilFixture.freezeDate,
     details: {
       ...thirdPhoto.details,
+      ...photoImageDetailsFixture,
       captureDate: new Date(thirdPhoto.details.captureDate),
       imageTags: [
         {

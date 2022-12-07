@@ -20,10 +20,8 @@ describe('Photo Model', () => {
       const expectedRequiredPaths = [
         'details.captureLocation',
         'details.imageCaption',
-        'details.imageFile',
         'details.imageTags',
         'details.imageTitle',
-        'details.originalImageName',
         'details.storeLink',
         'equipment.cameraIso',
         'equipment.cameraName',
@@ -146,14 +144,8 @@ describe('Photo Model', () => {
         expect(name).toEqual('ValidationError');
         expect(message).toEqual('Photo validation failed');
 
-        expect(errors['details.imageFile'].properties.message).toEqual(
-          'Path `details.imageFile` is invalid (testfile.ooo).',
-        );
         expect(errors['details.storeLink'].properties.message).toEqual(
           'Path `details.storeLink` is invalid (http://www.futos).',
-        );
-        expect(errors['details.originalImageName'].properties.message).toEqual(
-          'Path `details.originalImageName` is invalid (originaltestfile.hhh).',
         );
         expect(errors['equipment.cameraIso'].properties.message).toEqual(
           'Path `equipment.cameraIso` is invalid (string).',
@@ -176,10 +168,8 @@ describe('Photo Model', () => {
       const expectedRequiredPaths = [
         'details.captureLocation',
         'details.imageCaption',
-        'details.imageFile',
         'details.imageTags',
         'details.imageTitle',
-        'details.originalImageName',
         'details.storeLink',
       ];
       const expectedMinLengthPaths = [
@@ -226,11 +216,9 @@ describe('Photo Model', () => {
       expect(actualDetails.captureDate).toEqual(new Date(expectedDetails.captureDate));
       expect(actualDetails.captureLocation).toEqual(expectedDetails.captureLocation);
       expect(actualDetails.imageCaption).toEqual(expectedDetails.imageCaption);
-      expect(actualDetails.imageFile).toEqual(expectedDetails.imageFile);
       expect(actualDetails.imageSize).toEqual(expectedDetails.imageSize);
       expect(actualDetails.imageTags.toString()).toEqual(expectedDetails.imageTags.toString());
       expect(actualDetails.imageTitle).toEqual(expectedDetails.imageTitle);
-      expect(actualDetails.originalImageName).toEqual(expectedDetails.originalImageName);
       expect(actualDetails.storeLink).toEqual(expectedDetails.storeLink);
 
       // * Photo equipment

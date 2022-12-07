@@ -9,11 +9,13 @@ export interface IPhoto extends Document {
     captureDate: Date;
     captureLocation: string;
     imageCaption: string;
-    imageFile: string;
+    imageKey: string;
+    imageName: string;
     imageSize: enm.ImageSize;
     imageTags: IPhotoImageTags[] | Types.ObjectId[];
     imageTitle: string;
-    originalImageName: string;
+    imageType: string;
+    imageUrl: string;
     photographer: IPhotoPhotographer | Types.ObjectId;
     storeLink: string;
   };
@@ -25,6 +27,7 @@ export interface IPhoto extends Document {
     lensName: string;
     lensShutterSpeed: string;
   };
+  image: File;
 }
 
 export interface IPhotoImageTags {

@@ -1,22 +1,52 @@
 import { NextFunction, Request, Response } from 'express';
 import { LeanDocument, Types } from 'mongoose';
 
+import s3Middleware from '@/middlewares/s3.middleware';
 import PhotoModel from '@/models/Photo.model';
 import photosDbService from '@/services/photosDb.service';
 import * as enm from '@/ts/enums/db.enum';
 import * as inf from '@/ts/interfaces/db.interface';
 import generalUtils from '@/utils/general.utils';
+import regexUtils from '@/utils/regex.utils';
 
 import controllerUtils from './utils/controller.utils';
 import photosControllerUtils from './utils/photosController.utils';
 
-const addPhoto = (request: Request, response: Response, next: NextFunction): Promise<void> => {
-  const { body } = request;
+const addPhoto = async (request: Request, response: Response, next: NextFunction): Promise<void> => {
+  const { body, file } = request;
+
+  if (!file) {
+    return Promise.resolve(next(controllerUtils.handleRequiredError(response, 'Photo')));
+  }
+
+  const isAuthorisedFileType = regexUtils.imageFile.test(file.originalname);
+  if (!isAuthorisedFileType) {
+    return Promise.resolve(
+      next(controllerUtils.handleFileTypeError(response, '.gif, jpeg, .jpg, .tiff, .png, .webp, .bmp')),
+    );
+  }
+
+  const imageKey = generalUtils.generateKey();
+
+  await s3Middleware
+    .uploadFile(file.buffer, imageKey, file.mimetype)
+    .catch((error): Promise<void> => Promise.resolve(next(error)));
+
+  const imageUrl = await s3Middleware
+    .getFileUrl(imageKey)
+    .catch((error): Promise<void> => Promise.resolve(next(error)));
 
   const newPhoto = new PhotoModel({
     _id: new Types.ObjectId(),
     ...body,
-    details: { ...body?.details, photographer: response.locals.user._id },
+    details: {
+      ...body?.details,
+      imageKey,
+      imageName: file.originalname,
+      imageType: file.mimetype,
+      imageUrl,
+      photographer: response.locals.user._id,
+    },
   });
 
   const photoId = newPhoto._id;

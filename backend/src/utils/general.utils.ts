@@ -1,3 +1,4 @@
+import crypto from 'crypto';
 import { Types } from 'mongoose';
 
 import * as con from '@/utils/constants/parsing';
@@ -28,6 +29,8 @@ const flattenObject = (object: Record<string, unknown>): Record<string, unknown>
   return flattenedObject;
 };
 
+const generateKey = (bytes = 32): string => crypto.randomBytes(bytes).toString('hex');
+
 const numberToString = (value: string | number | Types.ObjectId): string =>
   typeof value === 'number' || typeof value === 'object' ? value.toString() : value;
 
@@ -38,6 +41,7 @@ export default {
   checkIsObjectEmpty,
   checkStringIsEmpty,
   flattenObject,
+  generateKey,
   numberToString,
   stringToNumber,
 };
