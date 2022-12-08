@@ -72,6 +72,11 @@ module.exports = {
         tsx: 'never',
       },
     ],
+    // * devDependencies covered by node/no-unpublished-import
+    'import/no-extraneous-dependencies': [
+      'error',
+      { devDependencies: true, optionalDependencies: false, peerDependencies: false },
+    ],
     'import/prefer-default-export': 'off',
     'no-underscore-dangle': ['error', { allow: ['_id'] }],
     'no-unused-vars': 'off',
@@ -80,8 +85,8 @@ module.exports = {
     'node/no-unpublished-import': [
       'error',
       {
-        // * Allow some devDependencies that are only used in tests
-        allowModules: ['jest-when'],
+        // * Allow some devDependencies that are only used in tests or builds
+        allowModules: ['jest-when', '@vitejs/plugin-react', 'vite'],
       },
     ],
     'node/no-unsupported-features/es-syntax': [
@@ -125,7 +130,8 @@ module.exports = {
     'react/no-unused-class-component-methods': 'error',
     'react/no-unused-prop-types': 'error',
     'react/prop-types': 'error',
-    'react/react-in-jsx-scope': 'error',
+    // * React ^17 no longer needs to import react when writing JSX
+    'react/react-in-jsx-scope': 'off',
     'react/require-default-props': 'error',
     'react-hooks/exhaustive-deps': 'warn',
     'react-hooks/rules-of-hooks': 'error',

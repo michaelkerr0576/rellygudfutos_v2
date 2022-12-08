@@ -225,6 +225,8 @@ We all love React but there is a lot of mistakes that can be made. Top things I 
   - It does everything twice. It double renders and runs functions, hooks, dispatches, etc twice
   - On first render it mounts, unmounts and mounts the component again. This helps spot unintended side effects in `useEffects` where we are not using a cleanup.
 
+**Useful Links:**
+
 - [Youtube React UseEffect Best Practices - Web Dev Simplified](https://www.youtube.com/watch?v=MFj_S0Nof90&ab_channel=WebDevSimplified)
 - [Youtube React Other Hook Best Practices - Web Dev Simplified](https://www.youtube.com/watch?v=GGo3MVBFr1A&ab_channel=WebDevSimplified)
 - [Youtube React Strict Mode - Web Dev Simplified](https://www.youtube.com/watch?v=XUwzASyHr4Q&ab_channel=WebDevSimplified)
@@ -232,17 +234,13 @@ We all love React but there is a lot of mistakes that can be made. Top things I 
 - [React Query Fetch Cancellation](https://tanstack.com/query/v4/docs/guides/query-cancellation)
 - [React React useEffect Cleanup](https://blog.logrocket.com/understanding-react-useeffect-cleanup-function/)
 
-### Next.js
+### Vite.js
 
-Next.js is a server-side rendering that reduces first contentful paint and is superior for SEO purposes. It is outputted in html vs javascript which is easier for search engines to look through :drooling_face:
-
-**_ LOOK INTO VITE - Can it work with Next.js _**
+I wanted to avoid slow webpack so Vite.js it is.
 
 **Useful Links:**
 
-- [Setting Up with React Query](https://prateeksurana.me/blog/mastering-data-fetching-with-react-query-and-next-js/)
-- [Youtube Next.js Tutorial - Traversy Media](https://www.youtube.com/watch?v=mTz0GXj8NN0&ab_channel=TraversyMedia)
-- [Youtube Next.js Tutorial - Fireship](https://www.youtube.com/watch?v=Sklc_fQBmcs&ab_channel=Fireship)
+- [Vite.js Docs](https://vitejs.dev/guide/)
 
 ### React Query
 
@@ -260,6 +258,21 @@ Super lightweight client-side state. For this application, Redux is overkill whe
 **Useful Links:**
 
 - [Zustand Docs](https://docs.pmnd.rs/zustand/introduction)
+
+## Regrets
+
+### Next.js
+
+Next.js is a server-side rendering that reduces first contentful paint and is superior for SEO purposes. It is outputted in html vs javascript which is easier for search engines to look through :drooling_face:
+
+The regret is not trying Next.js out first before finishing a fully fleshed out Express Backend. I could setup a custom server with Express within Next.js or mess around with some Next.js build where it is in the Express app. But that is starting to sound like it will take a long time and there is not as much resources on how to make this happen... I decided to save Next.js for when I could do it do justice.
+
+**Useful Links:**
+
+- [Next.js Custom Server](https://nextjs.org/docs/advanced-features/custom-server)
+- [Setting Up with React Query](https://prateeksurana.me/blog/mastering-data-fetching-with-react-query-and-next-js/)
+- [Youtube Next.js Tutorial - Traversy Media](https://www.youtube.com/watch?v=mTz0GXj8NN0&ab_channel=TraversyMedia)
+- [Youtube Next.js Tutorial - Fireship](https://www.youtube.com/watch?v=Sklc_fQBmcs&ab_channel=Fireship)
 
 ## Terminal
 

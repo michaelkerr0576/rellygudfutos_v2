@@ -62,7 +62,7 @@ module.exports = {
     'node/no-unpublished-import': [
       'error',
       {
-        // * Allow some devDependencies that are only used in tests
+        // * Allow some devDependencies that are only used in tests or builds
         allowModules: ['jest-when', 'timekeeper'],
       },
     ],

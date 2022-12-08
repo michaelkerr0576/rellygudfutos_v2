@@ -7,6 +7,7 @@
   "private": true,
   "scripts": {
     "devBE": "cd backend && yarn dev",
+    "devFE": "cd frontend && yarn vite",
     "testBE": "cd backend && yarn test"
   },
   "repository": {
