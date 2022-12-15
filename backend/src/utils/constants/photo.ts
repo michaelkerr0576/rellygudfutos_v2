@@ -1,0 +1,2 @@
+export const PHOTO_MAX_HEIGHT_PIXELS = 1080;
+export const PHOTO_MAX_WIDTH_PIXELS = 1080;

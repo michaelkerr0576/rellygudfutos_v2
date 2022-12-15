@@ -6,6 +6,8 @@ import photosDbService from '@/services/photosDb.service';
 import tagsDbService from '@/services/tagsDb.service';
 import usersDbService from '@/services/usersDb.service';
 import photoIdFixture from '@/tests/fixtures/photos/photoId.fixture';
+import photoImageFixture from '@/tests/fixtures/photos/photoImage.fixture';
+import photoImageDetailsFixture from '@/tests/fixtures/photos/photoImageDetails.fixture';
 import photoQueryFixture from '@/tests/fixtures/photos/photoQuery.fixture';
 import photoQueryResponseFixture from '@/tests/fixtures/photos/photoQueryResponse.fixture';
 import photoResponseFixture from '@/tests/fixtures/photos/photoResponse.fixture';
@@ -19,6 +21,7 @@ import utilFixture from '@/tests/fixtures/util.fixture';
 import mongoMemoryServer from '@/tests/mongoMemoryServer';
 import photosScripts from '@/tests/scripts/photos.scripts';
 import * as enm from '@/ts/enums/db.enum';
+import generalUtils from '@/utils/general.utils';
 
 import photosControllerUtils from '../photosController.utils';
 
@@ -26,6 +29,22 @@ jest.mock('@aws-sdk/client-s3');
 const mockS3DeleteFile = jest
   .spyOn(s3Middleware, 'deleteFile')
   .mockImplementation(() => Promise.resolve() as any);
+const mockS3GetFileUrl = jest
+  .spyOn(s3Middleware, 'getFileUrl')
+  .mockImplementation(() => Promise.resolve(photoResponseFixture.details.imageUrl));
+const mockS3UploadFile = jest
+  .spyOn(s3Middleware, 'uploadFile')
+  .mockImplementation(() => Promise.resolve() as any);
+
+jest.spyOn(generalUtils, 'generateKey').mockReturnValue(photoResponseFixture.details.imageKey);
+
+jest.mock('sharp', () => () => ({
+  resize: () => ({
+    jpeg: () => ({
+      toBuffer: () => 'testBuffer',
+    }),
+  }),
+}));
 
 const mockResponseStatus = jest.fn();
 const mockResponseJson = jest.fn();
@@ -36,6 +55,8 @@ const mockResponse: Partial<Response> = {
 };
 
 const mockError = new Error('test error');
+
+const s3ImageKey = photoImageDetailsFixture.imageKey;
 
 describe('Photos Controller Utils', () => {
   beforeAll(async () => {
@@ -54,7 +75,7 @@ describe('Photos Controller Utils', () => {
   describe('Cancel Add Photo', () => {
     test('Expect to continue error state if photo not found', async () => {
       await expect(
-        photosControllerUtils.cancelAddPhoto(mockError, photoIdFixture, photoTagIdsFixture),
+        photosControllerUtils.cancelAddPhoto(mockError, photoIdFixture, photoTagIdsFixture, s3ImageKey),
       ).rejects.toThrow('test error');
     });
 
@@ -64,8 +85,11 @@ describe('Photos Controller Utils', () => {
 
       // * Controller Utils: cancel added photo
       await expect(
-        photosControllerUtils.cancelAddPhoto(mockError, photoIdFixture, photoTagIdsFixture),
+        photosControllerUtils.cancelAddPhoto(mockError, photoIdFixture, photoTagIdsFixture, s3ImageKey),
       ).rejects.toThrow('test error');
+
+      // * S3: expect photo to be deleted from bucket
+      expect(mockS3DeleteFile).toHaveBeenCalledWith(s3ImageKey);
 
       // * DB Service: expect to not find photo just cancelled
       const cancelledPhoto = await photosDbService
@@ -283,8 +307,7 @@ describe('Photos Controller Utils', () => {
       expect(isTagsPhotoFound).toBe(false);
 
       // * S3: expect photo to be deleted from bucket
-      const { imageKey } = photoResponseFixture.details;
-      expect(mockS3DeleteFile).toHaveBeenCalledWith(imageKey);
+      expect(mockS3DeleteFile).toHaveBeenCalledWith(s3ImageKey);
 
       // * Response
       expect(mockResponse.status).toBeCalledWith(200);
@@ -403,6 +426,27 @@ describe('Photos Controller Utils', () => {
 
       // * Response
       expect(mockResponse.status).toBeCalledWith(200);
+    });
+  });
+
+  describe('Upload Photo To S3', () => {
+    test('Expect to return 200 photo updated', async () => {
+      // * Controller Utils: upload photo to S3
+      const uploadPhotoToS3 = await photosControllerUtils.uploadPhotoToS3(photoImageFixture);
+
+      // * S3: expect photo to be added to bucket then photoUrl retrieved
+      const { imageKey } = photoResponseFixture.details;
+      const { buffer, mimetype } = photoImageFixture;
+      expect(mockS3UploadFile).toHaveBeenCalledWith(buffer, imageKey, mimetype);
+      expect(mockS3GetFileUrl).toHaveBeenCalledWith(imageKey);
+
+      // * Result
+      expect(uploadPhotoToS3).toStrictEqual({
+        imageKey: 'key123',
+        imageName: 'testImage.jpg',
+        imageType: 'image/jpeg',
+        imageUrl: 'test.com',
+      });
     });
   });
 });

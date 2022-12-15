@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { LeanDocument, Types } from 'mongoose';
+import sharp from 'sharp';
 
 import s3Middleware from '@/middlewares/s3.middleware';
 import photosDbService from '@/services/photosDb.service';
@@ -7,8 +8,10 @@ import tagsDbService from '@/services/tagsDb.service';
 import usersDbService from '@/services/usersDb.service';
 import * as enm from '@/ts/enums/db.enum';
 import * as inf from '@/ts/interfaces/db.interface';
-import * as typ from '@/ts/types/db.types';
+import * as typDb from '@/ts/types/db.types';
+import * as typS3 from '@/ts/types/s3.types';
 import * as conPagination from '@/utils/constants/pagination';
+import * as conPhoto from '@/utils/constants/photo';
 import * as conSorting from '@/utils/constants/sorting';
 import errorMessageUtils from '@/utils/errorMessage.utils';
 import generalUtils from '@/utils/general.utils';
@@ -20,14 +23,16 @@ const cancelAddPhoto = async (
   error: Error,
   photoId: Types.ObjectId,
   photoTagIds: Types.ObjectId[] | undefined,
+  s3ImageKey: string,
 ): Promise<void> => {
-  const photoIdString = generalUtils.numberToString(photoId);
+  await s3Middleware.deleteFile(s3ImageKey);
 
   const isPhotoFound = await photosDbService.checkPhotoExists(photoId);
   if (!isPhotoFound) {
     throw error;
   }
 
+  const photoIdString = generalUtils.numberToString(photoId);
   await photosDbService.deletePhoto(photoIdString);
 
   const isTagPhotosFound = photoTagIds && (await tagsDbService.checkTagsPhotoExist(photoId));
@@ -55,7 +60,7 @@ const getPhotosFilter = (
   search: string,
   tags: string[],
   user: string,
-): typ.PhotosFilterColumnsWithPattern => {
+): typDb.PhotosFilterColumnsWithPattern => {
   let filter = {};
 
   const tagIds = Array.isArray(tags) ? tags : [];
@@ -86,7 +91,7 @@ const getPhotosFilter = (
 
 const getPhotosSort = (
   sort: enm.PhotoSortOptions,
-): typ.PhotosSortColumnsWithDirection | enm.PhotoSortOptions.RANDOM => {
+): typDb.PhotosSortColumnsWithDirection | enm.PhotoSortOptions.RANDOM => {
   const sortUpperCase = sort.toUpperCase();
 
   switch (sortUpperCase) {
@@ -105,7 +110,7 @@ const getPhotosSort = (
   }
 };
 
-const getPhotosQuery = (query: Request['query']): typ.PhotosQuery => {
+const getPhotosQuery = (query: Request['query']): typDb.PhotosQuery => {
   const {
     limit = conPagination.PHOTO_LIMIT,
     page = conPagination.PAGE,
@@ -173,11 +178,11 @@ const handleDeletedPhoto = async (
 
   const photoId = photo._id;
   const userId = photographer._id;
-  const photoKey = photo.details.imageKey;
+  const s3ImageKey = photo.details.imageKey;
 
   await tagsDbService.deleteTagPhotos(photoId);
   await usersDbService.deleteUserPhoto(userId, photoId);
-  await s3Middleware.deleteFile(photoKey);
+  await s3Middleware.deleteFile(s3ImageKey);
 
   response.status(200).json({
     data: photo,
@@ -200,7 +205,7 @@ const handlePhoto = async (response: Response, photo: LeanDocument<inf.IPhoto> |
 const handlePhotos = async (
   response: Response,
   photos: LeanDocument<inf.IPhoto[]> | null,
-  photosQuery: typ.PhotosQuery,
+  photosQuery: typDb.PhotosQuery,
 ): Promise<void> => {
   if (!photos) {
     response.status(500);
@@ -251,6 +256,32 @@ const handleUpdatedPhoto = async (
   });
 };
 
+const uploadPhotoToS3 = async (file: Express.Multer.File): Promise<typS3.PhotoS3> => {
+  const imageKey = generalUtils.generateKey();
+
+  const fileBuffer = await sharp(file.buffer)
+    .resize({
+      fit: 'inside',
+      height: conPhoto.PHOTO_MAX_HEIGHT_PIXELS,
+      width: conPhoto.PHOTO_MAX_WIDTH_PIXELS,
+    })
+    .jpeg({
+      mozjpeg: true,
+    })
+    .toBuffer();
+
+  await s3Middleware.uploadFile(fileBuffer as Buffer, imageKey, file.mimetype);
+
+  const imageUrl = await s3Middleware.getFileUrl(imageKey);
+
+  return {
+    imageKey,
+    imageName: file.originalname,
+    imageType: 'image/jpeg',
+    imageUrl,
+  };
+};
+
 export default {
   cancelAddPhoto,
   checkPhotoTagsExist,
@@ -262,4 +293,5 @@ export default {
   handlePhoto,
   handlePhotos,
   handleUpdatedPhoto,
+  uploadPhotoToS3,
 };

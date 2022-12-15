@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { LeanDocument, Types } from 'mongoose';
 
-import s3Middleware from '@/middlewares/s3.middleware';
 import PhotoModel from '@/models/Photo.model';
 import photosDbService from '@/services/photosDb.service';
 import * as enm from '@/ts/enums/db.enum';
@@ -26,15 +25,13 @@ const addPhoto = async (request: Request, response: Response, next: NextFunction
     );
   }
 
-  const imageKey = generalUtils.generateKey();
+  const uploadedPhoto = await photosControllerUtils.uploadPhotoToS3(file).catch((error): void => next(error));
 
-  await s3Middleware
-    .uploadFile(file.buffer, imageKey, file.mimetype)
-    .catch((error): Promise<void> => Promise.resolve(next(error)));
+  if (!uploadedPhoto) {
+    return Promise.resolve();
+  }
 
-  const imageUrl = await s3Middleware
-    .getFileUrl(imageKey)
-    .catch((error): Promise<void> => Promise.resolve(next(error)));
+  const { imageKey, imageName, imageType, imageUrl } = uploadedPhoto;
 
   const newPhoto = new PhotoModel({
     _id: new Types.ObjectId(),
@@ -42,8 +39,8 @@ const addPhoto = async (request: Request, response: Response, next: NextFunction
     details: {
       ...body?.details,
       imageKey,
-      imageName: file.originalname,
-      imageType: file.mimetype,
+      imageName,
+      imageType,
       imageUrl,
       photographer: response.locals.user._id,
     },
@@ -57,7 +54,9 @@ const addPhoto = async (request: Request, response: Response, next: NextFunction
     .then((): Promise<LeanDocument<inf.IPhoto> | null> => photosDbService.addPhoto(newPhoto))
     .then((photo): Promise<void> => photosControllerUtils.handleAddedPhoto(response, photo))
     .catch((error): void => controllerUtils.handleValidationError(response, error))
-    .catch((error): Promise<void> => photosControllerUtils.cancelAddPhoto(error, photoId, photoTagIds))
+    .catch(
+      (error): Promise<void> => photosControllerUtils.cancelAddPhoto(error, photoId, photoTagIds, imageKey),
+    )
     .catch((error): void => next(error));
 };
 

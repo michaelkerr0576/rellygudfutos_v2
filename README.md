@@ -178,9 +178,9 @@ Sorting and Filtering will also have to be done on the Backend because there wil
 
 ### Upload Images
 
-The photos will be uploaded to an image CDN, in this case AWS S3 Bucket.
+The photos will be uploaded to an image CDN, in this case AWS S3 Bucket. Sharp will be used to resize the image so nothing exceeds 1080 pixels in length or height
 
-**Pros:**
+**Pros for CDN:**
 
 1. Performance - Better load time
 2. Optimize - Adjust compression quality, etc
@@ -189,6 +189,7 @@ The photos will be uploaded to an image CDN, in this case AWS S3 Bucket.
 **Useful Links:**
 
 - [Youtube AWS S3 Bucket Tutorial - Sam Meech-Ward](https://www.sammeechward.com/storing-images-in-s3-from-node-server)
+- [Sharp Docs](https://sharp.pixelplumbing.com/)
 
 ## Frontend
 
@@ -290,6 +291,8 @@ List of commands [Yarn Cli](https://classic.yarnpkg.com/en/docs/cli/)
 - Add package to dependencies - `yarn add package`
 - Add package to dev dependencies - `yarn add -D package`
 - Remove package from `package.json` - `yarn remove package`
+- Check vulnerabilities - `yarn audit`
+- Upgrade package - `yarn upgrade package`
 
 ### Git
 
