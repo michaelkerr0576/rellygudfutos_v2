@@ -5,7 +5,22 @@ import * as enm from '@/ts/enums/db.enum';
 import * as inf from '@/ts/interfaces/db.interface';
 import * as typ from '@/ts/types/db.types';
 
-const addUser = (newUser: inf.IUser): Promise<LeanDocument<inf.IUser> | null> =>
+/* 
+ $ usersDbService
+  - addUser
+  - addUserPhoto
+  - addUsers
+  - checkUserPhotoExists
+  - countUsers
+  - deleteUser
+  - deleteUserPhoto
+  - findUser
+  - getUser
+  - getUsers
+  - updateUser
+*/
+
+export const addUser = (newUser: inf.IUser): Promise<LeanDocument<inf.IUser> | null> =>
   UserModel.create(newUser).then(
     (user): Promise<LeanDocument<inf.IUser> | null> =>
       UserModel.findById(user._id)
@@ -14,7 +29,7 @@ const addUser = (newUser: inf.IUser): Promise<LeanDocument<inf.IUser> | null> =>
         .then((addedUser): LeanDocument<inf.IUser> | null => addedUser),
   );
 
-const addUserPhoto = (userId: Types.ObjectId, photoId: Types.ObjectId): Promise<typ.QueryStatus> =>
+export const addUserPhoto = (userId: Types.ObjectId, photoId: Types.ObjectId): Promise<typ.QueryStatus> =>
   UserModel.findByIdAndUpdate(
     { _id: userId },
     {
@@ -22,7 +37,7 @@ const addUserPhoto = (userId: Types.ObjectId, photoId: Types.ObjectId): Promise<
     },
   ).then((): typ.QueryStatus => ({ status: enm.QueryStatus.SUCCESS }));
 
-const addUsers = (newUsers: inf.IUser[]): Promise<LeanDocument<inf.IUser[]> | null> =>
+export const addUsers = (newUsers: inf.IUser[]): Promise<LeanDocument<inf.IUser[]> | null> =>
   UserModel.insertMany(newUsers).then(
     (users): Promise<LeanDocument<inf.IUser[]> | null> =>
       UserModel.find({ _id: users.map((user): Types.ObjectId => user._id) as any })
@@ -31,18 +46,18 @@ const addUsers = (newUsers: inf.IUser[]): Promise<LeanDocument<inf.IUser[]> | nu
         .then((addedUsers): LeanDocument<inf.IUser[]> | null => addedUsers),
   );
 
-const checkUserPhotoExists = (photoId: Types.ObjectId): Promise<boolean> =>
+export const checkUserPhotoExists = (photoId: Types.ObjectId): Promise<boolean> =>
   UserModel.exists({ photos: photoId });
 
-const countUsers = (): Promise<number> => UserModel.countDocuments().then((count): number => count);
+export const countUsers = (): Promise<number> => UserModel.countDocuments().then((count): number => count);
 
-const deleteUser = (id: Types.ObjectId | string): Promise<LeanDocument<inf.IUser> | null> =>
+export const deleteUser = (id: Types.ObjectId | string): Promise<LeanDocument<inf.IUser> | null> =>
   UserModel.findByIdAndDelete(id)
     .select('-password')
     .lean()
     .then((user): LeanDocument<inf.IUser> | null => user);
 
-const deleteUserPhoto = (userId: Types.ObjectId, photoId: Types.ObjectId): Promise<typ.QueryStatus> =>
+export const deleteUserPhoto = (userId: Types.ObjectId, photoId: Types.ObjectId): Promise<typ.QueryStatus> =>
   UserModel.findByIdAndUpdate(
     { _id: userId },
     {
@@ -50,18 +65,18 @@ const deleteUserPhoto = (userId: Types.ObjectId, photoId: Types.ObjectId): Promi
     },
   ).then((): typ.QueryStatus => ({ status: enm.QueryStatus.SUCCESS }));
 
-const findUser = (email: string): Promise<LeanDocument<inf.IUser> | null> =>
+export const findUser = (email: string): Promise<LeanDocument<inf.IUser> | null> =>
   UserModel.findOne({ email })
     .lean()
     .then((user): LeanDocument<inf.IUser> | null => user);
 
-const getUser = (id: Types.ObjectId | string): Promise<LeanDocument<inf.IUser> | null> =>
+export const getUser = (id: Types.ObjectId | string): Promise<LeanDocument<inf.IUser> | null> =>
   UserModel.findById(id)
     .select('-password')
     .lean()
     .then((user): LeanDocument<inf.IUser> | null => user);
 
-const getUsers = (query: typ.PaginationQuery): Promise<LeanDocument<inf.IUser[]>> =>
+export const getUsers = (query: typ.PaginationQuery): Promise<LeanDocument<inf.IUser[]>> =>
   UserModel.find()
     .skip(query.startIndex)
     .limit(query.limit)
@@ -69,7 +84,7 @@ const getUsers = (query: typ.PaginationQuery): Promise<LeanDocument<inf.IUser[]>
     .lean()
     .then((users): LeanDocument<inf.IUser[]> => users);
 
-const updateUser = (
+export const updateUser = (
   id: Types.ObjectId | string,
   updateQuery: Record<string, unknown>,
 ): Promise<LeanDocument<inf.IUser> | null> =>
@@ -77,17 +92,3 @@ const updateUser = (
     .select('-password')
     .lean()
     .then((user): LeanDocument<inf.IUser> | null => user);
-
-export default {
-  addUser,
-  addUserPhoto,
-  addUsers,
-  checkUserPhotoExists,
-  countUsers,
-  deleteUser,
-  deleteUserPhoto,
-  findUser,
-  getUser,
-  getUsers,
-  updateUser,
-};

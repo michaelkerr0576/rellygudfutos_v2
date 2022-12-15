@@ -3,10 +3,21 @@ import { Response } from 'express';
 import * as typDb from '@/ts/types/db.types';
 import * as typError from '@/ts/types/error.types';
 import * as con from '@/utils/constants/mongoDb';
-import errorMessageUtils from '@/utils/errorMessage.utils';
-import generalUtils from '@/utils/general.utils';
+import * as errorMessageUtils from '@/utils/errorMessage.utils';
+import * as generalUtils from '@/utils/general.utils';
 
-const getPaginationQuery = (
+/* 
+ $ controllerUtils
+  - getPaginationQuery
+  - getPaginationResponse
+  - handleDuplicateError
+  - handleEmptyBodyRequest
+  - handleFileTypeError
+  - handleRequiredError
+  - handleValidationError
+*/
+
+export const getPaginationQuery = (
   limit: string | number,
   maxLimit: number,
   page: string | number,
@@ -26,7 +37,7 @@ const getPaginationQuery = (
   };
 };
 
-const getPaginationResponse = (
+export const getPaginationResponse = (
   endIndex: number,
   limit: number,
   page: number,
@@ -57,7 +68,7 @@ const getPaginationResponse = (
   return pagination;
 };
 
-const handleDuplicateError = (response: Response, error: typError.MongoError, model: string): void => {
+export const handleDuplicateError = (response: Response, error: typError.MongoError, model: string): void => {
   const isDuplicateUser = error.name === 'MongoError' && error.code === con.MONGODB_DUPLICATE_KEY_ERROR;
   if (isDuplicateUser) {
     response.status(400);
@@ -67,25 +78,25 @@ const handleDuplicateError = (response: Response, error: typError.MongoError, mo
   throw error;
 };
 
-const handleEmptyBodyRequest = (response: Response, model: string): Error => {
+export const handleEmptyBodyRequest = (response: Response, model: string): Error => {
   response.status(400);
   const newError = new Error(errorMessageUtils.error400EmptyRequestBody(model));
   return newError;
 };
 
-const handleFileTypeError = (response: Response, fileTypes: string): Error => {
+export const handleFileTypeError = (response: Response, fileTypes: string): Error => {
   response.status(400);
   const newError = new Error(errorMessageUtils.error400InvalidFileType(fileTypes));
   return newError;
 };
 
-const handleRequiredError = (response: Response, model: string): Error => {
+export const handleRequiredError = (response: Response, model: string): Error => {
   response.status(400);
   const newError = new Error(errorMessageUtils.error400Required(model));
   return newError;
 };
 
-const handleValidationError = (response: Response, error: typError.MongooseValidationError): void => {
+export const handleValidationError = (response: Response, error: typError.MongooseValidationError): void => {
   const isValidationError = error.name === 'ValidationError';
   if (isValidationError) {
     const { message, errors } = errorMessageUtils.error400Validation(error);
@@ -97,14 +108,4 @@ const handleValidationError = (response: Response, error: typError.MongooseValid
   }
 
   throw error;
-};
-
-export default {
-  getPaginationQuery,
-  getPaginationResponse,
-  handleDuplicateError,
-  handleEmptyBodyRequest,
-  handleFileTypeError,
-  handleRequiredError,
-  handleValidationError,
 };

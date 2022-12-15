@@ -1,6 +1,6 @@
 import { Types } from 'mongoose';
 
-import generalUtils from '../general.utils';
+import * as generalUtils from '../general.utils';
 
 describe('General Utils', () => {
   describe('Check Object Is Empty', () => {

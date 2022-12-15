@@ -1,7 +1,7 @@
 import express from 'express';
 
-import usersController from '@/controllers/users.controller';
-import protectRouteMiddleware from '@/middlewares/protectRoute.middleware';
+import * as usersController from '@/controllers/users.controller';
+import * as protectRouteMiddleware from '@/middlewares/protectRoute.middleware';
 
 const router = express.Router();
 

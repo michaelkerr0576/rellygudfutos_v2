@@ -3,14 +3,29 @@ import bcrypt from 'bcryptjs';
 import { Types } from 'mongoose';
 
 import UserModel from '@/models/User.model';
-import usersDbService from '@/services/usersDb.service';
-import errorMessageUtils from '@/utils/errorMessage.utils';
-import generalUtils from '@/utils/general.utils';
+import * as usersDbService from '@/services/usersDb.service';
+import * as errorMessageUtils from '@/utils/errorMessage.utils';
+import * as generalUtils from '@/utils/general.utils';
 
-import controllerUtils from './utils/controller.utils';
-import usersControllerUtils from './utils/usersController.utils';
+import * as controllerUtils from './utils/controller.utils';
+import * as usersControllerUtils from './utils/usersController.utils';
 
-const addUser = (request: Request, response: Response, next: NextFunction): Promise<void> => {
+/* 
+ $ usersController
+  - addUser
+  - deleteUser
+  - getUser
+  - getUsers
+  - loginUser
+  - updateUser
+*/
+
+/**
+ * @desc Add user
+ * @route OST /api/users
+ * @access Private
+ */
+export const addUser = (request: Request, response: Response, next: NextFunction): Promise<void> => {
   const {
     body: { password },
     body,
@@ -39,7 +54,12 @@ const addUser = (request: Request, response: Response, next: NextFunction): Prom
     .catch((error): void => next(error));
 };
 
-const deleteUser = (request: Request, response: Response, next: NextFunction): Promise<void> => {
+/**
+ * @desc Delete user
+ * @route DELETE /api/users/:id
+ * @access Private
+ */
+export const deleteUser = (request: Request, response: Response, next: NextFunction): Promise<void> => {
   const { id } = request.params;
 
   return usersDbService
@@ -48,7 +68,12 @@ const deleteUser = (request: Request, response: Response, next: NextFunction): P
     .catch((error): void => next(error));
 };
 
-const getUser = (request: Request, response: Response, next: NextFunction): Promise<void> => {
+/**
+ * @desc Get user
+ * @route GET /api/users/:id
+ * @access Private
+ */
+export const getUser = (request: Request, response: Response, next: NextFunction): Promise<void> => {
   const { id } = request.params;
 
   return usersDbService
@@ -57,7 +82,12 @@ const getUser = (request: Request, response: Response, next: NextFunction): Prom
     .catch((error): void => next(error));
 };
 
-const getUsers = (request: Request, response: Response, next: NextFunction): Promise<void> => {
+/**
+ * @desc Get users
+ * @route GET /api/users
+ * @access Private
+ */
+export const getUsers = (request: Request, response: Response, next: NextFunction): Promise<void> => {
   const usersQuery = usersControllerUtils.getUsersQuery(request.query);
 
   return usersDbService
@@ -66,7 +96,12 @@ const getUsers = (request: Request, response: Response, next: NextFunction): Pro
     .catch((error): void => next(error));
 };
 
-const loginUser = (request: Request, response: Response, next: NextFunction): Promise<void> => {
+/**
+ * @desc Login user
+ * @route POST /api/users/login
+ * @access Public
+ */
+export const loginUser = (request: Request, response: Response, next: NextFunction): Promise<void> => {
   const { email, password } = request.body;
 
   return usersDbService
@@ -75,7 +110,12 @@ const loginUser = (request: Request, response: Response, next: NextFunction): Pr
     .catch((error): void => next(error));
 };
 
-const updateUser = (request: Request, response: Response, next: NextFunction): Promise<void> => {
+/**
+ * @desc Update user
+ * @route PUT /api/users/:id
+ * @access Private
+ */
+export const updateUser = (request: Request, response: Response, next: NextFunction): Promise<void> => {
   const {
     body,
     params: { id },
@@ -93,43 +133,4 @@ const updateUser = (request: Request, response: Response, next: NextFunction): P
     .then((user): Promise<void> => usersControllerUtils.handleUpdatedUser(response, user))
     .catch((error): void => controllerUtils.handleValidationError(response, error))
     .catch((error): void => next(error));
-};
-
-export default {
-  /**
-   * @desc Add user
-   * @route OST /api/users
-   * @access Private
-   */
-  addUser,
-  /**
-   * @desc Delete user
-   * @route DELETE /api/users/:id
-   * @access Private
-   */
-  deleteUser,
-  /**
-   * @desc Get user
-   * @route GET /api/users/:id
-   * @access Private
-   */
-  getUser,
-  /**
-   * @desc Get users
-   * @route GET /api/users
-   * @access Private
-   */
-  getUsers,
-  /**
-   * @desc Login user
-   * @route POST /api/users/login
-   * @access Public
-   */
-  loginUser,
-  /**
-   * @desc Update user
-   * @route PUT /api/users/:id
-   * @access Private
-   */
-  updateUser,
 };

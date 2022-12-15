@@ -1,6 +1,6 @@
-import utilFixture from '@/tests/fixtures/util.fixture';
+import * as utilFixture from '@/tests/fixtures/util.fixture';
 
-import validateUtils from '../validate.utils';
+import * as validateUtils from '../validate.utils';
 
 describe('Validate Utils', () => {
   describe('Array Values Max Length', () => {

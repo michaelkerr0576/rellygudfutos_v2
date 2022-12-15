@@ -3,17 +3,17 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import timekeeper from 'timekeeper';
 
-import usersDbService from '@/services/usersDb.service';
+import * as usersDbService from '@/services/usersDb.service';
 import userMaxLengthFixture from '@/tests/fixtures/users/negative/userMaxLength.fixture';
 import userIdFixture from '@/tests/fixtures/users/userId.fixture';
 import userRequestFixture from '@/tests/fixtures/users/userRequest.fixture';
 import userResponseFixture from '@/tests/fixtures/users/userResponse.fixture';
 import usersResponseFixture from '@/tests/fixtures/users/usersResponse.fixture';
-import utilFixture from '@/tests/fixtures/util.fixture';
-import mongoMemoryServer from '@/tests/mongoMemoryServer';
-import usersScripts from '@/tests/scripts/users.scripts';
+import * as utilFixture from '@/tests/fixtures/util.fixture';
+import * as mongoMemoryServer from '@/tests/mongoMemoryServer';
+import * as usersScripts from '@/tests/scripts/users.scripts';
 
-import usersController from '../users.controller';
+import * as usersController from '../users.controller';
 
 const mockBcryptCompareSync = jest.fn();
 bcrypt.compareSync = mockBcryptCompareSync;

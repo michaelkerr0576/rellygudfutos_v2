@@ -2,17 +2,28 @@ import { Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import { LeanDocument } from 'mongoose';
 
-import usersDbService from '@/services/usersDb.service';
+import * as usersDbService from '@/services/usersDb.service';
 import * as inf from '@/ts/interfaces/db.interface';
 import * as typ from '@/ts/types/db.types';
-import authUtils from '@/utils/auth.utils';
+import * as authUtils from '@/utils/auth.utils';
 import * as con from '@/utils/constants/pagination';
-import errorMessageUtils from '@/utils/errorMessage.utils';
-import responseMessageUtils from '@/utils/responseMessage.utils';
+import * as errorMessageUtils from '@/utils/errorMessage.utils';
+import * as responseMessageUtils from '@/utils/responseMessage.utils';
 
-import controllerUtils from './controller.utils';
+import * as controllerUtils from './controller.utils';
 
-const getUsersQuery = (query: Request['query']): typ.PaginationQuery => {
+/* 
+ $ usersControllerUtils
+  - getUsersQuery
+  - handleAddedUser
+  - handleDeletedUser
+  - handleLoggedInUser
+  - handleUpdatedUser
+  - handleUser
+  - handleUsers
+*/
+
+export const getUsersQuery = (query: Request['query']): typ.PaginationQuery => {
   const { limit = con.USER_LIMIT, page = con.PAGE } = query;
 
   const pagination = controllerUtils.getPaginationQuery(
@@ -29,7 +40,10 @@ const getUsersQuery = (query: Request['query']): typ.PaginationQuery => {
   };
 };
 
-const handleAddedUser = async (response: Response, user: LeanDocument<inf.IUser> | null): Promise<void> => {
+export const handleAddedUser = async (
+  response: Response,
+  user: LeanDocument<inf.IUser> | null,
+): Promise<void> => {
   if (!user) {
     response.status(500);
     throw new Error(errorMessageUtils.error500NotFound('User'));
@@ -44,7 +58,10 @@ const handleAddedUser = async (response: Response, user: LeanDocument<inf.IUser>
   });
 };
 
-const handleDeletedUser = async (response: Response, user: LeanDocument<inf.IUser> | null): Promise<void> => {
+export const handleDeletedUser = async (
+  response: Response,
+  user: LeanDocument<inf.IUser> | null,
+): Promise<void> => {
   if (!user) {
     response.status(404);
     throw new Error(errorMessageUtils.error404('User'));
@@ -56,7 +73,7 @@ const handleDeletedUser = async (response: Response, user: LeanDocument<inf.IUse
   });
 };
 
-const handleLoggedInUser = async (
+export const handleLoggedInUser = async (
   response: Response,
   user: LeanDocument<inf.IUser> | null,
   typedPassword: string,
@@ -86,7 +103,10 @@ const handleLoggedInUser = async (
   });
 };
 
-const handleUpdatedUser = async (response: Response, user: LeanDocument<inf.IUser> | null): Promise<void> => {
+export const handleUpdatedUser = async (
+  response: Response,
+  user: LeanDocument<inf.IUser> | null,
+): Promise<void> => {
   if (!user) {
     response.status(404);
     throw new Error(errorMessageUtils.error404('User'));
@@ -98,7 +118,7 @@ const handleUpdatedUser = async (response: Response, user: LeanDocument<inf.IUse
   });
 };
 
-const handleUser = async (response: Response, user: LeanDocument<inf.IUser> | null): Promise<void> => {
+export const handleUser = async (response: Response, user: LeanDocument<inf.IUser> | null): Promise<void> => {
   if (!user) {
     response.status(404);
     throw new Error(errorMessageUtils.error404('User'));
@@ -110,7 +130,7 @@ const handleUser = async (response: Response, user: LeanDocument<inf.IUser> | nu
   });
 };
 
-const handleUsers = async (
+export const handleUsers = async (
   response: Response,
   users: LeanDocument<inf.IUser[]>,
   usersQuery: typ.PaginationQuery,
@@ -131,14 +151,4 @@ const handleUsers = async (
     message: responseMessageUtils.dataFetched('Users'),
     pagination,
   });
-};
-
-export default {
-  getUsersQuery,
-  handleAddedUser,
-  handleDeletedUser,
-  handleLoggedInUser,
-  handleUpdatedUser,
-  handleUser,
-  handleUsers,
 };

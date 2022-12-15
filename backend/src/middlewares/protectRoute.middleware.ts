@@ -2,10 +2,16 @@ import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import { LeanDocument, Types } from 'mongoose';
 
-import usersDbService from '@/services/usersDb.service';
+import * as usersDbService from '@/services/usersDb.service';
 import * as enm from '@/ts/enums/db.enum';
 import * as inf from '@/ts/interfaces/db.interface';
-import errorMessageUtils from '@/utils/errorMessage.utils';
+import * as errorMessageUtils from '@/utils/errorMessage.utils';
+
+/* 
+ $ protectRouteMiddleware
+  - adminAuthorisation
+  - userAuthorisation
+*/
 
 interface JwtPayload {
   id: Types.ObjectId;
@@ -63,13 +69,8 @@ const authenticateUser = (
     .catch((error): void => next(error));
 };
 
-const adminAuthorisation = (request: Request, response: Response, next: NextFunction): Promise<void> =>
+export const adminAuthorisation = (request: Request, response: Response, next: NextFunction): Promise<void> =>
   authenticateUser(request, response, next, [enm.UserRole.ADMIN]);
 
-const userAuthorisation = (request: Request, response: Response, next: NextFunction): Promise<void> =>
+export const userAuthorisation = (request: Request, response: Response, next: NextFunction): Promise<void> =>
   authenticateUser(request, response, next, [enm.UserRole.ADMIN, enm.UserRole.USER]);
-
-export default {
-  adminAuthorisation,
-  userAuthorisation,
-};

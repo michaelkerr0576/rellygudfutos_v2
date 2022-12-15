@@ -3,10 +3,10 @@ import { model, Schema, Types } from 'mongoose';
 
 import * as enm from '@/ts/enums/db.enum';
 import * as inf from '@/ts/interfaces/db.interface';
-import regexUtils from '@/utils/regex.utils';
+import * as regexUtils from '@/utils/regex.utils';
 
-import validateUtils from './utils/validate.utils';
-import validateMessageUtils from './utils/validateMessage.utils';
+import * as validateUtils from './utils/validate.utils';
+import * as validateMessageUtils from './utils/validateMessage.utils';
 
 const userSchema = new Schema<inf.IUser>(
   {

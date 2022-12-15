@@ -3,7 +3,7 @@ import { Types } from 'mongoose';
 import tagsRequestFixture from '../tags/tagsRequest.fixture';
 import userAdminRequestFixture from '../users/userAdminRequest.fixture';
 import userRequestFixture from '../users/userRequest.fixture';
-import utilFixture from '../util.fixture';
+import * as utilFixture from '../util.fixture';
 
 import photoImageDetailsFixture from './photoImageDetails.fixture';
 import photosRequestFixture from './photosRequest.fixture';

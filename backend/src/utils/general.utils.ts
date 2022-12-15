@@ -3,12 +3,23 @@ import { Types } from 'mongoose';
 
 import * as con from '@/utils/constants/parsing';
 
-const checkIsObjectEmpty = (object: Record<string, unknown>): boolean => Object.keys(object).length === 0;
+/* 
+ $ generalUtils
+  - checkIsObjectEmpty
+  - checkStringIsEmpty
+  - flattenObject
+  - generateKey
+  - numberToString
+  - stringToNumber
+*/
 
-const checkStringIsEmpty = (string: string): boolean =>
+export const checkIsObjectEmpty = (object: Record<string, unknown>): boolean =>
+  Object.keys(object).length === 0;
+
+export const checkStringIsEmpty = (string: string): boolean =>
   typeof string === 'string' && string.trim().length === 0;
 
-const flattenObject = (object: Record<string, unknown>): Record<string, unknown> => {
+export const flattenObject = (object: Record<string, unknown>): Record<string, unknown> => {
   let flattenedObject: Record<string, unknown> = {};
 
   Object.entries(object).forEach((entry): void => {
@@ -29,19 +40,10 @@ const flattenObject = (object: Record<string, unknown>): Record<string, unknown>
   return flattenedObject;
 };
 
-const generateKey = (bytes = 32): string => crypto.randomBytes(bytes).toString('hex');
+export const generateKey = (bytes = 32): string => crypto.randomBytes(bytes).toString('hex');
 
-const numberToString = (value: string | number | Types.ObjectId): string =>
+export const numberToString = (value: string | number | Types.ObjectId): string =>
   typeof value === 'number' || typeof value === 'object' ? value.toString() : value;
 
-const stringToNumber = (value: string | number): number =>
+export const stringToNumber = (value: string | number): number =>
   typeof value === 'string' ? parseInt(value, con.RADIX) : value;
-
-export default {
-  checkIsObjectEmpty,
-  checkStringIsEmpty,
-  flattenObject,
-  generateKey,
-  numberToString,
-  stringToNumber,
-};

@@ -3,8 +3,8 @@ import userMaxLengthFixture from '@/tests/fixtures/users/negative/userMaxLength.
 import userRegexFixture from '@/tests/fixtures/users/negative/userRegex.fixture';
 import userTrimFixture from '@/tests/fixtures/users/negative/userTrim.fixture';
 import userRequestFixture from '@/tests/fixtures/users/userRequest.fixture';
-import utilFixture from '@/tests/fixtures/util.fixture';
-import mongoMemoryServer from '@/tests/mongoMemoryServer';
+import * as utilFixture from '@/tests/fixtures/util.fixture';
+import * as mongoMemoryServer from '@/tests/mongoMemoryServer';
 
 import UserModel from '../User.model';
 

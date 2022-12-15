@@ -2,10 +2,10 @@ import { Request, Response } from 'express';
 import { LeanDocument, Types } from 'mongoose';
 import sharp from 'sharp';
 
-import s3Middleware from '@/middlewares/s3.middleware';
-import photosDbService from '@/services/photosDb.service';
-import tagsDbService from '@/services/tagsDb.service';
-import usersDbService from '@/services/usersDb.service';
+import * as s3Middleware from '@/middlewares/s3.middleware';
+import * as photosDbService from '@/services/photosDb.service';
+import * as tagsDbService from '@/services/tagsDb.service';
+import * as usersDbService from '@/services/usersDb.service';
 import * as enm from '@/ts/enums/db.enum';
 import * as inf from '@/ts/interfaces/db.interface';
 import * as typDb from '@/ts/types/db.types';
@@ -13,13 +13,28 @@ import * as typS3 from '@/ts/types/s3.types';
 import * as conPagination from '@/utils/constants/pagination';
 import * as conPhoto from '@/utils/constants/photo';
 import * as conSorting from '@/utils/constants/sorting';
-import errorMessageUtils from '@/utils/errorMessage.utils';
-import generalUtils from '@/utils/general.utils';
-import responseMessageUtils from '@/utils/responseMessage.utils';
+import * as errorMessageUtils from '@/utils/errorMessage.utils';
+import * as generalUtils from '@/utils/general.utils';
+import * as responseMessageUtils from '@/utils/responseMessage.utils';
 
-import controllerUtils from './controller.utils';
+import * as controllerUtils from './controller.utils';
 
-const cancelAddPhoto = async (
+/* 
+ $ photosControllerUtils
+  - cancelAddPhoto
+  - checkPhotoTagsExist
+  - getPhotosFilter
+  - getPhotosQuery
+  - getPhotosSort
+  - handleAddedPhoto
+  - handleDeletedPhoto
+  - handlePhoto
+  - handlePhotos
+  - handleUpdatedPhoto
+  - uploadPhotoToS3
+*/
+
+export const cancelAddPhoto = async (
   error: Error,
   photoId: Types.ObjectId,
   photoTagIds: Types.ObjectId[] | undefined,
@@ -44,7 +59,7 @@ const cancelAddPhoto = async (
   throw error;
 };
 
-const checkPhotoTagsExist = async (
+export const checkPhotoTagsExist = async (
   response: Response,
   photoTagIds: Types.ObjectId[] | undefined,
 ): Promise<void> => {
@@ -56,7 +71,7 @@ const checkPhotoTagsExist = async (
   }
 };
 
-const getPhotosFilter = (
+export const getPhotosFilter = (
   search: string,
   tags: string[],
   user: string,
@@ -89,7 +104,7 @@ const getPhotosFilter = (
   return filter;
 };
 
-const getPhotosSort = (
+export const getPhotosSort = (
   sort: enm.PhotoSortOptions,
 ): typDb.PhotosSortColumnsWithDirection | enm.PhotoSortOptions.RANDOM => {
   const sortUpperCase = sort.toUpperCase();
@@ -110,7 +125,7 @@ const getPhotosSort = (
   }
 };
 
-const getPhotosQuery = (query: Request['query']): typDb.PhotosQuery => {
+export const getPhotosQuery = (query: Request['query']): typDb.PhotosQuery => {
   const {
     limit = conPagination.PHOTO_LIMIT,
     page = conPagination.PAGE,
@@ -140,7 +155,7 @@ const getPhotosQuery = (query: Request['query']): typDb.PhotosQuery => {
   };
 };
 
-const handleAddedPhoto = async (
+export const handleAddedPhoto = async (
   response: Response,
   photo: LeanDocument<inf.IPhoto> | null,
 ): Promise<void> => {
@@ -165,7 +180,7 @@ const handleAddedPhoto = async (
   });
 };
 
-const handleDeletedPhoto = async (
+export const handleDeletedPhoto = async (
   response: Response,
   photo: LeanDocument<inf.IPhoto> | null,
 ): Promise<void> => {
@@ -190,7 +205,10 @@ const handleDeletedPhoto = async (
   });
 };
 
-const handlePhoto = async (response: Response, photo: LeanDocument<inf.IPhoto> | null): Promise<void> => {
+export const handlePhoto = async (
+  response: Response,
+  photo: LeanDocument<inf.IPhoto> | null,
+): Promise<void> => {
   if (!photo) {
     response.status(404);
     throw new Error(errorMessageUtils.error404('Photo'));
@@ -202,7 +220,7 @@ const handlePhoto = async (response: Response, photo: LeanDocument<inf.IPhoto> |
   });
 };
 
-const handlePhotos = async (
+export const handlePhotos = async (
   response: Response,
   photos: LeanDocument<inf.IPhoto[]> | null,
   photosQuery: typDb.PhotosQuery,
@@ -234,7 +252,7 @@ const handlePhotos = async (
   });
 };
 
-const handleUpdatedPhoto = async (
+export const handleUpdatedPhoto = async (
   response: Response,
   photo: LeanDocument<inf.IPhoto> | null,
 ): Promise<void> => {
@@ -256,7 +274,7 @@ const handleUpdatedPhoto = async (
   });
 };
 
-const uploadPhotoToS3 = async (file: Express.Multer.File): Promise<typS3.PhotoS3> => {
+export const uploadPhotoToS3 = async (file: Express.Multer.File): Promise<typS3.PhotoS3> => {
   const imageKey = generalUtils.generateKey();
 
   const fileBuffer = await sharp(file.buffer)
@@ -280,18 +298,4 @@ const uploadPhotoToS3 = async (file: Express.Multer.File): Promise<typS3.PhotoS3
     imageType: 'image/jpeg',
     imageUrl,
   };
-};
-
-export default {
-  cancelAddPhoto,
-  checkPhotoTagsExist,
-  getPhotosFilter,
-  getPhotosQuery,
-  getPhotosSort,
-  handleAddedPhoto,
-  handleDeletedPhoto,
-  handlePhoto,
-  handlePhotos,
-  handleUpdatedPhoto,
-  uploadPhotoToS3,
 };

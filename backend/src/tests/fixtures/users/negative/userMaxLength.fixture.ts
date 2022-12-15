@@ -1,4 +1,4 @@
-import utilFixture from '@/tests/fixtures/util.fixture';
+import * as utilFixture from '@/tests/fixtures/util.fixture';
 
 export default {
   email: utilFixture.chars101,

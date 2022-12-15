@@ -1,7 +1,7 @@
 import { Types } from 'mongoose';
 
 import tagsRequestFixture from '../tags/tagsRequest.fixture';
-import utilFixture from '../util.fixture';
+import * as utilFixture from '../util.fixture';
 
 import photoFixture from './photoRequest.fixture';
 

@@ -260,20 +260,34 @@ Super lightweight client-side state. For this application, Redux is overkill whe
 
 - [Zustand Docs](https://docs.pmnd.rs/zustand/introduction)
 
-## Regrets
+## Retrospective
 
 ### Next.js
 
 Next.js is a server-side rendering that reduces first contentful paint and is superior for SEO purposes. It is outputted in html vs javascript which is easier for search engines to look through :drooling_face:
 
-The regret is not trying Next.js out first before finishing a fully fleshed out Express Backend. I could setup a custom server with Express within Next.js or mess around with some Next.js build where it is in the Express app. But that is starting to sound like it will take a long time and there is not as much resources on how to make this happen... I decided to save Next.js for when I could do it do justice.
+The regret is not trying Next.js out first before finishing a fully fleshed out Express Backend. I could setup a custom server with Express within Next.js or mess around with some Next.js build where it is in the Express app. But in my opinion that is not doing Next.js justice. Something like GraphQL integrated with Next.js could be pretty powerful.
 
 **Useful Links:**
 
+- [Next.js Docs](https://nextjs.org/docs)
+- [GraphQL Docs](https://graphql.org/)
 - [Next.js Custom Server](https://nextjs.org/docs/advanced-features/custom-server)
 - [Setting Up with React Query](https://prateeksurana.me/blog/mastering-data-fetching-with-react-query-and-next-js/)
 - [Youtube Next.js Tutorial - Traversy Media](https://www.youtube.com/watch?v=mTz0GXj8NN0&ab_channel=TraversyMedia)
 - [Youtube Next.js Tutorial - Fireship](https://www.youtube.com/watch?v=Sklc_fQBmcs&ab_channel=Fireship)
+
+### Importing / Exporting
+
+I am still on the fence on this one because I like it as a pattern but I know it is perhaps bad practice.
+
+By handling imports like `import * as alias`, it sacrifices on optimal tree shaking to get rid of functions/modules that are not needed. But I find very useful for maintenance and general naming conventions. Knowing what file a function is coming from reads well in my opinion but it is bad practice to import everything and not just what you need. It is ok for small apps but could become a problem at enterprise level.
+
+100% do not take this approach for large external libraries like `lodash` or `MaterialUI`, import what you need from them.
+
+**Useful Links:**
+
+- [Tree Shaking](https://developer.mozilla.org/en-US/docs/Glossary/Tree_shaking)
 
 ## Terminal
 

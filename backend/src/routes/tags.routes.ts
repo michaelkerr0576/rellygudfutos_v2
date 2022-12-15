@@ -1,7 +1,7 @@
 import express from 'express';
 
-import tagsController from '@/controllers/tags.controller';
-import protectRouteMiddleware from '@/middlewares/protectRoute.middleware';
+import * as tagsController from '@/controllers/tags.controller';
+import * as protectRouteMiddleware from '@/middlewares/protectRoute.middleware';
 
 const router = express.Router();
 

@@ -4,8 +4,8 @@ import photoMinLengthFixture from '@/tests/fixtures/photos/negative/photoMinLeng
 import photoRegexFixture from '@/tests/fixtures/photos/negative/photoRegex.fixture';
 import photoTrimFixture from '@/tests/fixtures/photos/negative/photoTrim.fixture';
 import photoRequestFixture from '@/tests/fixtures/photos/photoRequest.fixture';
-import utilFixture from '@/tests/fixtures/util.fixture';
-import mongoMemoryServer from '@/tests/mongoMemoryServer';
+import * as utilFixture from '@/tests/fixtures/util.fixture';
+import * as mongoMemoryServer from '@/tests/mongoMemoryServer';
 
 import PhotoModel from '../Photo.model';
 

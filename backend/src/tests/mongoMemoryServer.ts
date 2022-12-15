@@ -1,12 +1,19 @@
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
 
+/* 
+ $ mongoMemoryServer
+  - clearDB
+  - connectDB
+  - disconnectDB
+*/
+
 async function createMongoServer(): Promise<MongoMemoryServer> {
   return MongoMemoryServer.create();
 }
 const mongoServer = createMongoServer();
 
-const clearDB = async (): Promise<void> => {
+export const clearDB = async (): Promise<void> => {
   const collections = Object.values(mongoose.connection.collections);
 
   collections.forEach(async (collection): Promise<void> => {
@@ -14,7 +21,7 @@ const clearDB = async (): Promise<void> => {
   });
 };
 
-const connectDB = async (): Promise<void> => {
+export const connectDB = async (): Promise<void> => {
   const uri = (await mongoServer).getUri();
 
   const mongooseOpts = {
@@ -27,14 +34,8 @@ const connectDB = async (): Promise<void> => {
   await mongoose.connect(uri, mongooseOpts);
 };
 
-const disconnectDB = async (): Promise<void> => {
+export const disconnectDB = async (): Promise<void> => {
   await mongoose.connection.dropDatabase();
   await mongoose.connection.close();
   await (await mongoServer).stop();
-};
-
-export default {
-  clearDB,
-  connectDB,
-  disconnectDB,
 };

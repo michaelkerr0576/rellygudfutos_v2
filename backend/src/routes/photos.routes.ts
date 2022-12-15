@@ -1,8 +1,8 @@
 import express from 'express';
 import multer from 'multer';
 
-import photosController from '@/controllers/photos.controller';
-import protectRouteMiddleware from '@/middlewares/protectRoute.middleware';
+import * as photosController from '@/controllers/photos.controller';
+import * as protectRouteMiddleware from '@/middlewares/protectRoute.middleware';
 
 const router = express.Router();
 

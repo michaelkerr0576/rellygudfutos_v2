@@ -1,4 +1,10 @@
-const arrayValuesMaxLength =
+/* 
+ $ validateUtils
+  - arrayValuesMaxLength
+  - arrayValuesRequired
+*/
+
+export const arrayValuesMaxLength =
   (maxLength: number) =>
   (array: any[]): boolean => {
     for (let i = 0; i < array.length; i += 1) {
@@ -10,9 +16,4 @@ const arrayValuesMaxLength =
     return true;
   };
 
-const arrayValuesRequired = (array: any[]): boolean => array.length > 0;
-
-export default {
-  arrayValuesMaxLength,
-  arrayValuesRequired,
-};
+export const arrayValuesRequired = (array: any[]): boolean => array.length > 0;

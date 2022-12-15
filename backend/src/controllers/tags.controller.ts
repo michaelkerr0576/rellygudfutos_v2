@@ -2,13 +2,27 @@ import { NextFunction, Request, Response } from 'express';
 import { Types } from 'mongoose';
 
 import TagModel from '@/models/Tag.model';
-import tagsDbService from '@/services/tagsDb.service';
-import generalUtils from '@/utils/general.utils';
+import * as tagsDbService from '@/services/tagsDb.service';
+import * as generalUtils from '@/utils/general.utils';
 
-import controllerUtils from './utils/controller.utils';
-import tagsControllerUtils from './utils/tagsController.utils';
+import * as controllerUtils from './utils/controller.utils';
+import * as tagsControllerUtils from './utils/tagsController.utils';
 
-const addTag = (request: Request, response: Response, next: NextFunction): Promise<void> => {
+/* 
+ $ tagsController
+  - addTag
+  - deleteTag
+  - getTag
+  - getTags
+  - updateTag
+*/
+
+/**
+ * @desc Add tag
+ * @route POST /api/tags
+ * @access Private
+ */
+export const addTag = (request: Request, response: Response, next: NextFunction): Promise<void> => {
   const { body } = request;
 
   const newTag = new TagModel({
@@ -23,7 +37,12 @@ const addTag = (request: Request, response: Response, next: NextFunction): Promi
     .catch((error): void => next(error));
 };
 
-const deleteTag = (request: Request, response: Response, next: NextFunction): Promise<void> => {
+/**
+ * @desc Delete tag
+ * @route DELETE /api/tags/:id
+ * @access Private
+ */
+export const deleteTag = (request: Request, response: Response, next: NextFunction): Promise<void> => {
   const { id } = request.params;
 
   return tagsDbService
@@ -32,7 +51,12 @@ const deleteTag = (request: Request, response: Response, next: NextFunction): Pr
     .catch((error): void => next(error));
 };
 
-const getTag = (request: Request, response: Response, next: NextFunction): Promise<void> => {
+/**
+ * @desc Get tag
+ * @route GET /api/tags/:id
+ * @access Public
+ */
+export const getTag = (request: Request, response: Response, next: NextFunction): Promise<void> => {
   const { id } = request.params;
 
   return tagsDbService
@@ -41,7 +65,12 @@ const getTag = (request: Request, response: Response, next: NextFunction): Promi
     .catch((error): void => next(error));
 };
 
-const getTags = (request: Request, response: Response, next: NextFunction): Promise<void> => {
+/**
+ * @desc Get tags
+ * @route GET /api/tags
+ * @access Public
+ */
+export const getTags = (request: Request, response: Response, next: NextFunction): Promise<void> => {
   const tagsQuery = tagsControllerUtils.getTagsQuery(request.query);
 
   return tagsDbService
@@ -50,7 +79,12 @@ const getTags = (request: Request, response: Response, next: NextFunction): Prom
     .catch((error): void => next(error));
 };
 
-const updateTag = (request: Request, response: Response, next: NextFunction): Promise<void> => {
+/**
+ * @desc Update tag
+ * @route PUT /api/tags/:id
+ * @access Private
+ */
+export const updateTag = (request: Request, response: Response, next: NextFunction): Promise<void> => {
   const {
     body,
     params: { id },
@@ -66,37 +100,4 @@ const updateTag = (request: Request, response: Response, next: NextFunction): Pr
     .then((tag): Promise<void> => tagsControllerUtils.handleUpdatedTag(response, tag))
     .catch((error): void => controllerUtils.handleValidationError(response, error))
     .catch((error): void => next(error));
-};
-
-export default {
-  /**
-   * @desc Add tag
-   * @route POST /api/tags
-   * @access Private
-   */
-  addTag,
-  /**
-   * @desc Delete tag
-   * @route DELETE /api/tags/:id
-   * @access Private
-   */
-  deleteTag,
-  /**
-   * @desc Get tag
-   * @route GET /api/tags/:id
-   * @access Public
-   */
-  getTag,
-  /**
-   * @desc Get tags
-   * @route GET /api/tags
-   * @access Public
-   */
-  getTags,
-  /**
-   * @desc Update tag
-   * @route PUT /api/tags/:id
-   * @access Private
-   */
-  updateTag,
 };

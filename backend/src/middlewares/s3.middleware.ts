@@ -8,6 +8,13 @@ import {
 } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 
+/* 
+ $ s3Middleware
+  - deleteFile
+  - getFileUrl
+  - uploadFile
+*/
+
 const bucketName = process.env.AWS_BUCKET_NAME || '';
 const bucketRegion = process.env.AWS_BUCKET_REGION || '';
 const accessKey = process.env.AWS_ACCESS_KEY || '';
@@ -21,7 +28,7 @@ const s3Client = new S3Client({
   region: bucketRegion,
 });
 
-const deleteFile = (key: string): Promise<DeleteObjectCommandOutput> => {
+export const deleteFile = (key: string): Promise<DeleteObjectCommandOutput> => {
   const params = {
     Bucket: bucketName,
     Key: key,
@@ -30,7 +37,7 @@ const deleteFile = (key: string): Promise<DeleteObjectCommandOutput> => {
   return s3Client.send(new DeleteObjectCommand(params));
 };
 
-const getFileUrl = async (key: string): Promise<string> => {
+export const getFileUrl = async (key: string): Promise<string> => {
   const params = {
     Bucket: bucketName,
     Key: key,
@@ -43,7 +50,11 @@ const getFileUrl = async (key: string): Promise<string> => {
   return fileUrl;
 };
 
-const uploadFile = (buffer: Buffer, key: string, mimetype: string): Promise<PutObjectCommandOutput> => {
+export const uploadFile = (
+  buffer: Buffer,
+  key: string,
+  mimetype: string,
+): Promise<PutObjectCommandOutput> => {
   const params = {
     Body: buffer,
     Bucket: bucketName,
@@ -52,10 +63,4 @@ const uploadFile = (buffer: Buffer, key: string, mimetype: string): Promise<PutO
   };
 
   return s3Client.send(new PutObjectCommand(params));
-};
-
-export default {
-  deleteFile,
-  getFileUrl,
-  uploadFile,
 };

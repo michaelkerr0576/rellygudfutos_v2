@@ -2,16 +2,30 @@ import { NextFunction, Request, Response } from 'express';
 import { LeanDocument, Types } from 'mongoose';
 
 import PhotoModel from '@/models/Photo.model';
-import photosDbService from '@/services/photosDb.service';
+import * as photosDbService from '@/services/photosDb.service';
 import * as enm from '@/ts/enums/db.enum';
 import * as inf from '@/ts/interfaces/db.interface';
-import generalUtils from '@/utils/general.utils';
-import regexUtils from '@/utils/regex.utils';
+import * as generalUtils from '@/utils/general.utils';
+import * as regexUtils from '@/utils/regex.utils';
 
-import controllerUtils from './utils/controller.utils';
-import photosControllerUtils from './utils/photosController.utils';
+import * as controllerUtils from './utils/controller.utils';
+import * as photosControllerUtils from './utils/photosController.utils';
 
-const addPhoto = async (request: Request, response: Response, next: NextFunction): Promise<void> => {
+/* 
+ $ photosController
+  - addPhoto
+  - deletePhoto
+  - getPhoto
+  - getPhotos
+  - updatePhoto
+*/
+
+/**
+ * @desc Add photo
+ * @route POST /api/photos
+ * @access Private
+ */
+export const addPhoto = async (request: Request, response: Response, next: NextFunction): Promise<void> => {
   const { body, file } = request;
 
   if (!file) {
@@ -60,7 +74,12 @@ const addPhoto = async (request: Request, response: Response, next: NextFunction
     .catch((error): void => next(error));
 };
 
-const deletePhoto = (request: Request, response: Response, next: NextFunction): Promise<void> => {
+/**
+ * @desc Delete photo
+ * @route DELETE /api/photos/:id
+ * @access Private
+ */
+export const deletePhoto = (request: Request, response: Response, next: NextFunction): Promise<void> => {
   const { id } = request.params;
 
   return photosDbService
@@ -69,7 +88,12 @@ const deletePhoto = (request: Request, response: Response, next: NextFunction): 
     .catch((error): void => next(error));
 };
 
-const getPhoto = (request: Request, response: Response, next: NextFunction): Promise<void> => {
+/**
+ * @desc Get photo
+ * @route GET /api/photos/:id
+ * @access Public
+ */
+export const getPhoto = (request: Request, response: Response, next: NextFunction): Promise<void> => {
   const { id } = request.params;
 
   return photosDbService
@@ -78,7 +102,12 @@ const getPhoto = (request: Request, response: Response, next: NextFunction): Pro
     .catch((error): void => next(error));
 };
 
-const getPhotos = (request: Request, response: Response, next: NextFunction): Promise<void> => {
+/**
+ * @desc Get photos
+ * @route GET /api/photos
+ * @access Public
+ */
+export const getPhotos = (request: Request, response: Response, next: NextFunction): Promise<void> => {
   const photosQuery = photosControllerUtils.getPhotosQuery(request.query);
 
   const isRandomSort = photosQuery.sort === enm.PhotoSortOptions.RANDOM;
@@ -97,7 +126,12 @@ const getPhotos = (request: Request, response: Response, next: NextFunction): Pr
     .catch((error): void => next(error));
 };
 
-const updatePhoto = (request: Request, response: Response, next: NextFunction): Promise<void> => {
+/**
+ * @desc Update photo
+ * @route PUT /api/photos/:id
+ * @access PrivatePrivate
+ */
+export const updatePhoto = (request: Request, response: Response, next: NextFunction): Promise<void> => {
   const {
     body,
     params: { id },
@@ -115,37 +149,4 @@ const updatePhoto = (request: Request, response: Response, next: NextFunction): 
     .then((photo): Promise<void> => photosControllerUtils.handleUpdatedPhoto(response, photo))
     .catch((error): void => controllerUtils.handleValidationError(response, error))
     .catch((error): void => next(error));
-};
-
-export default {
-  /**
-   * @desc Add photo
-   * @route POST /api/photos
-   * @access Private
-   */
-  addPhoto,
-  /**
-   * @desc Delete photo
-   * @route DELETE /api/photos/:id
-   * @access Private
-   */
-  deletePhoto,
-  /**
-   * @desc Get photo
-   * @route GET /api/photos/:id
-   * @access Public
-   */
-  getPhoto,
-  /**
-   * @desc Get photos
-   * @route GET /api/photos
-   * @access Public
-   */
-  getPhotos,
-  /**
-   * @desc Update photo
-   * @route PUT /api/photos/:id
-   * @access PrivatePrivate
-   */
-  updatePhoto,
 };

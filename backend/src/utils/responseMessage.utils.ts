@@ -1,17 +1,18 @@
-const dataAdded = (model: string): string => `${model} added`;
+/* 
+ $ responseMessageUtils
+  - dataAdded
+  - dataDeleted
+  - dataFetched
+  - dataUpdated
+  - userLoggedIn
+*/
 
-const dataDeleted = (model: string): string => `${model} deleted`;
+export const dataAdded = (model: string): string => `${model} added`;
 
-const dataFetched = (model: string): string => `${model} fetched successfully`;
+export const dataDeleted = (model: string): string => `${model} deleted`;
 
-const dataUpdated = (model: string): string => `${model} updated`;
+export const dataFetched = (model: string): string => `${model} fetched successfully`;
 
-const userLoggedIn = (username: string): string => `${username} logged in`;
+export const dataUpdated = (model: string): string => `${model} updated`;
 
-export default {
-  dataAdded,
-  dataDeleted,
-  dataFetched,
-  dataUpdated,
-  userLoggedIn,
-};
+export const userLoggedIn = (username: string): string => `${username} logged in`;

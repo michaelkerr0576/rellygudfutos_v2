@@ -1,6 +1,6 @@
 import { Types } from 'mongoose';
 
-import utilFixture from '../util.fixture';
+import * as utilFixture from '../util.fixture';
 
 import userAdminRequestFixture from './userAdminRequest.fixture';
 

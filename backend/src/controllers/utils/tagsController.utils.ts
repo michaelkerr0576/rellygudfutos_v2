@@ -1,16 +1,26 @@
 import { Request, Response } from 'express';
 import { LeanDocument } from 'mongoose';
 
-import tagsDbService from '@/services/tagsDb.service';
+import * as tagsDbService from '@/services/tagsDb.service';
 import * as inf from '@/ts/interfaces/db.interface';
 import * as typ from '@/ts/types/db.types';
 import * as con from '@/utils/constants/pagination';
-import errorMessageUtils from '@/utils/errorMessage.utils';
-import responseMessageUtils from '@/utils/responseMessage.utils';
+import * as errorMessageUtils from '@/utils/errorMessage.utils';
+import * as responseMessageUtils from '@/utils/responseMessage.utils';
 
-import controllerUtils from './controller.utils';
+import * as controllerUtils from './controller.utils';
 
-const getTagsQuery = (query: Request['query']): typ.PaginationQuery => {
+/* 
+ $ tagsControllerUtils
+  - getTagsQuery
+  - handleAddedTag
+  - handleDeletedTag
+  - handleTag
+  - handleTags
+  - handleUpdatedTag
+*/
+
+export const getTagsQuery = (query: Request['query']): typ.PaginationQuery => {
   const { limit = con.TAG_LIMIT, page = con.PAGE } = query;
 
   const pagination = controllerUtils.getPaginationQuery(
@@ -27,7 +37,10 @@ const getTagsQuery = (query: Request['query']): typ.PaginationQuery => {
   };
 };
 
-const handleAddedTag = async (response: Response, tag: LeanDocument<inf.ITag> | null): Promise<void> => {
+export const handleAddedTag = async (
+  response: Response,
+  tag: LeanDocument<inf.ITag> | null,
+): Promise<void> => {
   if (!tag) {
     response.status(500);
     throw new Error(errorMessageUtils.error500NotFound('Tag'));
@@ -39,7 +52,10 @@ const handleAddedTag = async (response: Response, tag: LeanDocument<inf.ITag> | 
   });
 };
 
-const handleDeletedTag = async (response: Response, tag: LeanDocument<inf.ITag> | null): Promise<void> => {
+export const handleDeletedTag = async (
+  response: Response,
+  tag: LeanDocument<inf.ITag> | null,
+): Promise<void> => {
   if (!tag) {
     response.status(404);
     throw new Error(errorMessageUtils.error404('Tag'));
@@ -51,7 +67,7 @@ const handleDeletedTag = async (response: Response, tag: LeanDocument<inf.ITag> 
   });
 };
 
-const handleTag = async (response: Response, tag: LeanDocument<inf.ITag> | null): Promise<void> => {
+export const handleTag = async (response: Response, tag: LeanDocument<inf.ITag> | null): Promise<void> => {
   if (!tag) {
     response.status(404);
     throw new Error(errorMessageUtils.error404('Tag'));
@@ -63,7 +79,7 @@ const handleTag = async (response: Response, tag: LeanDocument<inf.ITag> | null)
   });
 };
 
-const handleTags = async (
+export const handleTags = async (
   response: Response,
   tags: LeanDocument<inf.ITag[]>,
   tagsQuery: typ.PaginationQuery,
@@ -86,7 +102,10 @@ const handleTags = async (
   });
 };
 
-const handleUpdatedTag = async (response: Response, tag: LeanDocument<inf.ITag> | null): Promise<void> => {
+export const handleUpdatedTag = async (
+  response: Response,
+  tag: LeanDocument<inf.ITag> | null,
+): Promise<void> => {
   if (!tag) {
     response.status(404);
     throw new Error(errorMessageUtils.error404('Tag'));
@@ -96,13 +115,4 @@ const handleUpdatedTag = async (response: Response, tag: LeanDocument<inf.ITag> 
     data: tag,
     message: responseMessageUtils.dataUpdated('Tag'),
   });
-};
-
-export default {
-  getTagsQuery,
-  handleAddedTag,
-  handleDeletedTag,
-  handleTag,
-  handleTags,
-  handleUpdatedTag,
 };

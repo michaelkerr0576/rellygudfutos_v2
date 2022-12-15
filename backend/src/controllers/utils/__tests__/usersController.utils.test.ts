@@ -3,11 +3,11 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import timekeeper from 'timekeeper';
 
-import utilFixture from '@/tests/fixtures/util.fixture';
-import mongoMemoryServer from '@/tests/mongoMemoryServer';
-import usersScripts from '@/tests/scripts/users.scripts';
+import * as utilFixture from '@/tests/fixtures/util.fixture';
+import * as mongoMemoryServer from '@/tests/mongoMemoryServer';
+import * as usersScripts from '@/tests/scripts/users.scripts';
 
-import usersControllerUtils from '../usersController.utils';
+import * as usersControllerUtils from '../usersController.utils';
 
 const mockBcryptCompareSync = jest.fn();
 bcrypt.compareSync = mockBcryptCompareSync;

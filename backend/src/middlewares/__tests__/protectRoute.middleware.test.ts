@@ -5,11 +5,11 @@ import timekeeper from 'timekeeper';
 
 import userAdminFixture from '@/tests/fixtures/users/userAdminRequest.fixture';
 import userFixture from '@/tests/fixtures/users/userRequest.fixture';
-import utilFixture from '@/tests/fixtures/util.fixture';
-import mongoMemoryServer from '@/tests/mongoMemoryServer';
-import usersScripts from '@/tests/scripts/users.scripts';
+import * as utilFixture from '@/tests/fixtures/util.fixture';
+import * as mongoMemoryServer from '@/tests/mongoMemoryServer';
+import * as usersScripts from '@/tests/scripts/users.scripts';
 
-import protectRouteMiddleware from '../protectRoute.middleware';
+import * as protectRouteMiddleware from '../protectRoute.middleware';
 
 const actualJwtVerify = jest.requireActual('jsonwebtoken').verify;
 const mockJwtVerify = jest.fn();

@@ -1,16 +1,16 @@
 import { NextFunction, Request, Response } from 'express';
 import timekeeper from 'timekeeper';
 
-import tagsDbService from '@/services/tagsDb.service';
+import * as tagsDbService from '@/services/tagsDb.service';
 import tagMinLengthFixture from '@/tests/fixtures/tags/negative/tagMinLength.fixture';
 import tagRequestFixture from '@/tests/fixtures/tags/tagRequest.fixture';
 import tagResponseFixture from '@/tests/fixtures/tags/tagResponse.fixture';
 import tagsResponseFixture from '@/tests/fixtures/tags/tagsResponse.fixture';
-import utilFixture from '@/tests/fixtures/util.fixture';
-import mongoMemoryServer from '@/tests/mongoMemoryServer';
-import tagsScripts from '@/tests/scripts/tags.scripts';
+import * as utilFixture from '@/tests/fixtures/util.fixture';
+import * as mongoMemoryServer from '@/tests/mongoMemoryServer';
+import * as tagsScripts from '@/tests/scripts/tags.scripts';
 
-import tagsController from '../tags.controller';
+import * as tagsController from '../tags.controller';
 
 const mockResponseStatus = jest.fn();
 const mockResponseJson = jest.fn();

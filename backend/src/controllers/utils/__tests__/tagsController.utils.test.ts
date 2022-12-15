@@ -1,11 +1,11 @@
 import { Response } from 'express';
 import timekeeper from 'timekeeper';
 
-import utilFixture from '@/tests/fixtures/util.fixture';
-import mongoMemoryServer from '@/tests/mongoMemoryServer';
-import tagsScripts from '@/tests/scripts/tags.scripts';
+import * as utilFixture from '@/tests/fixtures/util.fixture';
+import * as mongoMemoryServer from '@/tests/mongoMemoryServer';
+import * as tagsScripts from '@/tests/scripts/tags.scripts';
 
-import tagsControllerUtils from '../tagsController.utils';
+import * as tagsControllerUtils from '../tagsController.utils';
 
 const mockResponseStatus = jest.fn();
 const mockResponseJson = jest.fn();

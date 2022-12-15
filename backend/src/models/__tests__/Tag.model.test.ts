@@ -2,8 +2,8 @@ import tagMaxLengthFixture from '@/tests/fixtures/tags/negative/tagMaxLength.fix
 import tagMinLengthFixture from '@/tests/fixtures/tags/negative/tagMinLength.fixture';
 import tagTrimFixture from '@/tests/fixtures/tags/negative/tagTrim.fixture';
 import tagRequestFixture from '@/tests/fixtures/tags/tagRequest.fixture';
-import utilFixture from '@/tests/fixtures/util.fixture';
-import mongoMemoryServer from '@/tests/mongoMemoryServer';
+import * as utilFixture from '@/tests/fixtures/util.fixture';
+import * as mongoMemoryServer from '@/tests/mongoMemoryServer';
 
 import TagModel from '../Tag.model';
 

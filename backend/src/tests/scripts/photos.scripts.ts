@@ -1,6 +1,6 @@
-import photosDbService from '@/services/photosDb.service';
-import tagsDbService from '@/services/tagsDb.service';
-import usersDbService from '@/services/usersDb.service';
+import * as photosDbService from '@/services/photosDb.service';
+import * as tagsDbService from '@/services/tagsDb.service';
+import * as usersDbService from '@/services/usersDb.service';
 import * as typ from '@/ts/types/db.types';
 
 import photoIdFixture from '../fixtures/photos/photoId.fixture';
@@ -14,7 +14,14 @@ import tagsRequestFixture from '../fixtures/tags/tagsRequest.fixture';
 import userAdminRequestFixture from '../fixtures/users/userAdminRequest.fixture';
 import usersRequestFixture from '../fixtures/users/usersRequest.fixture';
 
-const prepPhotoData = async (): Promise<void> => {
+/* 
+ $ photosScripts
+  - prepPhotoData
+  - prepPhotosData
+  - prepTagsAndUserData
+*/
+
+export const prepPhotoData = async (): Promise<void> => {
   await tagsDbService.addTags(tagsRequestFixture as any).catch((error): void => console.log(error));
   await usersDbService.addUser(userAdminRequestFixture as any).catch((error): void => console.log(error));
   await photosDbService.addPhoto(photoImageRequestFixture as any).catch((error): void => console.log(error));
@@ -26,7 +33,7 @@ const prepPhotoData = async (): Promise<void> => {
     .catch((error): void => console.log(error));
 };
 
-const prepPhotosData = async (): Promise<void> => {
+export const prepPhotosData = async (): Promise<void> => {
   await tagsDbService.addTags(tagsRequestFixture as any).catch((error): void => console.log(error));
   await usersDbService.addUsers(usersRequestFixture as any).catch((error): void => console.log(error));
   await photosDbService
@@ -45,13 +52,7 @@ const prepPhotosData = async (): Promise<void> => {
   );
 };
 
-const prepTagsAndUserData = async (): Promise<void> => {
+export const prepTagsAndUserData = async (): Promise<void> => {
   await tagsDbService.addTags(tagsRequestFixture as any).catch((error): void => console.log(error));
   await usersDbService.addUser(userAdminRequestFixture as any).catch((error): void => console.log(error));
-};
-
-export default {
-  prepPhotoData,
-  prepPhotosData,
-  prepTagsAndUserData,
 };

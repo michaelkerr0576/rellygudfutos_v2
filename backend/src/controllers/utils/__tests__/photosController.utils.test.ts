@@ -1,10 +1,10 @@
 import { Response } from 'express';
 import timekeeper from 'timekeeper';
 
-import s3Middleware from '@/middlewares/s3.middleware';
-import photosDbService from '@/services/photosDb.service';
-import tagsDbService from '@/services/tagsDb.service';
-import usersDbService from '@/services/usersDb.service';
+import * as s3Middleware from '@/middlewares/s3.middleware';
+import * as photosDbService from '@/services/photosDb.service';
+import * as tagsDbService from '@/services/tagsDb.service';
+import * as usersDbService from '@/services/usersDb.service';
 import photoIdFixture from '@/tests/fixtures/photos/photoId.fixture';
 import photoImageFixture from '@/tests/fixtures/photos/photoImage.fixture';
 import photoImageDetailsFixture from '@/tests/fixtures/photos/photoImageDetails.fixture';
@@ -17,13 +17,13 @@ import photoTagsResponseFixture from '@/tests/fixtures/photos/photoTagsResponse.
 import photoUserIdFixture from '@/tests/fixtures/photos/photoUserId.fixture';
 import photoUserResponseFixture from '@/tests/fixtures/photos/photoUserResponse.fixture';
 import userAdminRequestFixture from '@/tests/fixtures/users/userAdminRequest.fixture';
-import utilFixture from '@/tests/fixtures/util.fixture';
-import mongoMemoryServer from '@/tests/mongoMemoryServer';
-import photosScripts from '@/tests/scripts/photos.scripts';
+import * as utilFixture from '@/tests/fixtures/util.fixture';
+import * as mongoMemoryServer from '@/tests/mongoMemoryServer';
+import * as photosScripts from '@/tests/scripts/photos.scripts';
 import * as enm from '@/ts/enums/db.enum';
-import generalUtils from '@/utils/general.utils';
+import * as generalUtils from '@/utils/general.utils';
 
-import photosControllerUtils from '../photosController.utils';
+import * as photosControllerUtils from '../photosController.utils';
 
 jest.mock('@aws-sdk/client-s3');
 const mockS3DeleteFile = jest
