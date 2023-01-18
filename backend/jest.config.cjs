@@ -10,6 +10,7 @@ module.exports = {
     prefix: '<rootDir>/',
   }),
   preset: 'ts-jest',
+  setupFilesAfterEnv: ['<rootDir>/jestSetup.ts'],
   testEnvironment: 'node',
   testPathIgnorePatterns: ['.d.ts', '.js'],
 };

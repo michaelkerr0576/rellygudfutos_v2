@@ -38,14 +38,6 @@ const mockS3UploadFile = jest
 
 jest.spyOn(generalUtils, 'generateKey').mockReturnValue(photoResponseFixture.details.imageKey);
 
-jest.mock('sharp', () => () => ({
-  resize: () => ({
-    jpeg: () => ({
-      toBuffer: () => 'testBuffer',
-    }),
-  }),
-}));
-
 const mockResponseStatus = jest.fn();
 const mockResponseJson = jest.fn();
 const mockResponse: Partial<Response> = {

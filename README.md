@@ -281,7 +281,7 @@ The regret is not trying Next.js out first before finishing a fully fleshed out 
 
 I am still on the fence on this one because I like it as a pattern but I know it is perhaps bad practice.
 
-By handling imports like `import * as alias`, it sacrifices on optimal tree shaking to get rid of functions/modules that are not needed. But I find very useful for maintenance and general naming conventions. Knowing what file a function is coming from reads well in my opinion but it is bad practice to import everything and not just what you need. It is ok for small apps but could become a problem at enterprise level.
+By handling imports like `import * as alias`, it sacrifices on optimal tree shaking getting rid of functions/modules that are not needed. But I find very useful for maintenance and general naming conventions. Knowing what file a function is coming from reads well in my opinion but it is bad practice to import everything and not just what you need. It is ok for small apps but could become a problem at enterprise level.
 
 100% do not take this approach for large external libraries like `lodash` or `MaterialUI`, import what you need from them.
 
