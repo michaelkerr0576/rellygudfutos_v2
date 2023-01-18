@@ -26,7 +26,6 @@ import * as generalUtils from '@/utils/general.utils';
 
 import * as photosController from '../photos.controller';
 
-jest.mock('@aws-sdk/client-s3');
 const mockS3DeleteFile = jest
   .spyOn(s3Middleware, 'deleteFile')
   .mockImplementation(() => Promise.resolve() as any);
