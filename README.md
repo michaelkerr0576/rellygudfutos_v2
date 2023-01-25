@@ -333,3 +333,38 @@ Check [Node for Windows](https://nodejs.org/en/) for recommended version.
 
 - Check version - `tsc --version`
 - Compile file - `tsc index.ts`
+
+## Snippets
+
+Code snippets I use that I forget about from extensions:
+
+- Simple React Snippets - Check extension description for snippets
+- [ES7+ React/Redux/React-Native snippets ](https://github.com/ults-io/vscode-react-javascript-snippets/blob/HEAD/docs/Snippets.md)
+
+`rfce`
+
+```
+import React from 'react'
+
+function App() {
+  return (
+    <div>App</div>
+  )
+}
+
+export default App
+```
+
+`uef`
+
+```
+useEffect(() => {
+
+}, []);
+```
+
+`usf`
+
+```
+const [, set] = useState();
+```

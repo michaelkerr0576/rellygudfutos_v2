@@ -86,7 +86,7 @@ module.exports = {
       'error',
       {
         // * Allow some devDependencies that are only used in tests or builds
-        allowModules: ['jest-when', '@vitejs/plugin-react', 'vite'],
+        allowModules: ['jest-when', 'vite', '@vitejs/plugin-react', 'vite-tsconfig-paths'],
       },
     ],
     'node/no-unsupported-features/es-syntax': [
