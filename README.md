@@ -336,10 +336,10 @@ Check [Node for Windows](https://nodejs.org/en/) for recommended version.
 
 ## Snippets
 
-Code snippets I use that I forget about from extensions:
+Code snippets I use that I forget about:
 
 - Simple React Snippets - Check extension description for snippets
-- [ES7+ React/Redux/React-Native snippets ](https://github.com/ults-io/vscode-react-javascript-snippets/blob/HEAD/docs/Snippets.md)
+- [ES7+ React/Redux/React-Native Snippets ](https://github.com/ults-io/vscode-react-javascript-snippets/blob/HEAD/docs/Snippets.md)
 
 `rfce`
 
