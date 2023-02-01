@@ -144,6 +144,8 @@ module.exports = {
           ['^\\u0000'],
           // * Packages.
           ['^react', '^\\w'],
+          // * Specific libraries.
+          ['^@mui'],
           // * Internal packages.
           ['^(@|components)(/.*|$)'],
           // * Parent imports. Put `..` last.

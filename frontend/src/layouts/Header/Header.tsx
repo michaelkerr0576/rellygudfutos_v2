@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 
+import Drawer from '@/components/navigation/Drawer';
+
 function Header(): JSX.Element {
   return (
     <header>
@@ -20,6 +22,7 @@ function Header(): JSX.Element {
         <li>
           <Link to="/admin/dashboard">Dashboard</Link>
         </li>
+        <Drawer />
       </ul>
     </header>
   );
