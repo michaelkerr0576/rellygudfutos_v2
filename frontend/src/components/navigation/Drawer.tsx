@@ -1,93 +1,68 @@
-import { Fragment, useState } from 'react';
+import { useState } from 'react';
 
-import MailIcon from '@mui/icons-material/Mail';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Divider from '@mui/material/Divider';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import SwipeableDrawer from '@mui/material/SwipeableDrawer';
+import MuiSwipeableDrawer from '@mui/material/SwipeableDrawer';
 
-type Anchor = 'top' | 'left' | 'bottom' | 'right';
+import MenuIcon from '@/assets/icons/MenuIcon';
 
-export default function SwipeableTemporaryDrawer(): JSX.Element {
-  const [state, setState] = useState({
-    bottom: false,
-    left: false,
-    right: false,
-    top: false,
-  });
+import Button from '../inputs/Button';
+
+export interface DrawerProps {
+  children: JSX.Element;
+}
+
+export default function Drawer(props: DrawerProps): JSX.Element {
+  const { children } = props;
+
+  const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
 
   const toggleDrawer =
-    (anchor: Anchor, open: boolean) =>
+    (isOpen: boolean) =>
     (event: React.KeyboardEvent | React.MouseEvent): void => {
-      if (
+      const ìsTabOrShiftKeydown =
         event &&
         event.type === 'keydown' &&
-        ((event as React.KeyboardEvent).key === 'Tab' || (event as React.KeyboardEvent).key === 'Shift')
-      ) {
+        ((event as React.KeyboardEvent).key === 'Tab' || (event as React.KeyboardEvent).key === 'Shift');
+
+      if (ìsTabOrShiftKeydown) {
         return;
       }
 
-      setState({ ...state, [anchor]: open });
+      setIsDrawerOpen(isOpen);
     };
 
-  const list = (anchor: Anchor): JSX.Element => (
+  const renderList = (): JSX.Element => (
     <Box
-      sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
+      sx={{ width: 250 }}
       role="presentation"
-      onClick={toggleDrawer(anchor, false)}
-      onKeyDown={toggleDrawer(anchor, false)}
+      onClick={toggleDrawer(false)}
+      onKeyDown={toggleDrawer(false)}
     >
-      <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map(
-          (text, index): JSX.Element => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          ),
-        )}
-      </List>
-      <Divider />
-      <List>
-        {['All mail', 'Trash', 'Spam'].map(
-          (text, index): JSX.Element => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          ),
-        )}
-      </List>
+      {children}
     </Box>
   );
 
   return (
-    <div>
-      {(['left', 'right', 'top', 'bottom'] as const).map(
-        (anchor): JSX.Element => (
-          <Fragment key={anchor}>
-            <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
-            <SwipeableDrawer
-              anchor={anchor}
-              open={state[anchor]}
-              onClose={toggleDrawer(anchor, false)}
-              onOpen={toggleDrawer(anchor, true)}
-            >
-              {list(anchor)}
-            </SwipeableDrawer>
-          </Fragment>
-        ),
-      )}
-    </div>
+    <>
+      <Button onClick={toggleDrawer(true)}>
+        <MenuIcon />
+      </Button>
+      <Button onClick={toggleDrawer(true)}>
+        <>
+          <MenuIcon /> MENU
+        </>
+      </Button>
+
+      <Button onClick={toggleDrawer(true)}>MENU</Button>
+
+      <MuiSwipeableDrawer
+        anchor="left"
+        open={isDrawerOpen}
+        onClose={toggleDrawer(false)}
+        onOpen={toggleDrawer(true)}
+      >
+        {renderList()}
+      </MuiSwipeableDrawer>
+    </>
   );
 }

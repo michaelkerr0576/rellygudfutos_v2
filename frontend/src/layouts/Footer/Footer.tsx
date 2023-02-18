@@ -1,5 +1,7 @@
-function Footer(): JSX.Element {
-  return <div>Footer</div>;
-}
+import useThemes from '@/hooks/useThemes';
 
-export default Footer;
+export default function Footer(): JSX.Element {
+  const { colorMode } = useThemes();
+
+  return <div>Footer: {colorMode}</div>;
+}

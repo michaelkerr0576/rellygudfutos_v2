@@ -1,5 +1,3 @@
-function Main(): JSX.Element {
+export default function Main(): JSX.Element {
   return <div>Main</div>;
 }
-
-export default Main;

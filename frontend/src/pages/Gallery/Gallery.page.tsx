@@ -1,5 +1,3 @@
-function Gallery(): JSX.Element {
+export default function Gallery(): JSX.Element {
   return <div>Gallery</div>;
 }
-
-export default Gallery;

@@ -1,5 +1,3 @@
-function Portfolio(): JSX.Element {
+export default function Portfolio(): JSX.Element {
   return <div>Portfolio</div>;
 }
-
-export default Portfolio;
