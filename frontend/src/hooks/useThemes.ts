@@ -6,7 +6,23 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 
 import useStore, { State } from '@/store/store';
 
-export type ColorMode = 'light' | 'dark';
+declare module '@mui/material/styles' {
+  interface BreakpointOverrides {
+    // * Remove default breakpoints
+    xs: false;
+    sm: false;
+    md: false;
+    lg: false;
+    xl: false;
+    // * Custom breakpoints
+    mobile: true;
+    tablet: true;
+    laptop: true;
+    desktop: true;
+  }
+}
+
+type ColorMode = 'light' | 'dark';
 
 interface UseThemes {
   colorMode: ColorMode;
@@ -46,6 +62,14 @@ export default function useThemes(): UseThemes {
   const createdTheme = useMemo(
     (): Theme =>
       createTheme({
+        breakpoints: {
+          values: {
+            desktop: 1280,
+            laptop: 1024,
+            mobile: 0,
+            tablet: 640,
+          },
+        },
         palette: {
           ...(colorMode === 'dark' ? darkTheme.palette : lightTheme.palette),
           mode: colorMode,

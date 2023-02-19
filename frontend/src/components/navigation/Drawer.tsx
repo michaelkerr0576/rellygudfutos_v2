@@ -1,14 +1,14 @@
 import { useState } from 'react';
 
-import Box from '@mui/material/Box';
 import MuiSwipeableDrawer from '@mui/material/SwipeableDrawer';
 
 import MenuIcon from '@/assets/icons/MenuIcon';
 
-import Button from '../inputs/Button';
+import IconButton from '../inputs/IconButton';
+import Box from '../layout/Box';
 
 export interface DrawerProps {
-  children: JSX.Element;
+  children: React.ReactNode;
 }
 
 export default function Drawer(props: DrawerProps): JSX.Element {
@@ -32,28 +32,16 @@ export default function Drawer(props: DrawerProps): JSX.Element {
     };
 
   const renderList = (): JSX.Element => (
-    <Box
-      sx={{ width: 250 }}
-      role="presentation"
-      onClick={toggleDrawer(false)}
-      onKeyDown={toggleDrawer(false)}
-    >
+    <Box onClick={toggleDrawer(false)} onKeyDown={toggleDrawer(false)} style={{ width: 250 }}>
       {children}
     </Box>
   );
 
   return (
     <>
-      <Button onClick={toggleDrawer(true)}>
+      <IconButton ariaLabel="menu" onClick={toggleDrawer(true)}>
         <MenuIcon />
-      </Button>
-      <Button onClick={toggleDrawer(true)}>
-        <>
-          <MenuIcon /> MENU
-        </>
-      </Button>
-
-      <Button onClick={toggleDrawer(true)}>MENU</Button>
+      </IconButton>
 
       <MuiSwipeableDrawer
         anchor="left"

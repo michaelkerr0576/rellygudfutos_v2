@@ -4,7 +4,6 @@ import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import MailIcon from '@mui/icons-material/Mail';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
-import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
@@ -13,16 +12,53 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 
-import Button from '@/components/inputs/Button';
+import Box from '@/components/layout/Box';
+import Container from '@/components/layout/Container';
+import Stack from '@/components/layout/Stack';
 import Drawer from '@/components/navigation/Drawer';
 import useThemes from '@/hooks/useThemes';
 
 export default function Header(): JSX.Element {
-  const { theme, toggleColorMode } = useThemes();
+  const { colorMode, toggleColorMode } = useThemes();
 
   return (
     <header>
-      <div>rellygudfutos</div>
+      <Container>
+        <Stack horizontalAlignment="spaceBetween" verticalAlignment="center">
+          <div>rellygudfutos</div>
+
+          <Drawer>
+            <>
+              <List>
+                {['Inbox', 'Starred', 'Send email', 'Drafts'].map(
+                  (text, index): JSX.Element => (
+                    <ListItem key={text} disablePadding>
+                      <ListItemButton>
+                        <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                        <ListItemText primary={text} />
+                      </ListItemButton>
+                    </ListItem>
+                  ),
+                )}
+              </List>
+              <Divider />
+              <List>
+                {['All mail', 'Trash', 'Spam'].map(
+                  (text, index): JSX.Element => (
+                    <ListItem key={text} disablePadding>
+                      <ListItemButton>
+                        <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                        <ListItemText primary={text} />
+                      </ListItemButton>
+                    </ListItem>
+                  ),
+                )}
+              </List>
+            </>
+          </Drawer>
+        </Stack>
+      </Container>
+
       <ul>
         <li>
           <Link to="/gallery">Gallery</Link>
@@ -39,38 +75,10 @@ export default function Header(): JSX.Element {
         <li>
           <Link to="/admin/dashboard">Dashboard</Link>
         </li>
-        <Drawer>
-          <>
-            <List>
-              {['Inbox', 'Starred', 'Send email', 'Drafts'].map(
-                (text, index): JSX.Element => (
-                  <ListItem key={text} disablePadding>
-                    <ListItemButton>
-                      <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                      <ListItemText primary={text} />
-                    </ListItemButton>
-                  </ListItem>
-                ),
-              )}
-            </List>
-            <Divider />
-            <List>
-              {['All mail', 'Trash', 'Spam'].map(
-                (text, index): JSX.Element => (
-                  <ListItem key={text} disablePadding>
-                    <ListItemButton>
-                      <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                      <ListItemText primary={text} />
-                    </ListItemButton>
-                  </ListItem>
-                ),
-              )}
-            </List>
-          </>
-        </Drawer>
-        <Button onClick={(): void => {}}>TEST</Button>
+
+        <Box>text</Box>
         <Box
-          sx={{
+          style={{
             alignItems: 'center',
             bgcolor: 'background.default',
             borderRadius: 1,
@@ -81,9 +89,9 @@ export default function Header(): JSX.Element {
             width: '100%',
           }}
         >
-          {theme.palette.mode} mode
+          {colorMode} mode
           <IconButton sx={{ ml: 1 }} onClick={toggleColorMode} color="inherit">
-            {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+            {colorMode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
           </IconButton>
         </Box>
       </ul>
