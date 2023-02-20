@@ -1,5 +1,9 @@
 import MuiMenuRoundedIcon from '@mui/icons-material/MenuRounded';
 
-export default function MenuIcon(): JSX.Element {
-  return <MuiMenuRoundedIcon fontSize="inherit" />;
+import { IconProps } from './types/iconTypes';
+
+export default function MenuIcon(props: IconProps): JSX.Element {
+  const { size = 'large' } = props;
+
+  return <MuiMenuRoundedIcon fontSize={size} />;
 }

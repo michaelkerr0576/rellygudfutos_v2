@@ -1,5 +1,7 @@
+import Page from '@/layouts/Page/Page';
+
 function Dashboard(): JSX.Element {
-  return <div>Dashboard</div>;
+  return <Page>Dashboard</Page>;
 }
 
 export default Dashboard;

@@ -1,10 +1,8 @@
-import MuiStack from '@mui/material/Stack';
+import MuiStack, { StackProps as MuiStackProps } from '@mui/material/Stack';
 
 type Direction = 'column' | 'row';
 type HorizontalAlignment = 'start' | 'center' | 'end' | 'spaceBetween' | 'spaceEvenly';
-type JustifyContent = 'flex-start' | 'center' | 'flex-end' | 'space-between' | 'space=evenly';
 type VerticalAlignment = 'start' | 'center' | 'end';
-type AlignItems = 'flex-start' | 'center' | 'flex-end';
 
 export interface StackProps {
   children: React.ReactNode;
@@ -16,7 +14,7 @@ export interface StackProps {
 export default function Stack(props: StackProps): JSX.Element {
   const { children, direction, horizontalAlignment, verticalAlignment } = props;
 
-  const alignItems = (): AlignItems => {
+  const alignItems = (): MuiStackProps['alignItems'] => {
     switch (verticalAlignment) {
       case 'center':
         return 'center';
@@ -27,7 +25,7 @@ export default function Stack(props: StackProps): JSX.Element {
     }
   };
 
-  const justifyContent = (): JustifyContent => {
+  const justifyContent = (): MuiStackProps['justifyContent'] => {
     switch (horizontalAlignment) {
       case 'center':
         return 'center';
@@ -43,7 +41,7 @@ export default function Stack(props: StackProps): JSX.Element {
   };
 
   return (
-    <MuiStack alignItems={alignItems} direction={direction} justifyContent={justifyContent}>
+    <MuiStack alignItems={alignItems()} direction={direction} justifyContent={justifyContent()}>
       {children}
     </MuiStack>
   );

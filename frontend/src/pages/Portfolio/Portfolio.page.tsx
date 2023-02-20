@@ -1,3 +1,5 @@
+import Page from '@/layouts/Page/Page';
+
 export default function Portfolio(): JSX.Element {
-  return <div>Portfolio</div>;
+  return <Page>Portfolio</Page>;
 }

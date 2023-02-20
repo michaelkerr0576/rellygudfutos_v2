@@ -1,8 +1,12 @@
-import Brightness4Icon from '@mui/icons-material/Brightness4';
-import Brightness7Icon from '@mui/icons-material/Brightness7';
+import Brightness4RoundedIcon from '@mui/icons-material/Brightness4Rounded';
+import Brightness7RoundedIcon from '@mui/icons-material/Brightness7Rounded';
+// import FilterAltOffRoundedIcon from '@mui/icons-material/FilterAltOffRounded';
+// import FilterAltRoundedIcon from '@mui/icons-material/FilterAltRounded';
 import GridOnOutlinedIcon from '@mui/icons-material/GridOnOutlined';
-import LocalOfferRoundedIcon from '@mui/icons-material/LocalOfferRounded';
-import UnfoldMoreRoundedIcon from '@mui/icons-material/UnfoldMoreRounded';
+// import ImportExportRoundedIcon from '@mui/icons-material/ImportExportRounded';
+// import LocalOfferRoundedIcon from '@mui/icons-material/LocalOfferRounded';
+import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
+// import UnfoldMoreRoundedIcon from '@mui/icons-material/UnfoldMoreRounded';
 import ViewDayOutlinedIcon from '@mui/icons-material/ViewDayOutlined';
 
 import Box from '@/components/layout/Box';
@@ -32,23 +36,35 @@ export default function Gallery(): JSX.Element {
             value: 'list',
           },
           {
-            icon: colorMode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />,
+            icon: colorMode === 'dark' ? <Brightness7RoundedIcon /> : <Brightness4RoundedIcon />,
             label: colorMode === 'dark' ? 'Dark' : 'Light',
             onClick: toggleColorMode,
             value: 'mode',
           },
+          // {
+          //   icon: <FilterAltOffRoundedIcon />,
+          //   label: 'Filter',
+          //   onClick: (): void => {},
+          //   value: 'filter',
+          // },
           {
-            icon: <LocalOfferRoundedIcon />,
-            label: 'Tags',
+            icon: <SearchRoundedIcon />,
+            label: 'Search',
             onClick: (): void => {},
-            value: 'tags',
+            value: 'search',
           },
-          {
-            icon: <UnfoldMoreRoundedIcon />,
-            label: 'Sort',
-            onClick: (): void => {},
-            value: 'sort',
-          },
+          // {
+          //   icon: <LocalOfferRoundedIcon />,
+          //   label: 'Tags',
+          //   onClick: (): void => {},
+          //   value: 'tags',
+          // },
+          // {
+          //   icon: <ImportExportRoundedIcon />,
+          //   label: 'Sort',
+          //   onClick: (): void => {},
+          //   value: 'sort',
+          // },
         ]}
         initialValue="grid"
       />

@@ -5,7 +5,7 @@ export interface ContainerProps {
   children: React.ReactNode;
 }
 
-const StyledMuiContainer = styled(MuiContainer)(({ theme }): { [key: string]: string } => ({
+const StyledMuiContainer = styled(MuiContainer)(({ theme }): { [key: string]: any } => ({
   padding: theme.spacing(1, 2),
 }));
 

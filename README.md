@@ -247,6 +247,12 @@ I wanted to avoid slow webpack so Vite.js it is.
 
 React Query as a server-side state that reduces API requests :drooling_face:
 
+Examples of hooks that will take data from API calls:
+
+- usePhotos
+- useTags
+- useUsers
+
 **Useful Links:**
 
 - [React Query Docs](https://react-query.tanstack.com/)
@@ -254,11 +260,27 @@ React Query as a server-side state that reduces API requests :drooling_face:
 
 ### Zustand
 
-Super lightweight client-side state. For this application, Redux is overkill when using React Query.
+Super lightweight client-side state. For this application, Redux is overkill when using React Query and it is easier to set up then React's useContext.
+
+Examples of data that needs to go into global state:
+
+1. **Theme**
+
+- Toggling light and dark mode throughout the app.
 
 **Useful Links:**
 
 - [Zustand Docs](https://docs.pmnd.rs/zustand/introduction)
+
+### Error Boundary
+
+Error boundaries are React components that catch JavaScript errors anywhere in their child component tree, log those errors, and display a fallback UI. Better than the app crashing.
+
+The approach will be to wrap the top-level route components to display a “Something went wrong” message to the user.
+
+**Useful Links:**
+
+- [Error Boundary Docs](https://reactjs.org/docs/error-boundaries.html)
 
 ## Retrospective
 

@@ -21,27 +21,22 @@ export interface BottomNavigationProps {
 export default function BottomNavigation(props: BottomNavigationProps): JSX.Element {
   const { actions, initialValue } = props;
 
-  const [value, setValue] = useState<string>(initialValue);
+  const [selectedValue, setSelectedValue] = useState<string>(initialValue);
 
-  const handleOnChange = (_event: React.SyntheticEvent, newValue: string): void => setValue(newValue);
+  const handleOnChange = (_event: React.SyntheticEvent, newValue: string): void => setSelectedValue(newValue);
 
-  const renderActions = actions.map(
-    (action: Action): JSX.Element => (
-      <BottomNavigationAction
-        icon={action.icon}
-        key={action.value}
-        label={action.label}
-        onClick={action.onClick}
-        value={action.value}
-      />
-    ),
-  );
+  const renderActions = (): JSX.Element[] =>
+    actions.map((action: Action): JSX.Element => {
+      const { icon, label, onClick, value } = action;
+
+      return <BottomNavigationAction icon={icon} key={value} label={label} onClick={onClick} value={value} />;
+    });
 
   return (
     <Box style={{ bottom: 0, left: 0, position: 'fixed', right: 0 }}>
       <Paper elevation={24}>
-        <MuiBottomNavigation value={value} onChange={handleOnChange}>
-          {renderActions}
+        <MuiBottomNavigation value={selectedValue} onChange={handleOnChange}>
+          {renderActions()}
         </MuiBottomNavigation>
       </Paper>
     </Box>
