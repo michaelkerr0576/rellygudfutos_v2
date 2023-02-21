@@ -4,14 +4,14 @@ import SearchIcon from '@/assets/icons/SearchIcon';
 import ToggleDarkModeIcon from '@/assets/icons/ToggleDarkModeIcon';
 import ToggleLightModeIcon from '@/assets/icons/ToggleLightModeIcon';
 import BottomNavigation from '@/components/navigation/BottomNavigation';
-import useGallerySearch from '@/hooks/useGallerySearch';
+import useGallery from '@/hooks/useGallery';
 import useThemes from '@/hooks/useThemes';
 
 import SearchDrawer from './SearchDrawer';
 
 export default function GalleryBottomNavigation(): JSX.Element {
   const { colorMode, toggleColorMode } = useThemes();
-  const { toggleSearchDrawer } = useGallerySearch();
+  const { toggleSearchDrawer, galleryNavigationValue, toggleGalleryNavigationValue } = useGallery();
 
   return (
     <>
@@ -42,7 +42,8 @@ export default function GalleryBottomNavigation(): JSX.Element {
             value: 'search',
           },
         ]}
-        initialValue="grid"
+        selectedValue={galleryNavigationValue}
+        setSelectedValue={toggleGalleryNavigationValue}
       />
 
       <SearchDrawer />

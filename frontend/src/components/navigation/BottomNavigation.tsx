@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import MuiBottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 
@@ -15,13 +13,12 @@ type Action = {
 
 export interface BottomNavigationProps {
   actions: Action[];
-  initialValue: string;
+  selectedValue: string;
+  setSelectedValue: (value: string) => void;
 }
 
 export default function BottomNavigation(props: BottomNavigationProps): JSX.Element {
-  const { actions, initialValue } = props;
-
-  const [selectedValue, setSelectedValue] = useState<string>(initialValue);
+  const { actions, selectedValue, setSelectedValue } = props;
 
   const handleOnChange = (_event: React.SyntheticEvent, newValue: string): void => setSelectedValue(newValue);
 
