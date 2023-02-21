@@ -4,6 +4,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 
 import useThemes from '@/hooks/useThemes';
+import ErrorBoundary from '@/layouts/ErrorBoundary/ErrorBoundary';
 import Footer from '@/layouts/Footer/Footer';
 import Header from '@/layouts/Header/Header';
 import Dashboard from '@/pages/Dashboard/Dashboard.page';
@@ -16,30 +17,32 @@ export default function App(): JSX.Element {
   const { theme } = useThemes();
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Router>
-        <Header />
-        <Routes>
-          <Route path="/" element={<Gallery />} />
+    <ErrorBoundary identifier="App">
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Router>
+          <Header />
+          <Routes>
+            <Route path="/" element={<Gallery />} />
 
-          <Route path="/gallery">
-            <Route index element={<Gallery />} />
-            <Route path=":photoId" element={<Photo />} />
-          </Route>
+            <Route path="/gallery">
+              <Route index element={<Gallery />} />
+              <Route path=":photoId" element={<Photo />} />
+            </Route>
 
-          <Route path="/admin">
-            <Route index element={<Login />} />
-            <Route path="login" element={<Login />} />
-            <Route path="dashboard" element={<Dashboard />} />
-          </Route>
+            <Route path="/admin">
+              <Route index element={<Login />} />
+              <Route path="login" element={<Login />} />
+              <Route path="dashboard" element={<Dashboard />} />
+            </Route>
 
-          <Route path="/portfolio" element={<Portfolio />} />
+            <Route path="/portfolio" element={<Portfolio />} />
 
-          <Route path="/*" element={<Gallery />} />
-        </Routes>
-        <Footer />
-      </Router>
-    </ThemeProvider>
+            <Route path="/*" element={<Gallery />} />
+          </Routes>
+          <Footer />
+        </Router>
+      </ThemeProvider>
+    </ErrorBoundary>
   );
 }
