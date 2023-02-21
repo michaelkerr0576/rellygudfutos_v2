@@ -18,7 +18,7 @@ export default function Gallery(): JSX.Element {
   const { colorMode, toggleColorMode } = useThemes();
 
   return (
-    <Page>
+    <Page pageName="Gallery">
       <Box style={{ height: '1000px' }}>Gallery</Box>
 
       <BottomNavigation

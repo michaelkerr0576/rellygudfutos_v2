@@ -1,15 +1,20 @@
 import Container from '@/components/layout/Container';
 
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
+
 export interface PageProps {
   children: React.ReactNode;
+  pageName: string;
 }
 
 export default function Page(props: PageProps): JSX.Element {
-  const { children } = props;
+  const { children, pageName } = props;
 
   return (
-    <main>
-      <Container>{children}</Container>
-    </main>
+    <ErrorBoundary identifier={`${pageName} page`}>
+      <main>
+        <Container>{children}</Container>
+      </main>
+    </ErrorBoundary>
   );
 }
