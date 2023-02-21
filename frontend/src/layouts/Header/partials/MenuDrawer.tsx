@@ -2,6 +2,7 @@ import DarkModeIcon from '@/assets/icons/DarkModeIcon';
 import DashboardIcon from '@/assets/icons/DashboardIcon';
 import GalleryIcon from '@/assets/icons/GalleryIcon';
 import LoginIcon from '@/assets/icons/LoginIcon';
+import MenuIcon from '@/assets/icons/MenuIcon';
 import PortfolioIcon from '@/assets/icons/PortfolioIcon';
 import Divider from '@/components/dataDisplay/Divider';
 import List from '@/components/dataDisplay/List';
@@ -13,7 +14,7 @@ export default function MenuDrawer(): JSX.Element {
   const { colorMode, toggleColorMode } = useThemes();
 
   return (
-    <Drawer>
+    <Drawer icon={<MenuIcon />}>
       <List
         listItems={[
           {

@@ -1,23 +1,28 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import MuiSwipeableDrawer from '@mui/material/SwipeableDrawer';
-
-import MenuIcon from '@/assets/icons/MenuIcon';
 
 import IconButton from '../inputs/IconButton';
 import Box from '../layout/Box';
 
 export interface DrawerProps {
   children: React.ReactNode;
+  icon?: JSX.Element;
+  isOpen?: boolean;
+  setIsOpen?: (isOpen: boolean) => void;
 }
 
 export default function Drawer(props: DrawerProps): JSX.Element {
-  const { children } = props;
+  const { children, icon, isOpen = false, setIsOpen } = props;
 
-  const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(isOpen);
+
+  useEffect((): void => {
+    setIsDrawerOpen(isOpen);
+  }, [isOpen]);
 
   const toggleDrawer =
-    (isOpen: boolean) =>
+    (isOpenToggle: boolean) =>
     (event: React.KeyboardEvent | React.MouseEvent): void => {
       const ìsTabOrShiftKeydown =
         event &&
@@ -28,7 +33,11 @@ export default function Drawer(props: DrawerProps): JSX.Element {
         return;
       }
 
-      setIsDrawerOpen(isOpen);
+      if (setIsOpen) {
+        setIsOpen(isOpenToggle);
+      } else {
+        setIsDrawerOpen(isOpenToggle);
+      }
     };
 
   const renderList = (): JSX.Element => (
@@ -37,20 +46,34 @@ export default function Drawer(props: DrawerProps): JSX.Element {
     </Box>
   );
 
-  return (
-    <>
-      <IconButton ariaLabel="menu" onClick={toggleDrawer(true)}>
-        <MenuIcon />
-      </IconButton>
-
-      <MuiSwipeableDrawer
-        anchor="left"
-        open={isDrawerOpen}
-        onClose={toggleDrawer(false)}
-        onOpen={toggleDrawer(true)}
-      >
-        {renderList()}
-      </MuiSwipeableDrawer>
-    </>
+  const renderDrawer = (): JSX.Element => (
+    <MuiSwipeableDrawer
+      anchor="left"
+      open={isDrawerOpen}
+      onClose={toggleDrawer(false)}
+      onOpen={toggleDrawer(true)}
+    >
+      {renderList()}
+    </MuiSwipeableDrawer>
   );
+
+  if (icon) {
+    return (
+      <>
+        <IconButton ariaLabel="menu" onClick={toggleDrawer(true)}>
+          {icon}
+        </IconButton>
+
+        {renderDrawer()}
+      </>
+    );
+  }
+
+  return renderDrawer();
 }
+
+Drawer.defaultProps = {
+  icon: null,
+  isOpen: false,
+  setIsOpen: undefined,
+};

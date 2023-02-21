@@ -9,7 +9,10 @@ const useStore = create<State>()(
     persist(
       (set, _get): State => ({
         colorMode: undefined,
+        isSearchDrawerOpen: false,
         setColorMode: (colorMode: ColorMode): void => set({ colorMode }, false, 'SET_COLOR_MODE'),
+        setIsSearchDrawerOpen: (isSearchDrawerOpen: boolean): void =>
+          set({ isSearchDrawerOpen }, false, 'SET_IS_SEARCH_DRAWER_OPEN'),
       }),
       {
         // * Persists state to local storage

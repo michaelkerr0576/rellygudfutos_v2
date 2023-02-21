@@ -1,5 +1,8 @@
 import React from 'react';
 
+import Typography from '@/components/dataDisplay/Typography';
+import Container from '@/components/layout/Container';
+
 interface ErrorBoundaryProps {
   children: React.ReactNode;
   identifier: string;
@@ -35,7 +38,11 @@ export default class ErrorBoundary extends React.Component<ErrorBoundaryProps, E
     const { hasError } = this.state;
 
     if (hasError) {
-      return <h3>Something went wrong!</h3>;
+      return (
+        <Container>
+          <Typography variant="h5">Something went wrong!</Typography>
+        </Container>
+      );
     }
 
     return children;
