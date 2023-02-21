@@ -9,7 +9,13 @@ export interface BoxProps {
 }
 
 export default function Box(props: BoxProps): JSX.Element {
-  const { ariaRole, children, onClick, onKeyDown, style } = props;
+  const {
+    ariaRole = 'presentation',
+    children,
+    onClick = (): void => {},
+    onKeyDown = (): void => {},
+    style = undefined,
+  } = props;
 
   return (
     <MuiBox onClick={onClick} onKeyDown={onKeyDown} role={ariaRole} sx={style}>
@@ -17,10 +23,3 @@ export default function Box(props: BoxProps): JSX.Element {
     </MuiBox>
   );
 }
-
-Box.defaultProps = {
-  ariaRole: 'presentation',
-  onClick: (): void => {},
-  onKeyDown: (): void => {},
-  style: undefined,
-};

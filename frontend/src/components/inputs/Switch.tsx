@@ -10,7 +10,7 @@ export interface SwitchProps {
 }
 
 export default function Switch(props: SwitchProps): JSX.Element {
-  const { ariaLabel, horizontalAlignment, isChecked, onChange } = props;
+  const { ariaLabel, horizontalAlignment = 'center', isChecked, onChange } = props;
 
   const edge = (): MuiSwitchProps['edge'] => {
     switch (horizontalAlignment) {
@@ -34,7 +34,3 @@ export default function Switch(props: SwitchProps): JSX.Element {
     />
   );
 }
-
-Switch.defaultProps = {
-  horizontalAlignment: 'center',
-};

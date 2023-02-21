@@ -12,7 +12,7 @@ export interface StackProps {
 }
 
 export default function Stack(props: StackProps): JSX.Element {
-  const { children, direction, horizontalAlignment, verticalAlignment } = props;
+  const { children, direction = 'row', horizontalAlignment = 'start', verticalAlignment = 'start' } = props;
 
   const alignItems = (): MuiStackProps['alignItems'] => {
     switch (verticalAlignment) {
@@ -46,9 +46,3 @@ export default function Stack(props: StackProps): JSX.Element {
     </MuiStack>
   );
 }
-
-Stack.defaultProps = {
-  direction: 'row',
-  horizontalAlignment: 'start',
-  verticalAlignment: 'start',
-};

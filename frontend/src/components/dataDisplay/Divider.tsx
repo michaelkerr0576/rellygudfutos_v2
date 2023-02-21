@@ -7,11 +7,7 @@ interface DividerProps {
 }
 
 export default function Divider(props: DividerProps): JSX.Element {
-  const { orientation } = props;
+  const { orientation = 'horizontal' } = props;
 
   return <MuiDivider orientation={orientation} flexItem={orientation === 'vertical'} />;
 }
-
-Divider.defaultProps = {
-  orientation: 'horizontal',
-};

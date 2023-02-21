@@ -13,7 +13,7 @@ export interface DrawerProps {
 }
 
 export default function Drawer(props: DrawerProps): JSX.Element {
-  const { children, icon, isOpen = false, setIsOpen } = props;
+  const { children, icon = null, isOpen = false, setIsOpen = undefined } = props;
 
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(isOpen);
 
@@ -71,9 +71,3 @@ export default function Drawer(props: DrawerProps): JSX.Element {
 
   return renderDrawer();
 }
-
-Drawer.defaultProps = {
-  icon: null,
-  isOpen: false,
-  setIsOpen: undefined,
-};

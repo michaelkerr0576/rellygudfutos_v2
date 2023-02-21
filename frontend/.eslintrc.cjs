@@ -132,7 +132,8 @@ module.exports = {
     'react/prop-types': 'error',
     // * React ^17 no longer needs to import react when writing JSX
     'react/react-in-jsx-scope': 'off',
-    'react/require-default-props': 'error',
+    // * Does not play nice with Typescript. Better to apply default when deconstructing props
+    'react/require-default-props': 'off',
     'react-hooks/exhaustive-deps': 'warn',
     'react-hooks/rules-of-hooks': 'error',
     'simple-import-sort/exports': 'error',

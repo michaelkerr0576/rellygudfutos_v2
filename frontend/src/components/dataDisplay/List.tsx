@@ -28,7 +28,7 @@ const StyledMuiList = styled(MuiList)((): { [key: string]: any } => ({
 }));
 
 export default function List(props: ListProps): JSX.Element {
-  const { listItems, subHeader } = props;
+  const { listItems, subHeader = '' } = props;
 
   const renderListItem = (listItem: ListItem): JSX.Element => {
     const { action = null, icon, label, onClick = (): void => {} } = listItem;
@@ -67,7 +67,3 @@ export default function List(props: ListProps): JSX.Element {
     </StyledMuiList>
   );
 }
-
-List.defaultProps = {
-  subHeader: '',
-};
