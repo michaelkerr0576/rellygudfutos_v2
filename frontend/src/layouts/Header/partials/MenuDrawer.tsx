@@ -8,13 +8,15 @@ import Divider from '@/components/dataDisplay/Divider';
 import List from '@/components/dataDisplay/List';
 import Switch from '@/components/inputs/Switch';
 import Drawer from '@/components/navigation/Drawer';
+import useMenu from '@/hooks/useMenu';
 import useThemes from '@/hooks/useThemes';
 
 export default function MenuDrawer(): JSX.Element {
   const { colorMode, toggleColorMode } = useThemes();
+  const { isMenuDrawerOpen, toggleMenuDrawer } = useMenu();
 
   return (
-    <Drawer icon={<MenuIcon />}>
+    <Drawer icon={<MenuIcon />} isOpen={isMenuDrawerOpen} setIsOpen={toggleMenuDrawer}>
       <List
         listItems={[
           {

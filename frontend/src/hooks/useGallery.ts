@@ -15,7 +15,7 @@ interface UseGalleryState {
   setIsSearchDrawerOpen: State['setIsSearchDrawerOpen'];
 }
 
-export default function useGallerySearch(): UseGallery {
+export default function useGallery(): UseGallery {
   const { galleryNavigationValue, isSearchDrawerOpen, setGalleryNavigationValue, setIsSearchDrawerOpen } =
     useStore(
       (state): UseGalleryState => ({

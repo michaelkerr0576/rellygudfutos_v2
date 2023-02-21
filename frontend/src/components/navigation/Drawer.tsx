@@ -1,5 +1,3 @@
-import { useEffect, useState } from 'react';
-
 import MuiSwipeableDrawer from '@mui/material/SwipeableDrawer';
 
 import IconButton from '../inputs/IconButton';
@@ -8,21 +6,15 @@ import Box from '../layout/Box';
 export interface DrawerProps {
   children: React.ReactNode;
   icon?: JSX.Element;
-  isOpen?: boolean;
-  setIsOpen?: (isOpen: boolean) => void;
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
 }
 
 export default function Drawer(props: DrawerProps): JSX.Element {
-  const { children, icon = null, isOpen = false, setIsOpen = undefined } = props;
-
-  const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(isOpen);
-
-  useEffect((): void => {
-    setIsDrawerOpen(isOpen);
-  }, [isOpen]);
+  const { children, icon = null, isOpen, setIsOpen } = props;
 
   const toggleDrawer =
-    (isOpenToggle: boolean) =>
+    (isDrawerOpen: boolean) =>
     (event: React.KeyboardEvent | React.MouseEvent): void => {
       const ìsTabOrShiftKeydown =
         event &&
@@ -33,11 +25,7 @@ export default function Drawer(props: DrawerProps): JSX.Element {
         return;
       }
 
-      if (setIsOpen) {
-        setIsOpen(isOpenToggle);
-      } else {
-        setIsDrawerOpen(isOpenToggle);
-      }
+      setIsOpen(isDrawerOpen);
     };
 
   const renderList = (): JSX.Element => (
@@ -47,12 +35,7 @@ export default function Drawer(props: DrawerProps): JSX.Element {
   );
 
   const renderDrawer = (): JSX.Element => (
-    <MuiSwipeableDrawer
-      anchor="left"
-      open={isDrawerOpen}
-      onClose={toggleDrawer(false)}
-      onOpen={toggleDrawer(true)}
-    >
+    <MuiSwipeableDrawer anchor="left" open={isOpen} onClose={toggleDrawer(false)} onOpen={toggleDrawer(true)}>
       {renderList()}
     </MuiSwipeableDrawer>
   );
