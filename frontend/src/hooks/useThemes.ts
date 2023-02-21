@@ -1,8 +1,7 @@
-import { useEffect, useMemo } from 'react';
-import { shallow } from 'zustand/shallow';
+import { useMemo } from 'react';
 
 import { common, grey } from '@mui/material/colors';
-import { createTheme, PaletteOptions, Theme } from '@mui/material/styles';
+import { createTheme, Theme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 import useStore from '@/store/store';
@@ -33,8 +32,6 @@ export interface UseThemes {
 interface UseThemesState {
   colorMode: State['colorMode'];
   setColorMode: State['setColorMode'];
-  setTheme: State['setTheme'];
-  theme: State['theme'];
 }
 
 const lightTheme = {
@@ -60,35 +57,18 @@ const darkTheme = {
 };
 
 export default function useThemes(): UseThemes {
-  const { colorMode, setColorMode, setTheme, theme } = useStore(
-    (state): UseThemesState => ({
-      colorMode: state.colorMode,
-      setColorMode: state.setColorMode,
-      setTheme: state.setTheme,
-      theme: state.theme,
-    }),
-    shallow,
-  );
-
   const doesUserPreferDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 
   const defaultColorMode = doesUserPreferDarkMode ? 'dark' : 'light';
 
-  const getPalette = (): PaletteOptions => {
-    if (colorMode) {
-      return {
-        ...(colorMode === 'dark' ? darkTheme.palette : lightTheme.palette),
-        mode: colorMode,
-      };
-    }
+  const { colorMode, setColorMode } = useStore(
+    (state): UseThemesState => ({
+      colorMode: state.colorMode || defaultColorMode,
+      setColorMode: state.setColorMode,
+    }),
+  );
 
-    return {
-      ...(defaultColorMode === 'dark' ? darkTheme.palette : lightTheme.palette),
-      mode: defaultColorMode,
-    };
-  };
-
-  const newTheme = useMemo(
+  const theme = useMemo(
     (): Theme =>
       createTheme({
         breakpoints: {
@@ -99,18 +79,13 @@ export default function useThemes(): UseThemes {
             tablet: 640,
           },
         },
-        palette: getPalette(),
+        palette: {
+          ...(colorMode === 'dark' ? darkTheme.palette : lightTheme.palette),
+          mode: colorMode,
+        },
       }),
     [colorMode],
   );
-
-  useEffect((): void => {
-    if (colorMode) {
-      setTheme(newTheme);
-    } else {
-      setColorMode(defaultColorMode);
-    }
-  }, [colorMode]);
 
   const toggleColorMode = (): void => {
     const toggledColorCode = colorMode === 'light' ? 'dark' : 'light';
@@ -119,8 +94,8 @@ export default function useThemes(): UseThemes {
   };
 
   return {
-    colorMode: colorMode || defaultColorMode,
-    theme: theme || newTheme,
+    colorMode: colorMode as ColorMode,
+    theme,
     toggleColorMode,
   };
 }
