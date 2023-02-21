@@ -1,19 +1,26 @@
 import { create } from 'zustand';
-import { devtools } from 'zustand/middleware';
+import { devtools, persist } from 'zustand/middleware';
 
 import { Theme } from '@mui/material/styles';
 
-export interface State {
-  setTheme: (theme: Theme) => void;
-  theme: Theme | undefined;
-}
+import { ColorMode, State } from './types/storeTypes';
 
 const useStore = create<State>()(
   devtools(
-    (set, _get): State => ({
-      setTheme: (theme: Theme): void => set({ theme }, false, 'SET_THEME'),
-      theme: undefined,
-    }),
+    // * Enables Redux devtools
+    persist(
+      (set, _get): State => ({
+        colorMode: undefined,
+        setColorMode: (colorMode: ColorMode): void => set({ colorMode }, false, 'SET_COLOR_MODE'),
+        setTheme: (theme: Theme): void => set({ theme }, false, 'SET_THEME'),
+        theme: undefined,
+      }),
+      {
+        // * Persists chosen state to local storage
+        name: 'state-storage',
+        partialize: (state): Partial<State> => ({ colorMode: state.colorMode }),
+      },
+    ),
   ),
 );
 

@@ -1,10 +1,12 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo } from 'react';
+import { shallow } from 'zustand/shallow';
 
 import { common, grey } from '@mui/material/colors';
-import { createTheme, Theme } from '@mui/material/styles';
+import { createTheme, PaletteOptions, Theme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
-import useStore, { State } from '@/store/store';
+import useStore from '@/store/store';
+import { ColorMode, State } from '@/store/types/storeTypes';
 
 declare module '@mui/material/styles' {
   interface BreakpointOverrides {
@@ -22,12 +24,17 @@ declare module '@mui/material/styles' {
   }
 }
 
-type ColorMode = 'light' | 'dark';
-
-interface UseThemes {
+export interface UseThemes {
   colorMode: ColorMode;
   theme: Theme;
   toggleColorMode: () => void;
+}
+
+interface UseThemesState {
+  colorMode: State['colorMode'];
+  setColorMode: State['setColorMode'];
+  setTheme: State['setTheme'];
+  theme: State['theme'];
 }
 
 const lightTheme = {
@@ -53,13 +60,35 @@ const darkTheme = {
 };
 
 export default function useThemes(): UseThemes {
-  const { setTheme, theme } = useStore((state): State => ({ setTheme: state.setTheme, theme: state.theme }));
+  const { colorMode, setColorMode, setTheme, theme } = useStore(
+    (state): UseThemesState => ({
+      colorMode: state.colorMode,
+      setColorMode: state.setColorMode,
+      setTheme: state.setTheme,
+      theme: state.theme,
+    }),
+    shallow,
+  );
 
   const doesUserPreferDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 
-  const [colorMode, setColorMode] = useState<ColorMode>(doesUserPreferDarkMode ? 'dark' : 'light');
+  const defaultColorMode = doesUserPreferDarkMode ? 'dark' : 'light';
 
-  const createdTheme = useMemo(
+  const getPalette = (): PaletteOptions => {
+    if (colorMode) {
+      return {
+        ...(colorMode === 'dark' ? darkTheme.palette : lightTheme.palette),
+        mode: colorMode,
+      };
+    }
+
+    return {
+      ...(defaultColorMode === 'dark' ? darkTheme.palette : lightTheme.palette),
+      mode: defaultColorMode,
+    };
+  };
+
+  const newTheme = useMemo(
     (): Theme =>
       createTheme({
         breakpoints: {
@@ -70,24 +99,28 @@ export default function useThemes(): UseThemes {
             tablet: 640,
           },
         },
-        palette: {
-          ...(colorMode === 'dark' ? darkTheme.palette : lightTheme.palette),
-          mode: colorMode,
-        },
+        palette: getPalette(),
       }),
     [colorMode],
   );
 
   useEffect((): void => {
-    setTheme(createdTheme);
+    if (colorMode) {
+      setTheme(newTheme);
+    } else {
+      setColorMode(defaultColorMode);
+    }
   }, [colorMode]);
 
-  const toggleColorMode = (): void =>
-    setColorMode((previousColorMode): ColorMode => (previousColorMode === 'light' ? 'dark' : 'light'));
+  const toggleColorMode = (): void => {
+    const toggledColorCode = colorMode === 'light' ? 'dark' : 'light';
+
+    setColorMode(toggledColorCode);
+  };
 
   return {
-    colorMode: theme?.palette?.mode || colorMode,
-    theme: theme || createdTheme,
+    colorMode: colorMode || defaultColorMode,
+    theme: theme || newTheme,
     toggleColorMode,
   };
 }

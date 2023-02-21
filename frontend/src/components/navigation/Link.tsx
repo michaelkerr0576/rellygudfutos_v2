@@ -1,3 +1,4 @@
+import { forwardRef } from 'react';
 import { Link as ReactRouterLink } from 'react-router-dom';
 
 import { styled } from '@mui/material/styles';
@@ -12,8 +13,14 @@ const StyledReactRouterLink = styled(ReactRouterLink)((): { [key: string]: any }
   textDecoration: 'none',
 }));
 
-export default function Link(props: LinkProps): JSX.Element {
+function Link(props: LinkProps, ref: React.Ref<HTMLAnchorElement> | undefined): JSX.Element {
   const { children, to } = props;
 
-  return <StyledReactRouterLink to={to}>{children}</StyledReactRouterLink>;
+  return (
+    <StyledReactRouterLink ref={ref} to={to}>
+      {children}
+    </StyledReactRouterLink>
+  );
 }
+
+export default forwardRef(Link);
