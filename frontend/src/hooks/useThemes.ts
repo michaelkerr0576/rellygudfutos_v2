@@ -4,7 +4,6 @@ import { common, grey } from '@mui/material/colors';
 import { createTheme, Theme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
-import CabinSketch from '@/assets/fonts/CabinSketch-Regular.ttf';
 import useStore from '@/store/store';
 import { ColorMode, State } from '@/store/types/storeTypes';
 
@@ -47,7 +46,7 @@ const breakpoints = {
 const typography = {
   fontFamily: ['Roboto', 'Helvetica', 'Arial', 'sans-serif'].join(','),
   h1: {
-    fontSize: '2.25rem',
+    fontSize: '2rem',
   },
   h2: {
     fontSize: '1.5rem',
@@ -66,21 +65,6 @@ const typography = {
   },
   subtitle1: {
     fontSize: '0.83rem',
-  },
-};
-
-const components = {
-  MuiCssBaseline: {
-    styleOverrides: `
-      @font-face {
-        font-family: 'Cabin Sketch';
-        font-style: normal;
-        font-weight: 400;
-        font-display: swap;
-        src: url(${CabinSketch}) format('woff2');
-        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-      }
-    `,
   },
 };
 
@@ -122,7 +106,6 @@ export default function useThemes(): UseThemes {
     (): Theme =>
       createTheme({
         breakpoints: { ...breakpoints },
-        components: { ...components },
         palette: {
           ...(colorMode === 'dark' ? darkTheme.palette : lightTheme.palette),
           mode: colorMode,

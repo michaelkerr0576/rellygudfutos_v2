@@ -1,5 +1,5 @@
+import RellygudfutosLogo from '@/assets/logos/RellygudfutosLogo';
 import Divider from '@/components/dataDisplay/Divider';
-import Logo from '@/components/dataDisplay/Logo';
 import Container from '@/components/layout/Container';
 import Stack from '@/components/layout/Stack';
 
@@ -13,7 +13,7 @@ export default function Header(): JSX.Element {
       <header>
         <Container>
           <Stack horizontalAlignment="spaceBetween" verticalAlignment="center">
-            <Logo />
+            <RellygudfutosLogo />
             <MenuDrawer />
           </Stack>
         </Container>

@@ -1,8 +1,9 @@
 import { useTheme } from '@mui/material/styles';
 import MuiSwipeableDrawer from '@mui/material/SwipeableDrawer';
 
+import RellygudfutosLogo from '@/assets/logos/RellygudfutosLogo';
+
 import Divider from '../dataDisplay/Divider';
-import Logo from '../dataDisplay/Logo';
 import IconButton from '../inputs/IconButton';
 import Box from '../layout/Box';
 
@@ -42,7 +43,7 @@ export default function Drawer(props: DrawerProps): JSX.Element {
   const renderDrawer = (): JSX.Element => (
     <MuiSwipeableDrawer anchor="left" open={isOpen} onClose={toggleDrawer(false)} onOpen={toggleDrawer(true)}>
       <Box style={{ padding: theme.spacing(2, 2, 1) }}>
-        <Logo size="small" />
+        <RellygudfutosLogo size="small" />
       </Box>
 
       <Divider />
