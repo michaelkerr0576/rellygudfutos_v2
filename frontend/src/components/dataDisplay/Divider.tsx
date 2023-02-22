@@ -2,7 +2,7 @@ import MuiDivider from '@mui/material/Divider';
 
 type Orientation = 'horizontal' | 'vertical';
 
-interface DividerProps {
+export interface DividerProps {
   orientation?: Orientation;
 }
 

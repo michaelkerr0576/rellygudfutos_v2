@@ -4,6 +4,7 @@ import { common, grey } from '@mui/material/colors';
 import { createTheme, Theme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
+import CabinSketch from '@/assets/fonts/CabinSketch-Regular.ttf';
 import useStore from '@/store/store';
 import { ColorMode, State } from '@/store/types/storeTypes';
 
@@ -33,6 +34,55 @@ interface UseThemesState {
   colorMode: State['colorMode'];
   setColorMode: State['setColorMode'];
 }
+
+const breakpoints = {
+  values: {
+    desktop: 1280,
+    laptop: 1024,
+    mobile: 0,
+    tablet: 640,
+  },
+};
+
+const typography = {
+  fontFamily: ['Roboto', 'Helvetica', 'Arial', 'sans-serif'].join(','),
+  h1: {
+    fontSize: '2.25rem',
+  },
+  h2: {
+    fontSize: '1.5rem',
+  },
+  h3: {
+    fontSize: '1.17rem',
+  },
+  h4: {
+    fontSize: '1rem',
+  },
+  h5: {
+    fontSize: '0.83rem',
+  },
+  h6: {
+    fontSize: '0.75rem',
+  },
+  subtitle1: {
+    fontSize: '0.83rem',
+  },
+};
+
+const components = {
+  MuiCssBaseline: {
+    styleOverrides: `
+      @font-face {
+        font-family: 'Cabin Sketch';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url(${CabinSketch}) format('woff2');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+    `,
+  },
+};
 
 const lightTheme = {
   palette: {
@@ -71,18 +121,13 @@ export default function useThemes(): UseThemes {
   const theme = useMemo(
     (): Theme =>
       createTheme({
-        breakpoints: {
-          values: {
-            desktop: 1280,
-            laptop: 1024,
-            mobile: 0,
-            tablet: 640,
-          },
-        },
+        breakpoints: { ...breakpoints },
+        components: { ...components },
         palette: {
           ...(colorMode === 'dark' ? darkTheme.palette : lightTheme.palette),
           mode: colorMode,
         },
+        typography: { ...typography },
       }),
     [colorMode],
   );

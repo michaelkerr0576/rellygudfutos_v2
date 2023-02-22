@@ -12,21 +12,19 @@ export interface SwitchProps {
 export default function Switch(props: SwitchProps): JSX.Element {
   const { ariaLabel, horizontalAlignment = 'center', isChecked, onChange } = props;
 
-  const edge = (): MuiSwitchProps['edge'] => {
+  const muiEdge = (): MuiSwitchProps['edge'] => {
     switch (horizontalAlignment) {
-      case 'start':
-        return 'start';
-      case 'end':
-        return 'end';
-      default:
+      case 'center':
         return false;
+      default:
+        return horizontalAlignment;
     }
   };
 
   return (
     <MuiSwitch
       checked={isChecked}
-      edge={edge()}
+      edge={muiEdge()}
       inputProps={{
         'aria-labelledby': ariaLabel,
       }}

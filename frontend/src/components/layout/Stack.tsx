@@ -14,21 +14,21 @@ export interface StackProps {
 export default function Stack(props: StackProps): JSX.Element {
   const { children, direction = 'row', horizontalAlignment = 'start', verticalAlignment = 'start' } = props;
 
-  const alignItems = (): MuiStackProps['alignItems'] => {
+  const muiAlignItems = (): MuiStackProps['alignItems'] => {
     switch (verticalAlignment) {
-      case 'center':
-        return 'center';
+      case 'start':
+        return 'flex-start';
       case 'end':
         return 'flex-end';
       default:
-        return 'flex-start';
+        return verticalAlignment;
     }
   };
 
-  const justifyContent = (): MuiStackProps['justifyContent'] => {
+  const muiJustifyContent = (): MuiStackProps['justifyContent'] => {
     switch (horizontalAlignment) {
-      case 'center':
-        return 'center';
+      case 'start':
+        return 'flex-start';
       case 'end':
         return 'flex-end';
       case 'spaceBetween':
@@ -36,12 +36,12 @@ export default function Stack(props: StackProps): JSX.Element {
       case 'spaceEvenly':
         return 'space=evenly';
       default:
-        return 'flex-start';
+        return horizontalAlignment;
     }
   };
 
   return (
-    <MuiStack alignItems={alignItems()} direction={direction} justifyContent={justifyContent()}>
+    <MuiStack alignItems={muiAlignItems()} direction={direction} justifyContent={muiJustifyContent()}>
       {children}
     </MuiStack>
   );

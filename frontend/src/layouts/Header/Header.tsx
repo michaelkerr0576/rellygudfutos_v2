@@ -1,4 +1,5 @@
 import Divider from '@/components/dataDisplay/Divider';
+import Logo from '@/components/dataDisplay/Logo';
 import Container from '@/components/layout/Container';
 import Stack from '@/components/layout/Stack';
 
@@ -12,8 +13,7 @@ export default function Header(): JSX.Element {
       <header>
         <Container>
           <Stack horizontalAlignment="spaceBetween" verticalAlignment="center">
-            <div>rellygudfutos</div>
-
+            <Logo />
             <MenuDrawer />
           </Stack>
         </Container>

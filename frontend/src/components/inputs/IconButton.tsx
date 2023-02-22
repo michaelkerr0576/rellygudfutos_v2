@@ -10,7 +10,7 @@ export default function Button(props: IconButtonProps): JSX.Element {
   const { ariaLabel, children, onClick } = props;
 
   return (
-    <MuiIconButton aria-label={ariaLabel} onClick={onClick} size="large">
+    <MuiIconButton aria-label={ariaLabel} onClick={onClick}>
       {children}
     </MuiIconButton>
   );

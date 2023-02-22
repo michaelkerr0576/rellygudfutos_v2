@@ -16,7 +16,7 @@ export default function MenuDrawer(): JSX.Element {
   const { isMenuDrawerOpen, toggleMenuDrawer } = useMenu();
 
   return (
-    <Drawer icon={<MenuIcon />} isOpen={isMenuDrawerOpen} setIsOpen={toggleMenuDrawer}>
+    <Drawer icon={<MenuIcon size="large" />} isOpen={isMenuDrawerOpen} setIsOpen={toggleMenuDrawer}>
       <List
         listItems={[
           {
@@ -30,7 +30,7 @@ export default function MenuDrawer(): JSX.Element {
             navigateTo: '/portfolio',
           },
         ]}
-        subHeader="rellygudfutos"
+        subHeader="Navigation"
       />
 
       <Divider />

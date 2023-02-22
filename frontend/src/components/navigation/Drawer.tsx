@@ -1,5 +1,8 @@
+import { useTheme } from '@mui/material/styles';
 import MuiSwipeableDrawer from '@mui/material/SwipeableDrawer';
 
+import Divider from '../dataDisplay/Divider';
+import Logo from '../dataDisplay/Logo';
 import IconButton from '../inputs/IconButton';
 import Box from '../layout/Box';
 
@@ -12,6 +15,8 @@ export interface DrawerProps {
 
 export default function Drawer(props: DrawerProps): JSX.Element {
   const { children, icon = null, isOpen, setIsOpen } = props;
+
+  const theme = useTheme();
 
   const toggleDrawer =
     (isDrawerOpen: boolean) =>
@@ -36,6 +41,12 @@ export default function Drawer(props: DrawerProps): JSX.Element {
 
   const renderDrawer = (): JSX.Element => (
     <MuiSwipeableDrawer anchor="left" open={isOpen} onClose={toggleDrawer(false)} onOpen={toggleDrawer(true)}>
+      <Box style={{ padding: theme.spacing(2, 2, 1) }}>
+        <Logo size="small" />
+      </Box>
+
+      <Divider />
+
       {renderList()}
     </MuiSwipeableDrawer>
   );
