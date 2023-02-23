@@ -30,11 +30,13 @@ export default function MenuDrawer(): JSX.Element {
             icon: <GalleryIcon variant={pathname.includes('/gallery') ? 'filled' : 'outlined'} />,
             label: 'Gallery',
             navigateTo: '/gallery',
+            onClick: (): void => toggleMenuDrawer(false),
           },
           {
             icon: <PortfolioIcon variant={pathname.includes('/portfolio') ? 'filled' : 'outlined'} />,
             label: 'Portfolio',
             navigateTo: '/portfolio',
+            onClick: (): void => toggleMenuDrawer(false),
           },
         ]}
         subHeader="Navigation"
@@ -69,11 +71,13 @@ export default function MenuDrawer(): JSX.Element {
             icon: <DashboardIcon variant={pathname.includes('/admin/dashboard') ? 'filled' : 'outlined'} />,
             label: 'Dashboard',
             navigateTo: '/admin/dashboard',
+            onClick: (): void => toggleMenuDrawer(false),
           },
           {
             icon: <LoginIcon />,
             label: 'Login',
             navigateTo: '/admin/login',
+            onClick: (): void => toggleMenuDrawer(false),
           },
         ]}
         subHeader="Account"

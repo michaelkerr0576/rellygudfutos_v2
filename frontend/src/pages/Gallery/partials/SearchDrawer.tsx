@@ -1,8 +1,6 @@
-import DarkModeIcon from '@/assets/icons/DarkModeIcon';
 import SearchIcon from '@/assets/icons/SearchIcon';
 import Divider from '@/components/dataDisplay/Divider';
-import List from '@/components/dataDisplay/List';
-import Switch from '@/components/inputs/Switch';
+import TextField from '@/components/inputs/TextField';
 import Drawer from '@/components/navigation/Drawer';
 import useGallery from '@/hooks/useGallery';
 
@@ -11,36 +9,9 @@ export default function SearchDrawer(): JSX.Element {
 
   return (
     <Drawer isOpen={isSearchDrawerOpen} setIsOpen={toggleSearchDrawer}>
-      <List
-        listItems={[
-          {
-            icon: <SearchIcon />,
-            label: 'Search',
-          },
-        ]}
-        subHeader="Search"
-      />
+      <TextField label="Search" endAdornmentIcon={<SearchIcon />} />
 
       <Divider />
-
-      <List
-        listItems={[
-          {
-            action: (
-              <Switch
-                ariaLabel="switch-dark-mode"
-                isChecked
-                horizontalAlignment="end"
-                onChange={(): void => {}}
-              />
-            ),
-            icon: <DarkModeIcon />,
-            label: 'Dark mode',
-            onClick: (): void => {},
-          },
-        ]}
-        subHeader="Settings"
-      />
     </Drawer>
   );
 }

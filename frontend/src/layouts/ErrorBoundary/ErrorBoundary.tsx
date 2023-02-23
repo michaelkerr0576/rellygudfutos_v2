@@ -40,7 +40,7 @@ export default class ErrorBoundary extends React.Component<ErrorBoundaryProps, E
     if (hasError) {
       return (
         <Container>
-          <Typography variant="h5">Something went wrong!</Typography>
+          <Typography variant="h3">Something went wrong!</Typography>
         </Container>
       );
     }

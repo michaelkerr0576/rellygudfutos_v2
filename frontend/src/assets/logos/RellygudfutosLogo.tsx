@@ -7,12 +7,13 @@ export interface RellygudfutosLogoProps {
   size?: Size;
 }
 
-const StyledRellygudfutosLogo = styled('div')((): { [key: string]: any } => ({
+const StyledRellygudfutosLogo = styled('div')(({ theme }): { [key: string]: any } => ({
   '.MuiSvgIcon-root': {
     width: 'auto',
   },
 
   display: 'flex',
+  paddingTop: theme.spacing(0.5),
 }));
 
 export default function RellygudfutosLogo(props: RellygudfutosLogoProps): JSX.Element {

@@ -18,8 +18,15 @@ const StyledMuiSwipeableDrawer = styled(MuiSwipeableDrawer)(({ theme }): { [key:
   '.MuiList-root': {
     width: 250,
   },
-  '.rgf_rellygudfutosLogo': {
-    padding: theme.spacing(2, 2),
+  '.rgf_drawer__children': {
+    '.rgf_divider': {
+      marginLeft: -16,
+      marginRight: -16,
+    },
+    '.rgf_rellygudfutosLogo': {
+      padding: theme.spacing(2.5, 0, 2),
+    },
+    padding: theme.spacing(0, 2),
   },
 }));
 
@@ -41,12 +48,6 @@ export default function Drawer(props: DrawerProps): JSX.Element {
       setIsOpen(isDrawerOpen);
     };
 
-  const renderList = (): JSX.Element => (
-    <Box onClick={toggleDrawer(false)} onKeyDown={toggleDrawer(false)}>
-      {children}
-    </Box>
-  );
-
   const renderDrawer = (): JSX.Element => (
     <StyledMuiSwipeableDrawer
       anchor="left"
@@ -54,11 +55,13 @@ export default function Drawer(props: DrawerProps): JSX.Element {
       onClose={toggleDrawer(false)}
       onOpen={toggleDrawer(true)}
     >
-      <RellygudfutosLogo size="small" />
+      <Box className="rgf_drawer__children">
+        <RellygudfutosLogo size="small" />
 
-      <Divider />
+        <Divider />
 
-      {renderList()}
+        {children}
+      </Box>
     </StyledMuiSwipeableDrawer>
   );
 

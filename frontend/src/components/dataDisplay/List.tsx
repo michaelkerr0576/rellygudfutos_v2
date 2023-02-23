@@ -21,9 +21,13 @@ export interface ListProps {
   subHeader?: string;
 }
 
-const StyledMuiList = styled(MuiList)((): { [key: string]: any } => ({
+const StyledMuiList = styled(MuiList)(({ theme }): { [key: string]: any } => ({
+  '.MuiListItemButton-root': {
+    padding: theme.spacing(1, 0),
+  },
   '.MuiListSubheader-root': {
     backgroundColor: 'inherit',
+    padding: theme.spacing(1, 0),
   },
 }));
 
