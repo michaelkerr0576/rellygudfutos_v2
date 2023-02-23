@@ -2,7 +2,6 @@ import PhotoGridIcon from '@/assets/icons/PhotoGridIcon';
 import PhotoListIcon from '@/assets/icons/PhotoListIcon';
 import SearchIcon from '@/assets/icons/SearchIcon';
 import ToggleDarkModeIcon from '@/assets/icons/ToggleDarkModeIcon';
-import ToggleLightModeIcon from '@/assets/icons/ToggleLightModeIcon';
 import BottomNavigation from '@/components/navigation/BottomNavigation';
 import useGallery from '@/hooks/useGallery';
 import useThemes from '@/hooks/useThemes';
@@ -18,25 +17,30 @@ export default function GalleryBottomNavigation(): JSX.Element {
       <BottomNavigation
         actions={[
           {
-            icon: <PhotoGridIcon />,
+            icon: <PhotoGridIcon variant={galleryNavigationValue === 'grid' ? 'filled' : 'outlined'} />,
             label: 'Grid',
             onClick: (): void => {},
             value: 'grid',
           },
           {
-            icon: <PhotoListIcon />,
+            icon: <PhotoListIcon variant={galleryNavigationValue === 'list' ? 'filled' : 'outlined'} />,
             label: 'List',
             onClick: (): void => {},
             value: 'list',
           },
           {
-            icon: colorMode === 'dark' ? <ToggleLightModeIcon /> : <ToggleDarkModeIcon />,
+            icon: (
+              <ToggleDarkModeIcon
+                mode={colorMode}
+                variant={galleryNavigationValue === 'mode' ? 'filled' : 'outlined'}
+              />
+            ),
             label: colorMode === 'dark' ? 'Dark' : 'Light',
             onClick: toggleColorMode,
             value: 'mode',
           },
           {
-            icon: <SearchIcon />,
+            icon: <SearchIcon variant={galleryNavigationValue === 'search' ? 'filled' : 'outlined'} />,
             label: 'Search',
             onClick: (): void => toggleSearchDrawer(true),
             value: 'search',

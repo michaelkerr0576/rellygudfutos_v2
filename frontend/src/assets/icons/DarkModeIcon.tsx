@@ -1,9 +1,14 @@
-import MuiDarkModeRoundedIcon from '@mui/icons-material/DarkModeRounded';
+import MuiDarkModeIcon from '@mui/icons-material/DarkMode';
+import MuiDarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
 
 import { IconProps } from './types/iconTypes';
 
 export default function DarkModeIcon(props: IconProps): JSX.Element {
-  const { size = 'medium' } = props;
+  const { size = 'medium', variant = 'outlined' } = props;
 
-  return <MuiDarkModeRoundedIcon fontSize={size} />;
+  if (variant === 'filled') {
+    return <MuiDarkModeIcon fontSize={size} />;
+  }
+
+  return <MuiDarkModeOutlinedIcon fontSize={size} />;
 }

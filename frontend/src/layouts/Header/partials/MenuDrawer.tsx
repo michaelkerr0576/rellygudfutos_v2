@@ -1,3 +1,5 @@
+import { useLocation } from 'react-router-dom';
+
 import DarkModeIcon from '@/assets/icons/DarkModeIcon';
 import DashboardIcon from '@/assets/icons/DashboardIcon';
 import GalleryIcon from '@/assets/icons/GalleryIcon';
@@ -12,6 +14,7 @@ import useMenu from '@/hooks/useMenu';
 import useThemes from '@/hooks/useThemes';
 
 export default function MenuDrawer(): JSX.Element {
+  const { pathname } = useLocation();
   const { colorMode, toggleColorMode } = useThemes();
   const { isMenuDrawerOpen, toggleMenuDrawer } = useMenu();
 
@@ -20,12 +23,12 @@ export default function MenuDrawer(): JSX.Element {
       <List
         listItems={[
           {
-            icon: <GalleryIcon />,
+            icon: <GalleryIcon variant={pathname.includes('/gallery') ? 'filled' : 'outlined'} />,
             label: 'Gallery',
             navigateTo: '/gallery',
           },
           {
-            icon: <PortfolioIcon />,
+            icon: <PortfolioIcon variant={pathname.includes('/portfolio') ? 'filled' : 'outlined'} />,
             label: 'Portfolio',
             navigateTo: '/portfolio',
           },
@@ -46,7 +49,7 @@ export default function MenuDrawer(): JSX.Element {
                 onChange={(): void => {}}
               />
             ),
-            icon: <DarkModeIcon />,
+            icon: <DarkModeIcon variant={colorMode === 'dark' ? 'filled' : 'outlined'} />,
             label: 'Dark mode',
             onClick: toggleColorMode,
           },
@@ -59,7 +62,7 @@ export default function MenuDrawer(): JSX.Element {
       <List
         listItems={[
           {
-            icon: <DashboardIcon />,
+            icon: <DashboardIcon variant={pathname.includes('/admin/dashboard') ? 'filled' : 'outlined'} />,
             label: 'Dashboard',
             navigateTo: '/admin/dashboard',
           },

@@ -1,9 +1,30 @@
-import MuiBrightness4RoundedIcon from '@mui/icons-material/Brightness4Rounded';
+import MuiBrightness4Icon from '@mui/icons-material/Brightness4';
+import MuiBrightness4OutlinedIcon from '@mui/icons-material/Brightness4Outlined';
+import MuiBrightness7Icon from '@mui/icons-material/Brightness7';
+import MuiBrightness7OutlinedIcon from '@mui/icons-material/Brightness7Outlined';
 
 import { IconProps } from './types/iconTypes';
 
-export default function ToggleDarkModeIcon(props: IconProps): JSX.Element {
-  const { size = 'medium' } = props;
+type Mode = 'dark' | 'light';
 
-  return <MuiBrightness4RoundedIcon fontSize={size} />;
+export interface ToggleDarkModeIconProps extends IconProps {
+  mode: Mode;
+}
+
+export default function ToggleDarkModeIcon(props: ToggleDarkModeIconProps): JSX.Element {
+  const { size = 'medium', mode, variant = 'outlined' } = props;
+
+  if (mode === 'dark') {
+    if (variant === 'filled') {
+      return <MuiBrightness4Icon fontSize={size} />;
+    }
+
+    return <MuiBrightness4OutlinedIcon fontSize={size} />;
+  }
+
+  if (variant === 'filled') {
+    return <MuiBrightness7Icon fontSize={size} />;
+  }
+
+  return <MuiBrightness7OutlinedIcon fontSize={size} />;
 }
