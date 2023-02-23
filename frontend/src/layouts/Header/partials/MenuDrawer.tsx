@@ -19,7 +19,11 @@ export default function MenuDrawer(): JSX.Element {
   const { isMenuDrawerOpen, toggleMenuDrawer } = useMenu();
 
   return (
-    <Drawer icon={<MenuIcon size="large" />} isOpen={isMenuDrawerOpen} setIsOpen={toggleMenuDrawer}>
+    <Drawer
+      icon={<MenuIcon size="large" variant={isMenuDrawerOpen ? 'filled' : 'outlined'} />}
+      isOpen={isMenuDrawerOpen}
+      setIsOpen={toggleMenuDrawer}
+    >
       <List
         listItems={[
           {
