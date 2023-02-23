@@ -9,6 +9,7 @@ export interface LinkProps {
 }
 
 const StyledReactRouterLink = styled(ReactRouterLink)((): { [key: string]: any } => ({
+  '-webkit-tap-highlight-color': 'transparent',
   color: 'inherit',
   textDecoration: 'none',
 }));
