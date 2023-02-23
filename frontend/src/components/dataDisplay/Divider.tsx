@@ -9,5 +9,7 @@ export interface DividerProps {
 export default function Divider(props: DividerProps): JSX.Element {
   const { orientation = 'horizontal' } = props;
 
-  return <MuiDivider orientation={orientation} flexItem={orientation === 'vertical'} />;
+  return (
+    <MuiDivider className="rgf_divider" orientation={orientation} flexItem={orientation === 'vertical'} />
+  );
 }

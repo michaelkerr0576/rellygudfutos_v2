@@ -21,5 +21,9 @@ export default function Typography(props: TypographyProps): JSX.Element {
     }
   };
 
-  return <MuiTypography variant={muiVariant()}>{children}</MuiTypography>;
+  return (
+    <MuiTypography className="rgf_typography" variant={muiVariant()}>
+      {children}
+    </MuiTypography>
+  );
 }

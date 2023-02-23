@@ -8,5 +8,9 @@ export interface ContainerProps {
 export default function Paper(props: ContainerProps): JSX.Element {
   const { children, elevation = 3 } = props;
 
-  return <MuiPaper elevation={elevation}>{children}</MuiPaper>;
+  return (
+    <MuiPaper className="rgf_paper" elevation={elevation}>
+      {children}
+    </MuiPaper>
+  );
 }

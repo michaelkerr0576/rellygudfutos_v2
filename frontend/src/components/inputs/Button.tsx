@@ -8,5 +8,9 @@ export interface ButtonProps {
 export default function Button(props: ButtonProps): JSX.Element {
   const { children, onClick } = props;
 
-  return <MuiButton onClick={onClick}>{children}</MuiButton>;
+  return (
+    <MuiButton className="rgf_button" onClick={onClick}>
+      {children}
+    </MuiButton>
+  );
 }

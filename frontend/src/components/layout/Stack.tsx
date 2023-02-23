@@ -41,7 +41,12 @@ export default function Stack(props: StackProps): JSX.Element {
   };
 
   return (
-    <MuiStack alignItems={muiAlignItems()} direction={direction} justifyContent={muiJustifyContent()}>
+    <MuiStack
+      alignItems={muiAlignItems()}
+      className="rgf_stack"
+      direction={direction}
+      justifyContent={muiJustifyContent()}
+    >
       {children}
     </MuiStack>
   );

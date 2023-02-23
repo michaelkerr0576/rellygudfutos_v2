@@ -243,6 +243,18 @@ I wanted to avoid slow webpack so Vite.js it is.
 
 - [Vite.js Docs](https://vitejs.dev/guide/)
 
+### Material UI
+
+UI library with all the components I will need. Each component used will be put into `src/components` folder where I can do any custom design and ensure the components are being used the same throughout the app.
+
+Each component will have a `className` to make it easier to customize from a parent component eg. `className="rgf_list"`. `rgf` prefix stands for the app name rellygudfutos.
+
+**Useful Links:**
+
+- [Material UI Docs](https://mui.com/material-ui/getting-started/overview/)
+- [Material UI Theming](https://mui.com/material-ui/customization/theming/)
+- [Material UI Style Components](https://mui.com/material-ui/customization/how-to-customize/#2-reusable-component)
+
 ### React Query
 
 React Query as a server-side state that reduces API requests :drooling_face:

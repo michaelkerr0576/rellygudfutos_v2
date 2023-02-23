@@ -12,5 +12,9 @@ const StyledMuiContainer = styled(MuiContainer)(({ theme }): { [key: string]: an
 export default function Container(props: ContainerProps): JSX.Element {
   const { children } = props;
 
-  return <StyledMuiContainer maxWidth={false}>{children}</StyledMuiContainer>;
+  return (
+    <StyledMuiContainer className="rgf_container" maxWidth={false}>
+      {children}
+    </StyledMuiContainer>
+  );
 }

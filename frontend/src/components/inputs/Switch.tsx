@@ -24,6 +24,7 @@ export default function Switch(props: SwitchProps): JSX.Element {
   return (
     <MuiSwitch
       checked={isChecked}
+      className="rgf_switch"
       edge={muiEdge()}
       inputProps={{
         'aria-labelledby': ariaLabel,

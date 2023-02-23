@@ -1,4 +1,4 @@
-import { useTheme } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import MuiSwipeableDrawer from '@mui/material/SwipeableDrawer';
 
 import RellygudfutosLogo from '@/assets/logos/RellygudfutosLogo';
@@ -14,10 +14,17 @@ export interface DrawerProps {
   setIsOpen: (isOpen: boolean) => void;
 }
 
+const StyledMuiSwipeableDrawer = styled(MuiSwipeableDrawer)(({ theme }): { [key: string]: any } => ({
+  '.MuiList-root': {
+    width: 250,
+  },
+  '.rgf_rellygudfutosLogo': {
+    padding: theme.spacing(2, 2),
+  },
+}));
+
 export default function Drawer(props: DrawerProps): JSX.Element {
   const { children, icon = null, isOpen, setIsOpen } = props;
-
-  const theme = useTheme();
 
   const toggleDrawer =
     (isDrawerOpen: boolean) =>
@@ -35,34 +42,37 @@ export default function Drawer(props: DrawerProps): JSX.Element {
     };
 
   const renderList = (): JSX.Element => (
-    <Box onClick={toggleDrawer(false)} onKeyDown={toggleDrawer(false)} style={{ width: 250 }}>
+    <Box onClick={toggleDrawer(false)} onKeyDown={toggleDrawer(false)}>
       {children}
     </Box>
   );
 
   const renderDrawer = (): JSX.Element => (
-    <MuiSwipeableDrawer anchor="left" open={isOpen} onClose={toggleDrawer(false)} onOpen={toggleDrawer(true)}>
-      <Box style={{ padding: theme.spacing(2, 2, 1) }}>
-        <RellygudfutosLogo size="small" />
-      </Box>
+    <StyledMuiSwipeableDrawer
+      anchor="left"
+      open={isOpen}
+      onClose={toggleDrawer(false)}
+      onOpen={toggleDrawer(true)}
+    >
+      <RellygudfutosLogo size="small" />
 
       <Divider />
 
       {renderList()}
-    </MuiSwipeableDrawer>
+    </StyledMuiSwipeableDrawer>
   );
 
   if (icon) {
     return (
-      <>
+      <Box className="rgf_drawer">
         <IconButton ariaLabel="menu" onClick={toggleDrawer(true)}>
           {icon}
         </IconButton>
 
         {renderDrawer()}
-      </>
+      </Box>
     );
   }
 
-  return renderDrawer();
+  return <Box className="rgf_drawer">{renderDrawer()}</Box>;
 }

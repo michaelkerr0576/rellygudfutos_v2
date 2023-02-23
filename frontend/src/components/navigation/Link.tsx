@@ -17,7 +17,7 @@ function Link(props: LinkProps, ref: React.Ref<HTMLAnchorElement> | undefined): 
   const { children, to } = props;
 
   return (
-    <StyledReactRouterLink ref={ref} to={to}>
+    <StyledReactRouterLink className="rgf_link" ref={ref} to={to}>
       {children}
     </StyledReactRouterLink>
   );

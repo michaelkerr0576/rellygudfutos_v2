@@ -62,7 +62,7 @@ export default function List(props: ListProps): JSX.Element {
     });
 
   return (
-    <StyledMuiList subheader={<MuiListSubheader>{subHeader}</MuiListSubheader>}>
+    <StyledMuiList className="rgf_list" subheader={<MuiListSubheader>{subHeader}</MuiListSubheader>}>
       {renderListItems()}
     </StyledMuiList>
   );

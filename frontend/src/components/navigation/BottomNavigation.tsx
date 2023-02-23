@@ -1,7 +1,7 @@
 import MuiBottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
+import { styled } from '@mui/material/styles';
 
-import Box from '../layout/Box';
 import Paper from '../surfaces/Paper';
 
 type Action = {
@@ -17,6 +17,13 @@ export interface BottomNavigationProps {
   setSelectedValue: (value: string) => void;
 }
 
+const StyledBottomNavigation = styled('div')((): { [key: string]: any } => ({
+  bottom: 0,
+  left: 0,
+  position: 'fixed',
+  right: 0,
+}));
+
 export default function BottomNavigation(props: BottomNavigationProps): JSX.Element {
   const { actions, selectedValue, setSelectedValue } = props;
 
@@ -30,12 +37,12 @@ export default function BottomNavigation(props: BottomNavigationProps): JSX.Elem
     });
 
   return (
-    <Box style={{ bottom: 0, left: 0, position: 'fixed', right: 0 }}>
+    <StyledBottomNavigation className="rgf_bottomNavigation">
       <Paper elevation={24}>
         <MuiBottomNavigation value={selectedValue} onChange={handleOnChange}>
           {renderActions()}
         </MuiBottomNavigation>
       </Paper>
-    </Box>
+    </StyledBottomNavigation>
   );
 }
