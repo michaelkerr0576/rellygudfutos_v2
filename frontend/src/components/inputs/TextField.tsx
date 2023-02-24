@@ -7,8 +7,8 @@ export interface TextFieldProps {
   endAdornmentIcon?: JSX.Element;
 }
 
-const StyledMuiTextField = styled(MuiTextField)(({ theme }): { [key: string]: any } => ({
-  margin: theme.spacing(2, 0),
+const StyledTextField = styled('div')(({ theme }): { [key: string]: any } => ({
+  padding: theme.spacing(2, 0),
 }));
 
 export default function TextField(props: TextFieldProps): JSX.Element {
@@ -23,13 +23,15 @@ export default function TextField(props: TextFieldProps): JSX.Element {
   };
 
   return (
-    <StyledMuiTextField
-      className="rgf_textField"
-      InputProps={{
-        endAdornment: renderEndAdornment(),
-      }}
-      label={label}
-      variant="outlined"
-    />
+    <StyledTextField className="rgf_textField">
+      <MuiTextField
+        fullWidth
+        InputProps={{
+          endAdornment: renderEndAdornment(),
+        }}
+        label={label}
+        variant="outlined"
+      />
+    </StyledTextField>
   );
 }

@@ -19,7 +19,7 @@ const StyledMuiSwipeableDrawer = styled(MuiSwipeableDrawer)(({ theme }): { [key:
     padding: theme.spacing(2.5, 2, 2),
   },
   '.rgf_textField': {
-    margin: theme.spacing(2, 2),
+    padding: theme.spacing(2, 2),
   },
 }));
 
