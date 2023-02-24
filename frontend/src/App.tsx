@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom';
 
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
@@ -23,8 +23,6 @@ export default function App(): JSX.Element {
         <Router>
           <Header />
           <Routes>
-            <Route path="/" element={<Gallery />} />
-
             <Route path="/gallery">
               <Route index element={<Gallery />} />
               <Route path=":photoId" element={<Photo />} />
@@ -38,7 +36,7 @@ export default function App(): JSX.Element {
 
             <Route path="/portfolio" element={<Portfolio />} />
 
-            <Route path="/*" element={<Gallery />} />
+            <Route path="/*" element={<Navigate replace to="/gallery" />} />
           </Routes>
           <Footer />
         </Router>
