@@ -25,6 +25,7 @@ export default function RellygudfutosLogo(props: RellygudfutosLogoProps): JSX.El
         return '24px';
       case 'large':
         return '46px';
+      case 'medium':
       default:
         return '35px';
     }

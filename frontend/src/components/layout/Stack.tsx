@@ -34,7 +34,7 @@ export default function Stack(props: StackProps): JSX.Element {
       case 'spaceBetween':
         return 'space-between';
       case 'spaceEvenly':
-        return 'space=evenly';
+        return 'space-evenly';
       default:
         return horizontalAlignment;
     }

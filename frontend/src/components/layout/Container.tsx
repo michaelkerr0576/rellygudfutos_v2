@@ -1,20 +1,33 @@
 import MuiContainer from '@mui/material/Container';
-import { styled } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles';
+
+type VerticalPadding = 'small' | 'medium' | 'large';
 
 export interface ContainerProps {
   children: React.ReactNode;
+  verticalPadding?: VerticalPadding;
 }
 
-const StyledMuiContainer = styled(MuiContainer)(({ theme }): { [key: string]: any } => ({
-  padding: theme.spacing(1, 2),
-}));
-
 export default function Container(props: ContainerProps): JSX.Element {
-  const { children } = props;
+  const { children, verticalPadding = 'small' } = props;
+
+  const theme = useTheme();
+
+  const muiPadding = (): string => {
+    switch (verticalPadding) {
+      case 'large':
+        return theme.spacing(3, 2);
+      case 'medium':
+        return theme.spacing(2, 2);
+      case 'small':
+      default:
+        return theme.spacing(1, 2);
+    }
+  };
 
   return (
-    <StyledMuiContainer className="rgf_container" maxWidth={false}>
+    <MuiContainer className="rgf_container" maxWidth={false} sx={{ padding: muiPadding() }}>
       {children}
-    </StyledMuiContainer>
+    </MuiContainer>
   );
 }

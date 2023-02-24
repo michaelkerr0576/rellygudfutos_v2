@@ -13,7 +13,7 @@ export default function Page(props: PageProps): JSX.Element {
   return (
     <ErrorBoundary identifier={`${pageName} page`}>
       <main>
-        <Container>{children}</Container>
+        <Container verticalPadding="medium">{children}</Container>
       </main>
     </ErrorBoundary>
   );
