@@ -6,7 +6,7 @@ export interface IconButtonProps {
   onClick: React.MouseEventHandler<HTMLButtonElement>;
 }
 
-export default function Button(props: IconButtonProps): JSX.Element {
+export default function IconButton(props: IconButtonProps): JSX.Element {
   const { ariaLabel, children, onClick } = props;
 
   return (

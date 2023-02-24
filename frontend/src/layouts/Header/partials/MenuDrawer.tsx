@@ -8,6 +8,7 @@ import MenuIcon from '@/assets/icons/MenuIcon';
 import PortfolioIcon from '@/assets/icons/PortfolioIcon';
 import Divider from '@/components/dataDisplay/Divider';
 import List from '@/components/dataDisplay/List';
+import IconButton from '@/components/inputs/IconButton';
 import Switch from '@/components/inputs/Switch';
 import Drawer from '@/components/navigation/Drawer';
 import useMenu from '@/hooks/useMenu';
@@ -19,69 +20,71 @@ export default function MenuDrawer(): JSX.Element {
   const { isMenuDrawerOpen, toggleMenuDrawer } = useMenu();
 
   return (
-    <Drawer
-      icon={<MenuIcon size="large" variant={isMenuDrawerOpen ? 'filled' : 'outlined'} />}
-      isOpen={isMenuDrawerOpen}
-      setIsOpen={toggleMenuDrawer}
-    >
-      <List
-        listItems={[
-          {
-            icon: <GalleryIcon variant={pathname.includes('/gallery') ? 'filled' : 'outlined'} />,
-            label: 'Gallery',
-            navigateTo: '/gallery',
-            onClick: (): void => toggleMenuDrawer(false),
-          },
-          {
-            icon: <PortfolioIcon variant={pathname.includes('/portfolio') ? 'filled' : 'outlined'} />,
-            label: 'Portfolio',
-            navigateTo: '/portfolio',
-            onClick: (): void => toggleMenuDrawer(false),
-          },
-        ]}
-        subHeader="Navigation"
-      />
+    <>
+      <IconButton ariaLabel="menu" onClick={(): void => toggleMenuDrawer(true)}>
+        <MenuIcon size="large" variant={isMenuDrawerOpen ? 'filled' : 'outlined'} />
+      </IconButton>
 
-      <Divider />
+      <Drawer isOpen={isMenuDrawerOpen} setIsOpen={toggleMenuDrawer}>
+        <List
+          listItems={[
+            {
+              icon: <GalleryIcon variant={pathname.includes('/gallery') ? 'filled' : 'outlined'} />,
+              label: 'Gallery',
+              navigateTo: '/gallery',
+              onClick: (): void => toggleMenuDrawer(false),
+            },
+            {
+              icon: <PortfolioIcon variant={pathname.includes('/portfolio') ? 'filled' : 'outlined'} />,
+              label: 'Portfolio',
+              navigateTo: '/portfolio',
+              onClick: (): void => toggleMenuDrawer(false),
+            },
+          ]}
+          subHeader="Navigation"
+        />
 
-      <List
-        listItems={[
-          {
-            action: (
-              <Switch
-                ariaLabel="switch-dark-mode"
-                isChecked={colorMode === 'dark'}
-                horizontalAlignment="end"
-                onChange={(): void => {}}
-              />
-            ),
-            icon: <DarkModeIcon variant={colorMode === 'dark' ? 'filled' : 'outlined'} />,
-            label: 'Dark mode',
-            onClick: toggleColorMode,
-          },
-        ]}
-        subHeader="Settings"
-      />
+        <Divider />
 
-      <Divider />
+        <List
+          listItems={[
+            {
+              action: (
+                <Switch
+                  ariaLabel="switch-dark-mode"
+                  isChecked={colorMode === 'dark'}
+                  horizontalAlignment="end"
+                  onChange={(): void => {}}
+                />
+              ),
+              icon: <DarkModeIcon variant={colorMode === 'dark' ? 'filled' : 'outlined'} />,
+              label: 'Dark mode',
+              onClick: toggleColorMode,
+            },
+          ]}
+          subHeader="Settings"
+        />
 
-      <List
-        listItems={[
-          {
-            icon: <DashboardIcon variant={pathname.includes('/admin/dashboard') ? 'filled' : 'outlined'} />,
-            label: 'Dashboard',
-            navigateTo: '/admin/dashboard',
-            onClick: (): void => toggleMenuDrawer(false),
-          },
-          {
-            icon: <LoginIcon />,
-            label: 'Login',
-            navigateTo: '/admin/login',
-            onClick: (): void => toggleMenuDrawer(false),
-          },
-        ]}
-        subHeader="Account"
-      />
-    </Drawer>
+        <Divider />
+
+        <List
+          listItems={[
+            {
+              icon: <DashboardIcon variant={pathname.includes('/admin/dashboard') ? 'filled' : 'outlined'} />,
+              label: 'Dashboard',
+              navigateTo: '/admin/dashboard',
+              onClick: (): void => toggleMenuDrawer(false),
+            },
+            {
+              icon: <LoginIcon />,
+              label: 'Login',
+              navigateTo: '/admin/login',
+              onClick: (): void => toggleMenuDrawer(false),
+            },
+          ]}
+          subHeader="Account"
+        />
+      </Drawer>
+    </>
   );
 }

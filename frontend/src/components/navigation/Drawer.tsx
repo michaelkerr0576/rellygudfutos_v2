@@ -4,34 +4,27 @@ import MuiSwipeableDrawer from '@mui/material/SwipeableDrawer';
 import RellygudfutosLogo from '@/assets/logos/RellygudfutosLogo';
 
 import Divider from '../dataDisplay/Divider';
-import IconButton from '../inputs/IconButton';
-import Box from '../layout/Box';
 
 export interface DrawerProps {
   children: React.ReactNode;
-  icon?: JSX.Element;
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
 }
 
 const StyledMuiSwipeableDrawer = styled(MuiSwipeableDrawer)(({ theme }): { [key: string]: any } => ({
-  '.MuiList-root': {
-    width: 250,
+  '.MuiPaper-root': {
+    width: 270,
   },
-  '.rgf_drawer__children': {
-    '.rgf_divider': {
-      marginLeft: -16,
-      marginRight: -16,
-    },
-    '.rgf_rellygudfutosLogo': {
-      padding: theme.spacing(2.5, 0, 2),
-    },
-    padding: theme.spacing(0, 2),
+  '.rgf_rellygudfutosLogo': {
+    padding: theme.spacing(2.5, 2, 2),
+  },
+  '.rgf_textField': {
+    margin: theme.spacing(2, 2),
   },
 }));
 
 export default function Drawer(props: DrawerProps): JSX.Element {
-  const { children, icon = null, isOpen, setIsOpen } = props;
+  const { children, isOpen, setIsOpen } = props;
 
   const toggleDrawer =
     (isDrawerOpen: boolean) =>
@@ -48,34 +41,19 @@ export default function Drawer(props: DrawerProps): JSX.Element {
       setIsOpen(isDrawerOpen);
     };
 
-  const renderDrawer = (): JSX.Element => (
+  return (
     <StyledMuiSwipeableDrawer
       anchor="left"
-      open={isOpen}
+      className="rgf_drawer"
       onClose={toggleDrawer(false)}
       onOpen={toggleDrawer(true)}
+      open={isOpen}
     >
-      <Box className="rgf_drawer__children">
-        <RellygudfutosLogo size="small" />
+      <RellygudfutosLogo size="small" />
 
-        <Divider />
+      <Divider />
 
-        {children}
-      </Box>
+      {children}
     </StyledMuiSwipeableDrawer>
   );
-
-  if (icon) {
-    return (
-      <Box className="rgf_drawer">
-        <IconButton ariaLabel="menu" onClick={toggleDrawer(true)}>
-          {icon}
-        </IconButton>
-
-        {renderDrawer()}
-      </Box>
-    );
-  }
-
-  return <Box className="rgf_drawer">{renderDrawer()}</Box>;
 }
