@@ -14,7 +14,7 @@ export interface DrawerProps {
 
 const StyledMuiSwipeableDrawer = styled(MuiSwipeableDrawer)(({ theme }): { [key: string]: any } => ({
   '.rgf_drawer__children': {
-    padding: theme.spacing(2),
+    padding: theme.spacing(0, 2),
   },
   '.rgf_list, .rgf_divider': {
     marginLeft: -16,

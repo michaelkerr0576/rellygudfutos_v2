@@ -2,14 +2,18 @@ import MuiAutocomplete from '@mui/material/Autocomplete';
 import { styled } from '@mui/material/styles';
 import MuiTextField from '@mui/material/TextField';
 
-type Value = {
+type Option = {
   id: number;
   label: string;
 };
 
 export interface AutocompleteProps {
-  values: Value[];
-  onChange: (_event: React.SyntheticEvent<Element, Event>, values: Value[]) => void;
+  fieldId: string;
+  label: string;
+  noOptionsLabel: string;
+  onChange: (_event: React.SyntheticEvent<Element, Event>, values: Option[]) => void;
+  options: Option[];
+  value: Option[];
 }
 
 const StyledAutocomplete = styled('div')(({ theme }): { [key: string]: any } => ({
@@ -17,7 +21,7 @@ const StyledAutocomplete = styled('div')(({ theme }): { [key: string]: any } => 
 }));
 
 export default function Autocomplete(props: AutocompleteProps): JSX.Element {
-  const { values, onChange } = props;
+  const { fieldId, label, noOptionsLabel, onChange, options, value } = props;
 
   return (
     <StyledAutocomplete className="rgf_autocomplete">
@@ -27,14 +31,14 @@ export default function Autocomplete(props: AutocompleteProps): JSX.Element {
         filterSelectedOptions
         fullWidth
         getOptionLabel={(option): string => option.label}
-        id="rgf-autocomplete"
-        limitTags={1}
+        id={`rgf-${fieldId}`}
         multiple
-        noOptionsText="No tags"
+        noOptionsText={noOptionsLabel}
         onChange={onChange}
-        options={values}
+        options={options}
         // eslint-disable-next-line react/jsx-props-no-spreading
-        renderInput={(params): JSX.Element => <MuiTextField {...params} label="Tags" />}
+        renderInput={(params): JSX.Element => <MuiTextField {...params} label={label} />}
+        value={value}
       />
     </StyledAutocomplete>
   );

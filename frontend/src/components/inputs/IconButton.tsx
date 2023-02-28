@@ -5,13 +5,20 @@ export interface IconButtonProps {
   children: React.ReactNode;
   edge?: MuiIconButtonProps['edge'];
   onClick: MuiIconButtonProps['onClick'];
+  padding?: MuiIconButtonProps['size'];
 }
 
 export default function IconButton(props: IconButtonProps): JSX.Element {
-  const { ariaLabel, children, onClick, edge = false } = props;
+  const { ariaLabel, children, onClick, edge = false, padding = undefined } = props;
 
   return (
-    <MuiIconButton aria-label={ariaLabel} className="rgf_iconButton" edge={edge} onClick={onClick}>
+    <MuiIconButton
+      aria-label={ariaLabel}
+      className="rgf_iconButton"
+      edge={edge}
+      onClick={onClick}
+      size={padding}
+    >
       {children}
     </MuiIconButton>
   );

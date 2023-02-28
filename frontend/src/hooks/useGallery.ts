@@ -1,10 +1,12 @@
 import useStore from '@/store/store';
-import { GalleryNavigationValue, State, TagsFilter } from '@/store/types/storeTypes';
+import { GalleryNavigationValue, SortBy, State, TagsFilter } from '@/store/types/storeTypes';
 
 export interface UseGallery {
   galleryNavigationValue: GalleryNavigationValue;
+  handleSortByChange: (sortBy: string) => void;
   handleTagsFilterChange: (_event: React.SyntheticEvent<Element, Event>, tags: TagsFilter) => void;
   isSearchDrawerOpen: boolean;
+  sortBy: SortBy;
   tagsFilter: TagsFilter;
   toggleGalleryNavigationValue: (value: string) => void;
   toggleSearchDrawer: (isOpen: boolean) => void;
@@ -15,7 +17,9 @@ interface UseGalleryState {
   isSearchDrawerOpen: State['isSearchDrawerOpen'];
   setGalleryNavigationValue: State['setGalleryNavigationValue'];
   setIsSearchDrawerOpen: State['setIsSearchDrawerOpen'];
+  setSortBy: State['setSortBy'];
   setTagsFilter: State['setTagsFilter'];
+  sortBy: State['sortBy'];
   tagsFilter: State['tagsFilter'];
 }
 
@@ -25,7 +29,9 @@ export default function useGallery(): UseGallery {
     isSearchDrawerOpen,
     setGalleryNavigationValue,
     setIsSearchDrawerOpen,
+    setSortBy,
     setTagsFilter,
+    sortBy,
     tagsFilter,
   } = useStore(
     (state): UseGalleryState => ({
@@ -33,10 +39,14 @@ export default function useGallery(): UseGallery {
       isSearchDrawerOpen: state.isSearchDrawerOpen,
       setGalleryNavigationValue: state.setGalleryNavigationValue,
       setIsSearchDrawerOpen: state.setIsSearchDrawerOpen,
+      setSortBy: state.setSortBy,
       setTagsFilter: state.setTagsFilter,
+      sortBy: state.sortBy,
       tagsFilter: state.tagsFilter,
     }),
   );
+
+  const handleSortByChange = (sort: string): void => setSortBy(sort as SortBy);
 
   const handleTagsFilterChange = (_event: React.SyntheticEvent<Element, Event>, tags: TagsFilter): void =>
     setTagsFilter(tags);
@@ -48,8 +58,10 @@ export default function useGallery(): UseGallery {
 
   return {
     galleryNavigationValue,
+    handleSortByChange,
     handleTagsFilterChange,
     isSearchDrawerOpen,
+    sortBy,
     tagsFilter,
     toggleGalleryNavigationValue,
     toggleSearchDrawer,

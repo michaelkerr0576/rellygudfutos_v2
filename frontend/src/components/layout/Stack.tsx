@@ -11,6 +11,7 @@ export interface StackProps {
   direction?: Direction;
   hasDivider?: boolean;
   horizontalAlignment?: HorizontalAlignment;
+  spacing?: MuiStackProps['spacing'];
   verticalAlignment?: VerticalAlignment;
 }
 
@@ -20,6 +21,7 @@ export default function Stack(props: StackProps): JSX.Element {
     direction = 'row',
     hasDivider,
     horizontalAlignment = 'start',
+    spacing = 0,
     verticalAlignment = 'start',
   } = props;
 
@@ -53,9 +55,10 @@ export default function Stack(props: StackProps): JSX.Element {
     <MuiStack
       alignItems={muiAlignItems()}
       className="rgf_stack"
-      divider={hasDivider ? <Divider orientation="vertical" /> : null}
       direction={direction}
+      divider={hasDivider ? <Divider orientation="vertical" /> : null}
       justifyContent={muiJustifyContent()}
+      spacing={spacing}
     >
       {children}
     </MuiStack>

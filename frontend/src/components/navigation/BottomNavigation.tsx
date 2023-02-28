@@ -32,11 +32,17 @@ export default function BottomNavigation(props: BottomNavigationProps): JSX.Elem
   const handleOnChange = (_event: React.SyntheticEvent, newValue: string): void => setSelectedValue(newValue);
 
   const renderActions = (): JSX.Element[] =>
-    actions.map((action: Action): JSX.Element => {
-      const { icon, label, onClick, value } = action;
-
-      return <BottomNavigationAction icon={icon} key={value} label={label} onClick={onClick} value={value} />;
-    });
+    actions.map(
+      (action: Action): JSX.Element => (
+        <BottomNavigationAction
+          icon={action.icon}
+          key={action.value}
+          label={action.label}
+          onClick={action.onClick}
+          value={action.value}
+        />
+      ),
+    );
 
   return (
     <StyledBottomNavigation className="rgf_bottomNavigation">
