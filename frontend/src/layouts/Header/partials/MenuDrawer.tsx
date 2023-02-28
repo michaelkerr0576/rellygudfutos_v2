@@ -6,10 +6,12 @@ import GalleryIcon from '@/assets/icons/GalleryIcon';
 import LoginIcon from '@/assets/icons/LoginIcon';
 import MenuIcon from '@/assets/icons/MenuIcon';
 import PortfolioIcon from '@/assets/icons/PortfolioIcon';
+import RellygudfutosLogo from '@/assets/logos/RellygudfutosLogo';
 import Divider from '@/components/dataDisplay/Divider';
 import List from '@/components/dataDisplay/List';
 import IconButton from '@/components/inputs/IconButton';
 import Switch from '@/components/inputs/Switch';
+import Box from '@/components/layout/Box';
 import Drawer from '@/components/navigation/Drawer';
 import useMenu from '@/hooks/useMenu';
 import useThemes from '@/hooks/useThemes';
@@ -21,11 +23,17 @@ export default function MenuDrawer(): JSX.Element {
 
   return (
     <>
-      <IconButton ariaLabel="menu" onClick={(): void => toggleMenuDrawer(true)}>
+      <IconButton ariaLabel="menu" edge="start" onClick={(): void => toggleMenuDrawer(true)}>
         <MenuIcon size="large" variant={isMenuDrawerOpen ? 'filled' : 'outlined'} />
       </IconButton>
 
-      <Drawer isOpen={isMenuDrawerOpen} setIsOpen={toggleMenuDrawer}>
+      <Drawer anchor="left" isOpen={isMenuDrawerOpen} setIsOpen={toggleMenuDrawer}>
+        <Box pt={0.5} pb={2}>
+          <RellygudfutosLogo size="small" />
+        </Box>
+
+        <Divider />
+
         <List
           listItems={[
             {
@@ -52,8 +60,8 @@ export default function MenuDrawer(): JSX.Element {
               action: (
                 <Switch
                   ariaLabel="switch-dark-mode"
+                  edge="end"
                   isChecked={colorMode === 'dark'}
-                  horizontalAlignment="end"
                   onChange={(): void => {}}
                 />
               ),

@@ -7,13 +7,12 @@ export interface RellygudfutosLogoProps {
   size?: Size;
 }
 
-const StyledRellygudfutosLogo = styled('div')(({ theme }): { [key: string]: any } => ({
+const StyledRellygudfutosLogo = styled('div')((): { [key: string]: any } => ({
   '.MuiSvgIcon-root': {
     width: 'auto',
   },
 
   display: 'flex',
-  paddingTop: theme.spacing(0.5),
 }));
 
 export default function RellygudfutosLogo(props: RellygudfutosLogoProps): JSX.Element {
@@ -22,12 +21,12 @@ export default function RellygudfutosLogo(props: RellygudfutosLogoProps): JSX.El
   const muiHeight = (): string => {
     switch (size) {
       case 'small':
-        return '24px';
+        return '20px';
       case 'large':
-        return '46px';
+        return '40px';
       case 'medium':
       default:
-        return '35px';
+        return '30px';
     }
   };
 

@@ -1,5 +1,7 @@
 import MuiBottomNavigation from '@mui/material/BottomNavigation';
-import BottomNavigationAction from '@mui/material/BottomNavigationAction';
+import BottomNavigationAction, {
+  BottomNavigationActionProps as MuiBottomNavigationAction,
+} from '@mui/material/BottomNavigationAction';
 import { styled } from '@mui/material/styles';
 
 import Paper from '../surfaces/Paper';
@@ -7,7 +9,7 @@ import Paper from '../surfaces/Paper';
 type Action = {
   icon: JSX.Element;
   label: string;
-  onClick: React.MouseEventHandler<HTMLButtonElement>;
+  onClick: MuiBottomNavigationAction['onClick'];
   value: string;
 };
 

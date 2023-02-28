@@ -1,30 +1,29 @@
 import { styled } from '@mui/material/styles';
 import MuiSwipeableDrawer from '@mui/material/SwipeableDrawer';
 
-import RellygudfutosLogo from '@/assets/logos/RellygudfutosLogo';
+import Box from '../layout/Box';
 
-import Divider from '../dataDisplay/Divider';
+type Anchor = 'left' | 'right' | 'bottom';
 
 export interface DrawerProps {
+  anchor: Anchor;
   children: React.ReactNode;
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
 }
 
 const StyledMuiSwipeableDrawer = styled(MuiSwipeableDrawer)(({ theme }): { [key: string]: any } => ({
-  '.MuiPaper-root': {
-    width: 270,
+  '.rgf_drawer__children': {
+    padding: theme.spacing(2),
   },
-  '.rgf_rellygudfutosLogo': {
-    padding: theme.spacing(2.5, 2, 2),
-  },
-  '.rgf_textField': {
-    padding: theme.spacing(2, 2),
+  '.rgf_list, .rgf_divider': {
+    marginLeft: -16,
+    marginRight: -16,
   },
 }));
 
 export default function Drawer(props: DrawerProps): JSX.Element {
-  const { children, isOpen, setIsOpen } = props;
+  const { anchor, children, isOpen, setIsOpen } = props;
 
   const toggleDrawer =
     (isDrawerOpen: boolean) =>
@@ -43,17 +42,15 @@ export default function Drawer(props: DrawerProps): JSX.Element {
 
   return (
     <StyledMuiSwipeableDrawer
-      anchor="left"
+      anchor={anchor}
       className="rgf_drawer"
       onClose={toggleDrawer(false)}
       onOpen={toggleDrawer(true)}
       open={isOpen}
     >
-      <RellygudfutosLogo size="small" />
-
-      <Divider />
-
-      {children}
+      <Box className="rgf_drawer__children" style={{ width: anchor === 'bottom' ? 'auto' : 250 }}>
+        {children}
+      </Box>
     </StyledMuiSwipeableDrawer>
   );
 }

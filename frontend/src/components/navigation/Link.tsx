@@ -1,11 +1,11 @@
 import { forwardRef } from 'react';
-import { Link as ReactRouterLink } from 'react-router-dom';
+import { Link as ReactRouterLink, LinkProps as ReactRouterLinkProps } from 'react-router-dom';
 
 import { styled } from '@mui/material/styles';
 
 export interface LinkProps {
   children: React.ReactNode;
-  to: string;
+  to: ReactRouterLinkProps['to'];
 }
 
 const StyledReactRouterLink = styled(ReactRouterLink)((): { [key: string]: any } => ({

@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 
-import { ColorMode, GalleryNavigationValue, State } from './types/storeTypes';
+import { ColorMode, GalleryNavigationValue, State, TagsFilter } from './types/storeTypes';
 
 const useStore = create<State>()(
   devtools(
@@ -19,6 +19,8 @@ const useStore = create<State>()(
           set({ isMenuDrawerOpen }, false, 'SET_IS_MENU_DRAWER_OPEN'),
         setIsSearchDrawerOpen: (isSearchDrawerOpen: boolean): void =>
           set({ isSearchDrawerOpen }, false, 'SET_IS_SEARCH_DRAWER_OPEN'),
+        setTagsFilter: (tagsFilter: TagsFilter): void => set({ tagsFilter }, false, 'SET_TAGS_FILTER'),
+        tagsFilter: [],
       }),
       {
         // * Persists state to local storage

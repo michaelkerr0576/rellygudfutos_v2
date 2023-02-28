@@ -1,8 +1,8 @@
-import MuiButton from '@mui/material/Button';
+import MuiButton, { ButtonProps as MuiButtonProps } from '@mui/material/Button';
 
 export interface ButtonProps {
   children: React.ReactNode;
-  onClick: React.MouseEventHandler<HTMLButtonElement>;
+  onClick: MuiButtonProps['onClick'];
 }
 
 export default function Button(props: ButtonProps): JSX.Element {

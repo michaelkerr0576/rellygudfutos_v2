@@ -4,11 +4,11 @@ type Variant = 'h1' | 'h2' | 'h3' | 'subtitle' | 'body' | 'caption';
 
 export interface TypographyProps {
   children: React.ReactNode;
-  variant: Variant;
+  variant?: Variant;
 }
 
 export default function Typography(props: TypographyProps): JSX.Element {
-  const { children, variant } = props;
+  const { children, variant = 'body' } = props;
 
   const muiVariant = (): MuiTypographyProps['variant'] => {
     switch (variant) {

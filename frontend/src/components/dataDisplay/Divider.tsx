@@ -1,9 +1,7 @@
-import MuiDivider from '@mui/material/Divider';
-
-type Orientation = 'horizontal' | 'vertical';
+import MuiDivider, { DividerProps as MuiDividerProps } from '@mui/material/Divider';
 
 export interface DividerProps {
-  orientation?: Orientation;
+  orientation?: MuiDividerProps['orientation'];
 }
 
 export default function Divider(props: DividerProps): JSX.Element {

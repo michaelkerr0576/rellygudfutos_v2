@@ -1,5 +1,7 @@
 import RellygudfutosLogo from '@/assets/logos/RellygudfutosLogo';
+import Avatar from '@/components/dataDisplay/Avatar';
 import Divider from '@/components/dataDisplay/Divider';
+import Box from '@/components/layout/Box';
 import Container from '@/components/layout/Container';
 import Stack from '@/components/layout/Stack';
 
@@ -12,9 +14,16 @@ export default function Header(): JSX.Element {
     <ErrorBoundary identifier="Header">
       <header>
         <Container>
-          <Stack horizontalAlignment="spaceBetween" verticalAlignment="center">
-            <RellygudfutosLogo />
+          <Stack verticalAlignment="center">
             <MenuDrawer />
+
+            <Box pl={1}>
+              <RellygudfutosLogo />
+            </Box>
+
+            <Box style={{ marginLeft: 'auto' }}>
+              <Avatar>MK</Avatar>
+            </Box>
           </Stack>
         </Container>
 

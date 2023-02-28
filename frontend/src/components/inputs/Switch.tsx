@@ -1,31 +1,20 @@
 import MuiSwitch, { SwitchProps as MuiSwitchProps } from '@mui/material/Switch';
 
-type HorizontalAlignment = 'start' | 'center' | 'end';
-
 export interface SwitchProps {
-  ariaLabel: string;
-  horizontalAlignment?: HorizontalAlignment;
-  isChecked: boolean;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>, isChecked: boolean) => void;
+  ariaLabel: MuiSwitchProps['aria-label'];
+  edge?: MuiSwitchProps['edge'];
+  isChecked: MuiSwitchProps['checked'];
+  onChange: MuiSwitchProps['onChange'];
 }
 
 export default function Switch(props: SwitchProps): JSX.Element {
-  const { ariaLabel, horizontalAlignment = 'center', isChecked, onChange } = props;
-
-  const muiEdge = (): MuiSwitchProps['edge'] => {
-    switch (horizontalAlignment) {
-      case 'center':
-        return false;
-      default:
-        return horizontalAlignment;
-    }
-  };
+  const { ariaLabel, edge = false, isChecked, onChange } = props;
 
   return (
     <MuiSwitch
       checked={isChecked}
       className="rgf_switch"
-      edge={muiEdge()}
+      edge={edge}
       inputProps={{
         'aria-labelledby': ariaLabel,
       }}

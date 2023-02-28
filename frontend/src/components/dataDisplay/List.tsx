@@ -1,6 +1,10 @@
+import { LinkProps as ReactRouterLinkProps } from 'react-router-dom';
+
 import MuiList from '@mui/material/List';
 import MuiListItem from '@mui/material/ListItem';
-import MuiListItemButton from '@mui/material/ListItemButton';
+import MuiListItemButton, {
+  ListItemButtonProps as MuiListItemButtonProps,
+} from '@mui/material/ListItemButton';
 import MuiListItemIcon from '@mui/material/ListItemIcon';
 import MuiListItemText from '@mui/material/ListItemText';
 import MuiListSubheader from '@mui/material/ListSubheader';
@@ -12,8 +16,8 @@ type ListItem = {
   action?: JSX.Element;
   icon: JSX.Element;
   label: string;
-  navigateTo?: string;
-  onClick?: React.MouseEventHandler<HTMLDivElement>;
+  navigateTo?: ReactRouterLinkProps['to'];
+  onClick?: MuiListItemButtonProps['onClick'];
 };
 
 export interface ListProps {
