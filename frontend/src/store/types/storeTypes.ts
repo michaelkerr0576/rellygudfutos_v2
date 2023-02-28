@@ -1,6 +1,6 @@
 export type ColorMode = 'light' | 'dark';
 
-export type GalleryNavigationValue = 'grid' | 'list' | 'mode' | 'search';
+export type GalleryNavigationValue = 'home' | 'grid' | 'list' | 'mode' | 'search';
 
 export type TagsFilter = { id: number; label: string }[];
 

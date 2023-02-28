@@ -6,9 +6,9 @@ export interface AvatarProps {
 }
 
 const StyledMuiAvatar = styled(MuiAvatar)((): { [key: string]: any } => ({
-  fontSize: '1rem',
-  height: 34,
-  width: 34,
+  fontSize: '0.95rem',
+  height: 32,
+  width: 32,
 }));
 
 export default function Avatar(props: AvatarProps): JSX.Element {

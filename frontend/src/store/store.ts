@@ -9,7 +9,7 @@ const useStore = create<State>()(
     persist(
       (set, _get): State => ({
         colorMode: undefined,
-        galleryNavigationValue: 'grid',
+        galleryNavigationValue: 'home',
         isMenuDrawerOpen: false,
         isSearchDrawerOpen: false,
         setColorMode: (colorMode: ColorMode): void => set({ colorMode }, false, 'SET_COLOR_MODE'),

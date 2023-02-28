@@ -1,3 +1,4 @@
+import HomeIcon from '@/assets/icons/HomeIcon';
 import PhotoGridIcon from '@/assets/icons/PhotoGridIcon';
 import PhotoListIcon from '@/assets/icons/PhotoListIcon';
 import SearchIcon from '@/assets/icons/SearchIcon';
@@ -16,6 +17,12 @@ export default function GalleryBottomNavigation(): JSX.Element {
     <>
       <BottomNavigation
         actions={[
+          {
+            icon: <HomeIcon variant={galleryNavigationValue === 'home' ? 'filled' : 'outlined'} />,
+            label: 'Home',
+            onClick: (): void => {},
+            value: 'home',
+          },
           {
             icon: <PhotoGridIcon variant={galleryNavigationValue === 'grid' ? 'filled' : 'outlined'} />,
             label: 'Grid',

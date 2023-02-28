@@ -21,12 +21,12 @@ export default function RellygudfutosLogo(props: RellygudfutosLogoProps): JSX.El
   const muiHeight = (): string => {
     switch (size) {
       case 'small':
-        return '20px';
+        return '22px';
       case 'large':
         return '40px';
       case 'medium':
       default:
-        return '30px';
+        return '28px';
     }
   };
 
