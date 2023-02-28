@@ -1,5 +1,7 @@
 import MuiStack, { StackProps as MuiStackProps } from '@mui/material/Stack';
 
+import Divider from '../dataDisplay/Divider';
+
 type Direction = 'column' | 'row';
 type HorizontalAlignment = 'start' | 'center' | 'end' | 'spaceBetween' | 'spaceEvenly';
 type VerticalAlignment = 'start' | 'center' | 'end';
@@ -7,12 +9,19 @@ type VerticalAlignment = 'start' | 'center' | 'end';
 export interface StackProps {
   children: React.ReactNode;
   direction?: Direction;
+  hasDivider?: boolean;
   horizontalAlignment?: HorizontalAlignment;
   verticalAlignment?: VerticalAlignment;
 }
 
 export default function Stack(props: StackProps): JSX.Element {
-  const { children, direction = 'row', horizontalAlignment = 'start', verticalAlignment = 'start' } = props;
+  const {
+    children,
+    direction = 'row',
+    hasDivider,
+    horizontalAlignment = 'start',
+    verticalAlignment = 'start',
+  } = props;
 
   const muiAlignItems = (): MuiStackProps['alignItems'] => {
     switch (verticalAlignment) {
@@ -44,6 +53,7 @@ export default function Stack(props: StackProps): JSX.Element {
     <MuiStack
       alignItems={muiAlignItems()}
       className="rgf_stack"
+      divider={hasDivider ? <Divider orientation="vertical" /> : null}
       direction={direction}
       justifyContent={muiJustifyContent()}
     >

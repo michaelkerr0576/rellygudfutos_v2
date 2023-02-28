@@ -24,15 +24,19 @@ const tags = [
 export default function SearchDrawer(): JSX.Element {
   const { isSearchDrawerOpen, toggleSearchDrawer, handleTagsFilterChange } = useGallery();
 
+  const renderDrawerHeader = (): JSX.Element => (
+    <Stack horizontalAlignment="spaceEvenly" hasDivider>
+      <Typography variant="subtitle">Search</Typography>
+
+      <Typography variant="subtitle">Filter</Typography>
+
+      <Typography variant="subtitle">Sort</Typography>
+    </Stack>
+  );
+
   return (
     <Drawer anchor="bottom" isOpen={isSearchDrawerOpen} setIsOpen={toggleSearchDrawer}>
-      <Stack horizontalAlignment="spaceEvenly">
-        <Typography variant="subtitle">Search</Typography>
-        <Divider orientation="vertical" />
-        <Typography variant="subtitle">Filter</Typography>
-        <Divider orientation="vertical" />
-        <Typography variant="subtitle">Sort</Typography>
-      </Stack>
+      {renderDrawerHeader()}
 
       <TextField label="Search" endAdornmentIcon={<SearchIcon />} />
 

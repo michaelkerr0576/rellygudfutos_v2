@@ -7,10 +7,12 @@ export type TagsFilter = { id: number; label: string }[];
 export interface State {
   colorMode: ColorMode | undefined;
   galleryNavigationValue: GalleryNavigationValue;
+  isAccountDrawerOpen: boolean;
   isMenuDrawerOpen: boolean;
   isSearchDrawerOpen: boolean;
   setColorMode: (colorMode: ColorMode) => void;
   setGalleryNavigationValue: (value: GalleryNavigationValue) => void;
+  setIsAccountDrawerOpen: (isOpen: boolean) => void;
   setIsMenuDrawerOpen: (isOpen: boolean) => void;
   setIsSearchDrawerOpen: (isOpen: boolean) => void;
   setTagsFilter: (tags: TagsFilter) => void;

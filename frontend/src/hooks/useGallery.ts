@@ -2,10 +2,10 @@ import useStore from '@/store/store';
 import { GalleryNavigationValue, State, TagsFilter } from '@/store/types/storeTypes';
 
 export interface UseGallery {
-  galleryNavigationValue: State['galleryNavigationValue'];
+  galleryNavigationValue: GalleryNavigationValue;
   handleTagsFilterChange: (_event: React.SyntheticEvent<Element, Event>, tags: TagsFilter) => void;
-  isSearchDrawerOpen: State['isSearchDrawerOpen'];
-  tagsFilter: State['tagsFilter'];
+  isSearchDrawerOpen: boolean;
+  tagsFilter: TagsFilter;
   toggleGalleryNavigationValue: (value: string) => void;
   toggleSearchDrawer: (isOpen: boolean) => void;
 }
