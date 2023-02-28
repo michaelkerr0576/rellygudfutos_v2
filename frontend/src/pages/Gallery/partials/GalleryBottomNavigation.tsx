@@ -30,6 +30,12 @@ export default function GalleryBottomNavigation(): JSX.Element {
             value: 'grid',
           },
           {
+            icon: <SearchIcon variant={galleryNavigationValue === 'search' ? 'filled' : 'outlined'} />,
+            label: 'Search',
+            onClick: (): void => toggleSearchDrawer(true),
+            value: 'search',
+          },
+          {
             icon: <PhotoListIcon variant={galleryNavigationValue === 'list' ? 'filled' : 'outlined'} />,
             label: 'List',
             onClick: (): void => {},
@@ -45,12 +51,6 @@ export default function GalleryBottomNavigation(): JSX.Element {
             label: colorMode === 'dark' ? 'Dark' : 'Light',
             onClick: toggleColorMode,
             value: 'mode',
-          },
-          {
-            icon: <SearchIcon variant={galleryNavigationValue === 'search' ? 'filled' : 'outlined'} />,
-            label: 'Search',
-            onClick: (): void => toggleSearchDrawer(true),
-            value: 'search',
           },
         ]}
         selectedValue={galleryNavigationValue}
