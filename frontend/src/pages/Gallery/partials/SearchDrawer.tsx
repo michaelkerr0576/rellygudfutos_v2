@@ -32,13 +32,18 @@ const tags = [
 
 export default function SearchDrawer(): JSX.Element {
   const {
-    handleSortByChange,
-    handleTagsFilterChange,
+    handleChangeSortBy,
+    handleChangeTagsFilter,
     isSearchDrawerOpen,
     sortBy,
     tagsFilter,
     toggleSearchDrawer,
   } = useGallery();
+
+  const handleClearFilters = (): void => {
+    handleChangeSortBy('');
+    handleChangeTagsFilter([]);
+  };
 
   const renderToggleDrawerButton = (): JSX.Element => (
     <Stack horizontalAlignment="center">
@@ -51,9 +56,10 @@ export default function SearchDrawer(): JSX.Element {
   const renderButtonGroup = (): JSX.Element => (
     <Box py={2}>
       <Stack direction="column" spacing={1}>
-        <Button onClick={(): void => {}} variant="secondary">
+        <Button onClick={handleClearFilters} variant="secondary">
           Clear
         </Button>
+
         <Button onClick={(): void => {}}>Apply</Button>
       </Stack>
     </Box>
@@ -73,7 +79,7 @@ export default function SearchDrawer(): JSX.Element {
         fieldId="search-drawer-tags-autocomplete"
         label="Tags"
         noOptionsLabel="No tags"
-        onChange={handleTagsFilterChange}
+        onChange={handleChangeTagsFilter}
         options={tags}
         value={tagsFilter}
       />
@@ -83,7 +89,7 @@ export default function SearchDrawer(): JSX.Element {
       <Select
         fieldId="search-drawer-sort-select"
         label="Sort"
-        onChange={handleSortByChange}
+        onChange={handleChangeSortBy}
         options={[
           { id: 'newest', label: 'Newest' },
           { id: 'oldest', label: 'Oldest' },

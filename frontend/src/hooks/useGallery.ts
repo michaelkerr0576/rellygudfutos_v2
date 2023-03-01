@@ -3,8 +3,8 @@ import { GalleryNavigationValue, SortBy, State, TagsFilter } from '@/store/types
 
 export interface UseGallery {
   galleryNavigationValue: GalleryNavigationValue;
-  handleSortByChange: (sortBy: string) => void;
-  handleTagsFilterChange: (_event: React.SyntheticEvent<Element, Event>, tags: TagsFilter) => void;
+  handleChangeSortBy: (sortBy: string) => void;
+  handleChangeTagsFilter: (tags: TagsFilter) => void;
   isSearchDrawerOpen: boolean;
   sortBy: SortBy;
   tagsFilter: TagsFilter;
@@ -46,10 +46,9 @@ export default function useGallery(): UseGallery {
     }),
   );
 
-  const handleSortByChange = (sort: string): void => setSortBy(sort as SortBy);
+  const handleChangeSortBy = (sort: string): void => setSortBy(sort as SortBy);
 
-  const handleTagsFilterChange = (_event: React.SyntheticEvent<Element, Event>, tags: TagsFilter): void =>
-    setTagsFilter(tags);
+  const handleChangeTagsFilter = (tags: TagsFilter): void => setTagsFilter(tags);
 
   const toggleGalleryNavigationValue = (value: string): void =>
     setGalleryNavigationValue(value as GalleryNavigationValue);
@@ -58,8 +57,8 @@ export default function useGallery(): UseGallery {
 
   return {
     galleryNavigationValue,
-    handleSortByChange,
-    handleTagsFilterChange,
+    handleChangeSortBy,
+    handleChangeTagsFilter,
     isSearchDrawerOpen,
     sortBy,
     tagsFilter,

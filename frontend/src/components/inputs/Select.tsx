@@ -24,9 +24,7 @@ const StyledSelect = styled('div')(({ theme }): { [key: string]: any } => ({
 export default function Select(props: SelectProps): JSX.Element {
   const { fieldId, label, onChange, options, value } = props;
 
-  const handleChange = (event: MuiSelectChangeEvent): void => {
-    onChange(event.target.value);
-  };
+  const handleOnChange = (event: MuiSelectChangeEvent): void => onChange(event.target.value);
 
   const renderMenuItems = (): JSX.Element[] =>
     options.map(
@@ -46,7 +44,7 @@ export default function Select(props: SelectProps): JSX.Element {
           id={`rgf-${fieldId}`}
           value={value}
           label={label}
-          onChange={handleChange}
+          onChange={handleOnChange}
         >
           {renderMenuItems()}
         </MuiSelect>

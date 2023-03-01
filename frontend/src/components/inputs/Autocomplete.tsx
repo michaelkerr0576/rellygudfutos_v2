@@ -11,7 +11,7 @@ export interface AutocompleteProps {
   fieldId: string;
   label: string;
   noOptionsLabel: string;
-  onChange: (_event: React.SyntheticEvent<Element, Event>, values: Option[]) => void;
+  onChange: (values: Option[]) => void;
   options: Option[];
   value: Option[];
 }
@@ -23,6 +23,9 @@ const StyledAutocomplete = styled('div')(({ theme }): { [key: string]: any } => 
 export default function Autocomplete(props: AutocompleteProps): JSX.Element {
   const { fieldId, label, noOptionsLabel, onChange, options, value } = props;
 
+  const handleOnChange = (_event: React.SyntheticEvent<Element, Event>, values: Option[]): void =>
+    onChange(values);
+
   return (
     <StyledAutocomplete className="rgf_autocomplete">
       <MuiAutocomplete
@@ -32,9 +35,10 @@ export default function Autocomplete(props: AutocompleteProps): JSX.Element {
         fullWidth
         getOptionLabel={(option): string => option.label}
         id={`rgf-${fieldId}`}
+        isOptionEqualToValue={(option, propValue): boolean => option.label === propValue.label}
         multiple
         noOptionsText={noOptionsLabel}
-        onChange={onChange}
+        onChange={handleOnChange}
         options={options}
         // eslint-disable-next-line react/jsx-props-no-spreading
         renderInput={(params): JSX.Element => <MuiTextField {...params} label={label} />}

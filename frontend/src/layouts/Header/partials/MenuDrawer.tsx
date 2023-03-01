@@ -28,7 +28,7 @@ export default function MenuDrawer(): JSX.Element {
   );
 
   const renderDrawerHeader = (): JSX.Element => (
-    <Box pt={2} pb={1}>
+    <Box py={1}>
       <Stack verticalAlignment="center">
         {renderMenuButton(false)}
 
