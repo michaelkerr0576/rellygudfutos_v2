@@ -27,7 +27,7 @@ export default function Box(props: BoxProps): JSX.Element {
   const {
     ariaRole = 'presentation',
     children,
-    className = '',
+    className = 'rgf_box',
     m = undefined,
     mb = undefined,
     ml = undefined,

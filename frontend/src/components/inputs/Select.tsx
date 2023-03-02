@@ -40,11 +40,12 @@ export default function Select(props: SelectProps): JSX.Element {
       <MuiFormControl fullWidth>
         <MuiInputLabel id={`rgf-${fieldId}-label`}>{label}</MuiInputLabel>
         <MuiSelect
-          labelId={`rgf-${fieldId}-label`}
           id={`rgf-${fieldId}`}
-          value={value}
           label={label}
+          labelId={`rgf-${fieldId}-label`}
           onChange={handleOnChange}
+          value={value}
+          variant="outlined"
         >
           {renderMenuItems()}
         </MuiSelect>

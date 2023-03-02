@@ -1,5 +1,7 @@
 import { useLocation } from 'react-router-dom';
 
+import { styled } from '@mui/material/styles';
+
 import DashboardIcon from '@/assets/icons/DashboardIcon';
 import LoginIcon from '@/assets/icons/LoginIcon';
 import Avatar, { Size } from '@/components/dataDisplay/Avatar';
@@ -12,6 +14,12 @@ import Stack from '@/components/layout/Stack';
 import Drawer from '@/components/navigation/Drawer';
 import useMenu from '@/hooks/useMenu';
 
+const StyledAccountDrawer = styled('div')(({ theme }): { [key: string]: any } => ({
+  '.rgf_accountDrawer__header': {
+    padding: theme.spacing(1, 0),
+  },
+}));
+
 export default function AccountDrawer(): JSX.Element {
   const { pathname } = useLocation();
   const { isAccountDrawerOpen, toggleAccountDrawer } = useMenu();
@@ -23,7 +31,7 @@ export default function AccountDrawer(): JSX.Element {
   );
 
   const renderDrawerHeader = (): JSX.Element => (
-    <Box py={1}>
+    <Box className="rgf_accountDrawer__header">
       <Stack verticalAlignment="center" horizontalAlignment="spaceBetween">
         <Typography variant="h3">Michael Kerr</Typography>
 
@@ -37,29 +45,33 @@ export default function AccountDrawer(): JSX.Element {
       {renderAccountButton(true, 'large')}
 
       <Drawer anchor="right" isOpen={isAccountDrawerOpen} setIsOpen={toggleAccountDrawer}>
-        {renderDrawerHeader()}
+        <StyledAccountDrawer className="rgf_accountDrawer">
+          {renderDrawerHeader()}
 
-        <Divider />
+          <Divider />
 
-        <List
-          listItems={[
-            {
-              icon: <DashboardIcon variant={pathname.includes('/admin/dashboard') ? 'filled' : 'outlined'} />,
-              label: 'Dashboard',
-              navigateTo: '/admin/dashboard',
-              onClick: (): void => toggleAccountDrawer(false),
-            },
-            {
-              icon: <LoginIcon />,
-              label: 'Login',
-              navigateTo: '/admin/login',
-              onClick: (): void => toggleAccountDrawer(false),
-            },
-          ]}
-          subHeader="Account"
-        />
+          <List
+            listItems={[
+              {
+                icon: (
+                  <DashboardIcon variant={pathname.includes('/admin/dashboard') ? 'filled' : 'outlined'} />
+                ),
+                label: 'Dashboard',
+                navigateTo: '/admin/dashboard',
+                onClick: (): void => toggleAccountDrawer(false),
+              },
+              {
+                icon: <LoginIcon />,
+                label: 'Login',
+                navigateTo: '/admin/login',
+                onClick: (): void => toggleAccountDrawer(false),
+              },
+            ]}
+            subHeader="Account"
+          />
 
-        <Divider />
+          <Divider />
+        </StyledAccountDrawer>
       </Drawer>
     </>
   );

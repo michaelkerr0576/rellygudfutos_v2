@@ -3,6 +3,7 @@ import PhotoGridIcon from '@/assets/icons/PhotoGridIcon';
 import PhotoListIcon from '@/assets/icons/PhotoListIcon';
 import SearchIcon from '@/assets/icons/SearchIcon';
 import ToggleDarkModeIcon from '@/assets/icons/ToggleDarkModeIcon';
+import Box from '@/components/layout/Box';
 import BottomNavigation from '@/components/navigation/BottomNavigation';
 import useGallery from '@/hooks/useGallery';
 import useThemes from '@/hooks/useThemes';
@@ -14,7 +15,7 @@ export default function GalleryBottomNavigation(): JSX.Element {
   const { toggleSearchDrawer, galleryNavigationValue, toggleGalleryNavigationValue } = useGallery();
 
   return (
-    <>
+    <Box className="rgf_galleryBottomNavigation">
       <BottomNavigation
         actions={[
           {
@@ -58,6 +59,6 @@ export default function GalleryBottomNavigation(): JSX.Element {
       />
 
       <SearchDrawer />
-    </>
+    </Box>
   );
 }
