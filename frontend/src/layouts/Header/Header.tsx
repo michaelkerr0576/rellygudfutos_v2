@@ -2,7 +2,6 @@ import { styled } from '@mui/material/styles';
 
 import RellygudfutosLogo from '@/assets/logos/RellygudfutosLogo';
 import Divider from '@/components/dataDisplay/Divider';
-import Box from '@/components/layout/Box';
 import Container from '@/components/layout/Container';
 import Stack from '@/components/layout/Stack';
 
@@ -12,27 +11,20 @@ import AccountDrawer from './partials/AccountDrawer';
 import MenuDrawer from './partials/MenuDrawer';
 
 const StyledHeader = styled('header')(({ theme }): { [key: string]: any } => ({
-  '.rgf_header__accountDrawer': {
+  '.rgf_accountDrawer': {
     marginLeft: 'auto',
   },
-  '.rgf_header__rellygudfutosLogo': {
+  '.rgf_container': {
+    padding: theme.spacing(0, 2),
+  },
+  '.rgf_rellygudfutosLogo': {
+    alignItems: 'center',
+    minHeight: 60,
     paddingLeft: theme.spacing(1),
   },
 }));
 
 export default function Header(): JSX.Element {
-  const renderRellygudfutosLogos = (): JSX.Element => (
-    <Box className="rgf_header__rellygudfutosLogo">
-      <RellygudfutosLogo />
-    </Box>
-  );
-
-  const renderAccountDrawer = (): JSX.Element => (
-    <Box className="rgf_header__accountDrawer">
-      <AccountDrawer />
-    </Box>
-  );
-
   return (
     <ErrorBoundary identifier="Header">
       <StyledHeader className="rgf_header">
@@ -40,9 +32,9 @@ export default function Header(): JSX.Element {
           <Stack verticalAlignment="center">
             <MenuDrawer />
 
-            {renderRellygudfutosLogos()}
+            <RellygudfutosLogo />
 
-            {renderAccountDrawer()}
+            <AccountDrawer />
           </Stack>
         </Container>
 

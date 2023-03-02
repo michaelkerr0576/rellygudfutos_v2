@@ -1,3 +1,5 @@
+import clsx from 'clsx';
+
 import MuiBox, { BoxProps as MuiBoxProps } from '@mui/material/Box';
 
 export interface BoxProps {
@@ -27,7 +29,7 @@ export default function Box(props: BoxProps): JSX.Element {
   const {
     ariaRole = 'presentation',
     children,
-    className = 'rgf_box',
+    className = '',
     m = undefined,
     mb = undefined,
     ml = undefined,
@@ -49,7 +51,7 @@ export default function Box(props: BoxProps): JSX.Element {
 
   return (
     <MuiBox
-      className={className}
+      className={clsx('rgf_box', { [className]: className })}
       m={m}
       mb={mb}
       ml={ml}

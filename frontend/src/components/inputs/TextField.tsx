@@ -1,10 +1,13 @@
+import clsx from 'clsx';
+
 import MuiInputAdornment from '@mui/material/InputAdornment';
 import { styled } from '@mui/material/styles';
-import MuiTextField from '@mui/material/TextField';
+import MuiTextField, { TextFieldProps as MuiTextFieldProps } from '@mui/material/TextField';
 
 export interface TextFieldProps {
-  label: string;
+  className?: MuiTextFieldProps['className'];
   endAdornmentIcon?: JSX.Element;
+  label: string;
 }
 
 const StyledTextField = styled('div')(({ theme }): { [key: string]: any } => ({
@@ -12,7 +15,7 @@ const StyledTextField = styled('div')(({ theme }): { [key: string]: any } => ({
 }));
 
 export default function TextField(props: TextFieldProps): JSX.Element {
-  const { endAdornmentIcon = null, label } = props;
+  const { className = '', endAdornmentIcon = null, label } = props;
 
   const renderEndAdornment = (): JSX.Element | null => {
     if (!endAdornmentIcon) {
@@ -23,7 +26,7 @@ export default function TextField(props: TextFieldProps): JSX.Element {
   };
 
   return (
-    <StyledTextField className="rgf_textField">
+    <StyledTextField className={clsx('rgf_textField', { [className]: className })}>
       <MuiTextField
         fullWidth
         InputProps={{

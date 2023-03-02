@@ -1,4 +1,8 @@
-import MuiBottomNavigation from '@mui/material/BottomNavigation';
+import clsx from 'clsx';
+
+import MuiBottomNavigation, {
+  BottomNavigationProps as MuiBottomNavigationProps,
+} from '@mui/material/BottomNavigation';
 import MuiBottomNavigationAction, {
   BottomNavigationActionProps as MuiBottomNavigationPropsAction,
 } from '@mui/material/BottomNavigationAction';
@@ -15,6 +19,7 @@ type Action = {
 
 export interface BottomNavigationProps {
   actions: Action[];
+  className?: MuiBottomNavigationProps['className'];
   selectedValue: string;
   setSelectedValue: (value: string) => void;
 }
@@ -27,7 +32,7 @@ const StyledBottomNavigation = styled('div')((): { [key: string]: any } => ({
 }));
 
 export default function BottomNavigation(props: BottomNavigationProps): JSX.Element {
-  const { actions, selectedValue, setSelectedValue } = props;
+  const { actions, className = '', selectedValue, setSelectedValue } = props;
 
   const handleOnChange = (_event: React.SyntheticEvent, newValue: string): void => setSelectedValue(newValue);
 
@@ -45,7 +50,7 @@ export default function BottomNavigation(props: BottomNavigationProps): JSX.Elem
     );
 
   return (
-    <StyledBottomNavigation className="rgf_bottomNavigation">
+    <StyledBottomNavigation className={clsx('rgf_bottomNavigation', { [className]: className })}>
       <Paper elevation={24}>
         <MuiBottomNavigation value={selectedValue} onChange={handleOnChange}>
           {renderActions()}

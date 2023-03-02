@@ -1,5 +1,9 @@
+import clsx from 'clsx';
+
 import { styled } from '@mui/material/styles';
-import MuiSwipeableDrawer from '@mui/material/SwipeableDrawer';
+import MuiSwipeableDrawer, {
+  SwipeableDrawerProps as MuiSwipeableDrawerProps,
+} from '@mui/material/SwipeableDrawer';
 
 import ExpandIcon from '@/assets/icons/ExpandIcon';
 
@@ -16,6 +20,7 @@ type Anchor = 'left' | 'right' | 'bottom';
 export interface DrawerProps {
   anchor: Anchor;
   children: React.ReactNode;
+  className?: MuiSwipeableDrawerProps['className'];
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
 }
@@ -45,7 +50,7 @@ const StyledMuiSwipeableDrawer = styled(MuiSwipeableDrawer)(({ theme }): { [key:
 }));
 
 export default function Drawer(props: DrawerProps): JSX.Element {
-  const { anchor, children, isOpen, setIsOpen } = props;
+  const { anchor, children, className = '', isOpen, setIsOpen } = props;
 
   const isBottomDrawer = anchor === 'bottom';
 
@@ -67,21 +72,19 @@ export default function Drawer(props: DrawerProps): JSX.Element {
   return (
     <StyledMuiSwipeableDrawer
       anchor={anchor}
-      className="rgf_drawer"
+      className={clsx('rgf_drawer', { [className]: className })}
       onClose={toggleDrawer(false)}
       onOpen={toggleDrawer(true)}
       open={isOpen}
     >
       {isBottomDrawer && (
-        <Box className="rgf_drawer__expandDrawer">
-          <Paper elevation={1}>
-            <Grid horizontalAlignment="center">
-              <IconButton ariaLabel="less" onClick={(): void => setIsOpen(false)} padding="small">
-                <ExpandIcon type={isOpen ? 'less' : 'more'} size="large" />
-              </IconButton>
-            </Grid>
-          </Paper>
-        </Box>
+        <Paper className="rgf_drawer__expandDrawer" elevation={1}>
+          <Grid horizontalAlignment="center">
+            <IconButton ariaLabel="less" onClick={(): void => setIsOpen(false)} padding="small">
+              <ExpandIcon type={isOpen ? 'less' : 'more'} size="large" />
+            </IconButton>
+          </Grid>
+        </Paper>
       )}
 
       <Box

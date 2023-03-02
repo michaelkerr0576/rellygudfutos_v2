@@ -1,6 +1,7 @@
 import { LinkProps as ReactRouterLinkProps } from 'react-router-dom';
+import clsx from 'clsx';
 
-import MuiList from '@mui/material/List';
+import MuiList, { ListProps as MuiListProps } from '@mui/material/List';
 import MuiListItem from '@mui/material/ListItem';
 import MuiListItemButton, {
   ListItemButtonProps as MuiListItemButtonProps,
@@ -21,6 +22,7 @@ type ListItem = {
 };
 
 export interface ListProps {
+  className?: MuiListProps['className'];
   listItems: ListItem[];
   subHeader?: string;
 }
@@ -32,7 +34,7 @@ const StyledMuiList = styled(MuiList)((): { [key: string]: any } => ({
 }));
 
 export default function List(props: ListProps): JSX.Element {
-  const { listItems, subHeader = '' } = props;
+  const { className = '', listItems, subHeader = '' } = props;
 
   const renderListItem = (listItem: ListItem): JSX.Element => {
     const { action = null, icon, label, onClick = (): void => {} } = listItem;
@@ -66,7 +68,10 @@ export default function List(props: ListProps): JSX.Element {
     });
 
   return (
-    <StyledMuiList className="rgf_list" subheader={<MuiListSubheader>{subHeader}</MuiListSubheader>}>
+    <StyledMuiList
+      className={clsx('rgf_list', { [className]: className })}
+      subheader={<MuiListSubheader>{subHeader}</MuiListSubheader>}
+    >
       {renderListItems()}
     </StyledMuiList>
   );

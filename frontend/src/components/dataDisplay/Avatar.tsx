@@ -1,14 +1,17 @@
-import MuiAvatar from '@mui/material/Avatar';
+import clsx from 'clsx';
+
+import MuiAvatar, { AvatarProps as MuiAvatarProps } from '@mui/material/Avatar';
 
 export type Size = 'large' | 'medium' | 'small';
 
 export interface AvatarProps {
   children: React.ReactNode;
+  className?: MuiAvatarProps['className'];
   size?: Size;
 }
 
 export default function Avatar(props: AvatarProps): JSX.Element {
-  const { children, size = 'medium' } = props;
+  const { children, className = '', size = 'medium' } = props;
 
   const muiStyle = (): { fontSize: string; height: number; width: number } => {
     switch (size) {
@@ -23,7 +26,7 @@ export default function Avatar(props: AvatarProps): JSX.Element {
   };
 
   return (
-    <MuiAvatar className="rgf_avatar" style={{ ...muiStyle() }}>
+    <MuiAvatar className={clsx('rgf_avatar', { [className]: className })} style={{ ...muiStyle() }}>
       {children}
     </MuiAvatar>
   );

@@ -1,3 +1,5 @@
+import clsx from 'clsx';
+
 import MuiStack, { StackProps as MuiStackProps } from '@mui/material/Stack';
 
 import Divider from '../dataDisplay/Divider';
@@ -8,6 +10,7 @@ type VerticalAlignment = 'start' | 'center' | 'end';
 
 export interface StackProps {
   children: React.ReactNode;
+  className?: MuiStackProps['className'];
   direction?: Direction;
   hasDivider?: boolean;
   horizontalAlignment?: HorizontalAlignment;
@@ -18,6 +21,7 @@ export interface StackProps {
 export default function Stack(props: StackProps): JSX.Element {
   const {
     children,
+    className = '',
     direction = 'row',
     hasDivider,
     horizontalAlignment = 'start',
@@ -54,7 +58,7 @@ export default function Stack(props: StackProps): JSX.Element {
   return (
     <MuiStack
       alignItems={muiAlignItems()}
-      className="rgf_stack"
+      className={clsx('rgf_stack', { [className]: className })}
       direction={direction}
       divider={hasDivider ? <Divider orientation="vertical" /> : null}
       justifyContent={muiJustifyContent()}

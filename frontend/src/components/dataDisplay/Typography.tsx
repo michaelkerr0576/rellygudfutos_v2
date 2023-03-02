@@ -1,14 +1,17 @@
+import clsx from 'clsx';
+
 import MuiTypography, { TypographyProps as MuiTypographyProps } from '@mui/material/Typography';
 
 type Variant = 'h1' | 'h2' | 'h3' | 'subtitle' | 'body' | 'caption';
 
 export interface TypographyProps {
   children: React.ReactNode;
+  className?: MuiTypographyProps['className'];
   variant?: Variant;
 }
 
 export default function Typography(props: TypographyProps): JSX.Element {
-  const { children, variant = 'body' } = props;
+  const { children, className = '', variant = 'body' } = props;
 
   const muiVariant = (): MuiTypographyProps['variant'] => {
     switch (variant) {
@@ -22,7 +25,7 @@ export default function Typography(props: TypographyProps): JSX.Element {
   };
 
   return (
-    <MuiTypography className="rgf_typography" variant={muiVariant()}>
+    <MuiTypography className={clsx('rgf_typography', { [className]: className })} variant={muiVariant()}>
       {children}
     </MuiTypography>
   );

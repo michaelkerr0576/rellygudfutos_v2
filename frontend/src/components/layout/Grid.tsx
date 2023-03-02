@@ -1,3 +1,5 @@
+import clsx from 'clsx';
+
 import { GridProps as MuiGridProps } from '@mui/material/Grid';
 import MuiGrid2 from '@mui/material/Unstable_Grid2/Grid2';
 
@@ -6,6 +8,7 @@ type HorizontalAlignment = 'start' | 'center' | 'end' | 'spaceBetween' | 'spaceE
 
 export interface GridProps {
   children: React.ReactNode;
+  className?: MuiGridProps['className'];
   desktop?: number;
   desktopOffset?: number;
   direction?: Direction;
@@ -22,6 +25,7 @@ export interface GridProps {
 export default function Grid(props: GridProps): JSX.Element {
   const {
     children,
+    className = '',
     desktop = undefined,
     desktopOffset = undefined,
     direction = 'row',
@@ -52,7 +56,7 @@ export default function Grid(props: GridProps): JSX.Element {
 
   return (
     <MuiGrid2
-      className="rgf_grid"
+      className={clsx('rgf_grid', { [className]: className })}
       container={isContainer || !!horizontalAlignment}
       desktop={desktop}
       desktopOffset={desktopOffset}

@@ -36,21 +36,19 @@ export default function MenuDrawer(): JSX.Element {
   );
 
   const renderDrawerHeader = (): JSX.Element => (
-    <Box className="rgf_menuDrawer__header">
-      <Stack verticalAlignment="center" spacing={0.5}>
-        {renderMenuButton(false)}
+    <Stack className="rgf_menuDrawer__header" verticalAlignment="center" spacing={0.5}>
+      {renderMenuButton(false)}
 
-        <RellygudfutosLogo size="small" />
-      </Stack>
-    </Box>
+      <RellygudfutosLogo size="small" />
+    </Stack>
   );
 
   return (
-    <>
+    <Box className="rgf_menuDrawer">
       {renderMenuButton(true, 'large')}
 
       <Drawer anchor="left" isOpen={isMenuDrawerOpen} setIsOpen={toggleMenuDrawer}>
-        <StyledMenuDrawer className="rgf_menuDrawer">
+        <StyledMenuDrawer className="rgf_menuDrawer__children">
           {renderDrawerHeader()}
 
           <Divider />
@@ -97,6 +95,6 @@ export default function MenuDrawer(): JSX.Element {
           <Divider />
         </StyledMenuDrawer>
       </Drawer>
-    </>
+    </Box>
   );
 }

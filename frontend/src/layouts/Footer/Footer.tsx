@@ -4,7 +4,11 @@ import Container from '@/components/layout/Container';
 
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 
-const StyledFooter = styled('footer')((): { [key: string]: any } => ({}));
+const StyledFooter = styled('footer')(({ theme }): { [key: string]: any } => ({
+  '.rgf_container': {
+    padding: theme.spacing(1, 2),
+  },
+}));
 
 export default function Footer(): JSX.Element {
   return (

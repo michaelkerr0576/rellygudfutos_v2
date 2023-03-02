@@ -1,7 +1,12 @@
+import clsx from 'clsx';
+
 import MuiFormControl from '@mui/material/FormControl';
 import MuiInputLabel from '@mui/material/InputLabel';
 import MuiMenuItem from '@mui/material/MenuItem';
-import MuiSelect, { SelectChangeEvent as MuiSelectChangeEvent } from '@mui/material/Select';
+import MuiSelect, {
+  SelectChangeEvent as MuiSelectChangeEvent,
+  SelectProps as MuiSelectProps,
+} from '@mui/material/Select';
 import { styled } from '@mui/material/styles';
 
 type Option = {
@@ -10,6 +15,7 @@ type Option = {
 };
 
 export interface SelectProps {
+  className?: MuiSelectProps['className'];
   fieldId: string;
   label: string;
   onChange: (value: string) => void;
@@ -22,7 +28,7 @@ const StyledSelect = styled('div')(({ theme }): { [key: string]: any } => ({
 }));
 
 export default function Select(props: SelectProps): JSX.Element {
-  const { fieldId, label, onChange, options, value } = props;
+  const { className = '', fieldId, label, onChange, options, value } = props;
 
   const handleOnChange = (event: MuiSelectChangeEvent): void => onChange(event.target.value);
 
@@ -36,7 +42,7 @@ export default function Select(props: SelectProps): JSX.Element {
     );
 
   return (
-    <StyledSelect className="rgf_select">
+    <StyledSelect className={clsx('rgf_select', { [className]: className })}>
       <MuiFormControl fullWidth>
         <MuiInputLabel id={`rgf-${fieldId}-label`}>{label}</MuiInputLabel>
         <MuiSelect

@@ -1,3 +1,5 @@
+import clsx from 'clsx';
+
 import MuiAutocomplete from '@mui/material/Autocomplete';
 import { styled } from '@mui/material/styles';
 import MuiTextField from '@mui/material/TextField';
@@ -8,6 +10,7 @@ type Option = {
 };
 
 export interface AutocompleteProps {
+  className?: string;
   fieldId: string;
   label: string;
   noOptionsLabel: string;
@@ -21,13 +24,13 @@ const StyledAutocomplete = styled('div')(({ theme }): { [key: string]: any } => 
 }));
 
 export default function Autocomplete(props: AutocompleteProps): JSX.Element {
-  const { fieldId, label, noOptionsLabel, onChange, options, value } = props;
+  const { className = '', fieldId, label, noOptionsLabel, onChange, options, value } = props;
 
   const handleOnChange = (_event: React.SyntheticEvent<Element, Event>, values: Option[]): void =>
     onChange(values);
 
   return (
-    <StyledAutocomplete className="rgf_autocomplete">
+    <StyledAutocomplete className={clsx('rgf_autocomplete', { [className]: className })}>
       <MuiAutocomplete
         disableClearable
         disableCloseOnSelect

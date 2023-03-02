@@ -9,7 +9,11 @@ export interface PageProps {
   pageName: string;
 }
 
-const StyledPage = styled('main')((): { [key: string]: any } => ({}));
+const StyledPage = styled('main')(({ theme }): { [key: string]: any } => ({
+  '.rgf_container': {
+    padding: theme.spacing(2, 2),
+  },
+}));
 
 export default function Page(props: PageProps): JSX.Element {
   const { children, pageName } = props;
@@ -17,7 +21,7 @@ export default function Page(props: PageProps): JSX.Element {
   return (
     <ErrorBoundary identifier={`${pageName} page`}>
       <StyledPage className={`rgf_page${pageName}`}>
-        <Container verticalPadding="medium">{children}</Container>
+        <Container>{children}</Container>
       </StyledPage>
     </ErrorBoundary>
   );

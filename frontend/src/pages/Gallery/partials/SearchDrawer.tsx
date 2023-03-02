@@ -133,24 +133,27 @@ export default function SearchDrawer(): JSX.Element {
   );
 
   const renderActionButtonGroup = (): JSX.Element => (
-    <Box className="rgf_searchDrawer__actionButtonGroup">
-      <Paper elevation={24}>
-        {renderRow(
-          <Stack direction="row" spacing={1}>
-            <Button onClick={handleClearFilters} variant="secondary">
-              Clear
-            </Button>
+    <Paper className="rgf_searchDrawer__actionButtonGroup" elevation={24}>
+      {renderRow(
+        <Stack direction="row" spacing={1}>
+          <Button onClick={handleClearFilters} variant="secondary">
+            Clear
+          </Button>
 
-            <Button onClick={(): void => {}}>Apply</Button>
-          </Stack>,
-        )}
-      </Paper>
-    </Box>
+          <Button onClick={(): void => {}}>Apply</Button>
+        </Stack>,
+      )}
+    </Paper>
   );
 
   return (
-    <Drawer anchor="bottom" isOpen={isSearchDrawerOpen} setIsOpen={toggleSearchDrawer}>
-      <StyledSearchDrawer className="rgf_searchDrawer">
+    <Drawer
+      anchor="bottom"
+      className="rgf_searchDrawer"
+      isOpen={isSearchDrawerOpen}
+      setIsOpen={toggleSearchDrawer}
+    >
+      <StyledSearchDrawer className="rgf_searchDrawer__children">
         {renderSearchField()}
 
         {renderTagsFilter()}

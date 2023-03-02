@@ -1,10 +1,12 @@
 import { forwardRef } from 'react';
 import { Link as ReactRouterLink, LinkProps as ReactRouterLinkProps } from 'react-router-dom';
+import clsx from 'clsx';
 
 import { styled } from '@mui/material/styles';
 
 export interface LinkProps {
   children: React.ReactNode;
+  className?: ReactRouterLinkProps['className'];
   to: ReactRouterLinkProps['to'];
 }
 
@@ -15,10 +17,10 @@ const StyledReactRouterLink = styled(ReactRouterLink)((): { [key: string]: any }
 }));
 
 function Link(props: LinkProps, ref: React.Ref<HTMLAnchorElement> | undefined): JSX.Element {
-  const { children, to } = props;
+  const { children, className = '', to } = props;
 
   return (
-    <StyledReactRouterLink className="rgf_link" ref={ref} to={to}>
+    <StyledReactRouterLink className={clsx('rgf_link', { [className]: className })} ref={ref} to={to}>
       {children}
     </StyledReactRouterLink>
   );

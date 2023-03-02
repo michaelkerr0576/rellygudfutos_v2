@@ -31,21 +31,23 @@ export default function AccountDrawer(): JSX.Element {
   );
 
   const renderDrawerHeader = (): JSX.Element => (
-    <Box className="rgf_accountDrawer__header">
-      <Stack verticalAlignment="center" horizontalAlignment="spaceBetween">
-        <Typography variant="h3">Michael Kerr</Typography>
+    <Stack
+      className="rgf_accountDrawer__header"
+      horizontalAlignment="spaceBetween"
+      verticalAlignment="center"
+    >
+      <Typography variant="h3">Michael Kerr</Typography>
 
-        {renderAccountButton(false)}
-      </Stack>
-    </Box>
+      {renderAccountButton(false)}
+    </Stack>
   );
 
   return (
-    <>
+    <Box className="rgf_accountDrawer">
       {renderAccountButton(true, 'large')}
 
       <Drawer anchor="right" isOpen={isAccountDrawerOpen} setIsOpen={toggleAccountDrawer}>
-        <StyledAccountDrawer className="rgf_accountDrawer">
+        <StyledAccountDrawer className="rgf_accountDrawer__children">
           {renderDrawerHeader()}
 
           <Divider />
@@ -73,6 +75,6 @@ export default function AccountDrawer(): JSX.Element {
           <Divider />
         </StyledAccountDrawer>
       </Drawer>
-    </>
+    </Box>
   );
 }
