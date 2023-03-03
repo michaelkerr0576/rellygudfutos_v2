@@ -8,6 +8,8 @@ export interface TextFieldProps {
   className?: MuiTextFieldProps['className'];
   endAdornmentIcon?: JSX.Element;
   label: string;
+  onChange: (value: string) => void;
+  value: string;
 }
 
 const StyledTextField = styled('div')(({ theme }): { [key: string]: any } => ({
@@ -15,7 +17,9 @@ const StyledTextField = styled('div')(({ theme }): { [key: string]: any } => ({
 }));
 
 export default function TextField(props: TextFieldProps): JSX.Element {
-  const { className = '', endAdornmentIcon = null, label } = props;
+  const { className = '', endAdornmentIcon = null, label, onChange, value } = props;
+
+  const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>): void => onChange(event.target.value);
 
   const renderEndAdornment = (): JSX.Element | null => {
     if (!endAdornmentIcon) {
@@ -33,6 +37,8 @@ export default function TextField(props: TextFieldProps): JSX.Element {
           endAdornment: renderEndAdornment(),
         }}
         label={label}
+        onChange={handleOnChange}
+        value={value}
         variant="outlined"
       />
     </StyledTextField>

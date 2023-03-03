@@ -1,54 +1,64 @@
 import useStore from '@/store/store';
-import { GalleryNavigationValue, SortBy, State, TagsFilter } from '@/store/types/storeTypes';
+import { GalleryNavigationValue, GallerySortBy, GalleryTagsFilter, State } from '@/store/types/storeTypes';
 
 export interface UseGallery {
   galleryNavigationValue: GalleryNavigationValue;
-  handleChangeSortBy: (sortBy: string) => void;
-  handleChangeTagsFilter: (tags: TagsFilter) => void;
+  gallerySearch: string;
+  gallerySortBy: GallerySortBy;
+  galleryTagsFilter: GalleryTagsFilter;
+  handleGallerySearch: (search: string) => void;
+  handleGallerySortBy: (sortBy: string) => void;
+  handleGalleryTagsFilter: (tags: GalleryTagsFilter) => void;
   isSearchDrawerOpen: boolean;
-  sortBy: SortBy;
-  tagsFilter: TagsFilter;
   toggleGalleryNavigationValue: (value: string) => void;
   toggleSearchDrawer: (isOpen: boolean) => void;
 }
 
 interface UseGalleryState {
   galleryNavigationValue: State['galleryNavigationValue'];
+  gallerySearch: State['gallerySearch'];
+  gallerySortBy: State['gallerySortBy'];
+  galleryTagsFilter: State['galleryTagsFilter'];
   isSearchDrawerOpen: State['isSearchDrawerOpen'];
   setGalleryNavigationValue: State['setGalleryNavigationValue'];
+  setGallerySearch: State['setGallerySearch'];
+  setGallerySortBy: State['setGallerySortBy'];
+  setGalleryTagsFilter: State['setGalleryTagsFilter'];
   setIsSearchDrawerOpen: State['setIsSearchDrawerOpen'];
-  setSortBy: State['setSortBy'];
-  setTagsFilter: State['setTagsFilter'];
-  sortBy: State['sortBy'];
-  tagsFilter: State['tagsFilter'];
 }
 
 export default function useGallery(): UseGallery {
   const {
     galleryNavigationValue,
+    gallerySearch,
+    gallerySortBy,
+    galleryTagsFilter,
     isSearchDrawerOpen,
     setGalleryNavigationValue,
+    setGallerySearch,
+    setGallerySortBy,
+    setGalleryTagsFilter,
     setIsSearchDrawerOpen,
-    setSortBy,
-    setTagsFilter,
-    sortBy,
-    tagsFilter,
   } = useStore(
     (state): UseGalleryState => ({
       galleryNavigationValue: state.galleryNavigationValue,
+      gallerySearch: state.gallerySearch,
+      gallerySortBy: state.gallerySortBy,
+      galleryTagsFilter: state.galleryTagsFilter,
       isSearchDrawerOpen: state.isSearchDrawerOpen,
       setGalleryNavigationValue: state.setGalleryNavigationValue,
+      setGallerySearch: state.setGallerySearch,
+      setGallerySortBy: state.setGallerySortBy,
+      setGalleryTagsFilter: state.setGalleryTagsFilter,
       setIsSearchDrawerOpen: state.setIsSearchDrawerOpen,
-      setSortBy: state.setSortBy,
-      setTagsFilter: state.setTagsFilter,
-      sortBy: state.sortBy,
-      tagsFilter: state.tagsFilter,
     }),
   );
 
-  const handleChangeSortBy = (sort: string): void => setSortBy(sort as SortBy);
+  const handleGallerySearch = (search: string): void => setGallerySearch(search);
 
-  const handleChangeTagsFilter = (tags: TagsFilter): void => setTagsFilter(tags);
+  const handleGallerySortBy = (sort: string): void => setGallerySortBy(sort as GallerySortBy);
+
+  const handleGalleryTagsFilter = (tags: GalleryTagsFilter): void => setGalleryTagsFilter(tags);
 
   const toggleGalleryNavigationValue = (value: string): void =>
     setGalleryNavigationValue(value as GalleryNavigationValue);
@@ -57,11 +67,13 @@ export default function useGallery(): UseGallery {
 
   return {
     galleryNavigationValue,
-    handleChangeSortBy,
-    handleChangeTagsFilter,
+    gallerySearch,
+    gallerySortBy,
+    galleryTagsFilter,
+    handleGallerySearch,
+    handleGallerySortBy,
+    handleGalleryTagsFilter,
     isSearchDrawerOpen,
-    sortBy,
-    tagsFilter,
     toggleGalleryNavigationValue,
     toggleSearchDrawer,
   };

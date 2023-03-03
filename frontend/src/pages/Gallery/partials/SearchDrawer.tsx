@@ -64,17 +64,20 @@ const StyledSearchDrawer = styled('div')(({ theme }): { [key: string]: any } => 
 
 export default function SearchDrawer(): JSX.Element {
   const {
-    handleChangeSortBy,
-    handleChangeTagsFilter,
+    gallerySearch,
+    gallerySortBy,
+    galleryTagsFilter,
+    handleGallerySearch,
+    handleGallerySortBy,
+    handleGalleryTagsFilter,
     isSearchDrawerOpen,
-    sortBy,
-    tagsFilter,
     toggleSearchDrawer,
   } = useGallery();
 
   const handleClearFilters = (): void => {
-    handleChangeSortBy('');
-    handleChangeTagsFilter([]);
+    handleGallerySearch('');
+    handleGallerySortBy('');
+    handleGalleryTagsFilter([]);
   };
 
   const renderRow = (children: React.ReactNode): JSX.Element => (
@@ -87,7 +90,14 @@ export default function SearchDrawer(): JSX.Element {
 
   const renderSearchField = (): JSX.Element => (
     <Box className="rgf_searchDrawer__searchField">
-      {renderRow(<TextField label="Search" endAdornmentIcon={<SearchIcon />} />)}
+      {renderRow(
+        <TextField
+          endAdornmentIcon={<SearchIcon />}
+          label="Search"
+          onChange={handleGallerySearch}
+          value={gallerySearch}
+        />,
+      )}
 
       <Divider />
     </Box>
@@ -100,9 +110,9 @@ export default function SearchDrawer(): JSX.Element {
           fieldId="search-drawer-tags-autocomplete"
           label="Tags"
           noOptionsLabel="No tags"
-          onChange={handleChangeTagsFilter}
+          onChange={handleGalleryTagsFilter}
           options={tags}
-          value={tagsFilter}
+          value={galleryTagsFilter}
         />,
       )}
 
@@ -116,7 +126,7 @@ export default function SearchDrawer(): JSX.Element {
         <Select
           fieldId="search-drawer-sort-select"
           label="Sort"
-          onChange={handleChangeSortBy}
+          onChange={handleGallerySortBy}
           options={[
             { id: 'newest', label: 'Newest' },
             { id: 'oldest', label: 'Oldest' },
@@ -124,7 +134,7 @@ export default function SearchDrawer(): JSX.Element {
             { id: 'title_za', label: 'Title (z-a)' },
             { id: 'random', label: 'Random' },
           ]}
-          value={sortBy}
+          value={gallerySortBy}
         />,
       )}
 
