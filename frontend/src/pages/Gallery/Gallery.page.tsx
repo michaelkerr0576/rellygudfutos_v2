@@ -1,4 +1,5 @@
 import Typography from '@/components/dataDisplay/Typography';
+import Box from '@/components/layout/Box';
 import Page from '@/layouts/Page/Page';
 
 import GalleryBottomNavigation from './partials/GalleryBottomNavigation';
@@ -12,6 +13,8 @@ export default function Gallery(): JSX.Element {
       <Typography variant="subtitle">Gallery</Typography>
       <Typography variant="body">Gallery</Typography>
       <Typography variant="caption">Gallery</Typography>
+
+      <Box style={{ height: 1000 }}>yoyoyoyo</Box>
 
       <GalleryBottomNavigation />
     </Page>
