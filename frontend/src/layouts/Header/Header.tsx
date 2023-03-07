@@ -40,7 +40,7 @@ export default function Header(): JSX.Element {
     <LogoButton
       ariaLabel="really good photos"
       className="rgf_header__rellygudfutosLogoButton"
-      onClick={(): void => navigate('/gallery')}
+      onClick={(): void => navigate('/')}
     >
       <RellygudfutosLogo />
     </LogoButton>

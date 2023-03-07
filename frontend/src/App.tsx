@@ -11,7 +11,6 @@ import Dashboard from '@/pages/Dashboard/Dashboard.page';
 import Gallery from '@/pages/Gallery/Gallery.page';
 import Login from '@/pages/Login/Login.page';
 import Photo from '@/pages/Photo/Photo.page';
-import Portfolio from '@/pages/Portfolio/Portfolio.page';
 
 export default function App(): JSX.Element {
   const { theme } = useThemes();
@@ -23,20 +22,18 @@ export default function App(): JSX.Element {
         <Router>
           <Header />
           <Routes>
-            <Route path="/gallery">
+            <Route path="/">
               <Route index element={<Gallery />} />
-              <Route path=":photoId" element={<Photo />} />
+              <Route path="/gallery/:photoId" element={<Photo />} />
             </Route>
 
-            <Route path="/admin">
+            <Route path="/account">
               <Route index element={<Login />} />
               <Route path="login" element={<Login />} />
               <Route path="dashboard" element={<Dashboard />} />
             </Route>
 
-            <Route path="/portfolio" element={<Portfolio />} />
-
-            <Route path="/*" element={<Navigate replace to="/gallery" />} />
+            <Route path="/*" element={<Navigate replace to="/" />} />
           </Routes>
           <Footer />
         </Router>

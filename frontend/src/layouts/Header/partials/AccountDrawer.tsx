@@ -56,16 +56,16 @@ export default function AccountDrawer(): JSX.Element {
             listItems={[
               {
                 icon: (
-                  <DashboardIcon variant={pathname.includes('/admin/dashboard') ? 'filled' : 'outlined'} />
+                  <DashboardIcon variant={pathname.includes('/account/dashboard') ? 'filled' : 'outlined'} />
                 ),
                 label: 'Dashboard',
-                navigateTo: '/admin/dashboard',
+                navigateTo: '/account/dashboard',
                 onClick: (): void => toggleAccountDrawer(false),
               },
               {
                 icon: <LoginIcon />,
                 label: 'Login',
-                navigateTo: '/admin/login',
+                navigateTo: '/account/login',
                 onClick: (): void => toggleAccountDrawer(false),
               },
             ]}

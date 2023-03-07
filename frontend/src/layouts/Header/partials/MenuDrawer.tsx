@@ -5,7 +5,6 @@ import { styled } from '@mui/material/styles';
 import DarkModeIcon from '@/assets/icons/DarkModeIcon';
 import GalleryIcon from '@/assets/icons/GalleryIcon';
 import MenuIcon from '@/assets/icons/MenuIcon';
-import PortfolioIcon from '@/assets/icons/PortfolioIcon';
 import { IconProps } from '@/assets/icons/types/iconTypes';
 import RellygudfutosLogo from '@/assets/logos/RellygudfutosLogo';
 import Divider from '@/components/dataDisplay/Divider';
@@ -39,7 +38,7 @@ export default function MenuDrawer(): JSX.Element {
 
   const renderDrawerHeader = (): JSX.Element => {
     const handleLogoButtonClick = (): void => {
-      navigate('/gallery');
+      navigate('/');
       toggleMenuDrawer(false);
     };
 
@@ -67,15 +66,9 @@ export default function MenuDrawer(): JSX.Element {
           <List
             listItems={[
               {
-                icon: <GalleryIcon variant={pathname.includes('/gallery') ? 'filled' : 'outlined'} />,
+                icon: <GalleryIcon variant={pathname === '/' ? 'filled' : 'outlined'} />,
                 label: 'Gallery',
-                navigateTo: '/gallery',
-                onClick: (): void => toggleMenuDrawer(false),
-              },
-              {
-                icon: <PortfolioIcon variant={pathname.includes('/portfolio') ? 'filled' : 'outlined'} />,
-                label: 'Portfolio',
-                navigateTo: '/portfolio',
+                navigateTo: '/',
                 onClick: (): void => toggleMenuDrawer(false),
               },
             ]}
