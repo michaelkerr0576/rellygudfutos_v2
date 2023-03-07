@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { styled } from '@mui/material/styles';
 
@@ -11,6 +11,7 @@ import RellygudfutosLogo from '@/assets/logos/RellygudfutosLogo';
 import Divider from '@/components/dataDisplay/Divider';
 import List from '@/components/dataDisplay/List';
 import IconButton from '@/components/inputs/IconButton';
+import LogoButton from '@/components/inputs/LogoButton';
 import Switch from '@/components/inputs/Switch';
 import Box from '@/components/layout/Box';
 import Stack from '@/components/layout/Stack';
@@ -25,9 +26,10 @@ const StyledMenuDrawer = styled('div')(({ theme }): { [key: string]: any } => ({
 }));
 
 export default function MenuDrawer(): JSX.Element {
-  const { pathname } = useLocation();
   const { colorMode, toggleColorMode } = useThemes();
   const { isMenuDrawerOpen, toggleMenuDrawer } = useMenu();
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
 
   const renderMenuButton = (isDrawerOpen: boolean, size?: IconProps['size']): JSX.Element => (
     <IconButton ariaLabel="menu" edge="start" onClick={(): void => toggleMenuDrawer(isDrawerOpen)}>
@@ -35,13 +37,22 @@ export default function MenuDrawer(): JSX.Element {
     </IconButton>
   );
 
-  const renderDrawerHeader = (): JSX.Element => (
-    <Stack className="rgf_menuDrawer__header" verticalAlignment="center" spacing={0.5}>
-      {renderMenuButton(false)}
+  const renderDrawerHeader = (): JSX.Element => {
+    const handleLogoButtonClick = (): void => {
+      navigate('/gallery');
+      toggleMenuDrawer(false);
+    };
 
-      <RellygudfutosLogo size="small" />
-    </Stack>
-  );
+    return (
+      <Stack className="rgf_menuDrawer__header" verticalAlignment="center" spacing={0.5}>
+        {renderMenuButton(false)}
+
+        <LogoButton ariaLabel="really good photos" onClick={(): void => handleLogoButtonClick()}>
+          <RellygudfutosLogo size="small" />
+        </LogoButton>
+      </Stack>
+    );
+  };
 
   return (
     <Box className="rgf_menuDrawer">

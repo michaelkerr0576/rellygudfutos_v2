@@ -1,6 +1,9 @@
+import { useNavigate } from 'react-router-dom';
+
 import { styled } from '@mui/material/styles';
 
 import RellygudfutosLogo from '@/assets/logos/RellygudfutosLogo';
+import LogoButton from '@/components/inputs/LogoButton';
 import Container from '@/components/layout/Container';
 import Stack from '@/components/layout/Stack';
 import Paper from '@/components/surfaces/Paper';
@@ -19,8 +22,7 @@ const StyledHeader = styled('header')(({ theme }): { [key: string]: any } => ({
   '.rgf_container': {
     padding: theme.spacing(0, 2),
   },
-  '.rgf_rellygudfutosLogo': {
-    alignItems: 'center',
+  '.rgf_header__rellygudfutosLogoButton': {
     minHeight: 60,
     paddingLeft: theme.spacing(1),
   },
@@ -32,15 +34,27 @@ const StyledHeader = styled('header')(({ theme }): { [key: string]: any } => ({
 }));
 
 export default function Header(): JSX.Element {
+  const navigate = useNavigate();
+
+  const renderLogoButton = (): JSX.Element => (
+    <LogoButton
+      ariaLabel="really good photos"
+      className="rgf_header__rellygudfutosLogoButton"
+      onClick={(): void => navigate('/gallery')}
+    >
+      <RellygudfutosLogo />
+    </LogoButton>
+  );
+
   return (
     <ErrorBoundary identifier="Header">
       <StyledHeader className="rgf_header">
-        <Paper className="rgf_drawer__expandDrawer" elevation={1}>
+        <Paper elevation={1}>
           <Container>
             <Stack verticalAlignment="center">
               <MenuDrawer />
 
-              <RellygudfutosLogo />
+              {renderLogoButton()}
 
               <AccountDrawer />
             </Stack>
