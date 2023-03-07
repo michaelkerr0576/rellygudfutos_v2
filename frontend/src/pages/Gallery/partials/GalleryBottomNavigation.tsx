@@ -21,7 +21,7 @@ export default function GalleryBottomNavigation(): JSX.Element {
           {
             icon: <HomeIcon variant={galleryNavigationValue === 'home' ? 'filled' : 'outlined'} />,
             label: 'Home',
-            onClick: (): void => {},
+            onClick: (): void => window.scrollTo(0, 0),
             value: 'home',
           },
           {
