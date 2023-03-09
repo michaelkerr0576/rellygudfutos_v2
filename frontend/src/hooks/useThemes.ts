@@ -125,7 +125,6 @@ export default function useThemes(): UseThemes {
           ...(colorMode === 'dark' ? darkTheme.palette : lightTheme.palette),
           mode: colorMode,
         },
-        // typography: { ...typography },
         typography: {
           ...(colorMode === 'dark' ? darkTheme.typography : lightTheme.typography),
         },

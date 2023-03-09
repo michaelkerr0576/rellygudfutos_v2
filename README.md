@@ -267,7 +267,7 @@ Examples of hooks that will take data from API calls:
 
 **Useful Links:**
 
-- [React Query Docs](https://react-query.tanstack.com/)
+- [React Query Docs](https://react-query-v3.tanstack.com/overview)
 - [Youtube React Query Tutorial - Codevolution](https://www.youtube.com/watch?v=VtWkSCZX0Ec&list=PLC3y8-rFHvwjTELCrPrcZlo6blLBUspd2&ab_channel=Codevolution)
 
 ### Zustand

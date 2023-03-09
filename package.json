@@ -6,8 +6,10 @@
   "license": "MIT",
   "private": true,
   "scripts": {
+    "dev": "concurrently \"yarn devBE\" \"yarn devFE\"",
     "devBE": "cd backend && yarn dev",
     "devFE": "cd frontend && yarn vite",
+    "test": "concurrently \"yarn testBE\"",
     "testBE": "cd backend && yarn test"
   },
   "repository": {
@@ -18,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/michaelkerr0576/rellygudfutos_v2/issues"
   },
-  "homepage": "https://github.com/michaelkerr0576/rellygudfutos_v2#readme"
+  "homepage": "https://github.com/michaelkerr0576/rellygudfutos_v2#readme",
+  "devDependencies": {
+    "concurrently": "^7.6.0"
+  }
 }

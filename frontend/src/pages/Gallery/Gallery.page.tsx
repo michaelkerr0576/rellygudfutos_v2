@@ -1,10 +1,20 @@
 import Typography from '@/components/dataDisplay/Typography';
-import Box from '@/components/layout/Box';
+import usePhotos from '@/hooks/usePhotos';
 import Page from '@/layouts/Page/Page';
 
 import GalleryBottomNavigation from './partials/GalleryBottomNavigation';
 
 export default function Gallery(): JSX.Element {
+  const { data, isError, isLoading } = usePhotos();
+
+  if (isError) {
+    return <Page pageName="Gallery">There was an error loading the photos</Page>;
+  }
+
+  if (isLoading) {
+    return <Page pageName="Gallery">...Loading</Page>;
+  }
+
   return (
     <Page pageName="Gallery">
       <Typography variant="h1">Gallery</Typography>
@@ -14,7 +24,11 @@ export default function Gallery(): JSX.Element {
       <Typography variant="body">Gallery</Typography>
       <Typography variant="caption">Gallery</Typography>
 
-      <Box style={{ height: 1000 }}>yoyoyoyo</Box>
+      <br />
+      <br />
+      {JSON.stringify(data)}
+      <br />
+      <br />
 
       <GalleryBottomNavigation />
     </Page>

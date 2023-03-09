@@ -14,6 +14,8 @@
       "@/pages/*": ["./src/pages/*"],
       "@/partials/": ["./src/partials/"],
       "@/partials/*": ["./src/partials/*"],
+      "@/services/": ["./src/services/"],
+      "@/services/*": ["./src/services/*"],
       "@/store/": ["./src/store/"],
       "@/store/*": ["./src/store/*"],
       "@/tests/": ["./src/tests/"],
