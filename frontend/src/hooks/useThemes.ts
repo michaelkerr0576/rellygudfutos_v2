@@ -4,7 +4,7 @@ import { common, grey } from '@mui/material/colors';
 import { alpha, createTheme, Theme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
-import useStore from '@/store/store';
+import useStore from '@/store/useStore';
 import { ColorMode, State } from '@/ts/store';
 
 declare module '@mui/material/styles' {
@@ -108,7 +108,7 @@ const darkTheme = {
 export default function useThemes(): UseThemes {
   const doesUserPreferDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 
-  const defaultColorMode = doesUserPreferDarkMode ? 'dark' : 'light';
+  const defaultColorMode = doesUserPreferDarkMode ? ColorMode.DARK : ColorMode.LIGHT;
 
   const { colorMode, setColorMode } = useStore(
     (state): UseThemesState => ({
@@ -122,18 +122,18 @@ export default function useThemes(): UseThemes {
       createTheme({
         breakpoints: { ...breakpoints },
         palette: {
-          ...(colorMode === 'dark' ? darkTheme.palette : lightTheme.palette),
+          ...(colorMode === ColorMode.DARK ? darkTheme.palette : lightTheme.palette),
           mode: colorMode,
         },
         typography: {
-          ...(colorMode === 'dark' ? darkTheme.typography : lightTheme.typography),
+          ...(colorMode === ColorMode.DARK ? darkTheme.typography : lightTheme.typography),
         },
       }),
     [colorMode],
   );
 
   const toggleColorMode = (): void => {
-    const toggledColorCode = colorMode === 'light' ? 'dark' : 'light';
+    const toggledColorCode = colorMode === ColorMode.LIGHT ? ColorMode.DARK : ColorMode.LIGHT;
 
     setColorMode(toggledColorCode);
   };

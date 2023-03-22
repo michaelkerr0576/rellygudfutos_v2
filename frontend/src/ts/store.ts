@@ -1,9 +1,17 @@
-// TODO - switch some types to enum
-export type ColorMode = 'light' | 'dark';
-export type GallerySortBy = 'newest' | 'oldest' | 'title_az' | 'title_za' | 'random' | '';
-export type GalleryTagsFilter = { id: number; label: string }[];
-
 // #region State Enum
+export enum ColorMode {
+  LIGHT = 'light',
+  DARK = 'dark',
+}
+
+export enum GallerySortBy {
+  NEWEST = 'newest',
+  OLDEST = 'oldest',
+  TITLE_AZ = 'title_az',
+  TITLE_ZA = 'title_za',
+  RANDOM = 'random',
+}
+
 export enum GalleryNavigationValue {
   HOME = 'home',
   GRID = 'grid',
@@ -16,6 +24,10 @@ export enum GalleryVariant {
   GRID = 'grid',
   LIST = 'list',
 }
+// #endregion
+
+// #region State Types
+export type GalleryTagsFilter = { id: number; label: string }[];
 // #endregion
 
 // #region State Interfaces

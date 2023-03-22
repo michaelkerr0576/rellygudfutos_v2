@@ -11,14 +11,15 @@ import {
 } from '@/ts/store';
 
 const useStore = create<State>()(
+  // * Enables Redux devtools
   devtools(
-    // * Enables Redux devtools
+    // * Persists state to local storage
     persist(
       (set, _get): State => ({
-        colorMode: undefined,
+        colorMode: undefined, // * colorMode undefined while waiting for user preference in browser
         galleryNavigationValue: GalleryNavigationValue.HOME,
         gallerySearch: '',
-        gallerySortBy: '',
+        gallerySortBy: GallerySortBy.NEWEST,
         galleryTagsFilter: [],
         galleryVariant: GalleryVariant.GRID,
         isAccountDrawerOpen: false,
@@ -43,8 +44,7 @@ const useStore = create<State>()(
           set({ isSearchDrawerOpen }, false, 'SET_IS_SEARCH_DRAWER_OPEN'),
       }),
       {
-        // * Persists state to local storage
-        name: 'state-storage',
+        name: 'state-storage', // * Local storage key
       },
     ),
   ),

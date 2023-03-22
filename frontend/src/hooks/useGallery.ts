@@ -1,4 +1,4 @@
-import useStore from '@/store/store';
+import useStore from '@/store/useStore';
 import { GalleryNavigationValue, GallerySortBy, GalleryTagsFilter, GalleryVariant, State } from '@/ts/store';
 
 export interface UseGallery {
@@ -68,7 +68,8 @@ export default function useGallery(): UseGallery {
   const handleGalleryTagsFilter = (tags: GalleryTagsFilter): void => setGalleryTagsFilter(tags);
 
   const toggleGalleryNavigationValue = (value: string): void => {
-    if (value === GalleryVariant.GRID || GalleryVariant.LIST) {
+    const isGalleryVariantChange = value === GalleryVariant.GRID || value === GalleryVariant.LIST;
+    if (isGalleryVariantChange) {
       setGalleryVariant(value as GalleryVariant);
     }
 

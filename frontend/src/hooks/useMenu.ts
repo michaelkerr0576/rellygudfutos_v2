@@ -1,4 +1,4 @@
-import useStore from '@/store/store';
+import useStore from '@/store/useStore';
 import { State } from '@/ts/store';
 
 export interface UseMenu {

@@ -17,6 +17,7 @@ import Stack from '@/components/layout/Stack';
 import Drawer from '@/components/navigation/Drawer';
 import useMenu from '@/hooks/useMenu';
 import useThemes from '@/hooks/useThemes';
+import { ColorMode } from '@/ts/store';
 
 const StyledMenuDrawer = styled('div')(({ theme }): { [key: string]: any } => ({
   '.rgf_menuDrawer__header': {
@@ -84,11 +85,11 @@ export default function MenuDrawer(): JSX.Element {
                   <Switch
                     ariaLabel="switch-dark-mode"
                     edge="end"
-                    isChecked={colorMode === 'dark'}
+                    isChecked={colorMode === ColorMode.DARK}
                     onChange={(): void => {}}
                   />
                 ),
-                icon: <DarkModeIcon variant={colorMode === 'dark' ? 'filled' : 'outlined'} />,
+                icon: <DarkModeIcon variant={colorMode === ColorMode.DARK ? 'filled' : 'outlined'} />,
                 label: 'Dark mode',
                 onClick: toggleColorMode,
               },
