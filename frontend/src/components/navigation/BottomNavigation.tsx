@@ -24,11 +24,12 @@ export interface BottomNavigationProps {
   setSelectedValue: (value: string) => void;
 }
 
-const StyledBottomNavigation = styled('div')((): { [key: string]: any } => ({
+const StyledBottomNavigation = styled('div')(({ theme }): { [key: string]: any } => ({
   bottom: 0,
   left: 0,
   position: 'fixed',
   right: 0,
+  zIndex: theme.zIndex.appBar,
 }));
 
 export default function BottomNavigation(props: BottomNavigationProps): JSX.Element {

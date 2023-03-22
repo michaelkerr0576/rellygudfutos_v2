@@ -1,11 +1,12 @@
 import useStore from '@/store/store';
-import { GalleryNavigationValue, GallerySortBy, GalleryTagsFilter, State } from '@/store/types/storeTypes';
+import { GalleryNavigationValue, GallerySortBy, GalleryTagsFilter, GalleryVariant, State } from '@/ts/store';
 
 export interface UseGallery {
   galleryNavigationValue: GalleryNavigationValue;
   gallerySearch: string;
   gallerySortBy: GallerySortBy;
   galleryTagsFilter: GalleryTagsFilter;
+  galleryVariant: GalleryVariant;
   handleGallerySearch: (search: string) => void;
   handleGallerySortBy: (sortBy: string) => void;
   handleGalleryTagsFilter: (tags: GalleryTagsFilter) => void;
@@ -19,11 +20,13 @@ interface UseGalleryState {
   gallerySearch: State['gallerySearch'];
   gallerySortBy: State['gallerySortBy'];
   galleryTagsFilter: State['galleryTagsFilter'];
+  galleryVariant: State['galleryVariant'];
   isSearchDrawerOpen: State['isSearchDrawerOpen'];
   setGalleryNavigationValue: State['setGalleryNavigationValue'];
   setGallerySearch: State['setGallerySearch'];
   setGallerySortBy: State['setGallerySortBy'];
   setGalleryTagsFilter: State['setGalleryTagsFilter'];
+  setGalleryVariant: State['setGalleryVariant'];
   setIsSearchDrawerOpen: State['setIsSearchDrawerOpen'];
 }
 
@@ -33,11 +36,13 @@ export default function useGallery(): UseGallery {
     gallerySearch,
     gallerySortBy,
     galleryTagsFilter,
+    galleryVariant,
     isSearchDrawerOpen,
     setGalleryNavigationValue,
     setGallerySearch,
     setGallerySortBy,
     setGalleryTagsFilter,
+    setGalleryVariant,
     setIsSearchDrawerOpen,
   } = useStore(
     (state): UseGalleryState => ({
@@ -45,11 +50,13 @@ export default function useGallery(): UseGallery {
       gallerySearch: state.gallerySearch,
       gallerySortBy: state.gallerySortBy,
       galleryTagsFilter: state.galleryTagsFilter,
+      galleryVariant: state.galleryVariant,
       isSearchDrawerOpen: state.isSearchDrawerOpen,
       setGalleryNavigationValue: state.setGalleryNavigationValue,
       setGallerySearch: state.setGallerySearch,
       setGallerySortBy: state.setGallerySortBy,
       setGalleryTagsFilter: state.setGalleryTagsFilter,
+      setGalleryVariant: state.setGalleryVariant,
       setIsSearchDrawerOpen: state.setIsSearchDrawerOpen,
     }),
   );
@@ -60,8 +67,13 @@ export default function useGallery(): UseGallery {
 
   const handleGalleryTagsFilter = (tags: GalleryTagsFilter): void => setGalleryTagsFilter(tags);
 
-  const toggleGalleryNavigationValue = (value: string): void =>
+  const toggleGalleryNavigationValue = (value: string): void => {
+    if (value === GalleryVariant.GRID || GalleryVariant.LIST) {
+      setGalleryVariant(value as GalleryVariant);
+    }
+
     setGalleryNavigationValue(value as GalleryNavigationValue);
+  };
 
   const toggleSearchDrawer = (isOpen: boolean): void => setIsSearchDrawerOpen(isOpen);
 
@@ -70,6 +82,7 @@ export default function useGallery(): UseGallery {
     gallerySearch,
     gallerySortBy,
     galleryTagsFilter,
+    galleryVariant,
     handleGallerySearch,
     handleGallerySortBy,
     handleGalleryTagsFilter,

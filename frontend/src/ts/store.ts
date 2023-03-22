@@ -1,14 +1,31 @@
+// TODO - switch some types to enum
 export type ColorMode = 'light' | 'dark';
-export type GalleryNavigationValue = 'home' | 'grid' | 'list' | 'mode' | 'search';
 export type GallerySortBy = 'newest' | 'oldest' | 'title_az' | 'title_za' | 'random' | '';
 export type GalleryTagsFilter = { id: number; label: string }[];
 
+// #region State Enum
+export enum GalleryNavigationValue {
+  HOME = 'home',
+  GRID = 'grid',
+  LIST = 'list',
+  MODE = 'mode',
+  SEARCH = 'search',
+}
+
+export enum GalleryVariant {
+  GRID = 'grid',
+  LIST = 'list',
+}
+// #endregion
+
+// #region State Interfaces
 export interface State {
   colorMode: ColorMode | undefined;
   galleryNavigationValue: GalleryNavigationValue;
   gallerySearch: string;
   gallerySortBy: GallerySortBy;
   galleryTagsFilter: GalleryTagsFilter;
+  galleryVariant: GalleryVariant;
   isAccountDrawerOpen: boolean;
   isMenuDrawerOpen: boolean;
   isSearchDrawerOpen: boolean;
@@ -17,7 +34,9 @@ export interface State {
   setGallerySearch: (search: string) => void;
   setGallerySortBy: (sortBy: GallerySortBy) => void;
   setGalleryTagsFilter: (tags: GalleryTagsFilter) => void;
+  setGalleryVariant: (variant: GalleryVariant) => void;
   setIsAccountDrawerOpen: (isOpen: boolean) => void;
   setIsMenuDrawerOpen: (isOpen: boolean) => void;
   setIsSearchDrawerOpen: (isOpen: boolean) => void;
 }
+// #endregion

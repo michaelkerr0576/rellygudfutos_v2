@@ -31,6 +31,7 @@ const StyledHeader = styled('header')(({ theme }): { [key: string]: any } => ({
   position: 'fixed',
   right: 0,
   top: 0,
+  zIndex: theme.zIndex.appBar,
 }));
 
 export default function Header(): JSX.Element {

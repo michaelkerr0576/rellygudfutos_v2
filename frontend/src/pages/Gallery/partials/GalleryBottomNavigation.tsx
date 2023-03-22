@@ -7,8 +7,11 @@ import Box from '@/components/layout/Box';
 import BottomNavigation from '@/components/navigation/BottomNavigation';
 import useGallery from '@/hooks/useGallery';
 import useThemes from '@/hooks/useThemes';
+import { GalleryNavigationValue } from '@/ts/store';
 
 import SearchDrawer from './SearchDrawer';
+
+export const FIXED_GALLERY_BOTTOM_NAVIGATION_HEIGHT = '56px';
 
 export default function GalleryBottomNavigation(): JSX.Element {
   const { colorMode, toggleColorMode } = useThemes();
@@ -19,39 +22,55 @@ export default function GalleryBottomNavigation(): JSX.Element {
       <BottomNavigation
         actions={[
           {
-            icon: <HomeIcon variant={galleryNavigationValue === 'home' ? 'filled' : 'outlined'} />,
+            icon: (
+              <HomeIcon
+                variant={galleryNavigationValue === GalleryNavigationValue.HOME ? 'filled' : 'outlined'}
+              />
+            ),
             label: 'Home',
             onClick: (): void => window.scrollTo(0, 0),
-            value: 'home',
+            value: GalleryNavigationValue.HOME,
           },
           {
-            icon: <PhotoGridIcon variant={galleryNavigationValue === 'grid' ? 'filled' : 'outlined'} />,
+            icon: (
+              <PhotoGridIcon
+                variant={galleryNavigationValue === GalleryNavigationValue.GRID ? 'filled' : 'outlined'}
+              />
+            ),
             label: 'Grid',
             onClick: (): void => {},
-            value: 'grid',
+            value: GalleryNavigationValue.GRID,
           },
           {
-            icon: <SearchIcon variant={galleryNavigationValue === 'search' ? 'filled' : 'outlined'} />,
+            icon: (
+              <SearchIcon
+                variant={galleryNavigationValue === GalleryNavigationValue.SEARCH ? 'filled' : 'outlined'}
+              />
+            ),
             label: 'Search',
             onClick: (): void => toggleSearchDrawer(true),
-            value: 'search',
+            value: GalleryNavigationValue.SEARCH,
           },
           {
-            icon: <PhotoListIcon variant={galleryNavigationValue === 'list' ? 'filled' : 'outlined'} />,
+            icon: (
+              <PhotoListIcon
+                variant={galleryNavigationValue === GalleryNavigationValue.LIST ? 'filled' : 'outlined'}
+              />
+            ),
             label: 'List',
             onClick: (): void => {},
-            value: 'list',
+            value: GalleryNavigationValue.LIST,
           },
           {
             icon: (
               <ToggleDarkModeIcon
                 mode={colorMode}
-                variant={galleryNavigationValue === 'mode' ? 'filled' : 'outlined'}
+                variant={galleryNavigationValue === GalleryNavigationValue.MODE ? 'filled' : 'outlined'}
               />
             ),
             label: colorMode === 'dark' ? 'Dark' : 'Light',
             onClick: toggleColorMode,
-            value: 'mode',
+            value: GalleryNavigationValue.MODE,
           },
         ]}
         selectedValue={galleryNavigationValue}

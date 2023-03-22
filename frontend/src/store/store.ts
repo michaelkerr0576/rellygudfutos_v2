@@ -6,8 +6,9 @@ import {
   GalleryNavigationValue,
   GallerySortBy,
   GalleryTagsFilter,
+  GalleryVariant,
   State,
-} from './types/storeTypes';
+} from '@/ts/store';
 
 const useStore = create<State>()(
   devtools(
@@ -15,10 +16,11 @@ const useStore = create<State>()(
     persist(
       (set, _get): State => ({
         colorMode: undefined,
-        galleryNavigationValue: 'home',
+        galleryNavigationValue: GalleryNavigationValue.HOME,
         gallerySearch: '',
         gallerySortBy: '',
         galleryTagsFilter: [],
+        galleryVariant: GalleryVariant.GRID,
         isAccountDrawerOpen: false,
         isMenuDrawerOpen: false,
         isSearchDrawerOpen: false,
@@ -31,6 +33,8 @@ const useStore = create<State>()(
           set({ gallerySortBy }, false, 'SET_GALLERY_SORT_BY'),
         setGalleryTagsFilter: (galleryTagsFilter: GalleryTagsFilter): void =>
           set({ galleryTagsFilter }, false, 'SET_GALLERY_TAGS_FILTER'),
+        setGalleryVariant: (galleryVariant: GalleryVariant): void =>
+          set({ galleryVariant }, false, 'SET_GALLERY_VARIANT'),
         setIsAccountDrawerOpen: (isAccountDrawerOpen: boolean): void =>
           set({ isAccountDrawerOpen }, false, 'SET_IS_ACCOUNT_DRAWER_OPEN'),
         setIsMenuDrawerOpen: (isMenuDrawerOpen: boolean): void =>

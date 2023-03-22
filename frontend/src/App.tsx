@@ -7,7 +7,6 @@ import { ThemeProvider } from '@mui/material/styles';
 
 import useThemes from '@/hooks/useThemes';
 import ErrorBoundary from '@/layouts/ErrorBoundary/ErrorBoundary';
-import Footer from '@/layouts/Footer/Footer';
 import Header from '@/layouts/Header/Header';
 import Dashboard from '@/pages/Dashboard/Dashboard.page';
 import Gallery from '@/pages/Gallery/Gallery.page';
@@ -40,7 +39,6 @@ export default function App(): JSX.Element {
 
               <Route path="/*" element={<Navigate replace to="/" />} />
             </Routes>
-            <Footer />
           </Router>
         </ThemeProvider>
         <ReactQueryDevtools />

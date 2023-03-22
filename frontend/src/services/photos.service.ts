@@ -1,10 +1,11 @@
 import axios from 'axios';
 
-const API_URL = '/api/photos/';
+import { Photo } from '@/ts/api';
 
-// TODO - setup interface types for API responses
-export const getPhotos = async (): Promise<any> => {
-  const { data } = await axios.get(API_URL);
+const API_BASE_URL = '/api/photos/';
+
+export const getPhotos = async (): Promise<Photo[]> => {
+  const { data } = await axios.get<Photo[]>(API_BASE_URL);
 
   return data;
 };

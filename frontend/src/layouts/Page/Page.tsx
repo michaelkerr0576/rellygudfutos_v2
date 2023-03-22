@@ -12,7 +12,7 @@ export interface PageProps {
 
 const StyledPage = styled('main')(({ theme }): { [key: string]: any } => ({
   '.rgf_container': {
-    padding: theme.spacing(2, 2),
+    padding: theme.spacing(0),
   },
 
   marginTop: FIXED_HEADER_HEIGHT,
