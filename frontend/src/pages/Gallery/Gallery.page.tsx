@@ -1,6 +1,7 @@
 import { styled } from '@mui/material/styles';
 
 import ImageList from '@/components/dataDisplay/ImageList';
+import Box from '@/components/layout/Box';
 import useGallery from '@/hooks/useGallery';
 import usePhotos from '@/hooks/usePhotos';
 import Page from '@/layouts/Page/Page';
@@ -90,11 +91,16 @@ const photos = [
 ];
 
 const StyledGalleryPage = styled('div')(({ theme }): { [key: string]: any } => ({
+  '.rgf_pageGallery__gallery': {
+    margin: -8,
+  },
+
   marginBottom: FIXED_GALLERY_BOTTOM_NAVIGATION_HEIGHT,
-  padding: theme.spacing(1),
 
   [theme.breakpoints.up('tablet')]: {
-    padding: theme.spacing(2),
+    '.rgf_pageGallery__gallery': {
+      margin: 0,
+    },
   },
 }));
 
@@ -106,17 +112,25 @@ export default function Gallery(): JSX.Element {
   console.log(data);
 
   if (isError) {
+    // TODO - create error content
     return <Page pageName="Gallery">There was an error loading the photos</Page>;
   }
 
   if (isLoading) {
+    // TODO - create loading content
     return <Page pageName="Gallery">...Loading</Page>;
   }
+
+  const renderGallery = (): JSX.Element => (
+    <Box className="rgf_pageGallery__gallery">
+      <ImageList images={photos} variant={galleryVariant} />
+    </Box>
+  );
 
   return (
     <Page pageName="Gallery">
       <StyledGalleryPage>
-        <ImageList images={photos} variant={galleryVariant} />
+        {renderGallery()}
 
         <GalleryBottomNavigation />
       </StyledGalleryPage>

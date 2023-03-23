@@ -6,8 +6,8 @@ import { styled, useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 export const IMAGE_CONTAINER_COLUMNS = 15;
-export const IMAGE_CONTAINER_LARGE_SCREEN_GAP = 16; // The gap between images in px
-export const IMAGE_CONTAINER_SMALL_SCREEN_GAP = 8; // The gap between images in px
+export const IMAGE_CONTAINER_LARGE_SCREEN_GAP = 16; // * The gap between images in px
+export const IMAGE_CONTAINER_SMALL_SCREEN_GAP = 8; // * The gap between images in px
 
 export const IMAGE_LANDSCAPE_COLUMNS = 9;
 export const IMAGE_PORTRAIT_COLUMNS = 6;
@@ -20,7 +20,7 @@ export const MAX_IMAGE_LANDSCAPE_WIDTH = '1080px';
 export const MAX_IMAGE_PORTRAIT_HEIGHT = '1080px';
 export const MAX_IMAGE_PORTRAIT_WIDTH = '720px';
 
-// * MAX_IMAGE_LANDSCAPE_WIDTH + MAX_IMAGE_PORTRAIT_WIDTH
+// * 1800px = MAX_IMAGE_LANDSCAPE_WIDTH + MAX_IMAGE_PORTRAIT_WIDTH
 export const MAX_IMAGE_CONTAINER_WIDTH = '1800px';
 
 type Orientation = 'landscape' | 'portrait';
@@ -42,7 +42,7 @@ const StyledMuiImageList = styled(MuiImageList)((): { [key: string]: any } => ({
   '.rgf_imageList__listItem': {
     '.MuiImageListItem-img': {
       borderRadius: 4,
-      objectFit: 'contain',
+      objectFit: 'cover',
     },
 
     display: 'flex',
