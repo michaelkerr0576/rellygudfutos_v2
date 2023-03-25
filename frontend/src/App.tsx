@@ -8,10 +8,10 @@ import { ThemeProvider } from '@mui/material/styles';
 import useThemes from '@/hooks/useThemes';
 import ErrorBoundary from '@/layouts/ErrorBoundary/ErrorBoundary';
 import Header from '@/layouts/Header/Header';
-import Dashboard from '@/pages/Dashboard/Dashboard.page';
-import Gallery from '@/pages/Gallery/Gallery.page';
-import Login from '@/pages/Login/Login.page';
-import Photo from '@/pages/Photo/Photo.page';
+import DashboardPage from '@/pages/Dashboard/Dashboard.page';
+import GalleryPage from '@/pages/Gallery/Gallery.page';
+import LoginPage from '@/pages/Login/Login.page';
+import PhotoPage from '@/pages/Photo/Photo.page';
 
 const queryClient = new QueryClient();
 
@@ -27,14 +27,14 @@ export default function App(): JSX.Element {
             <Header />
             <Routes>
               <Route path="/">
-                <Route index element={<Gallery />} />
-                <Route path="/photo/:photoId" element={<Photo />} />
+                <Route index element={<GalleryPage />} />
+                <Route path="/photo/:photoId" element={<PhotoPage />} />
               </Route>
 
               <Route path="/account">
-                <Route index element={<Login />} />
-                <Route path="login" element={<Login />} />
-                <Route path="dashboard" element={<Dashboard />} />
+                <Route index element={<LoginPage />} />
+                <Route path="login" element={<LoginPage />} />
+                <Route path="dashboard" element={<DashboardPage />} />
               </Route>
 
               <Route path="/*" element={<Navigate replace to="/" />} />
