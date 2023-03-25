@@ -125,7 +125,6 @@ export default function Gallery(): JSX.Element {
     }
 
     if (isLoading) {
-      // TODO - skeleton loader
       return <CircularProgress />;
     }
 

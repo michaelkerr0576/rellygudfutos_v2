@@ -5,6 +5,8 @@ import MuiImageListItem from '@mui/material/ImageListItem';
 import { styled, useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
+import Image from './Image';
+
 export const IMAGE_CONTAINER_COLUMNS = 15;
 export const IMAGE_CONTAINER_LARGE_SCREEN_GAP = 16; // * The gap between images in px
 export const IMAGE_CONTAINER_SMALL_SCREEN_GAP = 8; // * The gap between images in px
@@ -26,7 +28,7 @@ export const MAX_IMAGE_CONTAINER_WIDTH = '1800px';
 type Orientation = 'landscape' | 'portrait';
 type Variant = 'grid' | 'list';
 
-export type Image = {
+export type ImageListItem = {
   img: string;
   orientation: Orientation;
   title: string;
@@ -34,17 +36,12 @@ export type Image = {
 
 export interface ImageListProps {
   className?: MuiImageListProps['className'];
-  images: Image[];
+  images: ImageListItem[];
   variant: Variant;
 }
 
 const StyledMuiImageList = styled(MuiImageList)((): { [key: string]: any } => ({
   '.rgf_imageList__listItem': {
-    '.MuiImageListItem-img': {
-      borderRadius: 4,
-      objectFit: 'cover',
-    },
-
     display: 'flex',
     justifyContent: 'center',
   },
@@ -88,15 +85,11 @@ export default function ImageList(props: ImageListProps): JSX.Element {
           cols={getColumns()}
           rows={getRows()}
         >
-          {/* // TODO - create image component with skeleton loader */}
-          <img
-            src={image.img}
+          <Image
             alt={image.title}
-            loading="lazy"
-            style={{
-              maxHeight: isLandscapeOrientation ? MAX_IMAGE_LANDSCAPE_HEIGHT : MAX_IMAGE_PORTRAIT_HEIGHT,
-              maxWidth: isLandscapeOrientation ? MAX_IMAGE_LANDSCAPE_WIDTH : MAX_IMAGE_PORTRAIT_WIDTH,
-            }}
+            maxHeight={isLandscapeOrientation ? MAX_IMAGE_LANDSCAPE_HEIGHT : MAX_IMAGE_PORTRAIT_HEIGHT}
+            maxWidth={isLandscapeOrientation ? MAX_IMAGE_LANDSCAPE_WIDTH : MAX_IMAGE_PORTRAIT_WIDTH}
+            src={image.img}
           />
         </MuiImageListItem>
       );
