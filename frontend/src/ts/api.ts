@@ -1,5 +1,5 @@
 // #region Photo Enum
-export enum Orientation {
+export enum AspectRatio {
   LANDSCAPE = 'landscape',
   PORTRAIT = 'portrait',
 }
@@ -32,6 +32,7 @@ export interface Photo {
     imageCaption: string;
     imageKey: string;
     imageName: string;
+    // TODO - remove imageSize and replace with aspectRatio
     imageSize: ImageSize;
     imageTags: PhotoTags[];
     imageTitle: string;

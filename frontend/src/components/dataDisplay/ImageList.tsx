@@ -17,13 +17,15 @@ export const IMAGE_LANDSCAPE_ROWS = 1;
 export const IMAGE_PORTRAIT_COLUMNS = 1;
 export const IMAGE_PORTRAIT_ROWS = 2;
 
-type Orientation = 'landscape' | 'portrait';
+type AspectRatio = 'landscape' | 'portrait';
 type Variant = 'grid' | 'list';
 
 export type ImageListItem = {
+  aspectRatio: AspectRatio;
   id: string;
   img: string;
-  orientation: Orientation;
+  maxHeight?: string;
+  maxWidth?: string;
   title: string;
 };
 
@@ -35,6 +37,11 @@ export interface ImageListProps {
 }
 
 const StyledMuiImageList = styled(MuiImageList)((): { [key: string]: any } => ({
+  '.rgf_imageList__listItem': {
+    display: 'flex',
+    justifyContent: 'center',
+  },
+
   margin: '0 auto',
 }));
 
@@ -46,14 +53,14 @@ export default function ImageList(props: ImageListProps): JSX.Element {
 
   const renderImageListItems = (): JSX.Element[] =>
     images.map((image): JSX.Element => {
-      const isLandscapeOrientation = image.orientation === 'landscape';
+      const isLandscapeAspectRatio = image.aspectRatio === 'landscape';
 
       const getColumns = (): number => {
         if (variant === 'list') {
           return IMAGE_CONTAINER_COLUMNS;
         }
 
-        return isLandscapeOrientation ? IMAGE_LANDSCAPE_COLUMNS : IMAGE_PORTRAIT_COLUMNS;
+        return isLandscapeAspectRatio ? IMAGE_LANDSCAPE_COLUMNS : IMAGE_PORTRAIT_COLUMNS;
       };
 
       const getRows = (): number => {
@@ -61,7 +68,7 @@ export default function ImageList(props: ImageListProps): JSX.Element {
           return IMAGE_ROWS;
         }
 
-        return isLandscapeOrientation ? IMAGE_LANDSCAPE_ROWS : IMAGE_PORTRAIT_ROWS;
+        return isLandscapeAspectRatio ? IMAGE_LANDSCAPE_ROWS : IMAGE_PORTRAIT_ROWS;
       };
 
       return (
@@ -71,7 +78,12 @@ export default function ImageList(props: ImageListProps): JSX.Element {
           cols={getColumns()}
           rows={getRows()}
         >
-          <Image alt={image.title} src={image.img} />
+          <Image
+            alt={image.title}
+            maxHeight={image.maxHeight ? image.maxHeight : 'inherit'}
+            maxWidth={image.maxWidth ? image.maxWidth : 'inherit'}
+            src={image.img}
+          />
         </MuiImageListItem>
       );
     });
