@@ -205,21 +205,39 @@ We all love React but there is a lot of mistakes that can be made. Top things I 
 
 - A lot of `useEffects` can be ugly and confusing. Group them up and create custom hooks and avoid using them in the first place if you don't have to, each usage causes a rerender.
 
-3. **Use State Directly After `setState`**
+3. **Unnecessary `useCallback` & `useMemo`**
+
+- It is tempting to memorize all pieces of data and functions but this can come at a performance cost... If the function or piece of data is a simple inline function, then setting up `useCallback` or `useMemo` can actually harm performance more than you would gain. Reserve these hooks for more complex computing that will have an obvious benefit.
+
+4. **Use State Directly After `setState`**
 
 - It will contain the previous render value and not the latest `setState` value. That is why we should use the function version of `useState` if manipulating the state and using it after.
 
-4. **Referential Equality Mistakes**
+  - Before:
+
+  ```
+  setCount(amount);
+  ```
+
+  - After:
+
+  ```
+  setCount(currentCount => {
+    return currentCount + amount
+  });
+  ```
+
+5. **Referential Equality Mistakes**
 
 - An object as a hook side effect will have funny results:
   - If passed from global state (Zustand, Redux) it will not trigger a rerender despite having different values because it is the same object.
   - The other side is if you copy the exact same object in a component it will incorrectly trigger a hook because it is a brand new object every render. Basically `const {} === {}` will always be false. They are the same value but different objects.
 
-5. **Not Aborting Fetch Requests**
+6. **Not Aborting Fetch Requests**
 
 - Filters and searches can cause a lot of API requests. If the previous request is not finished, it should be aborted for the latest. Will help performance and jumpy UI.
 
-6. **Not Using React Strict Mode**
+7. **Not Using React Strict Mode**
 
 - Will only be active for development and is useful to spot unintended side effects:
 
@@ -234,6 +252,7 @@ We all love React but there is a lot of mistakes that can be made. Top things I 
 - [Understanding Referential Equality in React](https://blog.bitsrc.io/understanding-referential-equality-in-react-a8fb3769be0)
 - [React Query Fetch Cancellation](https://tanstack.com/query/v4/docs/guides/query-cancellation)
 - [React React useEffect Cleanup](https://blog.logrocket.com/understanding-react-useeffect-cleanup-function/)
+- [When to useMemo and useCallback - Kent C. Dodds](https://kentcdodds.com/blog/usememo-and-usecallback)
 
 ### Vite.js
 

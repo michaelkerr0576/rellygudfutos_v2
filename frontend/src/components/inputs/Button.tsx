@@ -14,7 +14,7 @@ export interface ButtonProps {
 export default function Button(props: ButtonProps): JSX.Element {
   const { children, className = '', onClick, variant = 'primary' } = props;
 
-  const muiVariant = (): MuiButtonProps['variant'] => {
+  const getVariant = (): MuiButtonProps['variant'] => {
     switch (variant) {
       case 'secondary':
         return 'outlined';
@@ -32,7 +32,7 @@ export default function Button(props: ButtonProps): JSX.Element {
       fullWidth
       onClick={onClick}
       size="large"
-      variant={muiVariant()}
+      variant={getVariant()}
     >
       {children}
     </MuiButton>

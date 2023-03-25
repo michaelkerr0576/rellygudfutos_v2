@@ -29,7 +29,7 @@ export default function Stack(props: StackProps): JSX.Element {
     verticalAlignment = 'start',
   } = props;
 
-  const muiAlignItems = (): MuiStackProps['alignItems'] => {
+  const getAlignItems = (): MuiStackProps['alignItems'] => {
     switch (verticalAlignment) {
       case 'start':
         return 'flex-start';
@@ -40,7 +40,7 @@ export default function Stack(props: StackProps): JSX.Element {
     }
   };
 
-  const muiJustifyContent = (): MuiStackProps['justifyContent'] => {
+  const getJustifyContent = (): MuiStackProps['justifyContent'] => {
     switch (horizontalAlignment) {
       case 'start':
         return 'flex-start';
@@ -57,11 +57,11 @@ export default function Stack(props: StackProps): JSX.Element {
 
   return (
     <MuiStack
-      alignItems={muiAlignItems()}
+      alignItems={getAlignItems()}
       className={clsx('rgf_stack', { [className]: className })}
       direction={direction}
       divider={hasDivider ? <Divider orientation="vertical" /> : null}
-      justifyContent={muiJustifyContent()}
+      justifyContent={getJustifyContent()}
       spacing={spacing}
     >
       {children}

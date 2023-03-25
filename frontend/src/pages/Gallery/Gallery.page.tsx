@@ -1,6 +1,8 @@
 import { styled } from '@mui/material/styles';
 
 import ImageList from '@/components/dataDisplay/ImageList';
+import Alert from '@/components/feedback/Alert';
+import CircularProgress from '@/components/feedback/CircularProgress';
 import Box from '@/components/layout/Box';
 import useGallery from '@/hooks/useGallery';
 import usePhotos from '@/hooks/usePhotos';
@@ -111,21 +113,28 @@ export default function Gallery(): JSX.Element {
   console.log('--- Photos API data ---');
   console.log(data);
 
-  if (isError) {
-    // TODO - create error content
-    return <Page pageName="Gallery">There was an error loading the photos</Page>;
-  }
+  const renderGallery = (): JSX.Element => {
+    if (isError) {
+      return (
+        <Alert
+          message="There was an error retrieving photos from the server."
+          severity="error"
+          suggestion="Please try refreshing the page."
+        />
+      );
+    }
 
-  if (isLoading) {
-    // TODO - create loading content
-    return <Page pageName="Gallery">...Loading</Page>;
-  }
+    if (isLoading) {
+      // TODO - skeleton loader
+      return <CircularProgress />;
+    }
 
-  const renderGallery = (): JSX.Element => (
-    <Box className="rgf_pageGallery__gallery">
-      <ImageList images={photos} variant={galleryVariant} />
-    </Box>
-  );
+    return (
+      <Box className="rgf_pageGallery__gallery">
+        <ImageList images={photos} variant={galleryVariant} />
+      </Box>
+    );
+  };
 
   return (
     <Page pageName="Gallery">

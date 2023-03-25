@@ -13,7 +13,7 @@ export interface TypographyProps {
 export default function Typography(props: TypographyProps): JSX.Element {
   const { children, className = '', variant = 'body' } = props;
 
-  const muiVariant = (): MuiTypographyProps['variant'] => {
+  const getVariant = (): MuiTypographyProps['variant'] => {
     switch (variant) {
       case 'subtitle':
         return 'subtitle1';
@@ -25,7 +25,7 @@ export default function Typography(props: TypographyProps): JSX.Element {
   };
 
   return (
-    <MuiTypography className={clsx('rgf_typography', { [className]: className })} variant={muiVariant()}>
+    <MuiTypography className={clsx('rgf_typography', { [className]: className })} variant={getVariant()}>
       {children}
     </MuiTypography>
   );

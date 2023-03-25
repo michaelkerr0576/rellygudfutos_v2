@@ -39,7 +39,7 @@ export default function Grid(props: GridProps): JSX.Element {
     tabletOffset = undefined,
   } = props;
 
-  const muiJustifyContent = (): MuiGridProps['justifyContent'] => {
+  const getJustifyContent = (): MuiGridProps['justifyContent'] => {
     switch (horizontalAlignment) {
       case 'start':
         return 'flex-start';
@@ -67,7 +67,7 @@ export default function Grid(props: GridProps): JSX.Element {
       mobileOffset={mobileOffset}
       tablet={tablet}
       tabletOffset={tabletOffset}
-      justifyContent={muiJustifyContent()}
+      justifyContent={getJustifyContent()}
     >
       {children}
     </MuiGrid2>
