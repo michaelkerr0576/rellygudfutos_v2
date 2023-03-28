@@ -34,11 +34,13 @@ export interface ImageListProps {
   className?: MuiImageListProps['className'];
   images: ImageListItem[];
   maxWidth?: string;
+  onClick: (imageId: string) => void;
   variant: Variant;
 }
 
 const StyledMuiImageList = styled(MuiImageList)((): { [key: string]: any } => ({
   '.rgf_imageList__listItem': {
+    cursor: 'pointer',
     display: 'flex',
     justifyContent: 'center',
   },
@@ -47,7 +49,7 @@ const StyledMuiImageList = styled(MuiImageList)((): { [key: string]: any } => ({
 }));
 
 export default function ImageList(props: ImageListProps): JSX.Element {
-  const { className = '', images, maxWidth = 'inherit', variant } = props;
+  const { className = '', images, maxWidth = 'inherit', onClick, variant } = props;
 
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.between('mobile', 'laptop'));
@@ -84,8 +86,9 @@ export default function ImageList(props: ImageListProps): JSX.Element {
       return (
         <MuiImageListItem
           className="rgf_imageList__listItem"
-          key={image.id}
           cols={getColumns()}
+          key={image.id}
+          onClick={(): void => onClick(image.id)}
           rows={getRows()}
         >
           <Image

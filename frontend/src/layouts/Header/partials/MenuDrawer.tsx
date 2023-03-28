@@ -26,10 +26,10 @@ const StyledMenuDrawer = styled('div')(({ theme }): { [key: string]: any } => ({
 }));
 
 export default function MenuDrawer(): JSX.Element {
-  const { colorMode, toggleColorMode } = useThemes();
-  const { isMenuDrawerOpen, toggleMenuDrawer } = useMenu();
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  const { colorMode, toggleColorMode } = useThemes();
+  const { isMenuDrawerOpen, toggleMenuDrawer } = useMenu();
 
   const renderMenuButton = (isDrawerOpen: boolean, size?: IconProps['size']): JSX.Element => (
     <IconButton ariaLabel="menu" edge="start" onClick={(): void => toggleMenuDrawer(isDrawerOpen)}>

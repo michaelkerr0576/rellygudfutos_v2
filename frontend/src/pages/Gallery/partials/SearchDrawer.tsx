@@ -11,8 +11,9 @@ import Grid from '@/components/layout/Grid';
 import Stack from '@/components/layout/Stack';
 import Drawer, { FIXED_TOGGLE_DRAWER_BUTTON_HEIGHT } from '@/components/navigation/Drawer';
 import Paper from '@/components/surfaces/Paper';
-import useGallery from '@/hooks/useGallery';
 import { GallerySortBy } from '@/ts/store';
+
+import useGallery from '../hooks/useGallery';
 
 // TODO - replace with API data
 const tags = [

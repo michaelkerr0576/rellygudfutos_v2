@@ -3,9 +3,12 @@ import { styled } from '@mui/material/styles';
 import ImageList from '@/components/dataDisplay/ImageList';
 import Alert from '@/components/feedback/Alert';
 import CircularProgress from '@/components/feedback/CircularProgress';
-import useGallery from '@/hooks/useGallery';
 import usePhotos from '@/hooks/usePhotos';
 import { AspectRatio } from '@/ts/api';
+
+import useGallery from '../hooks/useGallery';
+
+import PhotoDialog from './PhotoDialog';
 
 // TODO - replace with API data
 const photos = [
@@ -142,11 +145,8 @@ const StyledGallery = styled('div')(({ theme }): { [key: string]: any } => ({
 }));
 
 export default function Gallery(): JSX.Element {
-  const { data, isError, isLoading } = usePhotos();
-  const { galleryVariant } = useGallery();
-
-  console.log('--- Photos API data ---');
-  console.log(data);
+  const { galleryVariant, isPhotoDialogOpen, togglePhotoDialog } = useGallery();
+  const { isError, isLoading } = usePhotos();
 
   if (isError) {
     return (
@@ -164,7 +164,14 @@ export default function Gallery(): JSX.Element {
 
   return (
     <StyledGallery className="rgf_gallery">
-      <ImageList images={photos} maxWidth={GALLERY_MAX_WIDTH} variant={galleryVariant} />
+      <ImageList
+        images={photos}
+        maxWidth={GALLERY_MAX_WIDTH}
+        onClick={(photoId): void => togglePhotoDialog(true, photoId)}
+        variant={galleryVariant}
+      />
+
+      {isPhotoDialogOpen && <PhotoDialog />}
     </StyledGallery>
   );
 }

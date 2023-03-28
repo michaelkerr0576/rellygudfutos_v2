@@ -7,11 +7,12 @@ type Variant = 'h1' | 'h2' | 'h3' | 'subtitle' | 'body' | 'caption';
 export interface TypographyProps {
   children: React.ReactNode;
   className?: MuiTypographyProps['className'];
+  id?: MuiTypographyProps['id'];
   variant?: Variant;
 }
 
 export default function Typography(props: TypographyProps): JSX.Element {
-  const { children, className = '', variant = 'body' } = props;
+  const { children, className = '', id = undefined, variant = 'body' } = props;
 
   const getVariant = (): MuiTypographyProps['variant'] => {
     switch (variant) {
@@ -25,7 +26,11 @@ export default function Typography(props: TypographyProps): JSX.Element {
   };
 
   return (
-    <MuiTypography className={clsx('rgf_typography', { [className]: className })} variant={getVariant()}>
+    <MuiTypography
+      className={clsx('rgf_typography', { [className]: className })}
+      id={id}
+      variant={getVariant()}
+    >
       {children}
     </MuiTypography>
   );

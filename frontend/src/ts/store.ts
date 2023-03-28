@@ -40,6 +40,7 @@ export interface State {
   galleryVariant: GalleryVariant;
   isAccountDrawerOpen: boolean;
   isMenuDrawerOpen: boolean;
+  isPhotoDialogOpen: boolean;
   isSearchDrawerOpen: boolean;
   setColorMode: (colorMode: ColorMode) => void;
   setGalleryNavigationValue: (value: GalleryNavigationValue) => void;
@@ -49,6 +50,7 @@ export interface State {
   setGalleryVariant: (variant: GalleryVariant) => void;
   setIsAccountDrawerOpen: (isOpen: boolean) => void;
   setIsMenuDrawerOpen: (isOpen: boolean) => void;
+  setIsPhotoDialogOpen: (isOpen: boolean) => void;
   setIsSearchDrawerOpen: (isOpen: boolean) => void;
 }
 // #endregion

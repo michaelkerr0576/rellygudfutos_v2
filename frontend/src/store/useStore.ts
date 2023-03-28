@@ -24,6 +24,7 @@ const useStore = create<State>()(
         galleryVariant: GalleryVariant.GRID,
         isAccountDrawerOpen: false,
         isMenuDrawerOpen: false,
+        isPhotoDialogOpen: false,
         isSearchDrawerOpen: false,
         setColorMode: (colorMode: ColorMode): void => set({ colorMode }, false, 'SET_COLOR_MODE'),
         setGalleryNavigationValue: (galleryNavigationValue: GalleryNavigationValue): void =>
@@ -40,6 +41,8 @@ const useStore = create<State>()(
           set({ isAccountDrawerOpen }, false, 'SET_IS_ACCOUNT_DRAWER_OPEN'),
         setIsMenuDrawerOpen: (isMenuDrawerOpen: boolean): void =>
           set({ isMenuDrawerOpen }, false, 'SET_IS_MENU_DRAWER_OPEN'),
+        setIsPhotoDialogOpen: (isPhotoDialogOpen: boolean): void =>
+          set({ isPhotoDialogOpen }, false, 'SET_IS_PHOTO_DIALOG_OPEN'),
         setIsSearchDrawerOpen: (isSearchDrawerOpen: boolean): void =>
           set({ isSearchDrawerOpen }, false, 'SET_IS_SEARCH_DRAWER_OPEN'),
       }),

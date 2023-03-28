@@ -5,9 +5,10 @@ import SearchIcon from '@/assets/icons/SearchIcon';
 import ToggleDarkModeIcon from '@/assets/icons/ToggleDarkModeIcon';
 import Box from '@/components/layout/Box';
 import BottomNavigation from '@/components/navigation/BottomNavigation';
-import useGallery from '@/hooks/useGallery';
 import useThemes from '@/hooks/useThemes';
 import { GalleryNavigationValue } from '@/ts/store';
+
+import useGallery from '../hooks/useGallery';
 
 import SearchDrawer from './SearchDrawer';
 
