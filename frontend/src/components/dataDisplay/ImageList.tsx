@@ -8,14 +8,15 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import Image from './Image';
 
 export const IMAGE_CONTAINER_COLUMNS = 3;
-export const IMAGE_CONTAINER_LARGE_SCREEN_GAP = 16; // * The gap between images in px
-export const IMAGE_CONTAINER_SMALL_SCREEN_GAP = 8; // * The gap between images in px
+export const IMAGE_LANDSCAPE_COLUMNS = 2;
+export const IMAGE_PORTRAIT_COLUMNS = 1;
 
 export const IMAGE_ROWS = 3;
-export const IMAGE_LANDSCAPE_COLUMNS = 2;
 export const IMAGE_LANDSCAPE_ROWS = 1;
-export const IMAGE_PORTRAIT_COLUMNS = 1;
 export const IMAGE_PORTRAIT_ROWS = 2;
+
+export const IMAGE_LARGE_SCREEN_GAP = 16; // * The gap between images in px
+export const IMAGE_SMALL_SCREEN_GAP = 8; // * The gap between images in px
 
 type AspectRatio = 'landscape' | 'portrait';
 type Variant = 'grid' | 'list';
@@ -53,22 +54,31 @@ export default function ImageList(props: ImageListProps): JSX.Element {
 
   const renderImageListItems = (): JSX.Element[] =>
     images.map((image): JSX.Element => {
+      const isListVariant = variant === 'list';
       const isLandscapeAspectRatio = image.aspectRatio === 'landscape';
 
       const getColumns = (): number => {
-        if (variant === 'list') {
+        if (isListVariant) {
           return IMAGE_CONTAINER_COLUMNS;
         }
 
-        return isLandscapeAspectRatio ? IMAGE_LANDSCAPE_COLUMNS : IMAGE_PORTRAIT_COLUMNS;
+        if (isLandscapeAspectRatio) {
+          return IMAGE_LANDSCAPE_COLUMNS;
+        }
+
+        return IMAGE_PORTRAIT_COLUMNS;
       };
 
       const getRows = (): number => {
-        if (variant === 'list') {
+        if (isListVariant) {
           return IMAGE_ROWS;
         }
 
-        return isLandscapeAspectRatio ? IMAGE_LANDSCAPE_ROWS : IMAGE_PORTRAIT_ROWS;
+        if (isLandscapeAspectRatio) {
+          return IMAGE_LANDSCAPE_ROWS;
+        }
+
+        return IMAGE_PORTRAIT_ROWS;
       };
 
       return (
@@ -92,7 +102,7 @@ export default function ImageList(props: ImageListProps): JSX.Element {
     <StyledMuiImageList
       className={clsx('rgf_imageList', { [className]: className })}
       cols={IMAGE_CONTAINER_COLUMNS}
-      gap={isSmallScreen ? IMAGE_CONTAINER_SMALL_SCREEN_GAP : IMAGE_CONTAINER_LARGE_SCREEN_GAP}
+      gap={isSmallScreen ? IMAGE_SMALL_SCREEN_GAP : IMAGE_LARGE_SCREEN_GAP}
       style={{ maxWidth }}
       variant="quilted"
     >
