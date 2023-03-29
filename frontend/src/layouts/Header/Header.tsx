@@ -23,7 +23,7 @@ const StyledHeader = styled('header')(({ theme }): { [key: string]: any } => ({
     padding: theme.spacing(0, 2),
   },
   '.rgf_header__rellygudfutosLogoButton': {
-    minHeight: 60,
+    height: '60px',
     paddingLeft: theme.spacing(1),
   },
 

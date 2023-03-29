@@ -3,12 +3,10 @@ import { styled } from '@mui/material/styles';
 import ImageList from '@/components/dataDisplay/ImageList';
 import Alert from '@/components/feedback/Alert';
 import CircularProgress from '@/components/feedback/CircularProgress';
-import usePhotos from '@/hooks/usePhotos';
+import usePhotos from '@/hooks/queries/usePhotos';
 import { AspectRatio } from '@/ts/api';
 
 import useGallery from '../hooks/useGallery';
-
-import PhotoDialog from './PhotoDialog';
 
 // TODO - replace with API data
 const photos = [
@@ -145,7 +143,7 @@ const StyledGallery = styled('div')(({ theme }): { [key: string]: any } => ({
 }));
 
 export default function Gallery(): JSX.Element {
-  const { galleryVariant, isPhotoDialogOpen, togglePhotoDialog } = useGallery();
+  const { galleryVariant, togglePhotoDialog } = useGallery();
   const { isError, isLoading } = usePhotos();
 
   if (isError) {
@@ -170,8 +168,6 @@ export default function Gallery(): JSX.Element {
         onClick={(photoId): void => togglePhotoDialog(true, photoId)}
         variant={galleryVariant}
       />
-
-      {isPhotoDialogOpen && <PhotoDialog />}
     </StyledGallery>
   );
 }

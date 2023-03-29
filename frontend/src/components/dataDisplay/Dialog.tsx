@@ -24,10 +24,19 @@ export interface DialogProps {
 }
 
 const StyledMuiDialog = styled(MuiDialog)(({ theme }): { [key: string]: any } => ({
+  '.MuiDialogActions-root': {
+    height: '56px',
+  },
   '.MuiDialogContent-root': {
     padding: theme.spacing(1, 2),
   },
   '.MuiDialogTitle-root': {
+    '.rgf_stack': {
+      minHeight: '40px',
+    },
+
+    maxHeight: '60px',
+    overflow: 'hidden',
     padding: theme.spacing(1.25, 2),
   },
 }));
