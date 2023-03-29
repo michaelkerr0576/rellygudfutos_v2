@@ -18,6 +18,7 @@ export default function PhotoDialog(): JSX.Element {
     <Dialog
       className="rgf_photoDialog"
       isOpen={isPhotoDialogOpen}
+      maxWidth="desktop"
       setIsOpen={(isOpen): void => togglePhotoDialog(isOpen, photoId)}
       title="Hoi An Central Market Hussle and Bussle"
       dialogActions={

@@ -8,11 +8,10 @@ export interface IconButtonProps {
   className?: MuiIconButtonProps['className'];
   edge?: MuiIconButtonProps['edge'];
   onClick: MuiIconButtonProps['onClick'];
-  padding?: MuiIconButtonProps['size'];
 }
 
 export default function IconButton(props: IconButtonProps): JSX.Element {
-  const { ariaLabel, children, className = '', onClick, edge = false, padding = undefined } = props;
+  const { ariaLabel, children, className = '', onClick, edge = false } = props;
 
   return (
     <MuiIconButton
@@ -20,7 +19,7 @@ export default function IconButton(props: IconButtonProps): JSX.Element {
       className={clsx('rgf_iconButton', { [className]: className })}
       edge={edge}
       onClick={onClick}
-      size={padding}
+      size="small"
     >
       {children}
     </MuiIconButton>

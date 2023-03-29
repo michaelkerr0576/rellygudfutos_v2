@@ -80,7 +80,7 @@ export default function Drawer(props: DrawerProps): JSX.Element {
       {isBottomDrawer && (
         <Paper className="rgf_drawer__expandDrawer" elevation={1}>
           <Grid horizontalAlignment="center">
-            <IconButton ariaLabel="less" onClick={(): void => setIsOpen(false)} padding="small">
+            <IconButton ariaLabel="less" onClick={(): void => setIsOpen(false)}>
               <ExpandIcon type={isOpen ? 'less' : 'more'} size="large" />
             </IconButton>
           </Grid>

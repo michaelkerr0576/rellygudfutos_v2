@@ -20,7 +20,7 @@ const StyledHeader = styled('header')(({ theme }): { [key: string]: any } => ({
     marginLeft: 'auto',
   },
   '.rgf_container': {
-    padding: theme.spacing(0, 2),
+    padding: theme.spacing(0, 1),
   },
   '.rgf_header__rellygudfutosLogoButton': {
     height: '60px',
@@ -32,6 +32,12 @@ const StyledHeader = styled('header')(({ theme }): { [key: string]: any } => ({
   right: 0,
   top: 0,
   zIndex: theme.zIndex.appBar,
+
+  [theme.breakpoints.up('tablet')]: {
+    '.rgf_container': {
+      padding: theme.spacing(0, 2),
+    },
+  },
 }));
 
 export default function Header(): JSX.Element {
