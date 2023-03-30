@@ -1,11 +1,13 @@
-import { useQuery } from 'react-query';
+import { useQuery, UseQueryResult } from 'react-query';
 
 import { getPhotos } from '@/services/photos.service';
+import { GetPhotos } from '@/ts/api/photos';
 
-// TODO - setup types for return usePhotos
-export default function usePhotos(): any {
-  return useQuery('photos', getPhotos, {
+export default function usePhotos(): UseQueryResult<GetPhotos> {
+  return useQuery({
     cacheTime: 30 * (60 * 1000), // 30 mins
+    queryFn: getPhotos,
+    queryKey: ['photos'],
     staleTime: 10 * (60 * 1000), // 10 mins
   });
 }

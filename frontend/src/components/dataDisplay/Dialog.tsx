@@ -48,6 +48,7 @@ const StyledMuiDialog = styled(MuiDialog)(({ theme }): { [key: string]: any } =>
   },
   '.rgf-dialog--titleText': {
     order: 2,
+    paddingLeft: theme.spacing(1),
   },
 
   [theme.breakpoints.up('laptop')]: {
@@ -56,6 +57,7 @@ const StyledMuiDialog = styled(MuiDialog)(({ theme }): { [key: string]: any } =>
     },
     '.rgf-dialog--titleText': {
       order: 1,
+      paddingLeft: 0,
     },
   },
 }));
@@ -68,13 +70,7 @@ export default function Dialog(props: DialogProps): JSX.Element {
 
   const renderDialogTitle = (): JSX.Element => {
     const renderTitleText = (): JSX.Element => (
-      <Typography
-        align="center"
-        className="rgf-dialog--titleText"
-        id="dialog-title"
-        maxLines={2}
-        variant="h3"
-      >
+      <Typography className="rgf-dialog--titleText" id="dialog-title" maxLines={2} variant="h3">
         {title}
       </Typography>
     );

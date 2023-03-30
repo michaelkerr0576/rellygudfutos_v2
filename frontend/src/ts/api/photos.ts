@@ -1,3 +1,5 @@
+import { Pagination } from './common';
+
 // #region Photo Enum
 export enum AspectRatio {
   LANDSCAPE = 'landscape',
@@ -50,5 +52,16 @@ export interface Photo {
     lensShutterSpeed: string;
   };
   image: File;
+}
+
+export interface GetPhoto {
+  data: Photo;
+  message: string;
+}
+
+export interface GetPhotos {
+  data: Photo[];
+  message: string;
+  pagination: Pagination;
 }
 // #endregion

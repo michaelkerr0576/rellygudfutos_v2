@@ -1,11 +1,23 @@
 import axios from 'axios';
 
-import { Photo } from '@/ts/api';
+import { GetPhoto, GetPhotos } from '@/ts/api/photos';
 
-const API_BASE_URL = '/api/photos/';
+const API_BASE_URL = '/api/photos';
 
-export const getPhotos = async (): Promise<Photo[]> => {
-  const { data } = await axios.get<Photo[]>(API_BASE_URL);
+export const getPhoto = async (id: string): Promise<GetPhoto> => {
+  const { data } = await axios.get<GetPhoto>(`${API_BASE_URL}/${id}`);
 
+  // TODO - remove logs
+  console.log('getPhoto');
+  console.log(data);
+  return data;
+};
+
+export const getPhotos = async (): Promise<GetPhotos[]> => {
+  const { data } = await axios.get<GetPhotos[]>(API_BASE_URL);
+
+  // TODO - remove logs
+  console.log('getPhotos');
+  console.log(data);
   return data;
 };

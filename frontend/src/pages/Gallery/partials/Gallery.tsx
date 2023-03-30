@@ -4,7 +4,7 @@ import ImageList from '@/components/dataDisplay/ImageList';
 import Alert from '@/components/feedback/Alert';
 import CircularProgress from '@/components/feedback/CircularProgress';
 import usePhotos from '@/hooks/queries/usePhotos';
-import { AspectRatio } from '@/ts/api';
+import { AspectRatio } from '@/ts/api/photos';
 
 import useGallery from '../hooks/useGallery';
 
