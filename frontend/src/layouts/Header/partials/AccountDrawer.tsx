@@ -15,7 +15,7 @@ import Drawer from '@/components/navigation/Drawer';
 import useMenu from '@/hooks/useMenu';
 
 const StyledAccountDrawer = styled('div')(({ theme }): { [key: string]: any } => ({
-  '.rgf_accountDrawer__header': {
+  '.rgf-accountDrawer--header': {
     padding: theme.spacing(1, 0),
   },
 }));
@@ -32,7 +32,7 @@ export default function AccountDrawer(): JSX.Element {
 
   const renderDrawerHeader = (): JSX.Element => (
     <Stack
-      className="rgf_accountDrawer__header"
+      className="rgf-accountDrawer--header"
       horizontalAlignment="spaceBetween"
       verticalAlignment="center"
     >
@@ -43,11 +43,11 @@ export default function AccountDrawer(): JSX.Element {
   );
 
   return (
-    <Box className="rgf_accountDrawer">
+    <Box className="rgf-accountDrawer">
       {renderAccountButton(true, 'large')}
 
       <Drawer anchor="right" isOpen={isAccountDrawerOpen} setIsOpen={toggleAccountDrawer}>
-        <StyledAccountDrawer className="rgf_accountDrawer__children">
+        <StyledAccountDrawer className="rgf-accountDrawer--children">
           {renderDrawerHeader()}
 
           <Divider />

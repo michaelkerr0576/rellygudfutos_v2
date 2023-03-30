@@ -11,7 +11,7 @@ export default function Container(props: ContainerProps): JSX.Element {
   const { children, className = '' } = props;
 
   return (
-    <MuiContainer className={clsx('rgf_container', { [className]: className })} maxWidth={false}>
+    <MuiContainer className={clsx('rgf-container', { [className]: !!className })} maxWidth={false}>
       {children}
     </MuiContainer>
   );

@@ -24,7 +24,7 @@ export default function LogoButton(props: IconButtonProps): JSX.Element {
     <StyledBox
       ariaLabel={ariaLabel}
       ariaRole="button"
-      className={clsx('rgf_logoButton', { [className]: className })}
+      className={clsx('rgf-logoButton', { [className]: !!className })}
       onClick={onClick}
     >
       {children}

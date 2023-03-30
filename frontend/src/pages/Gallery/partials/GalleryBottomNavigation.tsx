@@ -19,7 +19,7 @@ export default function GalleryBottomNavigation(): JSX.Element {
   const { toggleSearchDrawer, galleryNavigationValue, toggleGalleryNavigationValue } = useGallery();
 
   return (
-    <Box className="rgf_galleryBottomNavigation">
+    <Box className="rgf-galleryBottomNavigation">
       <BottomNavigation
         actions={[
           {

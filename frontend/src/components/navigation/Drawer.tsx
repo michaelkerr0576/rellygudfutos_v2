@@ -26,24 +26,24 @@ export interface DrawerProps {
 }
 
 const StyledMuiSwipeableDrawer = styled(MuiSwipeableDrawer)(({ theme }): { [key: string]: any } => ({
-  '.rgf_drawer__children': {
+  '.rgf-drawer--children': {
     display: 'flex',
     flexDirection: 'column',
     padding: theme.spacing(0, 2),
   },
-  '.rgf_drawer__expandDrawerButton': {
+  '.rgf-drawer--expandDrawerButton': {
     left: 0,
     position: 'fixed',
     right: 0,
     zIndex: theme.zIndex.drawer,
   },
-  '.rgf_list, .rgf_divider': {
+  '.rgf-list, .rgf-divider': {
     marginLeft: -16,
     marginRight: -16,
   },
 
   [theme.breakpoints.up('tablet')]: {
-    '.rgf_drawer__children': {
+    '.rgf-drawer--children': {
       height: 'auto',
     },
   },
@@ -72,13 +72,13 @@ export default function Drawer(props: DrawerProps): JSX.Element {
   return (
     <StyledMuiSwipeableDrawer
       anchor={anchor}
-      className={clsx('rgf_drawer', { [className]: className })}
+      className={clsx('rgf-drawer', { [className]: !!className })}
       onClose={toggleDrawer(false)}
       onOpen={toggleDrawer(true)}
       open={isOpen}
     >
       {isBottomDrawer && (
-        <Paper className="rgf_drawer__expandDrawerButton" elevation={1}>
+        <Paper className="rgf-drawer--expandDrawerButton" elevation={1}>
           <Grid horizontalAlignment="center">
             <IconButton ariaLabel="less" onClick={(): void => setIsOpen(false)}>
               <ExpandIcon type={isOpen ? 'less' : 'more'} size="large" />
@@ -88,7 +88,7 @@ export default function Drawer(props: DrawerProps): JSX.Element {
       )}
 
       <Box
-        className="rgf_drawer__children"
+        className="rgf-drawer--children"
         style={{
           height: isBottomDrawer ? `calc(100vh - ${BOTTOM_DRAWER_MOBILE_TOP_OFFSET})` : 'auto',
           width: isBottomDrawer ? 'auto' : 250,

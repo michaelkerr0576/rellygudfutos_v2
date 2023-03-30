@@ -42,7 +42,7 @@ export default function Select(props: SelectProps): JSX.Element {
     );
 
   return (
-    <StyledSelect className={clsx('rgf_select', { [className]: className })}>
+    <StyledSelect className={clsx('rgf-select', { [className]: !!className })}>
       <MuiFormControl fullWidth>
         <MuiInputLabel id={`rgf-${fieldId}-label`}>{label}</MuiInputLabel>
         <MuiSelect

@@ -161,7 +161,7 @@ export default function Gallery(): JSX.Element {
   }
 
   return (
-    <StyledGallery className="rgf_gallery">
+    <StyledGallery className="rgf-gallery">
       <ImageList
         images={photos}
         maxWidth={GALLERY_MAX_WIDTH}

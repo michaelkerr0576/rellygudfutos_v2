@@ -18,7 +18,7 @@ export default function PhotoDialog(): JSX.Element {
 
   return (
     <Dialog
-      className="rgf_photoDialog"
+      className="rgf-photoDialog"
       isOpen={isPhotoDialogOpen}
       maxWidth="desktop"
       setIsOpen={(isOpen): void => togglePhotoDialog(isOpen, photoId)}

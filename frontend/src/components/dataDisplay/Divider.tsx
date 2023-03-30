@@ -12,7 +12,7 @@ export default function Divider(props: DividerProps): JSX.Element {
 
   return (
     <MuiDivider
-      className={clsx('rgf_divider', { [className]: className })}
+      className={clsx('rgf-divider', { [className]: !!className })}
       flexItem={orientation === 'vertical'}
       orientation={orientation}
     />

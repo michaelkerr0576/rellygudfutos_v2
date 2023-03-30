@@ -39,7 +39,7 @@ export interface ImageListProps {
 }
 
 const StyledMuiImageList = styled(MuiImageList)((): { [key: string]: any } => ({
-  '.rgf_imageList__listItem': {
+  '.rgf-imageList--listItem': {
     cursor: 'pointer',
     display: 'flex',
     justifyContent: 'center',
@@ -85,7 +85,7 @@ export default function ImageList(props: ImageListProps): JSX.Element {
 
       return (
         <MuiImageListItem
-          className="rgf_imageList__listItem"
+          className="rgf-imageList--listItem"
           cols={getColumns()}
           key={image.id}
           onClick={(): void => onClick(image.id)}
@@ -103,7 +103,7 @@ export default function ImageList(props: ImageListProps): JSX.Element {
 
   return (
     <StyledMuiImageList
-      className={clsx('rgf_imageList', { [className]: className })}
+      className={clsx('rgf-imageList', { [className]: !!className })}
       cols={IMAGE_CONTAINER_COLUMNS}
       gap={isSmallScreen ? IMAGE_SMALL_SCREEN_GAP : IMAGE_LARGE_SCREEN_GAP}
       style={{ maxWidth }}

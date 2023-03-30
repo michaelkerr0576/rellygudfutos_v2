@@ -36,25 +36,25 @@ const StyledMuiDialog = styled(MuiDialog)(({ theme }): { [key: string]: any } =>
     padding: theme.spacing(1, 2),
   },
   '.MuiDialogTitle-root': {
-    '.rgf_stack': {
+    '.rgf-stack': {
       minHeight: '40px',
     },
 
     maxHeight: '60px',
     padding: theme.spacing(1.25, 2),
   },
-  '.rgf_dialog__titleCloseButton': {
+  '.rgf-dialog--titleCloseButton': {
     order: 1,
   },
-  '.rgf_dialog__titleText': {
+  '.rgf-dialog--titleText': {
     order: 2,
   },
 
   [theme.breakpoints.up('laptop')]: {
-    '.rgf_dialog__titleCloseButton': {
+    '.rgf-dialog--titleCloseButton': {
       order: 2,
     },
-    '.rgf_dialog__titleText': {
+    '.rgf-dialog--titleText': {
       order: 1,
     },
   },
@@ -70,7 +70,7 @@ export default function Dialog(props: DialogProps): JSX.Element {
     const renderTitleText = (): JSX.Element => (
       <Typography
         align="center"
-        className="rgf_dialog__titleText"
+        className="rgf-dialog--titleText"
         id="dialog-title"
         maxLines={2}
         variant="h3"
@@ -82,7 +82,7 @@ export default function Dialog(props: DialogProps): JSX.Element {
     const renderCloseButton = (): JSX.Element => (
       <IconButton
         ariaLabel="close"
-        className="rgf_dialog__titleCloseButton"
+        className="rgf-dialog--titleCloseButton"
         edge={isSmallScreen ? 'start' : 'end'}
         onClick={(): void => setIsOpen(false)}
       >
@@ -91,7 +91,7 @@ export default function Dialog(props: DialogProps): JSX.Element {
     );
 
     return (
-      <Paper className="rgf_dialog__title" elevation={1}>
+      <Paper className="rgf-dialog--title" elevation={1}>
         <MuiDialogTitle>
           <Stack horizontalAlignment={isSmallScreen ? 'start' : 'spaceBetween'} verticalAlignment="center">
             {renderCloseButton()}
@@ -104,7 +104,7 @@ export default function Dialog(props: DialogProps): JSX.Element {
   };
 
   const renderDialogActions = (): JSX.Element => (
-    <Paper className="rgf_dialog__actions" elevation={24}>
+    <Paper className="rgf-dialog--actions" elevation={24}>
       <MuiDialogActions>{dialogActions}</MuiDialogActions>
     </Paper>
   );
@@ -113,7 +113,7 @@ export default function Dialog(props: DialogProps): JSX.Element {
     <StyledMuiDialog
       aria-describedby="dialog-description"
       aria-labelledby="dialog-title"
-      className={clsx('rgf_dialog', { [className]: className })}
+      className={clsx('rgf-dialog', { [className]: !!className })}
       fullScreen={isSmallScreen}
       maxWidth={maxWidth}
       onClose={(): void => setIsOpen(false)}
@@ -122,7 +122,7 @@ export default function Dialog(props: DialogProps): JSX.Element {
     >
       {renderDialogTitle()}
 
-      <MuiDialogContent className="rgf_dialog__content">{children}</MuiDialogContent>
+      <MuiDialogContent className="rgf-dialog--content">{children}</MuiDialogContent>
 
       {renderDialogActions()}
     </StyledMuiDialog>

@@ -14,7 +14,7 @@ export default function Paper(props: ContainerProps): JSX.Element {
 
   return (
     <MuiPaper
-      className={clsx('rgf_paper', { [className]: className })}
+      className={clsx('rgf-paper', { [className]: !!className })}
       elevation={elevation}
       square={isSquare}
     >

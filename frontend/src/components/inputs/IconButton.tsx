@@ -16,7 +16,7 @@ export default function IconButton(props: IconButtonProps): JSX.Element {
   return (
     <MuiIconButton
       aria-label={ariaLabel}
-      className={clsx('rgf_iconButton', { [className]: className })}
+      className={clsx('rgf-iconButton', { [className]: !!className })}
       edge={edge}
       onClick={onClick}
       size="small"

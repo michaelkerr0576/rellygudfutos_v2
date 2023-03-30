@@ -46,7 +46,7 @@ export default function Typography(props: TypographyProps): JSX.Element {
     }
   };
 
-  const typographyStyles = clsx('rgf_typography', {
+  const typographyStyles = clsx('rgf-typography', {
     [className]: !!className,
     'rgf-style--maxLines': !!maxLines,
   });

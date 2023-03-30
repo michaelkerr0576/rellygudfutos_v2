@@ -30,7 +30,7 @@ export default function TextField(props: TextFieldProps): JSX.Element {
   };
 
   return (
-    <StyledTextField className={clsx('rgf_textField', { [className]: className })}>
+    <StyledTextField className={clsx('rgf-textField', { [className]: !!className })}>
       <MuiTextField
         fullWidth
         InputProps={{

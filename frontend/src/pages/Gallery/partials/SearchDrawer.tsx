@@ -37,8 +37,8 @@ const tags = [
 export const SEARCH_DRAWER_BUTTON_ACTIONS_HEIGHT = '74.25px';
 
 const StyledSearchDrawer = styled('div')(({ theme }): { [key: string]: any } => ({
-  '.rgf_searchDrawer__actionButtonGroup': {
-    '.rgf_stack': {
+  '.rgf-searchDrawer--actionButtonGroup': {
+    '.rgf-stack': {
       padding: theme.spacing(2),
     },
 
@@ -48,16 +48,16 @@ const StyledSearchDrawer = styled('div')(({ theme }): { [key: string]: any } => 
     right: 0,
     zIndex: theme.zIndex.drawer,
   },
-  '.rgf_searchDrawer__searchField': {
+  '.rgf-searchDrawer--searchField': {
     marginTop: FIXED_TOGGLE_DRAWER_BUTTON_HEIGHT,
   },
-  '.rgf_searchDrawer__sortBySelect': {
+  '.rgf-searchDrawer--sortBySelect': {
     marginBottom: SEARCH_DRAWER_BUTTON_ACTIONS_HEIGHT,
   },
 
   [theme.breakpoints.up('tablet')]: {
-    '.rgf_searchDrawer__actionButtonGroup': {
-      '.rgf_stack': {
+    '.rgf-searchDrawer--actionButtonGroup': {
+      '.rgf-stack': {
         padding: theme.spacing(2, 1),
       },
     },
@@ -91,7 +91,7 @@ export default function SearchDrawer(): JSX.Element {
   );
 
   const renderSearchField = (): JSX.Element => (
-    <Box className="rgf_searchDrawer__searchField">
+    <Box className="rgf-searchDrawer--searchField">
       {renderRow(
         <TextField
           endAdornmentIcon={<SearchIcon />}
@@ -106,7 +106,7 @@ export default function SearchDrawer(): JSX.Element {
   );
 
   const renderTagsFilter = (): JSX.Element => (
-    <Box className="rgf_searchDrawer__tagsFilter">
+    <Box className="rgf-searchDrawer--tagsFilter">
       {renderRow(
         <Autocomplete
           fieldId="search-drawer-tags-autocomplete"
@@ -123,7 +123,7 @@ export default function SearchDrawer(): JSX.Element {
   );
 
   const renderSortBySelect = (): JSX.Element => (
-    <Box className="rgf_searchDrawer__sortBySelect">
+    <Box className="rgf-searchDrawer--sortBySelect">
       {renderRow(
         <Select
           fieldId="search-drawer-sort-select"
@@ -145,7 +145,7 @@ export default function SearchDrawer(): JSX.Element {
   );
 
   const renderActionButtonGroup = (): JSX.Element => (
-    <Paper className="rgf_searchDrawer__actionButtonGroup" elevation={24}>
+    <Paper className="rgf-searchDrawer--actionButtonGroup" elevation={24}>
       {renderRow(
         <Stack direction="row" spacing={1}>
           <Button onClick={handleClearFilters} variant="secondary">
@@ -161,11 +161,11 @@ export default function SearchDrawer(): JSX.Element {
   return (
     <Drawer
       anchor="bottom"
-      className="rgf_searchDrawer"
+      className="rgf-searchDrawer"
       isOpen={isSearchDrawerOpen}
       setIsOpen={toggleSearchDrawer}
     >
-      <StyledSearchDrawer className="rgf_searchDrawer__children">
+      <StyledSearchDrawer className="rgf-searchDrawer--children">
         {renderSearchField()}
 
         {renderTagsFilter()}

@@ -69,7 +69,7 @@ export default function List(props: ListProps): JSX.Element {
 
   return (
     <StyledMuiList
-      className={clsx('rgf_list', { [className]: className })}
+      className={clsx('rgf-list', { [className]: !!className })}
       subheader={<MuiListSubheader>{subHeader}</MuiListSubheader>}
     >
       {renderListItems()}

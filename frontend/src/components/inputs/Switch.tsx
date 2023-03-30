@@ -16,7 +16,7 @@ export default function Switch(props: SwitchProps): JSX.Element {
   return (
     <MuiSwitch
       checked={isChecked}
-      className={clsx('rgf_switch', { [className]: className })}
+      className={clsx('rgf-switch', { [className]: !!className })}
       edge={edge}
       inputProps={{
         'aria-labelledby': ariaLabel,

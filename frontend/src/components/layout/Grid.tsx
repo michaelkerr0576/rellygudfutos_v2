@@ -56,18 +56,18 @@ export default function Grid(props: GridProps): JSX.Element {
 
   return (
     <MuiGrid2
-      className={clsx('rgf_grid', { [className]: className })}
+      className={clsx('rgf-grid', { [className]: !!className })}
       container={isContainer || !!horizontalAlignment}
       desktop={desktop}
       desktopOffset={desktopOffset}
       direction={direction}
+      justifyContent={getJustifyContent()}
       laptop={laptop}
       laptopOffset={laptopOffset}
       mobile={mobile}
       mobileOffset={mobileOffset}
       tablet={tablet}
       tabletOffset={tabletOffset}
-      justifyContent={getJustifyContent()}
     >
       {children}
     </MuiGrid2>

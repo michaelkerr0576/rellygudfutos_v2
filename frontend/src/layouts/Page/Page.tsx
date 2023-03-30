@@ -11,7 +11,7 @@ export interface PageProps {
 }
 
 const StyledPage = styled('main')(({ theme }): { [key: string]: any } => ({
-  '.rgf_container': {
+  '.rgf-container': {
     padding: theme.spacing(2),
   },
 
@@ -23,7 +23,7 @@ export default function Page(props: PageProps): JSX.Element {
 
   return (
     <ErrorBoundary identifier={`${pageName} page`}>
-      <StyledPage className={`rgf_page${pageName}`}>
+      <StyledPage className={`rgf-page${pageName}`}>
         <Container>{children}</Container>
       </StyledPage>
     </ErrorBoundary>

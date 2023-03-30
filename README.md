@@ -266,7 +266,7 @@ I wanted to avoid slow webpack so Vite.js it is.
 
 UI library with all the components I will need. Each component used will be put into `src/components` folder where I can do any custom design and ensure the components are being used the same throughout the app.
 
-Each component will have a `className` to make it easier to customize from a parent component eg. `className="rgf_list"`. `rgf` prefix stands for the app name rellygudfutos.
+Each component will have a `className` to make it easier to customize from a parent component eg. `className="rgf-list"`. `rgf` prefix stands for the app name rellygudfutos.
 
 **Useful Links:**
 

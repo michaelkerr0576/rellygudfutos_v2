@@ -16,13 +16,13 @@ import MenuDrawer from './partials/MenuDrawer';
 export const FIXED_HEADER_HEIGHT = '60px';
 
 const StyledHeader = styled('header')(({ theme }): { [key: string]: any } => ({
-  '.rgf_accountDrawer': {
+  '.rgf-accountDrawer': {
     marginLeft: 'auto',
   },
-  '.rgf_container': {
+  '.rgf-container': {
     padding: theme.spacing(0, 1),
   },
-  '.rgf_header__rellygudfutosLogoButton': {
+  '.rgf-header--rellygudfutosLogoButton': {
     height: '60px',
     paddingLeft: theme.spacing(1),
   },
@@ -34,7 +34,7 @@ const StyledHeader = styled('header')(({ theme }): { [key: string]: any } => ({
   zIndex: theme.zIndex.appBar,
 
   [theme.breakpoints.up('tablet')]: {
-    '.rgf_container': {
+    '.rgf-container': {
       padding: theme.spacing(0, 2),
     },
   },
@@ -46,7 +46,7 @@ export default function Header(): JSX.Element {
   const renderLogoButton = (): JSX.Element => (
     <LogoButton
       ariaLabel="really good photos"
-      className="rgf_header__rellygudfutosLogoButton"
+      className="rgf-header--rellygudfutosLogoButton"
       onClick={(): void => navigate('/')}
     >
       <RellygudfutosLogo />
@@ -55,7 +55,7 @@ export default function Header(): JSX.Element {
 
   return (
     <ErrorBoundary identifier="Header">
-      <StyledHeader className="rgf_header">
+      <StyledHeader className="rgf-header">
         <Paper elevation={1}>
           <Container>
             <Stack verticalAlignment="center">

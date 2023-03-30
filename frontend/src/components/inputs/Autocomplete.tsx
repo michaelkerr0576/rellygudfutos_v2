@@ -30,7 +30,7 @@ export default function Autocomplete(props: AutocompleteProps): JSX.Element {
     onChange(values);
 
   return (
-    <StyledAutocomplete className={clsx('rgf_autocomplete', { [className]: className })}>
+    <StyledAutocomplete className={clsx('rgf-autocomplete', { [className]: !!className })}>
       <MuiAutocomplete
         disableClearable
         disableCloseOnSelect

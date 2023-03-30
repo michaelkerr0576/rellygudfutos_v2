@@ -29,7 +29,7 @@ export default function Image(props: ImageProps): JSX.Element {
   const renderImage = (): JSX.Element => (
     <StyledImg
       alt={alt}
-      className={clsx('rgf_image', { [className]: className })}
+      className={clsx('rgf-image', { [className]: !!className })}
       loading="lazy"
       onLoad={(): void => setIsLoading(false)}
       src={src}

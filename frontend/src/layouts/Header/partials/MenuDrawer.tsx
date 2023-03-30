@@ -20,7 +20,7 @@ import useThemes from '@/hooks/useThemes';
 import { ColorMode } from '@/ts/store';
 
 const StyledMenuDrawer = styled('div')(({ theme }): { [key: string]: any } => ({
-  '.rgf_menuDrawer__header': {
+  '.rgf-menuDrawer--header': {
     padding: theme.spacing(1, 0),
   },
 }));
@@ -44,7 +44,7 @@ export default function MenuDrawer(): JSX.Element {
     };
 
     return (
-      <Stack className="rgf_menuDrawer__header" verticalAlignment="center" spacing={0.5}>
+      <Stack className="rgf-menuDrawer--header" verticalAlignment="center" spacing={0.5}>
         {renderMenuButton(false)}
 
         <LogoButton ariaLabel="really good photos" onClick={(): void => handleLogoButtonClick()}>
@@ -55,11 +55,11 @@ export default function MenuDrawer(): JSX.Element {
   };
 
   return (
-    <Box className="rgf_menuDrawer">
+    <Box className="rgf-menuDrawer">
       {renderMenuButton(true, 'large')}
 
       <Drawer anchor="left" isOpen={isMenuDrawerOpen} setIsOpen={toggleMenuDrawer}>
-        <StyledMenuDrawer className="rgf_menuDrawer__children">
+        <StyledMenuDrawer className="rgf-menuDrawer--children">
           {renderDrawerHeader()}
 
           <Divider />

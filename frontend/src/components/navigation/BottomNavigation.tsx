@@ -51,7 +51,7 @@ export default function BottomNavigation(props: BottomNavigationProps): JSX.Elem
     );
 
   return (
-    <StyledBottomNavigation className={clsx('rgf_bottomNavigation', { [className]: className })}>
+    <StyledBottomNavigation className={clsx('rgf-bottomNavigation', { [className]: !!className })}>
       <Paper elevation={24}>
         <MuiBottomNavigation value={selectedValue} onChange={handleOnChange}>
           {renderActions()}
