@@ -31,7 +31,7 @@ const StyledMuiSwipeableDrawer = styled(MuiSwipeableDrawer)(({ theme }): { [key:
     flexDirection: 'column',
     padding: theme.spacing(0, 2),
   },
-  '.rgf_drawer__expandDrawer': {
+  '.rgf_drawer__expandDrawerButton': {
     left: 0,
     position: 'fixed',
     right: 0,
@@ -78,7 +78,7 @@ export default function Drawer(props: DrawerProps): JSX.Element {
       open={isOpen}
     >
       {isBottomDrawer && (
-        <Paper className="rgf_drawer__expandDrawer" elevation={1}>
+        <Paper className="rgf_drawer__expandDrawerButton" elevation={1}>
           <Grid horizontalAlignment="center">
             <IconButton ariaLabel="less" onClick={(): void => setIsOpen(false)}>
               <ExpandIcon type={isOpen ? 'less' : 'more'} size="large" />

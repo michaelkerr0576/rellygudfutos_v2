@@ -11,7 +11,6 @@ import BackIcon from '@/assets/icons/BackIcon';
 import CloseIcon from '@/assets/icons/CloseIcon';
 
 import IconButton from '../inputs/IconButton';
-import Box from '../layout/Box';
 import Stack from '../layout/Stack';
 import Paper from '../surfaces/Paper';
 
@@ -42,8 +41,22 @@ const StyledMuiDialog = styled(MuiDialog)(({ theme }): { [key: string]: any } =>
     },
 
     maxHeight: '60px',
-    overflow: 'hidden',
     padding: theme.spacing(1.25, 2),
+  },
+  '.rgf_dialog__titleCloseButton': {
+    order: 1,
+  },
+  '.rgf_dialog__titleText': {
+    order: 2,
+  },
+
+  [theme.breakpoints.up('laptop')]: {
+    '.rgf_dialog__titleCloseButton': {
+      order: 2,
+    },
+    '.rgf_dialog__titleText': {
+      order: 1,
+    },
   },
 }));
 
@@ -55,7 +68,13 @@ export default function Dialog(props: DialogProps): JSX.Element {
 
   const renderDialogTitle = (): JSX.Element => {
     const renderTitleText = (): JSX.Element => (
-      <Typography align="center" id="dialog-title" variant="h3">
+      <Typography
+        align="center"
+        className="rgf_dialog__titleText"
+        id="dialog-title"
+        maxLines={2}
+        variant="h3"
+      >
         {title}
       </Typography>
     );
@@ -63,6 +82,7 @@ export default function Dialog(props: DialogProps): JSX.Element {
     const renderCloseButton = (): JSX.Element => (
       <IconButton
         ariaLabel="close"
+        className="rgf_dialog__titleCloseButton"
         edge={isSmallScreen ? 'start' : 'end'}
         onClick={(): void => setIsOpen(false)}
       >
@@ -74,9 +94,9 @@ export default function Dialog(props: DialogProps): JSX.Element {
       <Paper className="rgf_dialog__title" elevation={1}>
         <MuiDialogTitle>
           <Stack horizontalAlignment={isSmallScreen ? 'start' : 'spaceBetween'} verticalAlignment="center">
-            <Box style={{ order: isSmallScreen ? 1 : 2 }}>{renderCloseButton()}</Box>
+            {renderCloseButton()}
 
-            <Box style={{ order: isSmallScreen ? 2 : 1 }}>{renderTitleText()}</Box>
+            {renderTitleText()}
           </Stack>
         </MuiDialogTitle>
       </Paper>

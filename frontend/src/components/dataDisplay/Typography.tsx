@@ -10,15 +10,30 @@ export interface TypographyProps {
   children: React.ReactNode;
   className?: MuiTypographyProps['className'];
   id?: MuiTypographyProps['id'];
+  maxLines?: number;
   variant?: Variant;
 }
 
 const StyledMuiTypography = styled(MuiTypography)((): { [key: string]: any } => ({
+  '&.rgf-style--maxLines': {
+    display: '-webkit-box',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    WebkitBoxOrient: 'vertical',
+  },
+
   width: '100%',
 }));
 
 export default function Typography(props: TypographyProps): JSX.Element {
-  const { align = 'inherit', children, className = '', id = undefined, variant = 'body' } = props;
+  const {
+    align = 'inherit',
+    children,
+    className = '',
+    id = undefined,
+    maxLines = undefined,
+    variant = 'body',
+  } = props;
 
   const getVariant = (): MuiTypographyProps['variant'] => {
     switch (variant) {
@@ -31,11 +46,17 @@ export default function Typography(props: TypographyProps): JSX.Element {
     }
   };
 
+  const typographyStyles = clsx('rgf_typography', {
+    [className]: !!className,
+    'rgf-style--maxLines': !!maxLines,
+  });
+
   return (
     <StyledMuiTypography
       align={align}
-      className={clsx('rgf_typography', { [className]: className })}
+      className={typographyStyles}
       id={id}
+      sx={{ WebkitLineClamp: maxLines ? `${maxLines}` : undefined }}
       variant={getVariant()}
     >
       {children}

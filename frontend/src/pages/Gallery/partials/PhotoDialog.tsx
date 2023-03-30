@@ -9,10 +9,12 @@ export default function PhotoDialog(): JSX.Element {
   const { photoId } = useParams();
   const { isPhotoDialogOpen, togglePhotoDialog } = useGallery();
 
-  // TODO - replace with isError and isLoading from new react query usePhoto hook
+  // TODO - Add alert for not photoId in URl
   if (!photoId) {
     return <div>test</div>;
   }
+
+  // TODO - Add with isError and isLoading from new react query usePhoto hook
 
   return (
     <Dialog
