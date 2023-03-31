@@ -43,6 +43,24 @@ const breakpoints = {
   },
 };
 
+const components = {
+  MuiCssBaseline: {
+    styleOverrides: {
+      '&::-webkit-scrollbar': {
+        width: '8px',
+      },
+      '&::-webkit-scrollbar-thumb': {
+        backgroundColor: grey[400],
+        borderRadius: '4px',
+      },
+      '&::-webkit-scrollbar-track': {
+        boxShadow: `inset 0 0 1px ${grey[600]}`,
+        webkitBoxShadow: `inset 0 0 1px ${grey[600]}`,
+      },
+    },
+  },
+};
+
 const typography = {
   fontFamily: ['Roboto', 'Helvetica', 'Arial', 'sans-serif'].join(','),
   h1: {
@@ -121,6 +139,7 @@ export default function useThemes(): UseThemes {
     (): Theme =>
       createTheme({
         breakpoints: { ...breakpoints },
+        components: { ...components },
         palette: {
           ...(colorMode === ColorMode.DARK ? darkTheme.palette : lightTheme.palette),
           mode: colorMode,
