@@ -14,7 +14,7 @@ import Stack from '@/components/layout/Stack';
 import Drawer from '@/components/navigation/Drawer';
 import useMenu from '@/hooks/useMenu';
 
-const StyledAccountDrawer = styled('div')(({ theme }): { [key: string]: any } => ({
+const StyledDrawer = styled(Drawer)(({ theme }): { [key: string]: any } => ({
   '.rgf-accountDrawer--header': {
     padding: theme.spacing(1, 0),
   },
@@ -46,35 +46,33 @@ export default function AccountDrawer(): JSX.Element {
     <Box className="rgf-accountDrawer">
       {renderAccountButton(true, 'large')}
 
-      <Drawer anchor="right" isOpen={isAccountDrawerOpen} setIsOpen={toggleAccountDrawer}>
-        <StyledAccountDrawer className="rgf-accountDrawer--children">
-          {renderDrawerHeader()}
+      <StyledDrawer anchor="right" isOpen={isAccountDrawerOpen} setIsOpen={toggleAccountDrawer}>
+        {renderDrawerHeader()}
 
-          <Divider />
+        <Divider />
 
-          <List
-            listItems={[
-              {
-                icon: (
-                  <DashboardIcon variant={pathname.includes('/account/dashboard') ? 'filled' : 'outlined'} />
-                ),
-                label: 'Dashboard',
-                navigateTo: '/account/dashboard',
-                onClick: (): void => toggleAccountDrawer(false),
-              },
-              {
-                icon: <LoginIcon />,
-                label: 'Login',
-                navigateTo: '/account/login',
-                onClick: (): void => toggleAccountDrawer(false),
-              },
-            ]}
-            subHeader="Account"
-          />
+        <List
+          listItems={[
+            {
+              icon: (
+                <DashboardIcon variant={pathname.includes('/account/dashboard') ? 'filled' : 'outlined'} />
+              ),
+              label: 'Dashboard',
+              navigateTo: '/account/dashboard',
+              onClick: (): void => toggleAccountDrawer(false),
+            },
+            {
+              icon: <LoginIcon />,
+              label: 'Login',
+              navigateTo: '/account/login',
+              onClick: (): void => toggleAccountDrawer(false),
+            },
+          ]}
+          subHeader="Account"
+        />
 
-          <Divider />
-        </StyledAccountDrawer>
-      </Drawer>
+        <Divider />
+      </StyledDrawer>
     </Box>
   );
 }

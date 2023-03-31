@@ -14,7 +14,7 @@ export interface StackProps {
   direction?: Direction;
   hasDivider?: boolean;
   horizontalAlignment?: HorizontalAlignment;
-  spacing?: MuiStackProps['spacing'];
+  spacing?: MuiStackProps['spacing']; // * The gap elements in theme.spacing()
   verticalAlignment?: VerticalAlignment;
 }
 

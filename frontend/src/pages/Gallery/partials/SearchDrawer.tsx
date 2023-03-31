@@ -9,7 +9,7 @@ import TextField from '@/components/inputs/TextField';
 import Box from '@/components/layout/Box';
 import Grid from '@/components/layout/Grid';
 import Stack from '@/components/layout/Stack';
-import Drawer, { FIXED_TOGGLE_DRAWER_BUTTON_HEIGHT } from '@/components/navigation/Drawer';
+import Drawer from '@/components/navigation/Drawer';
 import Paper from '@/components/surfaces/Paper';
 import { GallerySortBy } from '@/ts/store';
 
@@ -36,7 +36,10 @@ const tags = [
 
 export const SEARCH_DRAWER_BUTTON_ACTIONS_HEIGHT = '74.25px';
 
-const StyledSearchDrawer = styled('div')(({ theme }): { [key: string]: any } => ({
+const StyledDrawer = styled(Drawer)(({ theme }): { [key: string]: any } => ({
+  '.rgf-drawer--children': {
+    marginBottom: SEARCH_DRAWER_BUTTON_ACTIONS_HEIGHT,
+  },
   '.rgf-searchDrawer--actionButtonGroup': {
     '.rgf-stack': {
       padding: theme.spacing(2),
@@ -47,12 +50,6 @@ const StyledSearchDrawer = styled('div')(({ theme }): { [key: string]: any } => 
     position: 'fixed',
     right: 0,
     zIndex: theme.zIndex.drawer,
-  },
-  '.rgf-searchDrawer--searchField': {
-    marginTop: FIXED_TOGGLE_DRAWER_BUTTON_HEIGHT,
-  },
-  '.rgf-searchDrawer--sortBySelect': {
-    marginBottom: SEARCH_DRAWER_BUTTON_ACTIONS_HEIGHT,
   },
 
   [theme.breakpoints.up('tablet')]: {
@@ -159,21 +156,19 @@ export default function SearchDrawer(): JSX.Element {
   );
 
   return (
-    <Drawer
+    <StyledDrawer
       anchor="bottom"
       className="rgf-searchDrawer"
       isOpen={isSearchDrawerOpen}
       setIsOpen={toggleSearchDrawer}
     >
-      <StyledSearchDrawer className="rgf-searchDrawer--children">
-        {renderSearchField()}
+      {renderSearchField()}
 
-        {renderTagsFilter()}
+      {renderTagsFilter()}
 
-        {renderSortBySelect()}
+      {renderSortBySelect()}
 
-        {renderActionButtonGroup()}
-      </StyledSearchDrawer>
-    </Drawer>
+      {renderActionButtonGroup()}
+    </StyledDrawer>
   );
 }

@@ -47,15 +47,22 @@ const components = {
   MuiCssBaseline: {
     styleOverrides: {
       '&::-webkit-scrollbar': {
-        width: '8px',
+        width: '7px',
       },
       '&::-webkit-scrollbar-thumb': {
-        backgroundColor: grey[400],
-        borderRadius: '4px',
+        backgroundClip: 'content-box',
+        backgroundColor: alpha(common.black, 0.4),
+        border: 'solid 2px transparent',
+        borderRadius: '3.5px',
       },
-      '&::-webkit-scrollbar-track': {
-        boxShadow: `inset 0 0 1px ${grey[600]}`,
-        webkitBoxShadow: `inset 0 0 1px ${grey[600]}`,
+
+      '@media only screen and (min-width: 640px)': {
+        '&::-webkit-scrollbar': {
+          width: '12px',
+        },
+        '&::-webkit-scrollbar-thumb': {
+          borderRadius: '6px',
+        },
       },
     },
   },

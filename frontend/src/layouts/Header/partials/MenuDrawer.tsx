@@ -19,7 +19,7 @@ import useMenu from '@/hooks/useMenu';
 import useThemes from '@/hooks/useThemes';
 import { ColorMode } from '@/ts/store';
 
-const StyledMenuDrawer = styled('div')(({ theme }): { [key: string]: any } => ({
+const StyledDrawer = styled(Drawer)(({ theme }): { [key: string]: any } => ({
   '.rgf-menuDrawer--header': {
     padding: theme.spacing(1, 0),
   },
@@ -58,48 +58,46 @@ export default function MenuDrawer(): JSX.Element {
     <Box className="rgf-menuDrawer">
       {renderMenuButton(true, 'large')}
 
-      <Drawer anchor="left" isOpen={isMenuDrawerOpen} setIsOpen={toggleMenuDrawer}>
-        <StyledMenuDrawer className="rgf-menuDrawer--children">
-          {renderDrawerHeader()}
+      <StyledDrawer anchor="left" isOpen={isMenuDrawerOpen} setIsOpen={toggleMenuDrawer}>
+        {renderDrawerHeader()}
 
-          <Divider />
+        <Divider />
 
-          <List
-            listItems={[
-              {
-                icon: <GalleryIcon variant={pathname === '/' ? 'filled' : 'outlined'} />,
-                label: 'Gallery',
-                navigateTo: '/',
-                onClick: (): void => toggleMenuDrawer(false),
-              },
-            ]}
-            subHeader="Navigation"
-          />
+        <List
+          listItems={[
+            {
+              icon: <GalleryIcon variant={pathname === '/' ? 'filled' : 'outlined'} />,
+              label: 'Gallery',
+              navigateTo: '/',
+              onClick: (): void => toggleMenuDrawer(false),
+            },
+          ]}
+          subHeader="Navigation"
+        />
 
-          <Divider />
+        <Divider />
 
-          <List
-            listItems={[
-              {
-                action: (
-                  <Switch
-                    ariaLabel="switch-dark-mode"
-                    edge="end"
-                    isChecked={colorMode === ColorMode.DARK}
-                    onChange={(): void => {}}
-                  />
-                ),
-                icon: <DarkModeIcon variant={colorMode === ColorMode.DARK ? 'filled' : 'outlined'} />,
-                label: 'Dark mode',
-                onClick: toggleColorMode,
-              },
-            ]}
-            subHeader="Settings"
-          />
+        <List
+          listItems={[
+            {
+              action: (
+                <Switch
+                  ariaLabel="switch-dark-mode"
+                  edge="end"
+                  isChecked={colorMode === ColorMode.DARK}
+                  onChange={(): void => {}}
+                />
+              ),
+              icon: <DarkModeIcon variant={colorMode === ColorMode.DARK ? 'filled' : 'outlined'} />,
+              label: 'Dark mode',
+              onClick: toggleColorMode,
+            },
+          ]}
+          subHeader="Settings"
+        />
 
-          <Divider />
-        </StyledMenuDrawer>
-      </Drawer>
+        <Divider />
+      </StyledDrawer>
     </Box>
   );
 }

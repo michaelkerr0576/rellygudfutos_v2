@@ -12,8 +12,7 @@ import Box from '../layout/Box';
 import Grid from '../layout/Grid';
 import Paper from '../surfaces/Paper';
 
-export const BOTTOM_DRAWER_MOBILE_TOP_OFFSET = '90px';
-export const FIXED_TOGGLE_DRAWER_BUTTON_HEIGHT = '45px';
+export const BOTTOM_DRAWER_MOBILE_TOP_OFFSET = '210px';
 
 type Anchor = 'left' | 'right' | 'bottom';
 
@@ -29,11 +28,12 @@ const StyledMuiSwipeableDrawer = styled(MuiSwipeableDrawer)(({ theme }): { [key:
   '.rgf-drawer--children': {
     display: 'flex',
     flexDirection: 'column',
+    overflowY: 'auto',
     padding: theme.spacing(0, 2),
   },
   '.rgf-drawer--expandDrawerButton': {
     left: 0,
-    position: 'fixed',
+    position: 'relative',
     right: 0,
     zIndex: theme.zIndex.drawer,
   },
@@ -73,6 +73,7 @@ export default function Drawer(props: DrawerProps): JSX.Element {
     <StyledMuiSwipeableDrawer
       anchor={anchor}
       className={clsx('rgf-drawer', { [className]: !!className })}
+      disableSwipeToOpen
       onClose={toggleDrawer(false)}
       onOpen={toggleDrawer(true)}
       open={isOpen}

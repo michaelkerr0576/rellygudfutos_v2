@@ -9,10 +9,10 @@ import usePhoto from '@/hooks/queries/usePhoto';
 import useGallery from '../hooks/useGallery';
 
 export default function PhotoDialog(): JSX.Element {
-  const { photoId } = useParams();
+  const { photoId = '' } = useParams();
 
   const { isPhotoDialogOpen, togglePhotoDialog } = useGallery();
-  const { isError, isLoading } = usePhoto({ photoId: photoId || '' });
+  const { isError, isLoading } = usePhoto({ photoId });
 
   const renderDialogContent = (): JSX.Element => {
     if (!photoId) {

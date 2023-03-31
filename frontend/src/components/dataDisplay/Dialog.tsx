@@ -111,6 +111,7 @@ export default function Dialog(props: DialogProps): JSX.Element {
       aria-labelledby="dialog-title"
       className={clsx('rgf-dialog', { [className]: !!className })}
       fullScreen={isSmallScreen}
+      fullWidth
       maxWidth={maxWidth}
       onClose={(): void => setIsOpen(false)}
       open={isOpen}

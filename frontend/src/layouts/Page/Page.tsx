@@ -1,6 +1,7 @@
 import { styled } from '@mui/material/styles';
 
 import Container from '@/components/layout/Container';
+import { FIXED_GALLERY_BOTTOM_NAVIGATION_HEIGHT } from '@/pages/Gallery/partials/GalleryBottomNavigation';
 
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import { FIXED_HEADER_HEIGHT } from '../Header/Header';
@@ -15,7 +16,9 @@ const StyledPage = styled('main')(({ theme }): { [key: string]: any } => ({
     padding: theme.spacing(2),
   },
 
+  height: `calc(100vh - (${FIXED_HEADER_HEIGHT} + ${FIXED_GALLERY_BOTTOM_NAVIGATION_HEIGHT}))`,
   marginTop: FIXED_HEADER_HEIGHT,
+  overflowY: 'auto',
 }));
 
 export default function Page(props: PageProps): JSX.Element {
