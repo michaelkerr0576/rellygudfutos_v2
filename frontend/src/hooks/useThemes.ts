@@ -54,6 +54,11 @@ const components = {
         backgroundColor: alpha(common.black, 0.4),
         border: 'solid 2px transparent',
         borderRadius: '3.5px',
+        position: 'fixed',
+      },
+      '&::-webkit-scrollbar-track': {
+        // * boxShadow: (horizontalLength, shadowTop & shadowBottom, blurRadius, spreadRadius)
+        boxShadow: `inset 1px 0px 0px 0px ${alpha(common.black, 0.1)}`,
       },
 
       '@media only screen and (min-width: 640px)': {

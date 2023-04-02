@@ -33,7 +33,7 @@ const StyledMuiSwipeableDrawer = styled(MuiSwipeableDrawer)(({ theme }): { [key:
   },
   '.rgf-drawer--expandDrawerButton': {
     left: 0,
-    position: 'relative',
+    position: 'sticky',
     right: 0,
     zIndex: theme.zIndex.drawer,
   },

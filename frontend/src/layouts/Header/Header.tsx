@@ -28,7 +28,7 @@ const StyledHeader = styled('header')(({ theme }): { [key: string]: any } => ({
   },
 
   left: 0,
-  position: 'fixed',
+  position: 'sticky',
   right: 0,
   top: 0,
   zIndex: theme.zIndex.appBar,

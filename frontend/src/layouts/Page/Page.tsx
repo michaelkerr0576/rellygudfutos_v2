@@ -17,7 +17,6 @@ const StyledPage = styled('main')(({ theme }): { [key: string]: any } => ({
   },
 
   height: `calc(100vh - (${FIXED_HEADER_HEIGHT} + ${FIXED_GALLERY_BOTTOM_NAVIGATION_HEIGHT}))`,
-  marginTop: FIXED_HEADER_HEIGHT,
   overflowY: 'auto',
 }));
 
