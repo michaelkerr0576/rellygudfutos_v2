@@ -5,7 +5,7 @@ import SearchIcon from '@/assets/icons/SearchIcon';
 import ToggleDarkModeIcon from '@/assets/icons/ToggleDarkModeIcon';
 import Box from '@/components/layout/Box';
 import BottomNavigation from '@/components/navigation/BottomNavigation';
-import useThemes from '@/hooks/useThemes';
+import useThemes from '@/hooks/shared/useThemes';
 import { GalleryNavigationValue } from '@/ts/store';
 
 import useGallery from '../hooks/useGallery';
@@ -29,6 +29,7 @@ export default function GalleryBottomNavigation(): JSX.Element {
               />
             ),
             label: 'Home',
+            // TODO - fix scrollTo top and make scroll.utils file
             onClick: (): void => window.scrollTo(0, 0),
             value: GalleryNavigationValue.HOME,
           },

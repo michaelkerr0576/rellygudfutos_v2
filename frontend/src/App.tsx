@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-d
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 
-import useThemes from '@/hooks/useThemes';
+import useThemes from '@/hooks/shared/useThemes';
 import ErrorBoundary from '@/layouts/ErrorBoundary/ErrorBoundary';
 import Header from '@/layouts/Header/Header';
 import DashboardPage from '@/pages/Dashboard/Dashboard.page';

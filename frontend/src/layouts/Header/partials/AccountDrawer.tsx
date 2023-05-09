@@ -12,7 +12,7 @@ import IconButton from '@/components/inputs/IconButton';
 import Box from '@/components/layout/Box';
 import Stack from '@/components/layout/Stack';
 import Drawer from '@/components/navigation/Drawer';
-import useMenu from '@/hooks/useMenu';
+import useMenu from '@/hooks/shared/useMenu';
 
 const StyledDrawer = styled(Drawer)(({ theme }): { [key: string]: any } => ({
   '.rgf-accountDrawer--header': {

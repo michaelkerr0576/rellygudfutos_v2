@@ -165,7 +165,6 @@ export default function useThemes(): UseThemes {
 
   const toggleColorMode = (): void => {
     const toggledColorCode = colorMode === ColorMode.LIGHT ? ColorMode.DARK : ColorMode.LIGHT;
-
     setColorMode(toggledColorCode);
   };
 
