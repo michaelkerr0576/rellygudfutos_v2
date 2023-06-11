@@ -30,7 +30,7 @@ const mockS3DeleteFile = jest
   .mockImplementation(() => Promise.resolve() as any);
 const mockS3GetFileUrl = jest
   .spyOn(s3Middleware, 'getFileUrl')
-  .mockImplementation(() => Promise.resolve(photoResponseFixture.image.url));
+  .mockImplementation(() => photoResponseFixture.image.url);
 const mockS3UploadFile = jest
   .spyOn(s3Middleware, 'uploadFile')
   .mockImplementation(() => Promise.resolve() as any);

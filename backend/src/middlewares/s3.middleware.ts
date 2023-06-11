@@ -2,12 +2,14 @@ import {
   DeleteObjectCommand,
   DeleteObjectCommandOutput,
   PutObjectCommand,
+  PutObjectCommandOutput,
   S3Client,
 } from '@aws-sdk/client-s3';
 
 /* 
  $ s3Middleware
   - deleteFile
+  - getFileUrl
   - uploadFile
 */
 
@@ -33,15 +35,21 @@ export const deleteFile = (key: string): Promise<DeleteObjectCommandOutput> => {
   return s3Client.send(new DeleteObjectCommand(params));
 };
 
-export const uploadFile = async (buffer: Buffer, key: string, mimetype: string): Promise<string> => {
+export const getFileUrl = (key: string): string =>
+  `https://${bucketName}.s3.${bucketRegion}.amazonaws.com/${key}`;
+
+export const uploadFile = async (
+  buffer: Buffer,
+  key: string,
+  mimetype: string,
+): Promise<PutObjectCommandOutput> => {
   const params = {
+    ACL: 'public-read',
     Body: buffer,
     Bucket: bucketName,
     ContentType: mimetype,
     Key: key,
   };
 
-  await s3Client.send(new PutObjectCommand(params));
-
-  return `https://${bucketName}.amazonaws.com/${key}`;
+  return s3Client.send(new PutObjectCommand(params));
 };

@@ -288,7 +288,8 @@ export const uploadPhotoToS3 = async (file: Express.Multer.File): Promise<typS3.
     })
     .toBuffer({ resolveWithObject: true });
 
-  const url = await s3Middleware.uploadFile(fileBuffer.data, key, file.mimetype);
+  await s3Middleware.uploadFile(fileBuffer.data, key, file.mimetype);
+  const url = s3Middleware.getFileUrl(key);
 
   return {
     fileName: file.originalname,
