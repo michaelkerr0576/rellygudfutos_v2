@@ -8,7 +8,7 @@ import { userThreeRequest } from './usersRequest.fixture';
 
 const userThreeResponse = {
   __v: 0,
-  _id: new Types.ObjectId(userThreeRequest._id),
+  _id: Types.ObjectId(userThreeRequest._id),
   createdAt: utilFixture.freezeDate,
   email: userThreeRequest.email.toLowerCase(),
   equipment: {
@@ -16,7 +16,7 @@ const userThreeResponse = {
     lenses: userThreeRequest.equipment.lenses,
   },
   name: userThreeRequest.name,
-  photos: [new Types.ObjectId(userThreeRequest.photos[0])],
+  photos: [Types.ObjectId(userThreeRequest.photos[0])],
   role: userThreeRequest.role,
   updatedAt: utilFixture.freezeDate,
 };

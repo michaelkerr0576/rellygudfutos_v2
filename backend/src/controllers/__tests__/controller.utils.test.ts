@@ -1,6 +1,6 @@
 import { Response } from 'express';
 
-import * as controllerUtils from '../controller.utils';
+import * as controllerUtils from '../utils/controller.utils';
 
 const mockResponseStatus = jest.fn();
 const mockResponseJson = jest.fn();

@@ -8,81 +8,64 @@ import * as regexUtils from '@/utils/regex.utils';
 import * as validateUtils from './utils/validate.utils';
 import * as validateMessageUtils from './utils/validateMessage.utils';
 
-const photoSchema = new Schema<inf.IPhoto>(
+const photoSchema = new Schema<inf.Photo>(
   {
     _id: Types.ObjectId,
-    details: {
-      captureDate: {
-        type: Date,
-        required: true,
-        default: '1900-01-01T10:10:10.123Z',
-        immutable: true,
-      },
-      captureLocation: {
-        type: String,
-        required: true,
-        trim: true,
-        minLength: 2,
-        maxLength: 100,
-      },
-      imageCaption: {
-        type: String,
-        required: true,
-        trim: true,
-        minLength: 2,
-        maxLength: 300,
-      },
-      imageKey: String,
-      imageName: String,
-      imageSize: {
-        type: String,
-        enum: enm.ImageSize,
-        default: enm.ImageSize.MEDIUM,
-      },
-      imageTags: {
-        type: [Types.ObjectId],
-        ref: 'Tag',
-        // * Validate: required - validate needed for array
-        validate: [validateUtils.arrayValuesRequired, validateMessageUtils.requiredMessage],
-      },
-      imageTitle: {
-        type: String,
-        required: true,
-        trim: true,
-        minLength: 2,
-        maxLength: 50,
-      },
-      imageType: String,
-      imageUrl: String,
-      photographer: {
-        type: Types.ObjectId,
-        ref: 'User',
-        immutable: true,
-      },
-      storeLink: {
-        type: String,
-        required: true,
-        trim: true,
-        match: regexUtils.urlLink,
-      },
+    aspectRatio: {
+      type: String,
+      enum: enm.PhotoAspectRatio,
+    },
+    caption: {
+      type: String,
+      required: true,
+      trim: true,
+      minLength: 2,
+      maxLength: 300,
+    },
+    captureDate: {
+      type: Date,
+      required: true,
+      default: '1900-01-01T10:10:10.123Z',
+      immutable: true,
     },
     equipment: {
-      cameraIso: {
-        type: String,
-        required: true,
-        trim: true,
-        minLength: 2,
-        maxLength: 7,
-        match: regexUtils.cameraIso,
-      },
-      cameraName: {
+      camera: {
         type: String,
         required: true,
         trim: true,
         minLength: 2,
         maxLength: 50,
       },
-      lensAperture: {
+      lens: {
+        type: String,
+        required: true,
+        trim: true,
+        minLength: 2,
+        maxLength: 50,
+      },
+    },
+    image: {
+      fileName: String,
+      fileType: String,
+      height: Number,
+      key: String,
+      url: String,
+      width: Number,
+    },
+    location: {
+      type: String,
+      required: true,
+      trim: true,
+      minLength: 2,
+      maxLength: 100,
+    },
+    photographer: {
+      type: Types.ObjectId,
+      ref: 'User',
+      immutable: true,
+    },
+    settings: {
+      aperture: {
         type: String,
         required: true,
         trim: true,
@@ -90,7 +73,7 @@ const photoSchema = new Schema<inf.IPhoto>(
         maxLength: 7,
         match: regexUtils.cameraLensAperture,
       },
-      lensFocalLength: {
+      focalLength: {
         type: String,
         required: true,
         trim: true,
@@ -98,14 +81,15 @@ const photoSchema = new Schema<inf.IPhoto>(
         maxLength: 7,
         match: regexUtils.cameraLensFocalLength,
       },
-      lensName: {
+      iso: {
         type: String,
         required: true,
         trim: true,
         minLength: 2,
-        maxLength: 50,
+        maxLength: 7,
+        match: regexUtils.cameraIso,
       },
-      lensShutterSpeed: {
+      shutterSpeed: {
         type: String,
         required: true,
         trim: true,
@@ -114,11 +98,29 @@ const photoSchema = new Schema<inf.IPhoto>(
         match: regexUtils.cameraLensShutterSpeed,
       },
     },
-    image: Object,
+    storeUrl: {
+      type: String,
+      required: true,
+      trim: true,
+      match: regexUtils.urlLink,
+    },
+    tags: {
+      type: [Types.ObjectId],
+      ref: 'Tag',
+      // * Validate: required - validate needed for array
+      validate: [validateUtils.arrayValuesRequired, validateMessageUtils.requiredMessage],
+    },
+    title: {
+      type: String,
+      required: true,
+      trim: true,
+      minLength: 2,
+      maxLength: 50,
+    },
   },
   { timestamps: true },
 );
 
-const Photo = model<inf.IPhoto>('Photo', photoSchema);
+const Photo = model<inf.Photo>('Photo', photoSchema);
 
 export default Photo;

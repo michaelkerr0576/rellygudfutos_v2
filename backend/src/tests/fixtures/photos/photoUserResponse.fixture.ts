@@ -6,5 +6,5 @@ import photoFixture from './photoRequest.fixture';
 
 export default {
   ...userAdminResponseFixture,
-  photos: [new Types.ObjectId(userAdminResponseFixture.photos[0]), new Types.ObjectId(photoFixture._id)],
+  photos: [Types.ObjectId(userAdminResponseFixture.photos[0] as any), Types.ObjectId(photoFixture._id)],
 };

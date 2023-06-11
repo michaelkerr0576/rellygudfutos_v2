@@ -47,7 +47,7 @@ const authenticateUser = (
     return decoded as Promise<JwtPayload>;
   }) as unknown as JwtPayload;
 
-  const checkUserAuthentication = (user: LeanDocument<inf.IUser> | null): void => {
+  const checkUserAuthentication = (user: LeanDocument<inf.User> | null): void => {
     if (!user) {
       response.status(404);
       throw new Error(errorMessageUtils.error404('User'));

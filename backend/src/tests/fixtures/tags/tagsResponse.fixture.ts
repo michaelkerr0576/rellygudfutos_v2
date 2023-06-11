@@ -9,20 +9,20 @@ const [firstTag, secondTag, thirdTag] = tagsRequestFixture;
 export default [
   {
     ...firstTag,
-    _id: new Types.ObjectId(firstTag._id),
+    _id: Types.ObjectId(firstTag._id),
     createdAt: utilFixture.freezeDate,
-    photos: [new Types.ObjectId(firstTag.photos[0])],
+    photos: [Types.ObjectId(firstTag.photos[0])],
     updatedAt: utilFixture.freezeDate,
   },
   {
     ...secondTag,
-    _id: new Types.ObjectId(secondTag._id),
+    _id: Types.ObjectId(secondTag._id),
     createdAt: utilFixture.freezeDate,
     updatedAt: utilFixture.freezeDate,
   },
   {
     ...thirdTag,
-    _id: new Types.ObjectId(thirdTag._id),
+    _id: Types.ObjectId(thirdTag._id),
     createdAt: utilFixture.freezeDate,
     updatedAt: utilFixture.freezeDate,
   },

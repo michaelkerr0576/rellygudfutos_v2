@@ -3,47 +3,54 @@ import { Date, Document, Types } from 'mongoose';
 import * as enm from '@/ts/enums/db.enum';
 
 // #region Photo Interface
-export interface IPhoto extends Document {
+export interface Photo extends Document {
   _id: Types.ObjectId;
-  details: {
-    captureDate: Date;
-    captureLocation: string;
-    imageCaption: string;
-    imageKey: string;
-    imageName: string;
-    imageSize: enm.ImageSize;
-    imageTags: IPhotoImageTags[] | Types.ObjectId[];
-    imageTitle: string;
-    imageType: string;
-    imageUrl: string;
-    photographer: IPhotoPhotographer | Types.ObjectId;
-    storeLink: string;
-  };
-  equipment: {
-    cameraIso: string;
-    cameraName: string;
-    lensAperture: string;
-    lensFocalLength: string;
-    lensName: string;
-    lensShutterSpeed: string;
-  };
-  image: File;
+  aspectRatio: enm.PhotoAspectRatio;
+  caption: string;
+  captureDate: Date;
+  equipment: PhotoEquipment;
+  image: PhotoImage;
+  location: string;
+  photographer: PhotoPhotographer | Types.ObjectId;
+  settings: PhotoSettings;
+  storeUrl: string;
+  tags: PhotoTag[] | Types.ObjectId[];
+  title: string;
 }
 
-export interface IPhotoImageTags {
-  _id: Types.ObjectId;
-  tag: string;
+interface PhotoEquipment {
+  camera: string;
+  lens: string;
 }
 
-export interface IPhotoPhotographer {
+interface PhotoImage {
+  fileName: string;
+  fileType: string;
+  key: string;
+  url: string;
+}
+
+export interface PhotoPhotographer {
   _id: Types.ObjectId;
   email: string;
   name: string;
 }
+
+interface PhotoSettings {
+  aperture: string;
+  focalLength: string;
+  iso: string;
+  shutterSpeed: string;
+}
+
+export interface PhotoTag {
+  _id: Types.ObjectId;
+  tag: string;
+}
 // #endregion
 
 // #region Tag Interface
-export interface ITag extends Document {
+export interface Tag extends Document {
   _id: Types.ObjectId;
   photos: Types.ObjectId[];
   tag: string;
@@ -51,16 +58,18 @@ export interface ITag extends Document {
 // #endregion
 
 // #region User Interface
-export interface IUser extends Document {
+export interface User extends Document {
   _id: Types.ObjectId;
   email: string;
-  equipment: {
-    cameras: string[];
-    lenses: string[];
-  };
+  equipment: UserEquipment;
   name: string;
   password: string;
   photos: Types.ObjectId[];
   role: enm.UserRole;
+}
+
+interface UserEquipment {
+  cameras: string[];
+  lenses: string[];
 }
 // #endregion

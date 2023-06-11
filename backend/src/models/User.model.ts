@@ -8,7 +8,7 @@ import * as regexUtils from '@/utils/regex.utils';
 import * as validateUtils from './utils/validate.utils';
 import * as validateMessageUtils from './utils/validateMessage.utils';
 
-const userSchema = new Schema<inf.IUser>(
+const userSchema = new Schema<inf.User>(
   {
     _id: Types.ObjectId,
     email: {
@@ -77,6 +77,6 @@ const userSchema = new Schema<inf.IUser>(
   { timestamps: true },
 );
 
-const User = model<inf.IUser>('User', userSchema);
+const User = model<inf.User>('User', userSchema);
 
 export default User;

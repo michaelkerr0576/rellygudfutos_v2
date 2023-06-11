@@ -37,20 +37,14 @@ export type PhotosQuery = PaginationQuery & {
 };
 
 export type PhotosFilterColumnsWithPattern = {
-  'details.imageTags'?: { _id: string[] };
-  'details.photographer'?: { _id: string };
-  $or?: [{ [Key in PhotosSearchColumns]?: RegexPattern }];
+  tags?: { _id: string[] };
+  photographer?: { _id: string };
+  $or?: [{ [Key in PhotosSearchColumns as any]?: RegexPattern }];
 };
 
-export type PhotosImmutableFields =
-  | 'details.captureDate'
-  | 'details.imageFile'
-  | 'details.originalImageName'
-  | 'details.photographer';
+export type PhotosSearchColumns = 'caption' | 'location' | 'title';
 
-export type PhotosSearchColumns = 'details.captureLocation' | 'details.imageCaption' | 'details.imageTitle';
-
-export type PhotosSortColumns = 'details.captureDate' | 'details.imageTitle';
+export type PhotosSortColumns = 'captureDate' | 'title';
 
 export type PhotosSortColumnsWithDirection = { [Key in PhotosSortColumns]?: SortDirection };
 // #endregion

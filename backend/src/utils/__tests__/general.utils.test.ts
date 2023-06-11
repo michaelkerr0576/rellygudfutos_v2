@@ -64,7 +64,7 @@ describe('General Utils', () => {
 
     test('Expect to change an ObjectId to a String', () => {
       const objectIdString = '0000007b4d846028acb6f441';
-      const objectId = new Types.ObjectId(objectIdString);
+      const objectId = Types.ObjectId(objectIdString);
       const numberToString = generalUtils.numberToString(objectId);
 
       expect(numberToString).toStrictEqual('0000007b4d846028acb6f441');

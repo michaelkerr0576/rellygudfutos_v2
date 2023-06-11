@@ -1,17 +1,17 @@
 import * as utilFixture from '@/tests/fixtures/util.fixture';
 
 export default {
-  details: {
-    captureLocation: utilFixture.chars101,
-    imageCaption: utilFixture.chars301,
-    imageTitle: utilFixture.chars51,
-  },
+  caption: utilFixture.chars301,
   equipment: {
-    cameraIso: utilFixture.chars8,
-    cameraName: utilFixture.chars51,
-    lensAperture: utilFixture.chars8,
-    lensFocalLength: utilFixture.chars8,
-    lensName: utilFixture.chars51,
-    lensShutterSpeed: utilFixture.chars8,
+    camera: utilFixture.chars51,
+    lens: utilFixture.chars51,
   },
+  location: utilFixture.chars101,
+  settings: {
+    aperture: utilFixture.chars8,
+    focalLength: utilFixture.chars8,
+    iso: utilFixture.chars8,
+    shutterSpeed: utilFixture.chars8,
+  },
+  title: utilFixture.chars51,
 };

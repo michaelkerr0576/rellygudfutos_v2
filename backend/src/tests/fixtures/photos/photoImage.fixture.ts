@@ -1,7 +1,10 @@
+import photoImageFixture from './photoFile.fixture';
+
 export default {
-  buffer: 'testBuffer',
-  encoding: '7bit',
-  fieldname: 'image',
-  mimetype: 'image/jpeg',
-  originalname: 'testImage.jpg',
-} as any;
+  fileName: photoImageFixture.originalname,
+  fileType: 'jpeg',
+  height: 720,
+  key: 'key123',
+  url: 'test.com',
+  width: 1080,
+};

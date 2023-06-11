@@ -111,16 +111,13 @@ describe('User Model', () => {
     test('Expect no validation errors for a valid UserModel', async () => {
       const validUser = new UserModel(userRequestFixture);
 
-      const savedValidUser = await validUser.save();
+      const expectedResult = userRequestFixture;
+      const actualResult = await validUser.save();
 
-      const { _id: expectedId, email: expectedEmail, password: expectedPassword } = userRequestFixture;
-      const { _id: actualId, email: actualEmail, password: actualPassword } = savedValidUser;
-
-      expect(savedValidUser).toBeTruthy();
-      expect(actualId.toString()).toEqual(expectedId.toString());
-
-      expect(actualEmail).toEqual(expectedEmail.toLowerCase());
-      expect(actualPassword).toEqual(expectedPassword);
+      expect(actualResult).toBeTruthy();
+      expect(actualResult._id.toString()).toEqual(expectedResult._id.toString());
+      expect(actualResult.email).toEqual(expectedResult.email.toLowerCase());
+      expect(actualResult.password).toEqual(expectedResult.password);
     });
   });
 });

@@ -18,24 +18,24 @@ import * as typ from '@/ts/types/db.types';
   - updatePhoto
 */
 
-export const addPhoto = (newPhoto: inf.IPhoto): Promise<LeanDocument<inf.IPhoto> | null> =>
+export const addPhoto = (newPhoto: inf.Photo): Promise<LeanDocument<inf.Photo> | null> =>
   PhotoModel.create(newPhoto).then(
-    (photo): Promise<LeanDocument<inf.IPhoto> | null> =>
+    (photo): Promise<LeanDocument<inf.Photo> | null> =>
       PhotoModel.findById(photo._id)
-        .populate('details.imageTags', 'tag')
-        .populate('details.photographer', 'email name')
+        .populate('tags', 'tag')
+        .populate('photographer', 'email name')
         .lean()
-        .then((addedPhoto): LeanDocument<inf.IPhoto> | null => addedPhoto),
+        .then((addedPhoto): LeanDocument<inf.Photo> | null => addedPhoto),
   );
 
-export const addPhotos = (newPhotos: inf.IPhoto[]): Promise<LeanDocument<inf.IPhoto[]> | null> =>
+export const addPhotos = (newPhotos: inf.Photo[]): Promise<LeanDocument<inf.Photo[]> | null> =>
   PhotoModel.insertMany(newPhotos).then(
-    (photos): Promise<LeanDocument<inf.IPhoto[]> | null> =>
+    (photos): Promise<LeanDocument<inf.Photo[]> | null> =>
       PhotoModel.find({ _id: photos.map((photo): Types.ObjectId => photo._id) as any })
-        .populate('details.imageTags', 'tag')
-        .populate('details.photographer', 'email name')
+        .populate('tags', 'tag')
+        .populate('photographer', 'email name')
         .lean()
-        .then((addedPhotos): LeanDocument<inf.IPhoto[]> | null => addedPhotos),
+        .then((addedPhotos): LeanDocument<inf.Photo[]> | null => addedPhotos),
   );
 
 export const checkPhotoExists = (id: Types.ObjectId): Promise<boolean> => PhotoModel.exists({ _id: id });
@@ -43,53 +43,53 @@ export const checkPhotoExists = (id: Types.ObjectId): Promise<boolean> => PhotoM
 export const countPhotos = (filter: typ.PhotosQuery['filter']): Promise<number> =>
   PhotoModel.countDocuments(filter).then((count): number => count);
 
-export const deletePhoto = (id: Types.ObjectId | string): Promise<LeanDocument<inf.IPhoto> | null> =>
+export const deletePhoto = (id: Types.ObjectId | string): Promise<LeanDocument<inf.Photo> | null> =>
   PhotoModel.findByIdAndDelete(id)
-    .populate('details.imageTags', 'tag')
-    .populate('details.photographer', 'email name')
+    .populate('tags', 'tag')
+    .populate('photographer', 'email name')
     .lean()
-    .then((photo): LeanDocument<inf.IPhoto> | null => photo);
+    .then((photo): LeanDocument<inf.Photo> | null => photo);
 
-export const findPhoto = (createdAt: Date): Promise<LeanDocument<inf.IPhoto> | null> =>
+export const findPhoto = (createdAt: Date): Promise<LeanDocument<inf.Photo> | null> =>
   PhotoModel.findOne({ createdAt })
-    .populate('details.imageTags', 'tag')
-    .populate('details.photographer', 'email name')
+    .populate('tags', 'tag')
+    .populate('photographer', 'email name')
     .lean()
-    .then((photo): LeanDocument<inf.IPhoto> | null => photo);
+    .then((photo): LeanDocument<inf.Photo> | null => photo);
 
-export const getPhoto = (id: Types.ObjectId | string): Promise<LeanDocument<inf.IPhoto> | null> =>
+export const getPhoto = (id: Types.ObjectId | string): Promise<LeanDocument<inf.Photo> | null> =>
   PhotoModel.findById(id)
-    .populate('details.imageTags', 'tag')
-    .populate('details.photographer', 'email name')
+    .populate('tags', 'tag')
+    .populate('photographer', 'email name')
     .lean()
-    .then((photo): LeanDocument<inf.IPhoto> | null => photo);
+    .then((photo): LeanDocument<inf.Photo> | null => photo);
 
-export const getPhotos = (query: typ.PhotosQuery): Promise<LeanDocument<inf.IPhoto[]>> =>
+export const getPhotos = (query: typ.PhotosQuery): Promise<LeanDocument<inf.Photo[]>> =>
   PhotoModel.find(query.filter)
     .sort(query.sort)
     .skip(query.startIndex)
     .limit(query.limit)
-    .populate('details.imageTags', 'tag')
-    .populate('details.photographer', 'email name')
+    .populate('tags', 'tag')
+    .populate('photographer', 'email name')
     .lean()
-    .then((photos): LeanDocument<inf.IPhoto[]> => photos);
+    .then((photos): LeanDocument<inf.Photo[]> => photos);
 
-export const getRandomPhotos = (limit: number): Promise<LeanDocument<inf.IPhoto[]> | null> =>
+export const getRandomPhotos = (limit: number): Promise<LeanDocument<inf.Photo[]> | null> =>
   PhotoModel.aggregate([{ $sample: { size: limit } }]).then(
-    (randomPhotos): Promise<LeanDocument<inf.IPhoto[]> | null> =>
+    (randomPhotos): Promise<LeanDocument<inf.Photo[]> | null> =>
       PhotoModel.find({ _id: randomPhotos.map((photo): Types.ObjectId => photo._id) as any })
-        .populate('details.imageTags', 'tag')
-        .populate('details.photographer', 'email name')
+        .populate('tags', 'tag')
+        .populate('photographer', 'email name')
         .lean()
-        .then((addedPhotos): LeanDocument<inf.IPhoto[]> | null => addedPhotos),
+        .then((addedPhotos): LeanDocument<inf.Photo[]> | null => addedPhotos),
   );
 
 export const updatePhoto = (
   id: Types.ObjectId | string,
   updateQuery: Record<string, unknown>,
-): Promise<LeanDocument<inf.IPhoto> | null> =>
+): Promise<LeanDocument<inf.Photo> | null> =>
   PhotoModel.findByIdAndUpdate(id, updateQuery, { new: true, runValidators: true })
-    .populate('details.imageTags', 'tag')
-    .populate('details.photographer', 'email name')
+    .populate('tags', 'tag')
+    .populate('photographer', 'email name')
     .lean()
-    .then((photo): LeanDocument<inf.IPhoto> | null => photo);
+    .then((photo): LeanDocument<inf.Photo> | null => photo);

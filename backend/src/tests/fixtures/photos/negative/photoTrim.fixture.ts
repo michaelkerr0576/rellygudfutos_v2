@@ -1,18 +1,16 @@
 export default {
-  details: {
-    captureLocation: ' ',
-    imageCaption: '  ',
-    imageFile: '   ',
-    imageTitle: '    ',
-    originalImageName: '     ',
-    storeLink: '       ',
-  },
+  caption: '  ',
   equipment: {
-    cameraIso: ' 1 ',
-    cameraName: '1 ',
-    lensAperture: ' 1',
-    lensFocalLength: '  1  ',
-    lensName: '  1',
-    lensShutterSpeed: '1  ',
+    camera: '1 ',
+    lens: '  1',
   },
+  location: ' ',
+  settings: {
+    aperture: ' 1',
+    focalLength: '  1  ',
+    iso: ' 1 ',
+    shutterSpeed: '1  ',
+  },
+  storeLink: '       ',
+  title: '    ',
 };

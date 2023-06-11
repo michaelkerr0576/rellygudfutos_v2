@@ -18,17 +18,17 @@ describe('Photo Model', () => {
       const invalidPhoto = new PhotoModel({});
 
       const expectedRequiredPaths = [
-        'details.captureLocation',
-        'details.imageCaption',
-        'details.imageTags',
-        'details.imageTitle',
-        'details.storeLink',
-        'equipment.cameraIso',
-        'equipment.cameraName',
-        'equipment.lensAperture',
-        'equipment.lensFocalLength',
-        'equipment.lensName',
-        'equipment.lensShutterSpeed',
+        'caption',
+        'equipment.camera',
+        'equipment.lens',
+        'location',
+        'settings.aperture',
+        'settings.focalLength',
+        'settings.iso',
+        'settings.shutterSpeed',
+        'storeUrl',
+        'tags',
+        'title',
       ];
 
       try {
@@ -49,15 +49,15 @@ describe('Photo Model', () => {
       const invalidPhoto = new PhotoModel(photoMinLengthFixture);
 
       const expectedMinLengthPaths = [
-        'details.captureLocation',
-        'details.imageCaption',
-        'details.imageTitle',
-        'equipment.cameraIso',
-        'equipment.cameraName',
-        'equipment.lensAperture',
-        'equipment.lensFocalLength',
-        'equipment.lensName',
-        'equipment.lensShutterSpeed',
+        'caption',
+        'equipment.camera',
+        'equipment.lens',
+        'location',
+        'settings.aperture',
+        'settings.focalLength',
+        'settings.iso',
+        'settings.shutterSpeed',
+        'title',
       ];
 
       try {
@@ -80,12 +80,12 @@ describe('Photo Model', () => {
       const invalidPhoto = new PhotoModel(photoMaxLengthFixture);
 
       const expectedMaxLength8Paths = [
-        'equipment.cameraIso',
-        'equipment.lensAperture',
-        'equipment.lensFocalLength',
-        'equipment.lensShutterSpeed',
+        'settings.aperture',
+        'settings.focalLength',
+        'settings.iso',
+        'settings.shutterSpeed',
       ];
-      const expectedMaxLength51Paths = ['details.imageTitle', 'equipment.cameraName', 'equipment.lensName'];
+      const expectedMaxLength51Paths = ['title', 'equipment.camera', 'equipment.lens'];
 
       try {
         await invalidPhoto.save();
@@ -107,11 +107,11 @@ describe('Photo Model', () => {
           );
         });
 
-        expect(errors['details.captureLocation'].properties.message).toEqual(
-          `Path \`details.captureLocation\` (\`${utilFixture.chars101}\`) is longer than the maximum allowed length (100).`,
+        expect(errors.location.properties.message).toEqual(
+          `Path \`location\` (\`${utilFixture.chars101}\`) is longer than the maximum allowed length (100).`,
         );
-        expect(errors['details.imageCaption'].properties.message).toEqual(
-          `Path \`details.imageCaption\` (\`${utilFixture.chars301}\`) is longer than the maximum allowed length (300).`,
+        expect(errors.caption.properties.message).toEqual(
+          `Path \`caption\` (\`${utilFixture.chars301}\`) is longer than the maximum allowed length (300).`,
         );
       }
     });
@@ -127,8 +127,8 @@ describe('Photo Model', () => {
         expect(name).toEqual('ValidationError');
         expect(message).toEqual('Photo validation failed');
 
-        expect(errors['details.imageSize'].properties.message).toEqual(
-          '`XSMALL` is not a valid enum value for path `details.imageSize`.',
+        expect(errors.aspectRatio.properties.message).toEqual(
+          '`SQUARE` is not a valid enum value for path `aspectRatio`.',
         );
       }
     });
@@ -144,20 +144,16 @@ describe('Photo Model', () => {
         expect(name).toEqual('ValidationError');
         expect(message).toEqual('Photo validation failed');
 
-        expect(errors['details.storeLink'].properties.message).toEqual(
-          'Path `details.storeLink` is invalid (http://www.futos).',
+        expect(errors.storeUrl.properties.message).toEqual('Path `storeUrl` is invalid (http://www.futos).');
+        expect(errors['settings.iso'].properties.message).toEqual('Path `settings.iso` is invalid (string).');
+        expect(errors['settings.aperture'].properties.message).toEqual(
+          'Path `settings.aperture` is invalid (a/1.2).',
         );
-        expect(errors['equipment.cameraIso'].properties.message).toEqual(
-          'Path `equipment.cameraIso` is invalid (string).',
+        expect(errors['settings.focalLength'].properties.message).toEqual(
+          'Path `settings.focalLength` is invalid (100nn).',
         );
-        expect(errors['equipment.lensAperture'].properties.message).toEqual(
-          'Path `equipment.lensAperture` is invalid (a/1.2).',
-        );
-        expect(errors['equipment.lensFocalLength'].properties.message).toEqual(
-          'Path `equipment.lensFocalLength` is invalid (100nn).',
-        );
-        expect(errors['equipment.lensShutterSpeed'].properties.message).toEqual(
-          'Path `equipment.lensShutterSpeed` is invalid (1.200).',
+        expect(errors['settings.shutterSpeed'].properties.message).toEqual(
+          'Path `settings.shutterSpeed` is invalid (1.200).',
         );
       }
     });
@@ -165,20 +161,14 @@ describe('Photo Model', () => {
     test('Expect to validate and trim the relevant properties in PhotoModel', async () => {
       const invalidPhoto = new PhotoModel(photoTrimFixture);
 
-      const expectedRequiredPaths = [
-        'details.captureLocation',
-        'details.imageCaption',
-        'details.imageTags',
-        'details.imageTitle',
-        'details.storeLink',
-      ];
+      const expectedRequiredPaths = ['caption', 'location', 'storeUrl', 'tags', 'title'];
       const expectedMinLengthPaths = [
-        'equipment.cameraIso',
-        'equipment.cameraName',
-        'equipment.lensAperture',
-        'equipment.lensFocalLength',
-        'equipment.lensName',
-        'equipment.lensShutterSpeed',
+        'equipment.camera',
+        'equipment.lens',
+        'settings.aperture',
+        'settings.focalLength',
+        'settings.iso',
+        'settings.shutterSpeed',
       ];
 
       try {
@@ -204,30 +194,24 @@ describe('Photo Model', () => {
     test('Expect no validation errors for a valid PhotoModel', async () => {
       const validPhoto = new PhotoModel(photoRequestFixture);
 
-      const savedValidPhoto = await validPhoto.save();
+      const expectedResult = photoRequestFixture;
+      const actualResult = await validPhoto.save();
 
-      const { _id: expectedId, details: expectedDetails, equipment: expectedEquipment } = photoRequestFixture;
-      const { _id: actualId, details: actualDetails, equipment: actualEquipment } = savedValidPhoto;
-
-      expect(savedValidPhoto).toBeTruthy();
-      expect(actualId.toString()).toEqual(expectedId.toString());
-
-      // * Photo details
-      expect(actualDetails.captureDate).toEqual(new Date(expectedDetails.captureDate));
-      expect(actualDetails.captureLocation).toEqual(expectedDetails.captureLocation);
-      expect(actualDetails.imageCaption).toEqual(expectedDetails.imageCaption);
-      expect(actualDetails.imageSize).toEqual(expectedDetails.imageSize);
-      expect(actualDetails.imageTags.toString()).toEqual(expectedDetails.imageTags.toString());
-      expect(actualDetails.imageTitle).toEqual(expectedDetails.imageTitle);
-      expect(actualDetails.storeLink).toEqual(expectedDetails.storeLink);
-
-      // * Photo equipment
-      expect(actualEquipment.cameraIso).toEqual(expectedEquipment.cameraIso);
-      expect(actualEquipment.cameraName).toEqual(expectedEquipment.cameraName);
-      expect(actualEquipment.lensAperture).toEqual(expectedEquipment.lensAperture);
-      expect(actualEquipment.lensFocalLength).toEqual(expectedEquipment.lensFocalLength);
-      expect(actualEquipment.lensName).toEqual(expectedEquipment.lensName);
-      expect(actualEquipment.lensShutterSpeed).toEqual(expectedEquipment.lensShutterSpeed);
+      expect(actualResult).toBeTruthy();
+      expect(actualResult._id.toString()).toEqual(expectedResult._id.toString());
+      expect(actualResult.aspectRatio).toEqual(expectedResult.aspectRatio);
+      expect(actualResult.caption).toEqual(expectedResult.caption);
+      expect(actualResult.captureDate).toEqual(new Date(expectedResult.captureDate));
+      expect(actualResult.equipment.camera).toEqual(expectedResult.equipment.camera);
+      expect(actualResult.equipment.lens).toEqual(expectedResult.equipment.lens);
+      expect(actualResult.location).toEqual(expectedResult.location);
+      expect(actualResult.settings.aperture).toEqual(expectedResult.settings.aperture);
+      expect(actualResult.settings.focalLength).toEqual(expectedResult.settings.focalLength);
+      expect(actualResult.settings.iso).toEqual(expectedResult.settings.iso);
+      expect(actualResult.settings.shutterSpeed).toEqual(expectedResult.settings.shutterSpeed);
+      expect(actualResult.storeUrl).toEqual(expectedResult.storeUrl);
+      expect(actualResult.tags.toString()).toEqual(expectedResult.tags.toString());
+      expect(actualResult.title).toEqual(expectedResult.title);
     });
   });
 });

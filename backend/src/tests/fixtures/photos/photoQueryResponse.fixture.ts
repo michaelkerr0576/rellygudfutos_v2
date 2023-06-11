@@ -7,32 +7,32 @@ export default {
   filter: {
     $or: [
       {
-        'details.captureLocation': {
+        caption: {
           $regex: /test/i,
         },
       },
       {
-        'details.imageCaption': {
+        location: {
           $regex: /test/i,
         },
       },
       {
-        'details.imageTitle': {
+        title: {
           $regex: /test/i,
         },
       },
     ],
-    'details.imageTags': {
-      _id: [firstTag, secondTag],
-    },
-    'details.photographer': {
+    photographer: {
       _id: photoQueryFixture.user,
+    },
+    tags: {
+      _id: [firstTag, secondTag],
     },
   },
   limit: 1,
   page: 2,
   sort: {
-    'details.captureDate': 1,
+    captureDate: 1,
   },
   startIndex: 1,
 };

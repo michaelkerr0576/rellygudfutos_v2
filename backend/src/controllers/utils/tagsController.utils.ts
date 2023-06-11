@@ -39,7 +39,7 @@ export const getTagsQuery = (query: Request['query']): typ.PaginationQuery => {
 
 export const handleAddedTag = async (
   response: Response,
-  tag: LeanDocument<inf.ITag> | null,
+  tag: LeanDocument<inf.Tag> | null,
 ): Promise<void> => {
   if (!tag) {
     response.status(500);
@@ -54,7 +54,7 @@ export const handleAddedTag = async (
 
 export const handleDeletedTag = async (
   response: Response,
-  tag: LeanDocument<inf.ITag> | null,
+  tag: LeanDocument<inf.Tag> | null,
 ): Promise<void> => {
   if (!tag) {
     response.status(404);
@@ -67,7 +67,7 @@ export const handleDeletedTag = async (
   });
 };
 
-export const handleTag = async (response: Response, tag: LeanDocument<inf.ITag> | null): Promise<void> => {
+export const handleTag = async (response: Response, tag: LeanDocument<inf.Tag> | null): Promise<void> => {
   if (!tag) {
     response.status(404);
     throw new Error(errorMessageUtils.error404('Tag'));
@@ -81,7 +81,7 @@ export const handleTag = async (response: Response, tag: LeanDocument<inf.ITag> 
 
 export const handleTags = async (
   response: Response,
-  tags: LeanDocument<inf.ITag[]>,
+  tags: LeanDocument<inf.Tag[]>,
   tagsQuery: typ.PaginationQuery,
 ): Promise<void> => {
   const isTagsEmpty = tags.length === 0;
@@ -104,7 +104,7 @@ export const handleTags = async (
 
 export const handleUpdatedTag = async (
   response: Response,
-  tag: LeanDocument<inf.ITag> | null,
+  tag: LeanDocument<inf.Tag> | null,
 ): Promise<void> => {
   if (!tag) {
     response.status(404);

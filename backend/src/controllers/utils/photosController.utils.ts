@@ -80,11 +80,11 @@ export const getPhotosFilter = (
 
   const tagIds = Array.isArray(tags) ? tags : [];
   if (tagIds.length > 0) {
-    filter = { ...filter, 'details.imageTags': { _id: tagIds } };
+    filter = { ...filter, tags: { _id: tagIds } };
   }
 
   if (user) {
-    filter = { ...filter, 'details.photographer': { _id: user } };
+    filter = { ...filter, photographer: { _id: user } };
   }
 
   const searchString = search.toString();
@@ -94,9 +94,9 @@ export const getPhotosFilter = (
     filter = {
       ...filter,
       $or: [
-        { 'details.captureLocation': { $regex: pattern } },
-        { 'details.imageCaption': { $regex: pattern } },
-        { 'details.imageTitle': { $regex: pattern } },
+        { caption: { $regex: pattern } },
+        { location: { $regex: pattern } },
+        { title: { $regex: pattern } },
       ],
     };
   }
@@ -107,21 +107,21 @@ export const getPhotosFilter = (
 export const getPhotosSort = (
   sort: enm.PhotoSortOptions,
 ): typDb.PhotosSortColumnsWithDirection | enm.PhotoSortOptions.RANDOM => {
-  const sortUpperCase = sort.toUpperCase();
+  const sortLowerCase = sort.toLowerCase();
 
-  switch (sortUpperCase) {
+  switch (sortLowerCase) {
     case enm.PhotoSortOptions.NEWEST:
-      return { 'details.captureDate': conSorting.DESCENDING };
+      return { captureDate: conSorting.DESCENDING };
     case enm.PhotoSortOptions.OLDEST:
-      return { 'details.captureDate': conSorting.ASCENDING };
+      return { captureDate: conSorting.ASCENDING };
     case enm.PhotoSortOptions.TITLE_AZ:
-      return { 'details.imageTitle': conSorting.ASCENDING };
+      return { title: conSorting.ASCENDING };
     case enm.PhotoSortOptions.TITLE_ZA:
-      return { 'details.imageTitle': conSorting.DESCENDING };
+      return { title: conSorting.DESCENDING };
     case enm.PhotoSortOptions.RANDOM:
       return enm.PhotoSortOptions.RANDOM;
     default:
-      return { 'details.captureDate': conSorting.DESCENDING };
+      return { captureDate: conSorting.DESCENDING };
   }
 };
 
@@ -157,15 +157,15 @@ export const getPhotosQuery = (query: Request['query']): typDb.PhotosQuery => {
 
 export const handleAddedPhoto = async (
   response: Response,
-  photo: LeanDocument<inf.IPhoto> | null,
+  photo: LeanDocument<inf.Photo> | null,
 ): Promise<void> => {
   if (!photo) {
     response.status(500);
     throw new Error(errorMessageUtils.error500NotFound('Photo'));
   }
 
-  const imageTags = photo.details.imageTags as inf.IPhotoImageTags[];
-  const photographer = photo.details.photographer as inf.IPhotoPhotographer;
+  const imageTags = photo.tags as inf.PhotoTag[];
+  const photographer = photo.photographer as inf.PhotoPhotographer;
 
   const photoId = photo._id;
   const tagIds = imageTags.map((tag): Types.ObjectId => tag._id);
@@ -182,18 +182,18 @@ export const handleAddedPhoto = async (
 
 export const handleDeletedPhoto = async (
   response: Response,
-  photo: LeanDocument<inf.IPhoto> | null,
+  photo: LeanDocument<inf.Photo> | null,
 ): Promise<void> => {
   if (!photo) {
     response.status(404);
     throw new Error(errorMessageUtils.error404('Photo'));
   }
 
-  const photographer = photo.details.photographer as inf.IPhotoPhotographer;
+  const photographer = photo.photographer as inf.PhotoPhotographer;
 
   const photoId = photo._id;
   const userId = photographer._id;
-  const s3ImageKey = photo.details.imageKey;
+  const s3ImageKey = photo.image.key;
 
   await tagsDbService.deleteTagPhotos(photoId);
   await usersDbService.deleteUserPhoto(userId, photoId);
@@ -207,7 +207,7 @@ export const handleDeletedPhoto = async (
 
 export const handlePhoto = async (
   response: Response,
-  photo: LeanDocument<inf.IPhoto> | null,
+  photo: LeanDocument<inf.Photo> | null,
 ): Promise<void> => {
   if (!photo) {
     response.status(404);
@@ -222,7 +222,7 @@ export const handlePhoto = async (
 
 export const handlePhotos = async (
   response: Response,
-  photos: LeanDocument<inf.IPhoto[]> | null,
+  photos: LeanDocument<inf.Photo[]> | null,
   photosQuery: typDb.PhotosQuery,
 ): Promise<void> => {
   if (!photos) {
@@ -254,14 +254,14 @@ export const handlePhotos = async (
 
 export const handleUpdatedPhoto = async (
   response: Response,
-  photo: LeanDocument<inf.IPhoto> | null,
+  photo: LeanDocument<inf.Photo> | null,
 ): Promise<void> => {
   if (!photo) {
     response.status(404);
     throw new Error(errorMessageUtils.error404('Photo'));
   }
 
-  const imageTags = photo.details.imageTags as inf.IPhotoImageTags[];
+  const imageTags = photo.tags as inf.PhotoTag[];
 
   const photoId = photo._id;
   const tagIds = imageTags.map((tag): Types.ObjectId => tag._id);
@@ -275,7 +275,7 @@ export const handleUpdatedPhoto = async (
 };
 
 export const uploadPhotoToS3 = async (file: Express.Multer.File): Promise<typS3.PhotoS3> => {
-  const imageKey = generalUtils.generateKey();
+  const key = generalUtils.generateKey();
 
   const fileBuffer = await sharp(file.buffer)
     .resize({
@@ -286,16 +286,18 @@ export const uploadPhotoToS3 = async (file: Express.Multer.File): Promise<typS3.
     .jpeg({
       mozjpeg: true,
     })
-    .toBuffer();
+    .toBuffer({ resolveWithObject: true });
 
-  await s3Middleware.uploadFile(fileBuffer as Buffer, imageKey, file.mimetype);
+  await s3Middleware.uploadFile(fileBuffer.data, key, file.mimetype);
 
-  const imageUrl = await s3Middleware.getFileUrl(imageKey);
+  const url = await s3Middleware.getFileUrl(key);
 
   return {
-    imageKey,
-    imageName: file.originalname,
-    imageType: 'image/jpeg',
-    imageUrl,
+    fileName: file.originalname,
+    fileType: fileBuffer.info.format,
+    height: fileBuffer.info.height,
+    key,
+    url,
+    width: fileBuffer.info.width,
   };
 };

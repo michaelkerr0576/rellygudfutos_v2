@@ -7,22 +7,22 @@ const [firstTag, secondTag] = tagsRequestFixture;
 
 export default {
   _id: '41224d776a326fb40f000002',
-  details: {
-    captureDate: '2011-11-11T11:11:11.111Z',
-    captureLocation: 'Test capture location',
-    imageCaption: 'Test image caption',
-    imageSize: enm.ImageSize.LARGE,
-    imageTags: [firstTag._id, secondTag._id],
-    imageTitle: 'Test image title',
-    photographer: userAdminRequestFixture._id,
-    storeLink: 'https:www.testStoreLink.html',
-  },
+  aspectRatio: enm.PhotoAspectRatio.LANDSCAPE,
+  caption: 'Test image caption',
+  captureDate: '2011-11-11T11:11:11.111Z',
   equipment: {
-    cameraIso: '100',
-    cameraName: 'Test camera name',
-    lensAperture: 'f/1.8',
-    lensFocalLength: '700mm',
-    lensName: 'Test lens name',
-    lensShutterSpeed: '1/1000',
+    camera: 'Test camera name',
+    lens: 'Test lens name',
   },
+  location: 'Test capture location',
+  photographer: userAdminRequestFixture._id,
+  settings: {
+    aperture: 'f/1.8',
+    focalLength: '700mm',
+    iso: '100',
+    shutterSpeed: '1/1000',
+  },
+  storeUrl: 'https:www.testStoreLink.html',
+  tags: [firstTag._id, secondTag._id],
+  title: 'Test image title',
 };

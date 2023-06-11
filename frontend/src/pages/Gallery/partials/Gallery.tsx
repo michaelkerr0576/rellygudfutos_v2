@@ -4,14 +4,14 @@ import ImageList from '@/components/dataDisplay/ImageList';
 import Alert from '@/components/feedback/Alert';
 import CircularProgress from '@/components/feedback/CircularProgress';
 import usePhotos from '@/hooks/queries/usePhotos';
-import { AspectRatio } from '@/ts/api/photos';
+import { PhotoAspectRatio } from '@/ts/api/photos';
 
 import useGallery from '../hooks/useGallery';
 
 // TODO - replace with API data
 const photos = [
   {
-    aspectRatio: AspectRatio.LANDSCAPE,
+    aspectRatio: PhotoAspectRatio.LANDSCAPE,
     id: '1',
     img: 'https://rellygudfutosuploads.s3-eu-west-1.amazonaws.com/20200316-IMG_5768-Edit.jpg',
     maxHeight: '720px',
@@ -19,7 +19,7 @@ const photos = [
     title: 'Landscape',
   },
   {
-    aspectRatio: AspectRatio.PORTRAIT,
+    aspectRatio: PhotoAspectRatio.PORTRAIT,
     id: '2',
     img: 'https://rellygudfutosuploads.s3-eu-west-1.amazonaws.com/20200316-IMG_5643.jpg',
     maxHeight: '1080px',
@@ -27,7 +27,7 @@ const photos = [
     title: 'Portrait',
   },
   {
-    aspectRatio: AspectRatio.PORTRAIT,
+    aspectRatio: PhotoAspectRatio.PORTRAIT,
     id: '3',
     img: 'https://rellygudfutosuploads.s3-eu-west-1.amazonaws.com/20200316-IMG_5643.jpg',
     maxHeight: '1080px',
@@ -35,7 +35,7 @@ const photos = [
     title: 'Portrait',
   },
   {
-    aspectRatio: AspectRatio.LANDSCAPE,
+    aspectRatio: PhotoAspectRatio.LANDSCAPE,
     id: '4',
     img: 'https://rellygudfutosuploads.s3-eu-west-1.amazonaws.com/20200316-IMG_5768-Edit.jpg',
     maxHeight: '720px',
@@ -43,7 +43,7 @@ const photos = [
     title: 'Landscape',
   },
   {
-    aspectRatio: AspectRatio.PORTRAIT,
+    aspectRatio: PhotoAspectRatio.PORTRAIT,
     id: '5',
     img: 'https://rellygudfutosuploads.s3-eu-west-1.amazonaws.com/20200316-IMG_5643.jpg',
     maxHeight: '1080px',
@@ -51,7 +51,7 @@ const photos = [
     title: 'Portrait',
   },
   {
-    aspectRatio: AspectRatio.PORTRAIT,
+    aspectRatio: PhotoAspectRatio.PORTRAIT,
     id: '6',
     img: 'https://rellygudfutosuploads.s3-eu-west-1.amazonaws.com/20200316-IMG_5643.jpg',
     maxHeight: '1080px',
@@ -59,7 +59,7 @@ const photos = [
     title: 'Portrait',
   },
   {
-    aspectRatio: AspectRatio.PORTRAIT,
+    aspectRatio: PhotoAspectRatio.PORTRAIT,
     id: '7',
     img: 'https://rellygudfutosuploads.s3-eu-west-1.amazonaws.com/20200316-IMG_5643.jpg',
     maxHeight: '1080px',
@@ -67,7 +67,7 @@ const photos = [
     title: 'Portrait',
   },
   {
-    aspectRatio: AspectRatio.LANDSCAPE,
+    aspectRatio: PhotoAspectRatio.LANDSCAPE,
     id: '8',
     img: 'https://rellygudfutosuploads.s3-eu-west-1.amazonaws.com/20200316-IMG_5768-Edit.jpg',
     maxHeight: '720px',
@@ -75,7 +75,7 @@ const photos = [
     title: 'Landscape',
   },
   {
-    aspectRatio: AspectRatio.LANDSCAPE,
+    aspectRatio: PhotoAspectRatio.LANDSCAPE,
     id: '9',
     img: 'https://rellygudfutosuploads.s3-eu-west-1.amazonaws.com/20200316-IMG_5768-Edit.jpg',
     maxHeight: '720px',
@@ -83,7 +83,7 @@ const photos = [
     title: 'Landscape',
   },
   {
-    aspectRatio: AspectRatio.PORTRAIT,
+    aspectRatio: PhotoAspectRatio.PORTRAIT,
     id: '10',
     img: 'https://rellygudfutosuploads.s3-eu-west-1.amazonaws.com/20200316-IMG_5643.jpg',
     maxHeight: '1080px',
@@ -91,7 +91,7 @@ const photos = [
     title: 'Portrait',
   },
   {
-    aspectRatio: AspectRatio.PORTRAIT,
+    aspectRatio: PhotoAspectRatio.PORTRAIT,
     id: '11',
     img: 'https://rellygudfutosuploads.s3-eu-west-1.amazonaws.com/20200316-IMG_5643.jpg',
     maxHeight: '1080px',
@@ -99,7 +99,7 @@ const photos = [
     title: 'Portrait',
   },
   {
-    aspectRatio: AspectRatio.LANDSCAPE,
+    aspectRatio: PhotoAspectRatio.LANDSCAPE,
     id: '12',
     img: 'https://rellygudfutosuploads.s3-eu-west-1.amazonaws.com/20200316-IMG_5768-Edit.jpg',
     maxHeight: '720px',
@@ -107,7 +107,7 @@ const photos = [
     title: 'Landscape',
   },
   {
-    aspectRatio: AspectRatio.PORTRAIT,
+    aspectRatio: PhotoAspectRatio.PORTRAIT,
     id: '13',
     img: 'https://rellygudfutosuploads.s3-eu-west-1.amazonaws.com/20200316-IMG_5643.jpg',
     maxHeight: '1080px',
@@ -115,7 +115,7 @@ const photos = [
     title: 'Portrait',
   },
   {
-    aspectRatio: AspectRatio.PORTRAIT,
+    aspectRatio: PhotoAspectRatio.PORTRAIT,
     id: '14',
     img: 'https://rellygudfutosuploads.s3-eu-west-1.amazonaws.com/20200316-IMG_5643.jpg',
     maxHeight: '1080px',
@@ -123,7 +123,7 @@ const photos = [
     title: 'Portrait',
   },
   {
-    aspectRatio: AspectRatio.LANDSCAPE,
+    aspectRatio: PhotoAspectRatio.LANDSCAPE,
     id: '15',
     img: 'https://rellygudfutosuploads.s3-eu-west-1.amazonaws.com/20200316-IMG_5768-Edit.jpg',
     maxHeight: '720px',

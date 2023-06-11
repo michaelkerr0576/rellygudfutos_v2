@@ -45,27 +45,20 @@ export const addPhoto = async (request: Request, response: Response, next: NextF
     return Promise.resolve();
   }
 
-  const { imageKey, imageName, imageType, imageUrl } = uploadedPhoto;
-
   const newPhoto = new PhotoModel({
     _id: new Types.ObjectId(),
     ...body,
-    details: {
-      ...body?.details,
-      imageKey,
-      imageName,
-      imageType,
-      imageUrl,
-      photographer: response.locals.user._id,
-    },
+    image: uploadedPhoto,
+    photographer: response.locals.user._id,
   });
 
   const photoId = newPhoto._id;
-  const photoTagIds = newPhoto?.details?.imageTags as Types.ObjectId[];
+  const photoTagIds = newPhoto?.tags as Types.ObjectId[];
+  const imageKey = newPhoto.image.key;
 
   return photosControllerUtils
     .checkPhotoTagsExist(response, photoTagIds)
-    .then((): Promise<LeanDocument<inf.IPhoto> | null> => photosDbService.addPhoto(newPhoto))
+    .then((): Promise<LeanDocument<inf.Photo> | null> => photosDbService.addPhoto(newPhoto))
     .then((photo): Promise<void> => photosControllerUtils.handleAddedPhoto(response, photo))
     .catch((error): void => controllerUtils.handleValidationError(response, error))
     .catch(

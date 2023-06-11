@@ -4,24 +4,24 @@ import tagsRequestFixture from '../tags/tagsRequest.fixture';
 import userAdminRequestFixture from '../users/userAdminRequest.fixture';
 import * as utilFixture from '../util.fixture';
 
-import photoImageDetailsFixture from './photoImageDetails.fixture';
+import photoImageFixture from './photoImage.fixture';
 import photoRequestFixture from './photoRequest.fixture';
 
 const [firstTag, secondTag] = tagsRequestFixture;
 
-const imageTags = [
+const tags = [
   {
-    _id: new Types.ObjectId(firstTag._id),
+    _id: Types.ObjectId(firstTag._id),
     tag: firstTag.tag,
   },
   {
-    _id: new Types.ObjectId(secondTag._id),
+    _id: Types.ObjectId(secondTag._id),
     tag: secondTag.tag,
   },
 ];
 
 const photographer = {
-  _id: new Types.ObjectId(userAdminRequestFixture._id),
+  _id: Types.ObjectId(userAdminRequestFixture._id),
   email: userAdminRequestFixture.email.toLowerCase(),
   name: userAdminRequestFixture.name,
 };
@@ -29,14 +29,11 @@ const photographer = {
 export default {
   ...photoRequestFixture,
   __v: 0,
-  _id: new Types.ObjectId(photoRequestFixture._id),
+  _id: Types.ObjectId(photoRequestFixture._id),
+  captureDate: new Date(photoRequestFixture.captureDate),
   createdAt: utilFixture.freezeDate,
-  details: {
-    ...photoRequestFixture.details,
-    ...photoImageDetailsFixture,
-    captureDate: new Date(photoRequestFixture.details.captureDate),
-    imageTags,
-    photographer,
-  },
+  image: photoImageFixture,
+  photographer,
+  tags,
   updatedAt: utilFixture.freezeDate,
 };

@@ -5,9 +5,9 @@ import * as s3Middleware from '@/middlewares/s3.middleware';
 import * as photosDbService from '@/services/photosDb.service';
 import * as tagsDbService from '@/services/tagsDb.service';
 import * as usersDbService from '@/services/usersDb.service';
+import photoFileFixture from '@/tests/fixtures/photos/photoFile.fixture';
 import photoIdFixture from '@/tests/fixtures/photos/photoId.fixture';
 import photoImageFixture from '@/tests/fixtures/photos/photoImage.fixture';
-import photoImageDetailsFixture from '@/tests/fixtures/photos/photoImageDetails.fixture';
 import photoQueryFixture from '@/tests/fixtures/photos/photoQuery.fixture';
 import photoQueryResponseFixture from '@/tests/fixtures/photos/photoQueryResponse.fixture';
 import photoResponseFixture from '@/tests/fixtures/photos/photoResponse.fixture';
@@ -23,19 +23,19 @@ import * as photosScripts from '@/tests/scripts/photos.scripts';
 import * as enm from '@/ts/enums/db.enum';
 import * as generalUtils from '@/utils/general.utils';
 
-import * as photosControllerUtils from '../photosController.utils';
+import * as photosControllerUtils from '../utils/photosController.utils';
 
 const mockS3DeleteFile = jest
   .spyOn(s3Middleware, 'deleteFile')
   .mockImplementation(() => Promise.resolve() as any);
 const mockS3GetFileUrl = jest
   .spyOn(s3Middleware, 'getFileUrl')
-  .mockImplementation(() => Promise.resolve(photoResponseFixture.details.imageUrl));
+  .mockImplementation(() => Promise.resolve(photoResponseFixture.image.url));
 const mockS3UploadFile = jest
   .spyOn(s3Middleware, 'uploadFile')
   .mockImplementation(() => Promise.resolve() as any);
 
-jest.spyOn(generalUtils, 'generateKey').mockReturnValue(photoResponseFixture.details.imageKey);
+jest.spyOn(generalUtils, 'generateKey').mockReturnValue(photoResponseFixture.image.key);
 
 const mockResponseStatus = jest.fn();
 const mockResponseJson = jest.fn();
@@ -47,7 +47,7 @@ const mockResponse: Partial<Response> = {
 
 const mockError = new Error('test error');
 
-const s3ImageKey = photoImageDetailsFixture.imageKey;
+const s3ImageKey = photoImageFixture.key;
 
 describe('Photos Controller Utils', () => {
   beforeAll(async () => {
@@ -150,17 +150,17 @@ describe('Photos Controller Utils', () => {
       const photosSort = photosControllerUtils.getPhotosSort(sort);
 
       expect(photosSort).toStrictEqual({
-        'details.captureDate': -1,
+        captureDate: -1,
       });
     });
 
     test('Expect to return capture date sorted by oldest', () => {
-      const sort = 'oldest' as any;
+      const sort = 'OlDeSt' as any;
 
       const photosSort = photosControllerUtils.getPhotosSort(sort);
 
       expect(photosSort).toStrictEqual({
-        'details.captureDate': 1,
+        captureDate: 1,
       });
     });
 
@@ -170,17 +170,17 @@ describe('Photos Controller Utils', () => {
       const photosSort = photosControllerUtils.getPhotosSort(sort);
 
       expect(photosSort).toStrictEqual({
-        'details.imageTitle': 1,
+        title: 1,
       });
     });
 
     test('Expect to return image title sorted by z - a', () => {
-      const sort = 'title_za' as any;
+      const sort = 'tItLe_Za' as any;
 
       const photosSort = photosControllerUtils.getPhotosSort(sort);
 
       expect(photosSort).toStrictEqual({
-        'details.imageTitle': -1,
+        title: -1,
       });
     });
 
@@ -198,7 +198,7 @@ describe('Photos Controller Utils', () => {
       const photosSort = photosControllerUtils.getPhotosSort(sort);
 
       expect(photosSort).toStrictEqual({
-        'details.captureDate': -1,
+        captureDate: -1,
       });
     });
   });
@@ -214,7 +214,7 @@ describe('Photos Controller Utils', () => {
         limit: 5,
         page: 1,
         sort: {
-          'details.captureDate': -1,
+          captureDate: -1,
         },
         startIndex: 0,
       });
@@ -423,20 +423,22 @@ describe('Photos Controller Utils', () => {
   describe('Upload Photo To S3', () => {
     test('Expect to return 200 photo updated', async () => {
       // * Controller Utils: upload photo to S3
-      const uploadPhotoToS3 = await photosControllerUtils.uploadPhotoToS3(photoImageFixture);
+      const uploadPhotoToS3 = await photosControllerUtils.uploadPhotoToS3(photoFileFixture);
 
       // * S3: expect photo to be added to bucket then photoUrl retrieved
-      const { imageKey } = photoResponseFixture.details;
-      const { buffer, mimetype } = photoImageFixture;
-      expect(mockS3UploadFile).toHaveBeenCalledWith(buffer, imageKey, mimetype);
-      expect(mockS3GetFileUrl).toHaveBeenCalledWith(imageKey);
+      const { key } = photoResponseFixture.image;
+      const { buffer, mimetype } = photoFileFixture;
+      expect(mockS3UploadFile).toHaveBeenCalledWith(buffer, key, mimetype);
+      expect(mockS3GetFileUrl).toHaveBeenCalledWith(key);
 
       // * Result
       expect(uploadPhotoToS3).toStrictEqual({
-        imageKey: 'key123',
-        imageName: 'testImage.jpg',
-        imageType: 'image/jpeg',
-        imageUrl: 'test.com',
+        fileName: 'testImage.jpg',
+        fileType: 'jpeg',
+        height: 720,
+        key: 'key123',
+        url: 'test.com',
+        width: 1080,
       });
     });
   });

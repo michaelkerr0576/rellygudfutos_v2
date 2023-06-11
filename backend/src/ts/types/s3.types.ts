@@ -1,6 +1,8 @@
 export type PhotoS3 = {
-  imageKey: string;
-  imageName: string;
-  imageType: string;
-  imageUrl: string;
+  fileName: string;
+  fileType: string;
+  height: number;
+  key: string;
+  url: string;
+  width: number;
 };

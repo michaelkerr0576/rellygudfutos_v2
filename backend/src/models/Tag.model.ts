@@ -3,7 +3,7 @@ import { model, Schema, Types } from 'mongoose';
 
 import * as inf from '@/ts/interfaces/db.interface';
 
-const tagSchema = new Schema<inf.ITag>(
+const tagSchema = new Schema<inf.Tag>(
   {
     _id: Types.ObjectId,
     photos: [
@@ -23,6 +23,6 @@ const tagSchema = new Schema<inf.ITag>(
   { timestamps: true },
 );
 
-const Tag = model<inf.ITag>('Tag', tagSchema);
+const Tag = model<inf.Tag>('Tag', tagSchema);
 
 export default Tag;

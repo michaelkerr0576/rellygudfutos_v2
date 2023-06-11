@@ -151,7 +151,7 @@ describe('Protect Route Middleware', () => {
       );
 
       // * Response
-      expect(mockResponse.locals).toEqual({ user: { _id: new Types.ObjectId(userAdminFixture._id) } });
+      expect(mockResponse.locals).toEqual({ user: { _id: Types.ObjectId(userAdminFixture._id) } });
       expect(mockNextFunction).toHaveBeenCalledWith();
     });
   });
@@ -240,7 +240,7 @@ describe('Protect Route Middleware', () => {
       );
 
       // * Response
-      expect(mockResponse.locals).toEqual({ user: { _id: new Types.ObjectId(userFixture._id) } });
+      expect(mockResponse.locals).toEqual({ user: { _id: Types.ObjectId(userFixture._id) } });
       expect(mockNextFunction).toHaveBeenCalledWith();
     });
   });

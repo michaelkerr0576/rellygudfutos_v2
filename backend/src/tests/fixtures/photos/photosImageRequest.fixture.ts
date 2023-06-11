@@ -1,4 +1,4 @@
-import photoImageDetailsFixture from './photoImageDetails.fixture';
+import photoImageFixture from './photoImage.fixture';
 import photosRequestFixture from './photosRequest.fixture';
 
 const [firstPhoto, secondPhoto, thirdPhoto] = photosRequestFixture;
@@ -6,23 +6,14 @@ const [firstPhoto, secondPhoto, thirdPhoto] = photosRequestFixture;
 export default [
   {
     ...firstPhoto,
-    details: {
-      ...firstPhoto.details,
-      ...photoImageDetailsFixture,
-    },
+    image: photoImageFixture,
   },
   {
     ...secondPhoto,
-    details: {
-      ...secondPhoto.details,
-      ...photoImageDetailsFixture,
-    },
+    image: photoImageFixture,
   },
   {
     ...thirdPhoto,
-    details: {
-      ...thirdPhoto.details,
-      ...photoImageDetailsFixture,
-    },
+    image: photoImageFixture,
   },
 ];

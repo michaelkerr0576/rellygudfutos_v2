@@ -42,7 +42,7 @@ export const getUsersQuery = (query: Request['query']): typ.PaginationQuery => {
 
 export const handleAddedUser = async (
   response: Response,
-  user: LeanDocument<inf.IUser> | null,
+  user: LeanDocument<inf.User> | null,
 ): Promise<void> => {
   if (!user) {
     response.status(500);
@@ -60,7 +60,7 @@ export const handleAddedUser = async (
 
 export const handleDeletedUser = async (
   response: Response,
-  user: LeanDocument<inf.IUser> | null,
+  user: LeanDocument<inf.User> | null,
 ): Promise<void> => {
   if (!user) {
     response.status(404);
@@ -75,7 +75,7 @@ export const handleDeletedUser = async (
 
 export const handleLoggedInUser = async (
   response: Response,
-  user: LeanDocument<inf.IUser> | null,
+  user: LeanDocument<inf.User> | null,
   typedPassword: string,
 ): Promise<void> => {
   if (!user) {
@@ -105,7 +105,7 @@ export const handleLoggedInUser = async (
 
 export const handleUpdatedUser = async (
   response: Response,
-  user: LeanDocument<inf.IUser> | null,
+  user: LeanDocument<inf.User> | null,
 ): Promise<void> => {
   if (!user) {
     response.status(404);
@@ -118,7 +118,7 @@ export const handleUpdatedUser = async (
   });
 };
 
-export const handleUser = async (response: Response, user: LeanDocument<inf.IUser> | null): Promise<void> => {
+export const handleUser = async (response: Response, user: LeanDocument<inf.User> | null): Promise<void> => {
   if (!user) {
     response.status(404);
     throw new Error(errorMessageUtils.error404('User'));
@@ -132,7 +132,7 @@ export const handleUser = async (response: Response, user: LeanDocument<inf.IUse
 
 export const handleUsers = async (
   response: Response,
-  users: LeanDocument<inf.IUser[]>,
+  users: LeanDocument<inf.User[]>,
   usersQuery: typ.PaginationQuery,
 ): Promise<void> => {
   const isUsersEmpty = users.length === 0;

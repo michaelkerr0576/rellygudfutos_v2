@@ -1,28 +1,27 @@
 export enum QueryStatus {
-  FAILED = 'FAILED',
-  PENDING = 'PENDING',
-  SUCCESS = 'SUCCESS',
+  FAILED = 'failed',
+  PENDING = 'pending',
+  SUCCESS = 'success',
 }
 
 // #region Photo Enum
-export enum ImageSize {
-  SMALL = 'SMALL',
-  MEDIUM = 'MEDIUM',
-  LARGE = 'LARGE',
+export enum PhotoAspectRatio {
+  LANDSCAPE = 'landscape',
+  PORTRAIT = 'portrait',
 }
 
 export enum PhotoSortOptions {
-  NEWEST = 'NEWEST',
-  OLDEST = 'OLDEST',
-  TITLE_AZ = 'TITLE_AZ',
-  TITLE_ZA = 'TITLE_ZA',
-  RANDOM = 'RANDOM',
+  NEWEST = 'newest',
+  OLDEST = 'oldest',
+  TITLE_AZ = 'title_az',
+  TITLE_ZA = 'title_za',
+  RANDOM = 'random',
 }
 // #endregion
 
 // #region User Enum
 export enum UserRole {
-  ADMIN = 'ADMIN',
-  USER = 'USER',
+  ADMIN = 'admin',
+  USER = 'user',
 }
 // #endregion

@@ -2,6 +2,6 @@ import { Types } from 'mongoose';
 
 import photoRequestFixture from './photoRequest.fixture';
 
-const [firstTag, secondTag] = photoRequestFixture.details.imageTags;
+const [firstTag, secondTag] = photoRequestFixture.tags;
 
-export default [new Types.ObjectId(firstTag), new Types.ObjectId(secondTag)];
+export default [Types.ObjectId(firstTag), Types.ObjectId(secondTag)];

@@ -7,8 +7,8 @@ import * as tagsDbService from '@/services/tagsDb.service';
 import * as usersDbService from '@/services/usersDb.service';
 import photoEnumFixture from '@/tests/fixtures/photos/negative/photoEnum.fixture';
 import photoRequiredFixture from '@/tests/fixtures/photos/negative/photoRequired.fixture';
+import photoFileFixture from '@/tests/fixtures/photos/photoFile.fixture';
 import photoIdFixture from '@/tests/fixtures/photos/photoId.fixture';
-import photoImageFixture from '@/tests/fixtures/photos/photoImage.fixture';
 import photoRequestFixture from '@/tests/fixtures/photos/photoRequest.fixture';
 import photoResponseFixture from '@/tests/fixtures/photos/photoResponse.fixture';
 import photosResponseFixture from '@/tests/fixtures/photos/photosResponse.fixture';
@@ -31,12 +31,12 @@ const mockS3DeleteFile = jest
   .mockImplementation(() => Promise.resolve() as any);
 const mockS3GetFileUrl = jest
   .spyOn(s3Middleware, 'getFileUrl')
-  .mockImplementation(() => Promise.resolve(photoResponseFixture.details.imageUrl));
+  .mockImplementation(() => Promise.resolve(photoResponseFixture.image.url));
 const mockS3UploadFile = jest
   .spyOn(s3Middleware, 'uploadFile')
   .mockImplementation(() => Promise.resolve() as any);
 
-jest.spyOn(generalUtils, 'generateKey').mockReturnValue(photoResponseFixture.details.imageKey);
+jest.spyOn(generalUtils, 'generateKey').mockReturnValue(photoResponseFixture.image.key);
 
 const mockResponseStatus = jest.fn();
 const mockResponseJson = jest.fn();
@@ -67,7 +67,7 @@ describe('Photos Controller', () => {
     test('Expect to return 404 tag not found in image tags', async () => {
       const mockRequest: Partial<Request> = {
         body: photoRequestFixture,
-        file: photoImageFixture,
+        file: photoFileFixture,
       };
 
       await photosController
@@ -85,7 +85,7 @@ describe('Photos Controller', () => {
     test('Expect to return 400 photo validation failed', async () => {
       const mockRequest: Partial<Request> = {
         body: photoRequiredFixture,
-        file: photoImageFixture,
+        file: photoFileFixture,
       };
 
       await photosController
@@ -103,7 +103,7 @@ describe('Photos Controller', () => {
     test('Expect to return 201 photo added', async () => {
       const mockRequest: Partial<Request> = {
         body: photoRequestFixture,
-        file: photoImageFixture,
+        file: photoFileFixture,
       };
 
       // * Script: populate memory server with test data
@@ -139,10 +139,10 @@ describe('Photos Controller', () => {
       expect(addedUser).toEqual(photoUserResponseFixture);
 
       // * S3: expect photo to be added to bucket then photoUrl retrieved
-      const { imageKey } = photoResponseFixture.details;
-      const { buffer, mimetype } = photoImageFixture;
-      expect(mockS3UploadFile).toHaveBeenCalledWith(buffer, imageKey, mimetype);
-      expect(mockS3GetFileUrl).toHaveBeenCalledWith(imageKey);
+      const { key } = photoResponseFixture.image;
+      const { buffer, mimetype } = photoFileFixture;
+      expect(mockS3UploadFile).toHaveBeenCalledWith(buffer, key, mimetype);
+      expect(mockS3GetFileUrl).toHaveBeenCalledWith(key);
 
       // * Response
       expect(mockResponse.status).toBeCalledWith(201);
@@ -206,8 +206,8 @@ describe('Photos Controller', () => {
       expect(isUserPhotoFound).toBe(false);
 
       // * S3: expect photo to be deleted from bucket
-      const { imageKey } = photoResponseFixture.details;
-      expect(mockS3DeleteFile).toHaveBeenCalledWith(imageKey);
+      const { key } = photoResponseFixture.image;
+      expect(mockS3DeleteFile).toHaveBeenCalledWith(key);
 
       // * Response
       expect(mockResponse.status).toBeCalledWith(200);
@@ -518,7 +518,7 @@ describe('Photos Controller', () => {
       const mockRequest: Partial<Request> = {
         body: {
           ...photoRequestFixture,
-          details: { ...photoRequestFixture.details, imageSize: photoEnumFixture.details.imageSize },
+          aspectRatio: photoEnumFixture.aspectRatio,
         },
         params: { id: photoRequestFixture._id },
       };
@@ -562,15 +562,10 @@ describe('Photos Controller', () => {
       const mockRequest: Partial<Request> = {
         body: {
           ...photoRequestFixture,
-          details: {
-            ...photoRequestFixture.details,
-            captureDate: 'test immutable',
-            imageCaption: 'test updated caption',
-            imageFile: 'test immutable',
-            originalImageName: 'test immutable',
-            photographer: 'test immutable',
-          },
-          equipment: { ...photoRequestFixture.equipment, lensName: 'test updated lens name' },
+          caption: 'test updated caption',
+          captureDate: 'test immutable',
+          equipment: { ...photoRequestFixture.equipment, lens: 'test updated lens name' },
+          photographer: 'test immutable',
         },
         params: { id: photoRequestFixture._id },
       };
@@ -590,13 +585,10 @@ describe('Photos Controller', () => {
 
       const expectedPhoto = {
         ...photoResponseFixture,
-        details: {
-          ...photoResponseFixture.details,
-          imageCaption: 'test updated caption',
-        },
+        caption: 'test updated caption',
         equipment: {
           ...photoResponseFixture.equipment,
-          lensName: 'test updated lens name',
+          lens: 'test updated lens name',
         },
       };
 

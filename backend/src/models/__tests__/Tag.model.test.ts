@@ -79,16 +79,13 @@ describe('Tag Model', () => {
     test('Expect no validation errors for a valid TagModel', async () => {
       const validTag = new TagModel(tagRequestFixture);
 
-      const savedValidTag = await validTag.save();
+      const expectedResult = tagRequestFixture;
+      const actualResult = await validTag.save();
 
-      const { _id: expectedId, tag: expectedTag, photos: expectedPhotos } = tagRequestFixture;
-      const { _id: actualId, tag: actualTag, photos: actualPhotos } = savedValidTag;
-
-      expect(savedValidTag).toBeTruthy();
-      expect(actualId.toString()).toEqual(expectedId.toString());
-
-      expect(actualTag).toEqual(expectedTag);
-      expect(actualPhotos.toString()).toEqual(expectedPhotos.toString());
+      expect(actualResult).toBeTruthy();
+      expect(actualResult._id.toString()).toEqual(expectedResult._id.toString());
+      expect(actualResult.tag).toEqual(expectedResult.tag);
+      expect(actualResult.photos.toString()).toEqual(expectedResult.photos.toString());
     });
   });
 });

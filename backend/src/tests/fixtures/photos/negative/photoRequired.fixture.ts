@@ -1,5 +1,3 @@
 export default {
-  details: {
-    imageTags: [],
-  },
+  tags: [],
 };

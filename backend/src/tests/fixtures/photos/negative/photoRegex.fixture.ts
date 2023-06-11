@@ -1,13 +1,9 @@
 export default {
-  details: {
-    imageFile: 'testfile.ooo',
-    originalImageName: 'originaltestfile.hhh',
-    storeLink: 'http://www.futos',
+  settings: {
+    aperture: 'a/1.2',
+    focalLength: '100nn',
+    iso: 'string',
+    shutterSpeed: '1.200',
   },
-  equipment: {
-    cameraIso: 'string',
-    lensAperture: 'a/1.2',
-    lensFocalLength: '100nn',
-    lensShutterSpeed: '1.200',
-  },
+  storeUrl: 'http://www.futos',
 };

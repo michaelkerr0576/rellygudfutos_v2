@@ -1,59 +1,62 @@
 import { Pagination } from './common';
 
 // #region Photo Enum
-export enum AspectRatio {
+export enum PhotoAspectRatio {
   LANDSCAPE = 'landscape',
   PORTRAIT = 'portrait',
 }
-
-// TODO - Remove ImageSize when BE is updated
-export enum ImageSize {
-  SMALL = 'SMALL',
-  MEDIUM = 'MEDIUM',
-  LARGE = 'LARGE',
-}
 // #endregion
 
-// #region Photo Interfaces
-export interface PhotoTags {
+// #region Photo Response Types
+export interface Photo {
   _id: string;
-  tag: string;
+  aspectRatio: PhotoAspectRatio;
+  caption: string;
+  captureDate: Date;
+  equipment: PhotoEquipment;
+  image: PhotoImage;
+  location: string;
+  photographer: PhotoPhotographer;
+  settings: PhotoSettings;
+  storeUrl: string;
+  tags: PhotoTag[];
+  title: string;
 }
 
-export interface PhotoPhotographer {
+interface PhotoEquipment {
+  camera: string;
+  lens: string;
+}
+
+interface PhotoImage {
+  fileName: string;
+  fileType: string;
+  height: number;
+  key: string;
+  url: string;
+  width: number;
+}
+
+interface PhotoPhotographer {
   _id: string;
   email: string;
   name: string;
 }
 
-export interface Photo {
-  _id: string;
-  details: {
-    captureDate: Date;
-    captureLocation: string;
-    imageCaption: string;
-    imageKey: string;
-    imageName: string;
-    // TODO - remove imageSize and replace with aspectRatio
-    imageSize: ImageSize;
-    imageTags: PhotoTags[];
-    imageTitle: string;
-    imageType: string;
-    imageUrl: string;
-    photographer: PhotoPhotographer;
-    storeLink: string;
-  };
-  equipment: {
-    cameraIso: string;
-    cameraName: string;
-    lensAperture: string;
-    lensFocalLength: string;
-    lensName: string;
-    lensShutterSpeed: string;
-  };
-  image: File;
+interface PhotoSettings {
+  aperture: string;
+  focalLength: string;
+  iso: string;
+  shutterSpeed: string;
 }
 
+interface PhotoTag {
+  _id: string;
+  tag: string;
+}
+// #endregion
+
+// #region Photo Request Types
 export interface GetPhoto {
   data: Photo;
   message: string;
