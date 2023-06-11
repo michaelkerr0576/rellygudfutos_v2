@@ -1,17 +1,13 @@
 import {
   DeleteObjectCommand,
   DeleteObjectCommandOutput,
-  GetObjectCommand,
   PutObjectCommand,
-  PutObjectCommandOutput,
   S3Client,
 } from '@aws-sdk/client-s3';
-import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 
 /* 
  $ s3Middleware
   - deleteFile
-  - getFileUrl
   - uploadFile
 */
 
@@ -37,23 +33,7 @@ export const deleteFile = (key: string): Promise<DeleteObjectCommandOutput> => {
   return s3Client.send(new DeleteObjectCommand(params));
 };
 
-export const getFileUrl = async (key: string): Promise<string> => {
-  const params = {
-    Bucket: bucketName,
-    Key: key,
-  };
-
-  const getCommand = new GetObjectCommand(params);
-  const fileUrl = await getSignedUrl(s3Client, getCommand);
-
-  return fileUrl;
-};
-
-export const uploadFile = (
-  buffer: Buffer,
-  key: string,
-  mimetype: string,
-): Promise<PutObjectCommandOutput> => {
+export const uploadFile = async (buffer: Buffer, key: string, mimetype: string): Promise<string> => {
   const params = {
     Body: buffer,
     Bucket: bucketName,
@@ -61,5 +41,7 @@ export const uploadFile = (
     Key: key,
   };
 
-  return s3Client.send(new PutObjectCommand(params));
+  await s3Client.send(new PutObjectCommand(params));
+
+  return `https://${bucketName}.amazonaws.com/${key}`;
 };
