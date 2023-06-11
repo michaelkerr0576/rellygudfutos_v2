@@ -21,12 +21,16 @@ export const IMAGE_SMALL_SCREEN_GAP = 8; // * The gap between images in px
 type AspectRatio = 'landscape' | 'portrait';
 type Variant = 'grid' | 'list';
 
-export type ImageListItem = {
+type Img = {
+  url: string;
+  height: number;
+  width: number;
+};
+
+type ImageListItem = {
+  _id: string;
   aspectRatio: AspectRatio;
-  id: string;
-  img: string;
-  maxHeight?: string;
-  maxWidth?: string;
+  image: Img;
   title: string;
 };
 
@@ -56,8 +60,11 @@ export default function ImageList(props: ImageListProps): JSX.Element {
 
   const renderImageListItems = (): JSX.Element[] =>
     images.map((image): JSX.Element => {
+      const { _id: imageId, aspectRatio: imageAspectRatio, title: imageTitle } = image;
+      const { height: imageHeight, width: imageWidth, url: imageUrl } = image.image;
+
+      const isLandscapeAspectRatio = imageAspectRatio === 'landscape';
       const isListVariant = variant === 'list';
-      const isLandscapeAspectRatio = image.aspectRatio === 'landscape';
 
       const getColumns = (): number => {
         if (isListVariant) {
@@ -87,15 +94,15 @@ export default function ImageList(props: ImageListProps): JSX.Element {
         <MuiImageListItem
           className="rgf-imageList--listItem"
           cols={getColumns()}
-          key={image.id}
-          onClick={(): void => onClick(image.id)}
+          key={imageId}
+          onClick={(): void => onClick(imageId)}
           rows={getRows()}
         >
           <Image
-            alt={image.title}
-            maxHeight={image.maxHeight ? image.maxHeight : 'inherit'}
-            maxWidth={image.maxWidth ? image.maxWidth : 'inherit'}
-            src={image.img}
+            alt={imageTitle}
+            maxHeight={`${imageHeight}px`}
+            maxWidth={`${imageWidth}px`}
+            src={imageUrl}
           />
         </MuiImageListItem>
       );

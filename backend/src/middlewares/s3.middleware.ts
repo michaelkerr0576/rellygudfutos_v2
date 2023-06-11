@@ -44,8 +44,7 @@ export const getFileUrl = async (key: string): Promise<string> => {
   };
 
   const getCommand = new GetObjectCommand(params);
-  const oneMinute = 60;
-  const fileUrl = await getSignedUrl(s3Client, getCommand, { expiresIn: oneMinute });
+  const fileUrl = await getSignedUrl(s3Client, getCommand);
 
   return fileUrl;
 };
