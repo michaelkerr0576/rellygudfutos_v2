@@ -17,20 +17,15 @@ export default function PhotoDialog(): JSX.Element {
   const renderDialogContent = (): JSX.Element => {
     if (!photoId) {
       return (
-        <Alert
-          message="There is no photoId in the URL."
-          severity="warning"
-          suggestion="Please go back to the Gallery."
-        />
+        <Alert message="There is no photoId in the URL. Please go back to the Gallery" severity="warning" />
       );
     }
 
     if (isError) {
       return (
         <Alert
-          message="There was an error retrieving the photo from the server."
+          message="There was an error retrieving the photo from the server. Please try refreshing the page or go back to the Gallery"
           severity="error"
-          suggestion="Please try refreshing the page or go back to the Gallery."
         />
       );
     }

@@ -4,18 +4,17 @@ import * as enm from '../enums/db.enum';
 
 export type PaginatedResponse = {
   limit: number;
+  next?: PaginationPreviousNext;
   page: number;
   pages: number;
+  previous?: PaginationPreviousNext;
   total: number;
-  previous?: {
-    limit: number;
-    page: number;
-  };
-  next?: {
-    limit: number;
-    page: number;
-  };
 };
+
+interface PaginationPreviousNext {
+  limit: number;
+  page: number;
+}
 
 export type PaginationQuery = {
   endIndex: number;
@@ -37,8 +36,8 @@ export type PhotosQuery = PaginationQuery & {
 };
 
 export type PhotosFilterColumnsWithPattern = {
-  tags?: { _id: string[] };
   photographer?: { _id: string };
+  tags?: { _id: string[] };
   $or?: [{ [Key in PhotosSearchColumns as any]?: RegexPattern }];
 };
 

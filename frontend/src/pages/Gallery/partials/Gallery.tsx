@@ -19,14 +19,20 @@ const StyledGallery = styled('div')(({ theme }): { [key: string]: any } => ({
 
 export default function Gallery(): JSX.Element {
   const { galleryVariant, togglePhotoDialog } = useGallery();
-  const { data: photos, isError, isLoading } = usePhotos();
+  const { data: photos, error, isError, isLoading } = usePhotos();
+
+  const isPhotosNotFound = isError && error?.response?.status === 404;
+  if (isPhotosNotFound) {
+    const errorMessage = error?.response?.data?.message;
+
+    return <Alert message={errorMessage} severity="warning" />;
+  }
 
   if (isError) {
     return (
       <Alert
-        message="There was an error retrieving photos from the server."
+        message="There was an error retrieving photos from the server. Please try refreshing the page"
         severity="error"
-        suggestion="Please try refreshing the page."
       />
     );
   }

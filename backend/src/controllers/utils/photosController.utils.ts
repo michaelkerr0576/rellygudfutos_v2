@@ -78,13 +78,13 @@ export const getPhotosFilter = (
 ): typDb.PhotosFilterColumnsWithPattern => {
   let filter = {};
 
+  if (user) {
+    filter = { ...filter, photographer: { _id: user } };
+  }
+
   const tagIds = Array.isArray(tags) ? tags : [];
   if (tagIds.length > 0) {
     filter = { ...filter, tags: { _id: tagIds } };
-  }
-
-  if (user) {
-    filter = { ...filter, photographer: { _id: user } };
   }
 
   const searchString = search.toString();

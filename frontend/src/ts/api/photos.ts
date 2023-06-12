@@ -1,5 +1,3 @@
-import { Pagination } from './common';
-
 // #region Photo Enum
 export enum PhotoAspectRatio {
   LANDSCAPE = 'landscape',
@@ -53,18 +51,5 @@ interface PhotoSettings {
 interface PhotoTag {
   _id: string;
   tag: string;
-}
-// #endregion
-
-// #region Photo Request Types
-export interface GetPhoto {
-  data: Photo;
-  message: string;
-}
-
-export interface GetPhotos {
-  data: Photo[];
-  message: string;
-  pagination: Pagination;
 }
 // #endregion
