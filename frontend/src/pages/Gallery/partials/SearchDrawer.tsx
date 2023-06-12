@@ -13,6 +13,7 @@ import Drawer from '@/components/navigation/Drawer';
 import Paper from '@/components/surfaces/Paper';
 import { GallerySortBy } from '@/ts/store';
 
+import { SEARCH_DRAWER_BUTTON_ACTIONS_HEIGHT } from '../constants';
 import useGallery from '../hooks/useGallery';
 
 // TODO - replace with API data
@@ -33,8 +34,6 @@ const tags = [
   { id: 14, label: 'Cityscape 5' },
   { id: 15, label: 'Cityscape 6' },
 ];
-
-export const SEARCH_DRAWER_BUTTON_ACTIONS_HEIGHT = '74.25px';
 
 const StyledDrawer = styled(Drawer)(({ theme }): { [key: string]: any } => ({
   '.rgf-drawer--children': {

@@ -12,8 +12,6 @@ import useGallery from '../hooks/useGallery';
 
 import SearchDrawer from './SearchDrawer';
 
-export const FIXED_GALLERY_BOTTOM_NAVIGATION_HEIGHT = '56px';
-
 export default function GalleryBottomNavigation(): JSX.Element {
   const { colorMode, toggleColorMode } = useThemes();
   const { toggleSearchDrawer, galleryNavigationValue, toggleGalleryNavigationValue } = useGallery();

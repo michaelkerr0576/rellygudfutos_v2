@@ -6,7 +6,7 @@ import { styled } from '@mui/material/styles';
 
 export interface AlertProps {
   className?: MuiAlertProps['className'];
-  message?: string;
+  message: string;
   severity: MuiAlertProps['severity'];
 }
 
@@ -17,7 +17,7 @@ const StyledMuiAlert = styled(MuiAlert)(({ theme }): { [key: string]: any } => (
 }));
 
 export default function Alert(props: AlertProps): JSX.Element {
-  const { className = '', message = '', severity } = props;
+  const { className = '', message, severity } = props;
 
   const getTitleText = (): string => {
     switch (severity) {
@@ -32,12 +32,10 @@ export default function Alert(props: AlertProps): JSX.Element {
     }
   };
 
-  const getMessage = (): string => message || 'There was an unexpected error';
-
   return (
     <StyledMuiAlert className={clsx('rgf-alert', { [className]: !!className })} severity={severity}>
       <MuiAlertTitle>{getTitleText()}</MuiAlertTitle>
-      {getMessage()}
+      {message}
     </StyledMuiAlert>
   );
 }

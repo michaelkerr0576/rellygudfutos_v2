@@ -4,13 +4,7 @@ import { getPhoto } from '@/services/photos.service';
 import { ApiErrorResponse, ApiResponse } from '@/ts/api/data';
 import { Photo } from '@/ts/api/photos';
 
-interface UsePhotoQueryParam {
-  photoId: string;
-}
-
-export default function usePhoto({
-  photoId,
-}: UsePhotoQueryParam): UseQueryResult<ApiResponse<Photo>, ApiErrorResponse> {
+export default function usePhoto(photoId: string): UseQueryResult<ApiResponse<Photo>, ApiErrorResponse> {
   return useQuery({
     cacheTime: 30 * (60 * 1000), // 30 mins
     queryFn: (): Promise<ApiResponse<Photo>> => getPhoto(photoId),

@@ -1,7 +1,7 @@
 import { styled } from '@mui/material/styles';
 
 import Container from '@/components/layout/Container';
-import { FIXED_GALLERY_BOTTOM_NAVIGATION_HEIGHT } from '@/pages/Gallery/partials/GalleryBottomNavigation';
+import { FIXED_GALLERY_BOTTOM_NAVIGATION_HEIGHT } from '@/pages/Gallery/constants';
 
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import { FIXED_HEADER_HEIGHT } from '../Header/Header';

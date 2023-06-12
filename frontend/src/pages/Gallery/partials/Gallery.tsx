@@ -4,10 +4,10 @@ import ImageList from '@/components/dataDisplay/ImageList';
 import Alert from '@/components/feedback/Alert';
 import CircularProgress from '@/components/feedback/CircularProgress';
 import usePhotos from '@/hooks/queries/usePhotos';
+import useErrorMessage from '@/hooks/shared/useErrorMessage';
 
+import { GALLERY_MAX_WIDTH } from '../constants';
 import useGallery from '../hooks/useGallery';
-
-export const GALLERY_MAX_WIDTH = '1600px';
 
 const StyledGallery = styled('div')(({ theme }): { [key: string]: any } => ({
   margin: theme.spacing(-1),
@@ -21,20 +21,12 @@ export default function Gallery(): JSX.Element {
   const { galleryVariant, togglePhotoDialog } = useGallery();
   const { data: photos, error, isError, isLoading } = usePhotos();
 
-  const isPhotosNotFound = isError && error?.response?.status === 404;
-  if (isPhotosNotFound) {
-    const errorMessage = error?.response?.data?.message;
-
-    return <Alert message={errorMessage} severity="warning" />;
-  }
+  const defaultErrorMessage =
+    'There was an error retrieving photos from the server. Please try refreshing the page';
+  const { errorMessage, errorSeverity } = useErrorMessage(error, defaultErrorMessage);
 
   if (isError) {
-    return (
-      <Alert
-        message="There was an error retrieving photos from the server. Please try refreshing the page"
-        severity="error"
-      />
-    );
+    return <Alert message={errorMessage || defaultErrorMessage} severity={errorSeverity || 'error'} />;
   }
 
   if (isLoading) {
