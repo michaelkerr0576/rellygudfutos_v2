@@ -15,7 +15,7 @@ export interface UseGallery {
   isPhotoDialogOpen: boolean;
   isSearchDrawerOpen: boolean;
   toggleGalleryNavigationValue: (value: string) => void;
-  togglePhotoDialog: (isOpen: boolean, photoId: string) => void;
+  togglePhotoDialog: (isOpen: boolean, photoId?: string) => void;
   toggleSearchDrawer: (isOpen: boolean) => void;
 }
 
@@ -87,8 +87,8 @@ export default function useGallery(): UseGallery {
     setGalleryNavigationValue(value as GalleryNavigationValue);
   };
 
-  const togglePhotoDialog = (isOpen: boolean, photoId: string): void => {
-    if (isOpen) {
+  const togglePhotoDialog = (isOpen: boolean, photoId?: string): void => {
+    if (photoId && isOpen) {
       navigate(`/photo/${photoId}`);
     } else {
       navigate('/');

@@ -5,28 +5,26 @@ import Alert from '@/components/feedback/Alert';
 import CircularProgress from '@/components/feedback/CircularProgress';
 import Button from '@/components/inputs/Button';
 import usePhoto from '@/hooks/queries/usePhoto';
+import useErrorMessage from '@/hooks/shared/useErrorMessage';
 
 import useGallery from '../hooks/useGallery';
 
 export default function PhotoDialog(): JSX.Element {
   const { photoId = '' } = useParams();
   const { isPhotoDialogOpen, togglePhotoDialog } = useGallery();
-  const { isError, isLoading } = usePhoto(photoId);
+  const { isError, isLoading, error } = usePhoto(photoId);
+
+  const defaultErrorMessage =
+    'There was an error retrieving the photo from the server. Please try refreshing the page or go back to the Gallery';
+  const { errorMessage, errorSeverity } = useErrorMessage(error, defaultErrorMessage);
+
+  if (!photoId) {
+    togglePhotoDialog(false);
+  }
 
   const renderDialogContent = (): JSX.Element => {
-    if (!photoId) {
-      return (
-        <Alert message="There is no photoId in the URL. Please go back to the Gallery" severity="warning" />
-      );
-    }
-
     if (isError) {
-      return (
-        <Alert
-          message="There was an error retrieving the photo from the server. Please try refreshing the page or go back to the Gallery"
-          severity="error"
-        />
-      );
+      return <Alert message={errorMessage || defaultErrorMessage} severity={errorSeverity || 'error'} />;
     }
 
     // TODO - Replace with skeleton loader
