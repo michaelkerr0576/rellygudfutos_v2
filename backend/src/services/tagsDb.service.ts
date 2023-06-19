@@ -1,9 +1,9 @@
 import { LeanDocument, Types } from 'mongoose';
 
 import TagModel from '@/models/Tag.model';
-import * as enm from '@/ts/enums/db.enum';
-import * as inf from '@/ts/interfaces/db.interface';
-import * as typ from '@/ts/types/db.types';
+import * as enm from '@/types/enums/db.enum';
+import * as inf from '@/types/interfaces/db.interface';
+import * as typ from '@/types/types/db.types';
 
 /* 
  $ tagsDbService

@@ -6,7 +6,7 @@ import ToggleDarkModeIcon from '@/assets/icons/ToggleDarkModeIcon';
 import Box from '@/components/layout/Box';
 import BottomNavigation from '@/components/navigation/BottomNavigation';
 import useThemes from '@/hooks/shared/useThemes';
-import { GalleryNavigationValue } from '@/ts/store';
+import { GalleryNavigationValue } from '@/types/store.types';
 
 import useGallery from '../hooks/useGallery';
 

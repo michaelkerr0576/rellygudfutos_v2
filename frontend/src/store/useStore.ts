@@ -8,7 +8,7 @@ import {
   GalleryTagsFilter,
   GalleryVariant,
   State,
-} from '@/ts/store';
+} from '@/types/store.types';
 
 const useStore = create<State>()(
   // * Enables Redux devtools

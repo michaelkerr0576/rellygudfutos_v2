@@ -5,6 +5,7 @@ import MuiBox, { BoxProps as MuiBoxProps } from '@mui/material/Box';
 export interface BoxProps {
   ariaLabel?: MuiBoxProps['aria-label'];
   ariaRole?: MuiBoxProps['role'];
+  boxRef?: MuiBoxProps['ref'];
   children: React.ReactNode;
   className?: MuiBoxProps['className'];
   onClick?: MuiBoxProps['onClick'];
@@ -15,6 +16,7 @@ export default function Box(props: BoxProps): JSX.Element {
   const {
     ariaLabel = '',
     ariaRole = 'presentation',
+    boxRef = undefined,
     children,
     className = '',
     onClick = (): void => {},
@@ -26,6 +28,7 @@ export default function Box(props: BoxProps): JSX.Element {
       aria-label={ariaLabel}
       className={clsx('rgf-box', { [className]: !!className })}
       onClick={onClick}
+      ref={boxRef}
       role={ariaRole}
       sx={style}
     >

@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 
-import * as typ from '@/ts/types/error.types';
+import * as typ from '@/types/types/error.types';
 
 const nodeEnv = process.env.NODE_ENV || 'development';
 

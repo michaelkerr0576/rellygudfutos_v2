@@ -1,8 +1,8 @@
 import { Response } from 'express';
 
-import * as typDb from '@/ts/types/db.types';
-import * as typError from '@/ts/types/error.types';
-import * as con from '@/utils/constants/mongoDb';
+import * as con from '@/constants/mongoDb.constants';
+import * as typDb from '@/types/types/db.types';
+import * as typError from '@/types/types/error.types';
 import * as errorMessageUtils from '@/utils/errorMessage.utils';
 import * as generalUtils from '@/utils/general.utils';
 

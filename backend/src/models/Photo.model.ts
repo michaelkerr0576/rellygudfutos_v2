@@ -1,8 +1,8 @@
 /* eslint-disable sort-keys */
 import { model, Schema, Types } from 'mongoose';
 
-import * as enm from '@/ts/enums/db.enum';
-import * as inf from '@/ts/interfaces/db.interface';
+import * as enm from '@/types/enums/db.enum';
+import * as inf from '@/types/interfaces/db.interface';
 import * as regexUtils from '@/utils/regex.utils';
 
 import * as validateUtils from './utils/validate.utils';

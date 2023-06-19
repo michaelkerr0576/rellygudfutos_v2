@@ -1,8 +1,8 @@
 import { useQuery, UseQueryResult } from 'react-query';
 
 import { getPhoto } from '@/services/photos.service';
-import { ApiErrorResponse, ApiResponse } from '@/ts/api/data';
-import { Photo } from '@/ts/api/photos';
+import { ApiErrorResponse, ApiResponse } from '@/types/api/data.types';
+import { Photo } from '@/types/api/photo.types';
 
 export default function usePhoto(photoId: string): UseQueryResult<ApiResponse<Photo>, ApiErrorResponse> {
   return useQuery({

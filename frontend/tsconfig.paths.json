@@ -6,6 +6,8 @@
       "@/assets/*": ["./src/assets/*"],
       "@/components/": ["./src/components/"],
       "@/components/*": ["./src/components/*"],
+      "@/constants/": ["./src/constants/"],
+      "@/constants/*": ["./src/constants/*"],
       "@/hooks/": ["./src/hooks/"],
       "@/hooks/*": ["./src/hooks/*"],
       "@/layouts/": ["./src/layouts/"],
@@ -20,8 +22,8 @@
       "@/store/*": ["./src/store/*"],
       "@/tests/": ["./src/tests/"],
       "@/tests/*": ["./src/tests/*"],
-      "@/ts/": ["./src/ts/"],
-      "@/ts/*": ["./src/ts/*"],
+      "@/types/": ["./src/types/"],
+      "@/types/*": ["./src/types/*"],
       "@/utils/": ["./src/utils/"],
       "@/utils/*": ["./src/utils/*"]
     }

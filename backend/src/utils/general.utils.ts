@@ -1,7 +1,7 @@
 import crypto from 'crypto';
 import { Types } from 'mongoose';
 
-import * as con from '@/utils/constants/parsing';
+import * as con from '@/constants/parsing.constants';
 
 /* 
  $ generalUtils

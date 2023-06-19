@@ -2,11 +2,11 @@ import { Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import { LeanDocument } from 'mongoose';
 
+import * as con from '@/constants/pagination.constants';
 import * as usersDbService from '@/services/usersDb.service';
-import * as inf from '@/ts/interfaces/db.interface';
-import * as typ from '@/ts/types/db.types';
+import * as inf from '@/types/interfaces/db.interface';
+import * as typ from '@/types/types/db.types';
 import * as authUtils from '@/utils/auth.utils';
-import * as con from '@/utils/constants/pagination';
 import * as errorMessageUtils from '@/utils/errorMessage.utils';
 import * as responseMessageUtils from '@/utils/responseMessage.utils';
 

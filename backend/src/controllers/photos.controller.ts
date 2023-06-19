@@ -3,8 +3,8 @@ import { LeanDocument, Types } from 'mongoose';
 
 import PhotoModel from '@/models/Photo.model';
 import * as photosDbService from '@/services/photosDb.service';
-import * as enm from '@/ts/enums/db.enum';
-import * as inf from '@/ts/interfaces/db.interface';
+import * as enm from '@/types/enums/db.enum';
+import * as inf from '@/types/interfaces/db.interface';
 import * as generalUtils from '@/utils/general.utils';
 import * as regexUtils from '@/utils/regex.utils';
 

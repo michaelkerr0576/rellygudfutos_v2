@@ -1,7 +1,13 @@
 import { useNavigate } from 'react-router-dom';
 
 import useStore from '@/store/useStore';
-import { GalleryNavigationValue, GallerySortBy, GalleryTagsFilter, GalleryVariant, State } from '@/ts/store';
+import {
+  GalleryNavigationValue,
+  GallerySortBy,
+  GalleryTagsFilter,
+  GalleryVariant,
+  State,
+} from '@/types/store.types';
 
 export interface UseGallery {
   galleryNavigationValue: GalleryNavigationValue;

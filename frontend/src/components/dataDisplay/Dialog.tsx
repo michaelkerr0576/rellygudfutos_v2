@@ -90,7 +90,7 @@ export default function Dialog(props: DialogProps): JSX.Element {
     return (
       <Paper className="rgf-dialog--title" elevation={1}>
         <MuiDialogTitle>
-          <Stack horizontalAlignment={isSmallScreen ? 'start' : 'spaceBetween'} verticalAlignment="center">
+          <Stack alignItems="center" justifyContent={isSmallScreen ? 'start' : 'spaceBetween'}>
             {renderCloseButton()}
 
             {renderTitleText()}

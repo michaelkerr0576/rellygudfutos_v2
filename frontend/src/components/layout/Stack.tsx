@@ -4,44 +4,44 @@ import MuiStack, { StackProps as MuiStackProps } from '@mui/material/Stack';
 
 import Divider from '../dataDisplay/Divider';
 
+type AlignItems = 'start' | 'center' | 'end';
 type Direction = 'column' | 'row';
-type HorizontalAlignment = 'start' | 'center' | 'end' | 'spaceBetween' | 'spaceEvenly';
-type VerticalAlignment = 'start' | 'center' | 'end';
+type JustifyContent = 'start' | 'center' | 'end' | 'spaceBetween' | 'spaceEvenly';
 
 export interface StackProps {
+  alignItems?: AlignItems;
   children: React.ReactNode;
   className?: MuiStackProps['className'];
   direction?: Direction;
   hasDivider?: boolean;
-  horizontalAlignment?: HorizontalAlignment;
+  justifyContent?: JustifyContent;
   spacing?: MuiStackProps['spacing']; // * The gap elements in theme.spacing()
-  verticalAlignment?: VerticalAlignment;
 }
 
 export default function Stack(props: StackProps): JSX.Element {
   const {
+    alignItems = 'start',
     children,
     className = '',
     direction = 'row',
     hasDivider,
-    horizontalAlignment = 'start',
+    justifyContent = 'start',
     spacing = 0,
-    verticalAlignment = 'start',
   } = props;
 
   const getAlignItems = (): MuiStackProps['alignItems'] => {
-    switch (verticalAlignment) {
+    switch (alignItems) {
       case 'start':
         return 'flex-start';
       case 'end':
         return 'flex-end';
       default:
-        return verticalAlignment;
+        return alignItems;
     }
   };
 
   const getJustifyContent = (): MuiStackProps['justifyContent'] => {
-    switch (horizontalAlignment) {
+    switch (justifyContent) {
       case 'start':
         return 'flex-start';
       case 'end':
@@ -51,7 +51,7 @@ export default function Stack(props: StackProps): JSX.Element {
       case 'spaceEvenly':
         return 'space-evenly';
       default:
-        return horizontalAlignment;
+        return justifyContent;
     }
   };
 

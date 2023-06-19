@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
 import { LeanDocument } from 'mongoose';
 
+import * as con from '@/constants/pagination.constants';
 import * as tagsDbService from '@/services/tagsDb.service';
-import * as inf from '@/ts/interfaces/db.interface';
-import * as typ from '@/ts/types/db.types';
-import * as con from '@/utils/constants/pagination';
+import * as inf from '@/types/interfaces/db.interface';
+import * as typ from '@/types/types/db.types';
 import * as errorMessageUtils from '@/utils/errorMessage.utils';
 import * as responseMessageUtils from '@/utils/responseMessage.utils';
 

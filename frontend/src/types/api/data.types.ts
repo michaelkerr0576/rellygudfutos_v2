@@ -10,7 +10,7 @@ export interface ApiResponsePaginated<T> extends ApiResponse<T> {
   pagination: Pagination;
 }
 
-interface Pagination {
+export interface Pagination {
   limit: number;
   next?: PaginationPreviousNext;
   page: number;

@@ -1,8 +1,8 @@
 import jwt from 'jsonwebtoken';
 import { Types } from 'mongoose';
 
-import * as enm from '@/ts/enums/db.enum';
-import * as con from '@/utils/constants/auth';
+import * as con from '@/constants/auth.constants';
+import * as enm from '@/types/enums/db.enum';
 
 /* 
  $ authUtils

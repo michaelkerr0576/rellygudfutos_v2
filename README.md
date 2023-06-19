@@ -276,7 +276,7 @@ Each component will have a `className` to make it easier to customize from a par
 
 ### React Query
 
-React Query as a server-side state that reduces API requests :drooling_face:
+React Query as a server-side state that reduces API requests :drooling_face:. It handles a lot of fantastic things out of the box. Refocus fetch, stale data refetch, success | loading | error states and glorious infinite queries for beautiful pagination without clicking buttons. It can fetch the data one page ahead so the experience feels seamless to the user.
 
 Examples of hooks that will take data from API calls:
 
@@ -287,6 +287,8 @@ Examples of hooks that will take data from API calls:
 **Useful Links:**
 
 - [React Query Docs](https://react-query-v3.tanstack.com/overview)
+- [React Query Infinite Query - TanStack](https://tanstack.com/query/v4/docs/react/guides/infinite-queries)
+- [React Query Infinite Query - Medium](https://articles.wesionary.team/how-to-implement-infinite-scroll-using-react-query-5fd7c425908f)
 - [Youtube React Query Tutorial - Codevolution](https://www.youtube.com/watch?v=VtWkSCZX0Ec&list=PLC3y8-rFHvwjTELCrPrcZlo6blLBUspd2&ab_channel=Codevolution)
 
 ### Zustand

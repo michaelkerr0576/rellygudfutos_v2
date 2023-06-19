@@ -1,6 +1,6 @@
 import { Date, Document, Types } from 'mongoose';
 
-import * as enm from '@/ts/enums/db.enum';
+import * as enm from '@/types/enums/db.enum';
 
 // #region Photo Interface
 export interface Photo extends Document {

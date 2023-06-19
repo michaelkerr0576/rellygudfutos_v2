@@ -1,7 +1,7 @@
 import * as photosDbService from '@/services/photosDb.service';
 import * as tagsDbService from '@/services/tagsDb.service';
 import * as usersDbService from '@/services/usersDb.service';
-import * as typ from '@/ts/types/db.types';
+import * as typ from '@/types/types/db.types';
 
 import photoIdFixture from '../fixtures/photos/photoId.fixture';
 import photoImageRequestFixture from '../fixtures/photos/photoImageRequest.fixture';

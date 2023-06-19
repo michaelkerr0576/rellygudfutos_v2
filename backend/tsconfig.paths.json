@@ -6,6 +6,8 @@
       "@/configs/*": ["./src/configs/*"],
       "@/controllers/": ["./src/controllers/"],
       "@/controllers/*": ["./src/controllers/*"],
+      "@/constants/": ["./src/constants/"],
+      "@/constants/*": ["./src/constants/*"],
       "@/middlewares/": ["./src/middlewares/"],
       "@/middlewares/*": ["./src/middlewares/*"],
       "@/models/": ["./src/models/"],
@@ -16,8 +18,8 @@
       "@/services/*": ["./src/services/*"],
       "@/tests/": ["./src/tests/"],
       "@/tests/*": ["./src/tests/*"],
-      "@/ts/": ["./src/ts/"],
-      "@/ts/*": ["./src/ts/*"],
+      "@/types/": ["./src/types/"],
+      "@/types/*": ["./src/types/*"],
       "@/utils": ["./src/utils"],
       "@/utils/*": ["./src/utils/*"]
     }

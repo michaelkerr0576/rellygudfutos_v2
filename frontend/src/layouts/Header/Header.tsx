@@ -58,7 +58,7 @@ export default function Header(): JSX.Element {
       <StyledHeader className="rgf-header">
         <Paper elevation={1}>
           <Container>
-            <Stack verticalAlignment="center">
+            <Stack alignItems="center">
               <MenuDrawer />
 
               {renderLogoButton()}

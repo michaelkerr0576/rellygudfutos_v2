@@ -21,7 +21,7 @@ import userAdminRequestFixture from '@/tests/fixtures/users/userAdminRequest.fix
 import * as utilFixture from '@/tests/fixtures/util.fixture';
 import * as mongoMemoryServer from '@/tests/mongoMemoryServer';
 import * as photosScripts from '@/tests/scripts/photos.scripts';
-import * as enm from '@/ts/enums/db.enum';
+import * as enm from '@/types/enums/db.enum';
 import * as generalUtils from '@/utils/general.utils';
 
 import * as photosController from '../photos.controller';

@@ -1,4 +1,4 @@
-import * as typ from '@/ts/types/error.types';
+import * as typ from '@/types/types/error.types';
 
 /* 
  $ errorMessageUtils

@@ -5,7 +5,7 @@ import { alpha, createTheme, Theme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 import useStore from '@/store/useStore';
-import { ColorMode, State } from '@/ts/store';
+import { ColorMode, State } from '@/types/store.types';
 
 declare module '@mui/material/styles' {
   interface BreakpointOverrides {

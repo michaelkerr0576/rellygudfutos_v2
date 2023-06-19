@@ -1,5 +1,5 @@
 import useStore from '@/store/useStore';
-import { State } from '@/ts/store';
+import { State } from '@/types/store.types';
 
 export interface UseMenu {
   isAccountDrawerOpen: boolean;

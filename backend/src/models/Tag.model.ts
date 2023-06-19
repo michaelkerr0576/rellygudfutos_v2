@@ -1,7 +1,7 @@
 /* eslint-disable sort-keys */
 import { model, Schema, Types } from 'mongoose';
 
-import * as inf from '@/ts/interfaces/db.interface';
+import * as inf from '@/types/interfaces/db.interface';
 
 const tagSchema = new Schema<inf.Tag>(
   {

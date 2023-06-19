@@ -1,4 +1,4 @@
-import * as con from '@/utils/constants/sorting';
+import * as con from '@/constants/sorting.constants';
 
 import * as enm from '../enums/db.enum';
 

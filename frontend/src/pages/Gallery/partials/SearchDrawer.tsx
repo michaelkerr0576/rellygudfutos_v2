@@ -11,7 +11,7 @@ import Grid from '@/components/layout/Grid';
 import Stack from '@/components/layout/Stack';
 import Drawer from '@/components/navigation/Drawer';
 import Paper from '@/components/surfaces/Paper';
-import { GallerySortBy } from '@/ts/store';
+import { GallerySortBy } from '@/types/store.types';
 
 import { SEARCH_DRAWER_BUTTON_ACTIONS_HEIGHT } from '../constants';
 import useGallery from '../hooks/useGallery';

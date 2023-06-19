@@ -3,8 +3,8 @@ import jwt from 'jsonwebtoken';
 import { LeanDocument, Types } from 'mongoose';
 
 import * as usersDbService from '@/services/usersDb.service';
-import * as enm from '@/ts/enums/db.enum';
-import * as inf from '@/ts/interfaces/db.interface';
+import * as enm from '@/types/enums/db.enum';
+import * as inf from '@/types/interfaces/db.interface';
 import * as errorMessageUtils from '@/utils/errorMessage.utils';
 
 /* 

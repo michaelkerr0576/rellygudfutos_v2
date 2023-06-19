@@ -17,7 +17,7 @@ import Stack from '@/components/layout/Stack';
 import Drawer from '@/components/navigation/Drawer';
 import useMenu from '@/hooks/shared/useMenu';
 import useThemes from '@/hooks/shared/useThemes';
-import { ColorMode } from '@/ts/store';
+import { ColorMode } from '@/types/store.types';
 
 const StyledDrawer = styled(Drawer)(({ theme }): { [key: string]: any } => ({
   '.rgf-menuDrawer--header': {
@@ -44,7 +44,7 @@ export default function MenuDrawer(): JSX.Element {
     };
 
     return (
-      <Stack className="rgf-menuDrawer--header" verticalAlignment="center" spacing={0.5}>
+      <Stack className="rgf-menuDrawer--header" alignItems="center" spacing={0.5}>
         {renderMenuButton(false)}
 
         <LogoButton ariaLabel="really good photos" onClick={(): void => handleLogoButtonClick()}>

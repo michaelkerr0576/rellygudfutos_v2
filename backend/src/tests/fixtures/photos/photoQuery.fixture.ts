@@ -1,4 +1,4 @@
-import * as enm from '@/ts/enums/db.enum';
+import * as enm from '@/types/enums/db.enum';
 
 import tagsRequestFixture from '../tags/tagsRequest.fixture';
 import userAdminRequestFixture from '../users/userAdminRequest.fixture';

@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 
 import { AlertProps } from '@/components/feedback/Alert';
-import { ApiErrorResponse } from '@/ts/api/data';
+import { ApiErrorResponse } from '@/types/api/data.types';
 
 export interface UseError {
   errorCode: number | null;
