@@ -1,3 +1,4 @@
+import { RefObject } from 'react';
 import clsx from 'clsx';
 
 import MuiImageList, { ImageListProps as MuiImageListProps } from '@mui/material/ImageList';
@@ -37,6 +38,7 @@ type ImageListItem = {
 export interface ImageListProps {
   className?: MuiImageListProps['className'];
   images: ImageListItem[];
+  lastImageRef?: RefObject<any> | ((node?: Element | null) => void);
   maxWidth?: string;
   onClick: (imageId: string) => void;
   variant: Variant;
@@ -53,16 +55,17 @@ const StyledMuiImageList = styled(MuiImageList)((): { [key: string]: any } => ({
 }));
 
 export default function ImageList(props: ImageListProps): JSX.Element {
-  const { className = '', images, maxWidth = 'inherit', onClick, variant } = props;
+  const { className = '', images, lastImageRef = undefined, maxWidth = 'inherit', onClick, variant } = props;
 
   const theme = useTheme();
   const isMobileScreen = useMediaQuery(theme.breakpoints.only('mobile'));
 
   const renderImageListItems = (): JSX.Element[] =>
-    images.map((image): JSX.Element => {
+    images.map((image, index): JSX.Element => {
       const { _id: imageId, aspectRatio: imageAspectRatio, title: imageTitle } = image;
       const { height: imageHeight, width: imageWidth, url: imageUrl } = image.image;
 
+      const isLastImage = images.length - 1 === index;
       const isLandscapeAspectRatio = imageAspectRatio === 'landscape';
       const isListVariant = variant === 'list';
 
@@ -100,6 +103,7 @@ export default function ImageList(props: ImageListProps): JSX.Element {
         >
           <Image
             alt={imageTitle}
+            imageRef={isLastImage ? lastImageRef : undefined}
             maxHeight={`${imageHeight}px`}
             maxWidth={`${imageWidth}px`}
             src={imageUrl}

@@ -2,9 +2,8 @@ import { styled } from '@mui/material/styles';
 
 import ImageList from '@/components/dataDisplay/ImageList';
 import Alert from '@/components/feedback/Alert';
-import CircularProgress from '@/components/feedback/CircularProgress';
+import CircularProgress, { LOADING_PANEL_HEIGHT } from '@/components/feedback/CircularProgress';
 import Box from '@/components/layout/Box';
-import Stack from '@/components/layout/Stack';
 import usePhotos from '@/hooks/queries/usePhotos';
 import useErrorMessage from '@/hooks/shared/useErrorMessage';
 import useInfinitePagination from '@/hooks/shared/useInfinitePagination';
@@ -14,10 +13,6 @@ import { GALLERY_MAX_WIDTH } from '../constants';
 import useGallery from '../hooks/useGallery';
 
 const StyledGallery = styled('div')(({ theme }): { [key: string]: any } => ({
-  '.rgf-stack--gallery': {
-    minHeight: '100vh',
-  },
-
   margin: theme.spacing(-1),
 
   [theme.breakpoints.up('tablet')]: {
@@ -44,21 +39,17 @@ export default function Gallery(): JSX.Element {
 
   return (
     <StyledGallery className="rgf-gallery">
-      <Stack
-        alignItems="center"
-        className="rgf-stack--gallery"
-        direction="column"
-        justifyContent="spaceBetween"
-      >
-        <ImageList
-          images={photos}
-          maxWidth={GALLERY_MAX_WIDTH}
-          onClick={(photoId): void => togglePhotoDialog(true, photoId)}
-          variant={galleryVariant}
-        />
+      <ImageList
+        images={photos}
+        lastImageRef={inViewRef}
+        maxWidth={GALLERY_MAX_WIDTH}
+        onClick={(photoId): void => togglePhotoDialog(true, photoId)}
+        variant={galleryVariant}
+      />
 
-        <Box boxRef={inViewRef}>{isFetchingNextPage ? <CircularProgress variant="panel" /> : null}</Box>
-      </Stack>
+      <Box style={{ height: LOADING_PANEL_HEIGHT }}>
+        {isFetchingNextPage ? <CircularProgress variant="panel" /> : null}
+      </Box>
     </StyledGallery>
   );
 }

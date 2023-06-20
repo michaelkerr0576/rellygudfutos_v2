@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { RefObject, useState } from 'react';
 import clsx from 'clsx';
 
 import { styled } from '@mui/material/styles';
@@ -8,6 +8,7 @@ import Skeleton from '../feedback/Skeleton';
 export interface ImageProps {
   alt: string;
   className?: string;
+  imageRef?: RefObject<any> | ((node?: Element | null) => void);
   maxHeight?: string;
   maxWidth?: string;
   src: string;
@@ -22,17 +23,25 @@ const StyledImg = styled('img')((): { [key: string]: any } => ({
 }));
 
 export default function Image(props: ImageProps): JSX.Element {
-  const { alt, className = '', maxHeight = 'inherit', maxWidth = 'inherit', src } = props;
+  const {
+    alt,
+    className = '',
+    imageRef = undefined,
+    maxHeight = 'inherit',
+    maxWidth = 'inherit',
+    src,
+  } = props;
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const renderImage = (): JSX.Element => (
+  const renderImage = (ref?: ImageProps['imageRef']): JSX.Element => (
     <StyledImg
       alt={alt}
       className={clsx('rgf-image', { [className]: !!className })}
       loading="lazy"
       onLoad={(): void => setIsLoading(false)}
       src={src}
+      ref={ref}
       style={{
         maxHeight,
         maxWidth,
@@ -44,5 +53,5 @@ export default function Image(props: ImageProps): JSX.Element {
     return <Skeleton>{renderImage()}</Skeleton>;
   }
 
-  return renderImage();
+  return renderImage(imageRef);
 }

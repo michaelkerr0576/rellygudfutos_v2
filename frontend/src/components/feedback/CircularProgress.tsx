@@ -3,13 +3,13 @@ import clsx from 'clsx';
 import MuiCircularProgress, {
   CircularProgressProps as MuiCircularProgressProps,
 } from '@mui/material/CircularProgress';
-import { useTheme } from '@mui/material/styles';
 
 import Box from '../layout/Box';
 
 export const LOADING_SPINNER_LARGE_SIZE = '64px';
 export const LOADING_SPINNER_MEDIUM_SIZE = '44px';
 export const LOADING_SPINNER_SMALL_SIZE = '24px';
+export const LOADING_PANEL_HEIGHT = '108px';
 
 type Variant = 'page' | 'panel' | 'inline';
 
@@ -21,14 +21,13 @@ export interface CircularProgressProps {
 export default function CircularProgress(props: CircularProgressProps): JSX.Element {
   const { className = '', variant = 'page' } = props;
 
-  const theme = useTheme();
-
   const getStyle = (): {
     alignItems?: string;
     display?: string;
     justifyContent?: string;
     left?: string;
     padding?: string;
+    height?: string;
     position?: string;
     top?: string;
   } => {
@@ -43,8 +42,8 @@ export default function CircularProgress(props: CircularProgressProps): JSX.Elem
         return {
           alignItems: 'center',
           display: 'flex',
+          height: LOADING_PANEL_HEIGHT,
           justifyContent: 'center',
-          padding: theme.spacing(4, 0),
         };
       case 'inline':
       default:
