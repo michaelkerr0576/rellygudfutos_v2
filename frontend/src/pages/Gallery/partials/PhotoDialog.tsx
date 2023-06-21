@@ -19,10 +19,10 @@ const StyledPhotoDialog = styled(Dialog)(({ theme }): { [key: string]: any } => 
     padding: 0,
   },
   '.rgf-photoDialog--content': {
-    padding: theme.spacing(0, 2),
+    padding: theme.spacing(1, 2),
   },
   '.rgf-photoDialog--contentTitle': {
-    padding: theme.spacing(1, 0),
+    paddingBottom: theme.spacing(1),
   },
 }));
 
@@ -41,12 +41,20 @@ export default function PhotoDialog(): JSX.Element {
 
   const renderDialogContent = (): JSX.Element => {
     if (isError) {
-      return <Alert message={errorMessage || defaultErrorMessage} severity={errorSeverity || 'error'} />;
+      return (
+        <Box className="rgf-photoDialog--content">
+          <Alert message={errorMessage || defaultErrorMessage} severity={errorSeverity || 'error'} />
+        </Box>
+      );
     }
 
     // TODO - Replace with skeleton loader
     if (isLoading) {
-      return <CircularProgress />;
+      return (
+        <Box className="rgf-photoDialog--content">
+          <CircularProgress />
+        </Box>
+      );
     }
 
     const imageUrl = photo?.data.image.url || '';
