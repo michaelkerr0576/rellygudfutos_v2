@@ -2,6 +2,8 @@ import clsx from 'clsx';
 
 import MuiIconButton, { IconButtonProps as MuiIconButtonProps } from '@mui/material/IconButton';
 
+export const ICON_BUTTON_HEIGHT_WIDTH = '34px';
+
 export interface IconButtonProps {
   ariaLabel: MuiIconButtonProps['aria-label'];
   children: React.ReactNode;

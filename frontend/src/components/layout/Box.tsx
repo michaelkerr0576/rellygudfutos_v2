@@ -6,7 +6,7 @@ export interface BoxProps {
   ariaLabel?: MuiBoxProps['aria-label'];
   ariaRole?: MuiBoxProps['role'];
   boxRef?: MuiBoxProps['ref'];
-  children: React.ReactNode;
+  children?: React.ReactNode;
   className?: MuiBoxProps['className'];
   onClick?: MuiBoxProps['onClick'];
   style?: MuiBoxProps['sx'];
@@ -17,7 +17,7 @@ export default function Box(props: BoxProps): JSX.Element {
     ariaLabel = '',
     ariaRole = 'presentation',
     boxRef = undefined,
-    children,
+    children = null,
     className = '',
     onClick = (): void => {},
     style = undefined,

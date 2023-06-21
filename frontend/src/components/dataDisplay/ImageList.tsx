@@ -103,6 +103,7 @@ export default function ImageList(props: ImageListProps): JSX.Element {
         >
           <Image
             alt={imageTitle}
+            imageFit="cover"
             imageRef={isLastImage ? lastImageRef : undefined}
             maxHeight={`${imageHeight}px`}
             maxWidth={`${imageWidth}px`}

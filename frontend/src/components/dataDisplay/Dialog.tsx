@@ -1,3 +1,4 @@
+import { MouseEventHandler } from 'react';
 import clsx from 'clsx';
 
 import MuiDialog, { DialogProps as MuiDialogProps } from '@mui/material/Dialog';
@@ -9,8 +10,11 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 
 import BackIcon from '@/assets/icons/BackIcon';
 import CloseIcon from '@/assets/icons/CloseIcon';
+import MoreOptionsIcon from '@/assets/icons/MoreOptionsIcon';
+import { FIXED_HEADER_HEIGHT } from '@/layouts/Header/constants';
 
-import IconButton from '../inputs/IconButton';
+import IconButton, { ICON_BUTTON_HEIGHT_WIDTH } from '../inputs/IconButton';
+import Box from '../layout/Box';
 import Stack from '../layout/Stack';
 import Paper from '../surfaces/Paper';
 
@@ -24,8 +28,9 @@ export interface DialogProps {
   dialogActions: JSX.Element;
   isOpen: boolean;
   maxWidth?: MaxWidth;
+  onMoreOptionsClick?: MouseEventHandler<HTMLButtonElement>;
   setIsOpen: (isOpen: boolean) => void;
-  title: string;
+  title?: string;
 }
 
 const StyledMuiDialog = styled(MuiDialog)(({ theme }): { [key: string]: any } => ({
@@ -37,41 +42,57 @@ const StyledMuiDialog = styled(MuiDialog)(({ theme }): { [key: string]: any } =>
     padding: theme.spacing(1, 2),
   },
   '.MuiDialogTitle-root': {
-    '.rgf-stack': {
-      minHeight: '40px',
-    },
-
-    maxHeight: '60px',
-    padding: theme.spacing(1.25, 2),
+    height: FIXED_HEADER_HEIGHT,
+    padding: theme.spacing(1, 2),
   },
   '.rgf-dialog--titleCloseButton': {
     order: 1,
   },
+  '.rgf-dialog--titleMoreOptionsButton': {
+    order: 3,
+    width: ICON_BUTTON_HEIGHT_WIDTH,
+  },
   '.rgf-dialog--titleText': {
     order: 2,
-    paddingLeft: theme.spacing(1),
   },
 
   [theme.breakpoints.up('laptop')]: {
     '.rgf-dialog--titleCloseButton': {
-      order: 2,
+      order: 3,
     },
-    '.rgf-dialog--titleText': {
+    '.rgf-dialog--titleMoreOptionsButton': {
       order: 1,
-      paddingLeft: 0,
     },
   },
 }));
 
 export default function Dialog(props: DialogProps): JSX.Element {
-  const { children, className = '', dialogActions, isOpen, maxWidth = 'tablet', setIsOpen, title } = props;
+  const {
+    children,
+    className = '',
+    dialogActions,
+    isOpen,
+    maxWidth = 'tablet',
+    onMoreOptionsClick = undefined,
+    setIsOpen,
+    title = '',
+  } = props;
 
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.between('mobile', 'laptop'));
 
   const renderDialogTitle = (): JSX.Element => {
+    const showTitle = !!title;
+    const showMoreOptionsButton = !!onMoreOptionsClick;
+
     const renderTitleText = (): JSX.Element => (
-      <Typography className="rgf-dialog--titleText" id="dialog-title" maxLines={2} variant="h3">
+      <Typography
+        align="center"
+        className="rgf-dialog--titleText"
+        id="dialog-title"
+        maxLines={2}
+        variant="h3"
+      >
         {title}
       </Typography>
     );
@@ -87,13 +108,30 @@ export default function Dialog(props: DialogProps): JSX.Element {
       </IconButton>
     );
 
+    const renderOptionsButton = (): JSX.Element => (
+      <IconButton
+        ariaLabel="more options"
+        className="rgf-dialog--titleMoreOptionsButton"
+        edge={isSmallScreen ? 'end' : 'start'}
+        onClick={onMoreOptionsClick}
+      >
+        <MoreOptionsIcon />
+      </IconButton>
+    );
+
+    const renderOptionsButtonPlaceholder = (): JSX.Element => (
+      <Box className="rgf-dialog--titleMoreOptionsButton" />
+    );
+
     return (
       <Paper className="rgf-dialog--title" elevation={1}>
         <MuiDialogTitle>
-          <Stack alignItems="center" justifyContent={isSmallScreen ? 'start' : 'spaceBetween'}>
+          <Stack alignItems="center" justifyContent="spaceBetween">
             {renderCloseButton()}
 
-            {renderTitleText()}
+            {showTitle && renderTitleText()}
+
+            {showMoreOptionsButton ? renderOptionsButton() : renderOptionsButtonPlaceholder()}
           </Stack>
         </MuiDialogTitle>
       </Paper>

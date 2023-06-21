@@ -5,20 +5,22 @@ import { styled } from '@mui/material/styles';
 
 import Skeleton from '../feedback/Skeleton';
 
+type ImageFit = 'contain' | 'cover';
+type Variant = 'rounded' | 'square';
+
 export interface ImageProps {
   alt: string;
   className?: string;
+  imageFit?: ImageFit;
   imageRef?: RefObject<any> | ((node?: Element | null) => void);
   maxHeight?: string;
   maxWidth?: string;
   src: string;
+  variant?: Variant;
 }
 
 const StyledImg = styled('img')((): { [key: string]: any } => ({
-  borderRadius: 4,
   display: 'block',
-  height: '100%',
-  objectFit: 'cover',
   width: '100%',
 }));
 
@@ -26,10 +28,12 @@ export default function Image(props: ImageProps): JSX.Element {
   const {
     alt,
     className = '',
+    imageFit = 'contain',
     imageRef = undefined,
     maxHeight = 'inherit',
     maxWidth = 'inherit',
     src,
+    variant = 'rounded',
   } = props;
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -43,8 +47,11 @@ export default function Image(props: ImageProps): JSX.Element {
       src={src}
       ref={ref}
       style={{
+        borderRadius: variant === 'rounded' ? 4 : 0,
+        height: imageFit === 'cover' ? '100%' : 'inherit',
         maxHeight,
         maxWidth,
+        objectFit: imageFit,
       }}
     />
   );

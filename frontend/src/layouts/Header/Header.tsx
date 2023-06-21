@@ -12,8 +12,7 @@ import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 
 import AccountDrawer from './partials/AccountDrawer';
 import MenuDrawer from './partials/MenuDrawer';
-
-export const FIXED_HEADER_HEIGHT = '60px';
+import { FIXED_HEADER_HEIGHT } from './constants';
 
 const StyledHeader = styled('header')(({ theme }): { [key: string]: any } => ({
   '.rgf-accountDrawer': {
@@ -23,7 +22,7 @@ const StyledHeader = styled('header')(({ theme }): { [key: string]: any } => ({
     padding: theme.spacing(0, 1),
   },
   '.rgf-header--rellygudfutosLogoButton': {
-    height: '60px',
+    height: FIXED_HEADER_HEIGHT,
     paddingLeft: theme.spacing(1),
   },
 
