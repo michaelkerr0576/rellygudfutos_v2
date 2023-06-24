@@ -5,5 +5,5 @@ import { IconProps } from './types/iconTypes';
 export default function CloseIcon(props: IconProps): JSX.Element {
   const { size = 'medium' } = props;
 
-  return <MuiCloseIcon fontSize={size} />;
+  return <MuiCloseIcon className="rgf-icon" fontSize={size} />;
 }

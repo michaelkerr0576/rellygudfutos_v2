@@ -7,8 +7,8 @@ export default function HomeIcon(props: IconProps): JSX.Element {
   const { size = 'medium', variant = 'outlined' } = props;
 
   if (variant === 'filled') {
-    return <MuiHomeIcon fontSize={size} />;
+    return <MuiHomeIcon className="rgf-icon" fontSize={size} />;
   }
 
-  return <MuiHomeOutlinedIcon fontSize={size} />;
+  return <MuiHomeOutlinedIcon className="rgf-icon" fontSize={size} />;
 }

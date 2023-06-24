@@ -13,8 +13,8 @@ export default function ExpandIcon(props: ExpandIconProps): JSX.Element {
   const { size = 'medium', type } = props;
 
   if (type === 'more') {
-    return <MuiExpandMoreIcon fontSize={size} />;
+    return <MuiExpandMoreIcon className="rgf-icon" fontSize={size} />;
   }
 
-  return <MuiExpandLessIcon fontSize={size} />;
+  return <MuiExpandLessIcon className="rgf-icon" fontSize={size} />;
 }

@@ -7,8 +7,8 @@ export default function SearchIcon(props: IconProps): JSX.Element {
   const { size = 'medium', variant = 'outlined' } = props;
 
   if (variant === 'filled') {
-    return <MuiSavedSearchIcon fontSize={size} />;
+    return <MuiSavedSearchIcon className="rgf-icon" fontSize={size} />;
   }
 
-  return <MuiSearchIcon fontSize={size} />;
+  return <MuiSearchIcon className="rgf-icon" fontSize={size} />;
 }

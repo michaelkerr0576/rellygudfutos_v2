@@ -7,8 +7,8 @@ export default function GalleryIcon(props: IconProps): JSX.Element {
   const { size = 'medium', variant = 'outlined' } = props;
 
   if (variant === 'filled') {
-    return <MUiPhotoLibraryIcon fontSize={size} />;
+    return <MUiPhotoLibraryIcon className="rgf-icon" fontSize={size} />;
   }
 
-  return <MuiPhotoLibraryOutlinedIcon fontSize={size} />;
+  return <MuiPhotoLibraryOutlinedIcon className="rgf-icon" fontSize={size} />;
 }

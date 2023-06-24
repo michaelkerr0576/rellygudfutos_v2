@@ -16,15 +16,15 @@ export default function ToggleDarkModeIcon(props: ToggleDarkModeIconProps): JSX.
 
   if (mode === 'dark') {
     if (variant === 'filled') {
-      return <MuiBrightness4Icon fontSize={size} />;
+      return <MuiBrightness4Icon className="rgf-icon" fontSize={size} />;
     }
 
-    return <MuiBrightness4OutlinedIcon fontSize={size} />;
+    return <MuiBrightness4OutlinedIcon className="rgf-icon" fontSize={size} />;
   }
 
   if (variant === 'filled') {
-    return <MuiBrightness7Icon fontSize={size} />;
+    return <MuiBrightness7Icon className="rgf-icon" fontSize={size} />;
   }
 
-  return <MuiBrightness7OutlinedIcon fontSize={size} />;
+  return <MuiBrightness7OutlinedIcon className="rgf-icon" fontSize={size} />;
 }

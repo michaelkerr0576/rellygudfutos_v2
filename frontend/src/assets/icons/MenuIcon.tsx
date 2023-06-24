@@ -7,8 +7,8 @@ export default function MenuIcon(props: IconProps): JSX.Element {
   const { size = 'medium', variant = 'outlined' } = props;
 
   if (variant === 'filled') {
-    return <MuiMenuOpenIcon fontSize={size} />;
+    return <MuiMenuOpenIcon className="rgf-icon" fontSize={size} />;
   }
 
-  return <MuiMenuIcon fontSize={size} />;
+  return <MuiMenuIcon className="rgf-icon" fontSize={size} />;
 }

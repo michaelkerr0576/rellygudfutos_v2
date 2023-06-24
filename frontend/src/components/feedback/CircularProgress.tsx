@@ -68,7 +68,12 @@ export default function CircularProgress(props: CircularProgressProps): JSX.Elem
   };
 
   return (
-    <Box className={clsx('rgf-circularProgress', { [className]: !!className })} style={getStyle()}>
+    <Box
+      className={clsx('rgf-circularProgress', `rgf-circularProgress--${variant}`, {
+        [className]: !!className,
+      })}
+      style={getStyle()}
+    >
       <MuiCircularProgress size={getSize()} />
     </Box>
   );

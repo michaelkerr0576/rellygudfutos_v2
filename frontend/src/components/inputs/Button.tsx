@@ -28,7 +28,7 @@ export default function Button(props: ButtonProps): JSX.Element {
 
   return (
     <MuiButton
-      className={clsx('rgf-button', { [className]: !!className })}
+      className={clsx('rgf-button', `rgf-button--${variant}`, { [className]: !!className })}
       fullWidth
       onClick={onClick}
       size="large"

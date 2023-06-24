@@ -7,8 +7,8 @@ export default function PhotoGridIcon(props: IconProps): JSX.Element {
   const { size = 'medium', variant = 'outlined' } = props;
 
   if (variant === 'filled') {
-    return <MuiAppsIcon fontSize={size} />;
+    return <MuiAppsIcon className="rgf-icon" fontSize={size} />;
   }
 
-  return <MuiGridOnOutlinedIcon fontSize={size} />;
+  return <MuiGridOnOutlinedIcon className="rgf-icon" fontSize={size} />;
 }

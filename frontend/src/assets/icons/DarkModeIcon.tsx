@@ -7,8 +7,8 @@ export default function DarkModeIcon(props: IconProps): JSX.Element {
   const { size = 'medium', variant = 'outlined' } = props;
 
   if (variant === 'filled') {
-    return <MuiDarkModeIcon fontSize={size} />;
+    return <MuiDarkModeIcon className="rgf-icon" fontSize={size} />;
   }
 
-  return <MuiDarkModeOutlinedIcon fontSize={size} />;
+  return <MuiDarkModeOutlinedIcon className="rgf-icon" fontSize={size} />;
 }

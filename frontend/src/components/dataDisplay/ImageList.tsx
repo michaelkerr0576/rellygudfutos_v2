@@ -115,7 +115,7 @@ export default function ImageList(props: ImageListProps): JSX.Element {
 
   return (
     <StyledMuiImageList
-      className={clsx('rgf-imageList', { [className]: !!className })}
+      className={clsx('rgf-imageList', `rgf-imageList--${variant}`, { [className]: !!className })}
       cols={IMAGE_CONTAINER_COLUMNS}
       gap={isMobileScreen ? IMAGE_SMALL_SCREEN_GAP : IMAGE_LARGE_SCREEN_GAP}
       style={{ maxWidth }}

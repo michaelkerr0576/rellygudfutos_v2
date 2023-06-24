@@ -7,8 +7,8 @@ export default function PhotoListIcon(props: IconProps): JSX.Element {
   const { size = 'medium', variant = 'outlined' } = props;
 
   if (variant === 'filled') {
-    return <MuiViewDayIcon fontSize={size} />;
+    return <MuiViewDayIcon className="rgf-icon" fontSize={size} />;
   }
 
-  return <MuiViewDayOutlinedIcon fontSize={size} />;
+  return <MuiViewDayOutlinedIcon className="rgf-icon" fontSize={size} />;
 }

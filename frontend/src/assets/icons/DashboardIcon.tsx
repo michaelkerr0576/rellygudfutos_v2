@@ -7,8 +7,8 @@ export default function DashboardIcon(props: IconProps): JSX.Element {
   const { size = 'medium', variant = 'outlined' } = props;
 
   if (variant === 'filled') {
-    return <MuiDashboardCustomizeIcon fontSize={size} />;
+    return <MuiDashboardCustomizeIcon className="rgf-icon" fontSize={size} />;
   }
 
-  return <MuiDashboardCustomizeOutlinedIcon fontSize={size} />;
+  return <MuiDashboardCustomizeOutlinedIcon className="rgf-icon" fontSize={size} />;
 }

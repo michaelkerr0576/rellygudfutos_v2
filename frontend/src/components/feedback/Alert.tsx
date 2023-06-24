@@ -33,7 +33,10 @@ export default function Alert(props: AlertProps): JSX.Element {
   };
 
   return (
-    <StyledMuiAlert className={clsx('rgf-alert', { [className]: !!className })} severity={severity}>
+    <StyledMuiAlert
+      className={clsx('rgf-alert', `rgf-chip--${severity}`, { [className]: !!className })}
+      severity={severity}
+    >
       <MuiAlertTitle>{getTitleText()}</MuiAlertTitle>
       {message}
     </StyledMuiAlert>

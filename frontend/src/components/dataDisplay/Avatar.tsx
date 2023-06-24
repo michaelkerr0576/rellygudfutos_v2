@@ -26,7 +26,10 @@ export default function Avatar(props: AvatarProps): JSX.Element {
   };
 
   return (
-    <MuiAvatar className={clsx('rgf-avatar', { [className]: !!className })} style={{ ...getStyle() }}>
+    <MuiAvatar
+      className={clsx('rgf-avatar', `rgf-chip--${size}`, { [className]: !!className })}
+      style={{ ...getStyle() }}
+    >
       {children}
     </MuiAvatar>
   );
