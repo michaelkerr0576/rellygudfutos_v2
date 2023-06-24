@@ -34,7 +34,7 @@ const StyledPhotoDialog = styled(Dialog)(({ theme }): { [key: string]: any } => 
     },
     '.rgf-photoDialog--contentDescription': {
       '.rgf-typographyIcon:first-of-type': {
-        paddingTop: theme.spacing(1),
+        paddingTop: theme.spacing(1.5),
       },
     },
     '.rgf-photoDialog--contentTags': {
@@ -47,6 +47,9 @@ const StyledPhotoDialog = styled(Dialog)(({ theme }): { [key: string]: any } => 
     '.rgf-typographyIcon': {
       padding: theme.spacing(0.5, 0),
     },
+  },
+  '.rgf-photoDialog--error': {
+    padding: theme.spacing(1.5, 2),
   },
 }));
 
@@ -149,7 +152,7 @@ export default function PhotoDialog(): JSX.Element {
     const captureDate = photo?.data.captureDate || '';
 
     return (
-      <Box className="rgf-photoDialog--contentDate">
+      <Box className="rgf-photoDialog--error">
         <Typography variant="subtitle">{`${captureDate}`}</Typography>
       </Box>
     );
@@ -158,7 +161,7 @@ export default function PhotoDialog(): JSX.Element {
   const renderDialogContent = (): JSX.Element => {
     if (isError) {
       return (
-        <Box className="rgf-photoDialog--content">
+        <Box className="rgf-photoDialog--error">
           <Alert message={errorMessage || defaultErrorMessage} severity={errorSeverity || 'error'} />
         </Box>
       );
@@ -166,11 +169,7 @@ export default function PhotoDialog(): JSX.Element {
 
     // TODO - Replace with skeleton loader
     if (isLoading) {
-      return (
-        <Box className="rgf-photoDialog--content">
-          <CircularProgress />
-        </Box>
-      );
+      return <CircularProgress />;
     }
 
     const imageUrl = photo?.data.image.url || '';
