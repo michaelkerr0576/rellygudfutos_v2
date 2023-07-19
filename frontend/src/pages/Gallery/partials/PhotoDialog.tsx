@@ -4,6 +4,8 @@ import { styled } from '@mui/material/styles';
 
 import ApertureIcon from '@/assets/icons/ApertureIcon';
 import CameraIcon from '@/assets/icons/CameraIcon';
+import FocalLengthIcon from '@/assets/icons/FocalLengthIcon';
+import LensIcon from '@/assets/icons/LensIcon';
 import LightIcon from '@/assets/icons/LightIcon';
 import LocationIcon from '@/assets/icons/LocationIcon';
 import PersonIcon from '@/assets/icons/PersonIcon';
@@ -21,6 +23,7 @@ import Box from '@/components/layout/Box';
 import Paper from '@/components/surfaces/Paper';
 import usePhoto from '@/hooks/queries/usePhoto';
 import useErrorMessage from '@/hooks/shared/useErrorMessage';
+import { PhotoTag } from '@/types/api/photo.types';
 
 import useGallery from '../hooks/useGallery';
 
@@ -77,16 +80,16 @@ export default function PhotoDialog(): JSX.Element {
   };
 
   const renderDialogContentTags = (): JSX.Element => {
-    // TODO - get actual tags from photo
-    const tags = photo?.data.tags.map((tag): any => tag.tag || '');
-    console.log(tags);
+    const tags = photo?.data.tags.map((tag): PhotoTag => tag) || [];
 
+    // TODO - onClick tag does a filter on photos by that tag and returns user to Gallery
     return (
       <Box className="rgf-photoDialog--contentTags">
-        <Chip label="test" onClick={(): void => {}} />
-        <Chip label="test" onClick={(): void => {}} />
-        <Chip label="test" onClick={(): void => {}} />
-        <Chip label="test" onClick={(): void => {}} />
+        {tags.map(
+          (tag): JSX.Element => (
+            <Chip key={tag._id} label={tag.tag} onClick={(): void => {}} />
+          ),
+        )}
       </Box>
     );
   };
@@ -123,16 +126,20 @@ export default function PhotoDialog(): JSX.Element {
           typography={<Typography>{equipmentCamera}</Typography>}
         />
 
-        {/* TODO - get custom lens icon */}
-        <Typography>{equipmentLens}</Typography>
+        <TypographyIcon
+          startIcon={<LensIcon size="small" />}
+          typography={<Typography>{equipmentLens}</Typography>}
+        />
 
         <TypographyIcon
           startIcon={<ApertureIcon size="small" variant="filled" />}
           typography={<Typography>{settingsAperture}</Typography>}
         />
 
-        {/* TODO - get custom focal length icon */}
-        <Typography>{settingsFocalLength}</Typography>
+        <TypographyIcon
+          startIcon={<FocalLengthIcon size="small" />}
+          typography={<Typography>{settingsFocalLength}</Typography>}
+        />
 
         <TypographyIcon
           startIcon={<LightIcon size="small" variant="filled" />}

@@ -48,7 +48,7 @@ interface PhotoSettings {
   shutterSpeed: string;
 }
 
-interface PhotoTag {
+export interface PhotoTag {
   _id: string;
   tag: string;
 }
