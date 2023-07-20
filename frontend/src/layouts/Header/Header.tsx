@@ -32,7 +32,7 @@ const StyledHeader = styled('header')(({ theme }): { [key: string]: any } => ({
   top: 0,
   zIndex: theme.zIndex.appBar,
 
-  [theme.breakpoints.up('tablet')]: {
+  [theme.breakpoints.up('laptop')]: {
     '.rgf-container': {
       padding: theme.spacing(0, 2),
     },

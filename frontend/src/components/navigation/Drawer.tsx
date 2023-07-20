@@ -42,7 +42,7 @@ const StyledMuiSwipeableDrawer = styled(MuiSwipeableDrawer)(({ theme }): { [key:
     marginRight: -16,
   },
 
-  [theme.breakpoints.up('tablet')]: {
+  [theme.breakpoints.up('laptop')]: {
     '.rgf-drawer--children': {
       height: 'auto',
     },

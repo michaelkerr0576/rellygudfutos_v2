@@ -36,20 +36,20 @@ const StyledMuiList = styled(MuiList)((): { [key: string]: any } => ({
 export default function List(props: ListProps): JSX.Element {
   const { className = '', listItems, subHeader = '' } = props;
 
-  const renderListItem = (listItem: ListItem): JSX.Element => {
-    const { action = null, icon, label, onClick = (): void => {} } = listItem;
+  const renderListItems = (): JSX.Element[] => {
+    const renderListItem = (listItem: ListItem): JSX.Element => {
+      const { action = null, icon, label, onClick = (): void => {} } = listItem;
 
-    return (
-      <MuiListItemButton onClick={onClick}>
-        <MuiListItemIcon>{icon}</MuiListItemIcon>
-        <MuiListItemText primary={label} />
-        {action}
-      </MuiListItemButton>
-    );
-  };
+      return (
+        <MuiListItemButton onClick={onClick}>
+          <MuiListItemIcon>{icon}</MuiListItemIcon>
+          <MuiListItemText primary={label} />
+          {action}
+        </MuiListItemButton>
+      );
+    };
 
-  const renderListItems = (): JSX.Element[] =>
-    listItems.map((listItem: ListItem): JSX.Element => {
+    return listItems.map((listItem: ListItem): JSX.Element => {
       const { label, navigateTo = '' } = listItem;
 
       if (navigateTo) {
@@ -66,6 +66,7 @@ export default function List(props: ListProps): JSX.Element {
         </MuiListItem>
       );
     });
+  };
 
   return (
     <StyledMuiList

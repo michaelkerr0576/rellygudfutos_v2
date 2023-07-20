@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { common, grey } from '@mui/material/colors';
+import { common } from '@mui/material/colors';
 import { alpha, createTheme, Theme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
@@ -102,37 +102,25 @@ const typography = {
 const lightTheme = {
   palette: {
     primary: {
-      main: grey[800],
+      main: alpha(common.black, 0.9),
     },
     secondary: {
-      main: grey[400],
+      main: alpha(common.black, 0.75),
     },
   },
-  typography: {
-    ...typography,
-    subtitle1: {
-      ...typography.subtitle1,
-      color: alpha(common.black, 0.6),
-    },
-  },
+  typography,
 };
 
 const darkTheme = {
   palette: {
     primary: {
-      main: common.white,
+      main: alpha(common.white, 0.9),
     },
     secondary: {
-      main: grey[50],
+      main: alpha(common.white, 0.75),
     },
   },
-  typography: {
-    ...typography,
-    subtitle1: {
-      ...typography.subtitle1,
-      color: alpha(common.white, 0.7),
-    },
-  },
+  typography,
 };
 
 export default function useThemes(): UseThemes {

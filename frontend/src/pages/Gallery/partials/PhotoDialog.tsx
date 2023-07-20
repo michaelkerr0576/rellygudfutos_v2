@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom';
 
-import { styled } from '@mui/material/styles';
+import { styled, useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 import ApertureIcon from '@/assets/icons/ApertureIcon';
 import CameraIcon from '@/assets/icons/CameraIcon';
@@ -20,6 +21,7 @@ import Alert from '@/components/feedback/Alert';
 import CircularProgress from '@/components/feedback/CircularProgress';
 import Button from '@/components/inputs/Button';
 import Box from '@/components/layout/Box';
+import Stack from '@/components/layout/Stack';
 import Paper from '@/components/surfaces/Paper';
 import usePhoto from '@/hooks/queries/usePhoto';
 import useErrorMessage from '@/hooks/shared/useErrorMessage';
@@ -32,14 +34,10 @@ const StyledPhotoDialog = styled(Dialog)(({ theme }): { [key: string]: any } => 
     padding: 0,
   },
   '.rgf-photoDialog--content': {
-    '.rgf-photoDialog--contentDate, .rgf-photoDialog--contentDescription, .rgf-photoDialog--contentTitle': {
-      padding: theme.spacing(1.5, 2),
-    },
-    '.rgf-photoDialog--contentDescription': {
-      '.rgf-typographyIcon:first-of-type': {
-        paddingTop: theme.spacing(1.5),
+    '.rgf-photoDialog--contentDate, .rgf-photoDialog--contentCaption, .rgf-photoDialog--contentDetails, .rgf-photoDialog--contentTitle':
+      {
+        padding: theme.spacing(1.5, 2),
       },
-    },
     '.rgf-photoDialog--contentTags': {
       '.rgf-chip': {
         margin: theme.spacing(0.5, 1),
@@ -50,14 +48,29 @@ const StyledPhotoDialog = styled(Dialog)(({ theme }): { [key: string]: any } => 
     '.rgf-typographyIcon': {
       padding: theme.spacing(0.5, 0),
     },
+
+    paddingBottom: theme.spacing(3),
   },
   '.rgf-photoDialog--error': {
     padding: theme.spacing(1.5, 2),
   },
+
+  [theme.breakpoints.up('laptop')]: {
+    '.rgf-photoDialog--content': {
+      '.rgf-photoDialog--contentDetails': {
+        '.rgf-photoDialog--contentDetailsColumnOne': {
+          paddingRight: theme.spacing(4),
+        },
+      },
+    },
+  },
 }));
 
 export default function PhotoDialog(): JSX.Element {
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.between('mobile', 'laptop'));
   const { photoId = '' } = useParams();
+
   const { isPhotoDialogOpen, togglePhotoDialog } = useGallery();
   const { data: photo, isError, isLoading, error } = usePhoto(photoId);
 
@@ -69,103 +82,116 @@ export default function PhotoDialog(): JSX.Element {
     togglePhotoDialog(false);
   }
 
-  const renderDialogContentTitle = (): JSX.Element => {
-    const title = photo?.data.title || '';
-
-    return (
-      <Paper className="rgf-photoDialog--contentTitle" elevation={1}>
-        <Typography variant="h3">{title}</Typography>
-      </Paper>
-    );
-  };
-
-  const renderDialogContentTags = (): JSX.Element => {
-    const tags = photo?.data.tags.map((tag): PhotoTag => tag) || [];
-
-    // TODO - onClick tag does a filter on photos by that tag and returns user to Gallery
-    return (
-      <Box className="rgf-photoDialog--contentTags">
-        {tags.map(
-          (tag): JSX.Element => (
-            <Chip key={tag._id} label={tag.tag} onClick={(): void => {}} />
-          ),
-        )}
-      </Box>
-    );
-  };
-
-  const renderDialogContentDescription = (): JSX.Element => {
-    const caption = photo?.data.caption || '';
-    const location = photo?.data.location || '';
-    const photographerName = photo?.data.photographer.name || '';
-    const equipmentCamera = photo?.data.equipment.camera || '';
-    const equipmentLens = photo?.data.equipment.lens || '';
-    const settingsAperture = photo?.data.settings.aperture || '';
-    const settingsFocalLength = photo?.data.settings.focalLength || '';
-    const settingsIso = photo?.data.settings.iso || '';
-    const settingsShutterSpeed = photo?.data.settings.shutterSpeed || '';
-
-    return (
-      <Box className="rgf-photoDialog--contentDescription">
-        <Typography>
-          {caption} The meandering mountain pass that joins the cities of Da Nang and Hue, Vietnam
-        </Typography>
-
-        <TypographyIcon
-          startIcon={<PersonIcon size="small" variant="filled" />}
-          typography={<Typography>{photographerName}</Typography>}
-        />
-
-        <TypographyIcon
-          startIcon={<LocationIcon size="small" variant="filled" />}
-          typography={<Typography>{location}</Typography>}
-        />
-
-        <TypographyIcon
-          startIcon={<CameraIcon size="small" variant="filled" />}
-          typography={<Typography>{equipmentCamera}</Typography>}
-        />
-
-        <TypographyIcon
-          startIcon={<LensIcon size="small" />}
-          typography={<Typography>{equipmentLens}</Typography>}
-        />
-
-        <TypographyIcon
-          startIcon={<ApertureIcon size="small" variant="filled" />}
-          typography={<Typography>{settingsAperture}</Typography>}
-        />
-
-        <TypographyIcon
-          startIcon={<FocalLengthIcon size="small" />}
-          typography={<Typography>{settingsFocalLength}</Typography>}
-        />
-
-        <TypographyIcon
-          startIcon={<LightIcon size="small" variant="filled" />}
-          typography={<Typography>{settingsIso} ISO</Typography>}
-        />
-
-        <TypographyIcon
-          startIcon={<ShutterSpeedIcon size="small" />}
-          typography={<Typography>{settingsShutterSpeed}</Typography>}
-        />
-      </Box>
-    );
-  };
-
-  const renderDialogContentDate = (): JSX.Element => {
-    // TODO - format date from BE
-    const captureDate = photo?.data.captureDate || '';
-
-    return (
-      <Box className="rgf-photoDialog--error">
-        <Typography variant="subtitle">{`${captureDate}`}</Typography>
-      </Box>
-    );
-  };
-
   const renderDialogContent = (): JSX.Element => {
+    const renderDialogContentTitle = (): JSX.Element => {
+      const title = photo?.data.title || '';
+
+      return (
+        <Paper className="rgf-photoDialog--contentTitle" elevation={1}>
+          <Typography variant="h3">{title}</Typography>
+        </Paper>
+      );
+    };
+
+    const renderDialogContentTags = (): JSX.Element => {
+      const tags = photo?.data.tags.map((tag): PhotoTag => tag) || [];
+
+      // TODO - onClick tag does a filter on photos by that tag and returns user to Gallery
+      return (
+        <Box className="rgf-photoDialog--contentTags">
+          {tags.map(
+            (tag): JSX.Element => (
+              <Chip key={tag._id} label={tag.tag} onClick={(): void => {}} />
+            ),
+          )}
+        </Box>
+      );
+    };
+
+    const renderDialogContentCaption = (): JSX.Element => {
+      const caption = photo?.data.caption || '';
+
+      return (
+        <Box className="rgf-photoDialog--contentCaption">
+          <Typography isParagraph>
+            {caption} The meandering mountain pass that joins the cities of Da Nang and Hue, Vietnam
+          </Typography>
+        </Box>
+      );
+    };
+
+    const renderDialogContentDetails = (): JSX.Element => {
+      const location = photo?.data.location || '';
+      const photographerName = photo?.data.photographer.name || '';
+      const equipmentCamera = photo?.data.equipment.camera || '';
+      const equipmentLens = photo?.data.equipment.lens || '';
+      const settingsAperture = photo?.data.settings.aperture || '';
+      const settingsFocalLength = photo?.data.settings.focalLength || '';
+      const settingsIso = photo?.data.settings.iso || '';
+      const settingsShutterSpeed = photo?.data.settings.shutterSpeed || '';
+
+      return (
+        <Box className="rgf-photoDialog--contentDetails">
+          <Stack direction={isSmallScreen ? 'column' : 'row'}>
+            <Stack className="rgf-photoDialog--contentDetailsColumnOne" direction="column">
+              <TypographyIcon
+                startIcon={<PersonIcon color="secondary" size="small" variant="filled" />}
+                typography={<Typography color="secondary">{photographerName}</Typography>}
+              />
+
+              <TypographyIcon
+                startIcon={<LocationIcon color="secondary" size="small" variant="filled" />}
+                typography={<Typography color="secondary">{location}</Typography>}
+              />
+
+              <TypographyIcon
+                startIcon={<CameraIcon color="secondary" size="small" variant="filled" />}
+                typography={<Typography color="secondary">{equipmentCamera}</Typography>}
+              />
+
+              <TypographyIcon
+                startIcon={<LensIcon color="secondary" size="small" />}
+                typography={<Typography color="secondary">{equipmentLens}</Typography>}
+              />
+            </Stack>
+
+            <Stack className="rgf-photoDialog--contentDetailsColumnTwo" direction="column">
+              <TypographyIcon
+                startIcon={<ApertureIcon color="secondary" size="small" variant="filled" />}
+                typography={<Typography color="secondary">{settingsAperture}</Typography>}
+              />
+
+              <TypographyIcon
+                startIcon={<FocalLengthIcon color="secondary" size="small" />}
+                typography={<Typography color="secondary">{settingsFocalLength}</Typography>}
+              />
+
+              <TypographyIcon
+                startIcon={<LightIcon color="secondary" size="small" variant="filled" />}
+                typography={<Typography color="secondary">{settingsIso} ISO</Typography>}
+              />
+
+              <TypographyIcon
+                startIcon={<ShutterSpeedIcon color="secondary" size="small" />}
+                typography={<Typography color="secondary">{settingsShutterSpeed}</Typography>}
+              />
+            </Stack>
+          </Stack>
+        </Box>
+      );
+    };
+
+    const renderDialogContentDate = (): JSX.Element => {
+      // TODO - format date from BE
+      const captureDate = photo?.data.captureDate || '';
+
+      return (
+        <Box className="rgf-photoDialog--contentDate">
+          <Typography color="secondary" variant="subtitle">{`${captureDate}`}</Typography>
+        </Box>
+      );
+    };
+
     if (isError) {
       return (
         <Box className="rgf-photoDialog--error">
@@ -193,7 +219,11 @@ export default function PhotoDialog(): JSX.Element {
 
           <Divider />
 
-          {renderDialogContentDescription()}
+          {renderDialogContentCaption()}
+
+          <Divider />
+
+          {renderDialogContentDetails()}
 
           <Divider />
 

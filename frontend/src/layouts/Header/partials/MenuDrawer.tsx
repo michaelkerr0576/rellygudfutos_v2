@@ -26,8 +26,9 @@ const StyledDrawer = styled(Drawer)(({ theme }): { [key: string]: any } => ({
 }));
 
 export default function MenuDrawer(): JSX.Element {
-  const { pathname } = useLocation();
   const navigate = useNavigate();
+  const { pathname } = useLocation();
+
   const { colorMode, toggleColorMode } = useThemes();
   const { isMenuDrawerOpen, toggleMenuDrawer } = useMenu();
 

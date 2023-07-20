@@ -51,7 +51,7 @@ const StyledDrawer = styled(Drawer)(({ theme }): { [key: string]: any } => ({
     zIndex: theme.zIndex.drawer,
   },
 
-  [theme.breakpoints.up('tablet')]: {
+  [theme.breakpoints.up('laptop')]: {
     '.rgf-searchDrawer--actionButtonGroup': {
       '.rgf-stack': {
         padding: theme.spacing(2, 1),

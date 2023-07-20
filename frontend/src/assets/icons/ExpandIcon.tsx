@@ -10,11 +10,11 @@ export interface ExpandIconProps extends IconProps {
 }
 
 export default function ExpandIcon(props: ExpandIconProps): JSX.Element {
-  const { size = 'medium', type } = props;
+  const { color = 'primary', size = 'medium', type } = props;
 
   if (type === 'more') {
-    return <MuiExpandMoreIcon className="rgf-icon" fontSize={size} />;
+    return <MuiExpandMoreIcon className="rgf-icon" color={color} fontSize={size} />;
   }
 
-  return <MuiExpandLessIcon className="rgf-icon" fontSize={size} />;
+  return <MuiExpandLessIcon className="rgf-icon" color={color} fontSize={size} />;
 }

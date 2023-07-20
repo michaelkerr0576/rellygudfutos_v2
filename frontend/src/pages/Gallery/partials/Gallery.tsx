@@ -15,7 +15,7 @@ import useGallery from '../hooks/useGallery';
 const StyledGallery = styled('div')(({ theme }): { [key: string]: any } => ({
   margin: theme.spacing(-1),
 
-  [theme.breakpoints.up('tablet')]: {
+  [theme.breakpoints.up('laptop')]: {
     margin: 0,
   },
 }));
