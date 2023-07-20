@@ -31,6 +31,7 @@ import useGallery from '../hooks/useGallery';
 
 const StyledPhotoDialog = styled(Dialog)(({ theme }): { [key: string]: any } => ({
   '.rgf-dialog--content': {
+    minHeight: '80vh',
     padding: 0,
   },
   '.rgf-photoDialog--content': {
