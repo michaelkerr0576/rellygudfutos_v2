@@ -1,5 +1,6 @@
 import { styled } from '@mui/material/styles';
 
+import FilterIcon from '@/assets/icons/FilterIcon';
 import SearchIcon from '@/assets/icons/SearchIcon';
 import Divider from '@/components/dataDisplay/Divider';
 import Autocomplete from '@/components/inputs/Autocomplete';
@@ -82,7 +83,7 @@ export default function SearchDrawer(): JSX.Element {
     <Box className="rgf-searchDrawer--searchField">
       {renderRow(
         <TextField
-          endAdornmentIcon={<SearchIcon />}
+          endAdornmentIcon={<SearchIcon variant="outlined" />}
           label="Search"
           onChange={handleGallerySearch}
           value={gallerySearch}
@@ -136,11 +137,16 @@ export default function SearchDrawer(): JSX.Element {
     <Paper className="rgf-searchDrawer--actionButtonGroup" elevation={24}>
       {renderRow(
         <Stack spacing={1}>
-          <Button isFullWidth onClick={handleClearFilters} variant="secondary">
+          <Button
+            isFullWidth
+            onClick={handleClearFilters}
+            startIcon={<FilterIcon size="large" type="off" />}
+            variant="secondary"
+          >
             Clear
           </Button>
 
-          <Button isFullWidth onClick={(): void => {}}>
+          <Button isFullWidth onClick={(): void => {}} startIcon={<FilterIcon size="large" type="on" />}>
             Apply
           </Button>
         </Stack>,
