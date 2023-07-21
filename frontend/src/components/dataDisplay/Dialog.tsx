@@ -35,7 +35,9 @@ export interface DialogProps {
 
 const StyledMuiDialog = styled(MuiDialog)(({ theme }): { [key: string]: any } => ({
   '.MuiDialogActions-root': {
+    display: 'inherit',
     height: '56px',
+    justifyContent: 'inherit',
   },
   '.MuiDialogContent-root': {
     minHeight: '400px',

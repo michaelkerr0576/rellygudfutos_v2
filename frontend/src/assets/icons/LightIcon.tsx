@@ -4,7 +4,7 @@ import MuiLightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
 import { IconProps } from './types/iconTypes';
 
 export default function LightIcon(props: IconProps): JSX.Element {
-  const { color = 'primary', size = 'medium', variant = 'outlined' } = props;
+  const { color = 'inherit', size = 'medium', variant = 'filled' } = props;
 
   if (variant === 'filled') {
     return <MuiLightModeIcon className="rgf-icon" color={color} fontSize={size} />;

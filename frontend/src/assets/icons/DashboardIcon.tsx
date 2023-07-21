@@ -4,7 +4,7 @@ import MuiDashboardCustomizeOutlinedIcon from '@mui/icons-material/DashboardCust
 import { IconProps } from './types/iconTypes';
 
 export default function DashboardIcon(props: IconProps): JSX.Element {
-  const { color = 'primary', size = 'medium', variant = 'outlined' } = props;
+  const { color = 'inherit', size = 'medium', variant = 'filled' } = props;
 
   if (variant === 'filled') {
     return <MuiDashboardCustomizeIcon className="rgf-icon" color={color} fontSize={size} />;

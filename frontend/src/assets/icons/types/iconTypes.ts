@@ -1,4 +1,4 @@
-type Color = 'primary' | 'secondary';
+type Color = 'primary' | 'secondary' | 'inherit';
 type Size = 'large' | 'medium' | 'small';
 type Variant = 'filled' | 'outlined';
 

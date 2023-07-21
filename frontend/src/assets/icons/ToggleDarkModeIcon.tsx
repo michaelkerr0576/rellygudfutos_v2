@@ -12,7 +12,7 @@ export interface ToggleDarkModeIconProps extends IconProps {
 }
 
 export default function ToggleDarkModeIcon(props: ToggleDarkModeIconProps): JSX.Element {
-  const { color = 'primary', size = 'medium', mode, variant = 'outlined' } = props;
+  const { color = 'inherit', size = 'medium', mode, variant = 'filled' } = props;
 
   if (mode === 'dark') {
     if (variant === 'filled') {

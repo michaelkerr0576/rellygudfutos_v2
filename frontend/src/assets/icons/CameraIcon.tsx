@@ -4,7 +4,7 @@ import MuiCameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
 import { IconProps } from './types/iconTypes';
 
 export default function CameraIcon(props: IconProps): JSX.Element {
-  const { color = 'primary', size = 'medium', variant = 'outlined' } = props;
+  const { color = 'inherit', size = 'medium', variant = 'filled' } = props;
 
   if (variant === 'filled') {
     return <MuiCameraAltIcon className="rgf-icon" color={color} fontSize={size} />;

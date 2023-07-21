@@ -41,7 +41,7 @@ const StyledDrawer = styled(Drawer)(({ theme }): { [key: string]: any } => ({
   },
   '.rgf-searchDrawer--actionButtonGroup': {
     '.rgf-stack': {
-      padding: theme.spacing(2),
+      padding: theme.spacing(1),
     },
 
     bottom: 0,
@@ -49,14 +49,6 @@ const StyledDrawer = styled(Drawer)(({ theme }): { [key: string]: any } => ({
     position: 'fixed',
     right: 0,
     zIndex: theme.zIndex.drawer,
-  },
-
-  [theme.breakpoints.up('laptop')]: {
-    '.rgf-searchDrawer--actionButtonGroup': {
-      '.rgf-stack': {
-        padding: theme.spacing(2, 1),
-      },
-    },
   },
 }));
 
@@ -143,12 +135,14 @@ export default function SearchDrawer(): JSX.Element {
   const renderActionButtonGroup = (): JSX.Element => (
     <Paper className="rgf-searchDrawer--actionButtonGroup" elevation={24}>
       {renderRow(
-        <Stack direction="row" spacing={1}>
-          <Button onClick={handleClearFilters} variant="secondary">
+        <Stack spacing={1}>
+          <Button isFullWidth onClick={handleClearFilters} variant="secondary">
             Clear
           </Button>
 
-          <Button onClick={(): void => {}}>Apply</Button>
+          <Button isFullWidth onClick={(): void => {}}>
+            Apply
+          </Button>
         </Stack>,
       )}
     </Paper>

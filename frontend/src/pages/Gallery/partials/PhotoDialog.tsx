@@ -4,11 +4,13 @@ import { styled } from '@mui/material/styles';
 
 import ApertureIcon from '@/assets/icons/ApertureIcon';
 import CameraIcon from '@/assets/icons/CameraIcon';
+import CartIcon from '@/assets/icons/CartIcon';
 import FocalLengthIcon from '@/assets/icons/FocalLengthIcon';
 import LensIcon from '@/assets/icons/LensIcon';
 import LightIcon from '@/assets/icons/LightIcon';
 import LocationIcon from '@/assets/icons/LocationIcon';
 import PersonIcon from '@/assets/icons/PersonIcon';
+import ShareIcon from '@/assets/icons/ShareIcon';
 import ShutterSpeedIcon from '@/assets/icons/ShutterSpeedIcon';
 import Chip from '@/components/dataDisplay/Chip';
 import Dialog from '@/components/dataDisplay/Dialog';
@@ -21,6 +23,7 @@ import CircularProgress from '@/components/feedback/CircularProgress';
 import Button from '@/components/inputs/Button';
 import Box from '@/components/layout/Box';
 import Grid from '@/components/layout/Grid';
+import Stack from '@/components/layout/Stack';
 import Paper from '@/components/surfaces/Paper';
 import usePhoto from '@/hooks/queries/usePhoto';
 import useErrorMessage from '@/hooks/shared/useErrorMessage';
@@ -83,10 +86,15 @@ export default function PhotoDialog(): JSX.Element {
   const renderDialogContent = (): JSX.Element => {
     const renderDialogContentTitle = (): JSX.Element => {
       const title = photo?.data.title || '';
+      const captureDate = photo?.data.captureDate || '';
 
       return (
         <Paper className="rgf-photoDialog--contentTitle" elevation={1}>
-          <Typography variant="h3">{title}</Typography>
+          <Stack justifyContent="spaceBetween" spacing={1}>
+            <Typography variant="h3">{title}</Typography>
+
+            <Typography align="right" color="secondary" variant="subtitle">{`${captureDate}`}</Typography>
+          </Stack>
         </Paper>
       );
     };
@@ -137,17 +145,17 @@ export default function PhotoDialog(): JSX.Element {
             laptop="auto"
           >
             <TypographyIcon
-              startIcon={<PersonIcon color="secondary" size="small" variant="filled" />}
+              startIcon={<PersonIcon color="secondary" size="small" />}
               typography={<Typography color="secondary">{photographerName}</Typography>}
             />
 
             <TypographyIcon
-              startIcon={<LocationIcon color="secondary" size="small" variant="filled" />}
+              startIcon={<LocationIcon color="secondary" size="small" />}
               typography={<Typography color="secondary">{location}</Typography>}
             />
 
             <TypographyIcon
-              startIcon={<CameraIcon color="secondary" size="small" variant="filled" />}
+              startIcon={<CameraIcon color="secondary" size="small" />}
               typography={<Typography color="secondary">{equipmentCamera}</Typography>}
             />
 
@@ -164,7 +172,7 @@ export default function PhotoDialog(): JSX.Element {
             laptop="auto"
           >
             <TypographyIcon
-              startIcon={<ApertureIcon color="secondary" size="small" variant="filled" />}
+              startIcon={<ApertureIcon color="secondary" size="small" />}
               typography={<Typography color="secondary">{settingsAperture}</Typography>}
             />
 
@@ -174,7 +182,7 @@ export default function PhotoDialog(): JSX.Element {
             />
 
             <TypographyIcon
-              startIcon={<LightIcon color="secondary" size="small" variant="filled" />}
+              startIcon={<LightIcon color="secondary" size="small" />}
               typography={<Typography color="secondary">{settingsIso} ISO</Typography>}
             />
 
@@ -239,14 +247,22 @@ export default function PhotoDialog(): JSX.Element {
     );
   };
 
+  const renderDialogActions = (): JSX.Element => (
+    <Stack justifyContent="end" spacing={1}>
+      <Button onClick={(): void => {}} startIcon={<ShareIcon size="large" />} variant="tertiary">
+        Share
+      </Button>
+
+      <Button onClick={(): void => {}} startIcon={<CartIcon size="large" />}>
+        Purchase
+      </Button>
+    </Stack>
+  );
+
   return (
     <StyledPhotoDialog
       className="rgf-photoDialog"
-      dialogActions={
-        <Button onClick={(): void => {}} variant="tertiary">
-          Purchase
-        </Button>
-      }
+      dialogActions={renderDialogActions()}
       isOpen={isPhotoDialogOpen}
       maxWidth="desktop"
       setIsOpen={(isOpen): void => togglePhotoDialog(isOpen, photoId)}

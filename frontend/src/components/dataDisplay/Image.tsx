@@ -1,7 +1,7 @@
 import { RefObject, useState } from 'react';
 import clsx from 'clsx';
 
-import { styled } from '@mui/material/styles';
+import { alpha, styled } from '@mui/material/styles';
 
 import Skeleton from '../feedback/Skeleton';
 
@@ -19,7 +19,8 @@ export interface ImageProps {
   variant?: Variant;
 }
 
-const StyledImg = styled('img')((): { [key: string]: any } => ({
+const StyledImg = styled('img')(({ theme }): { [key: string]: any } => ({
+  backgroundColor: alpha(theme.palette.common.black, 0.75),
   display: 'block',
   width: '100%',
 }));

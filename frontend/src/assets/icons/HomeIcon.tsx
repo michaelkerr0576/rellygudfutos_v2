@@ -4,7 +4,7 @@ import MuiHomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import { IconProps } from './types/iconTypes';
 
 export default function HomeIcon(props: IconProps): JSX.Element {
-  const { color = 'primary', size = 'medium', variant = 'outlined' } = props;
+  const { color = 'inherit', size = 'medium', variant = 'filled' } = props;
 
   if (variant === 'filled') {
     return <MuiHomeIcon className="rgf-icon" color={color} fontSize={size} />;

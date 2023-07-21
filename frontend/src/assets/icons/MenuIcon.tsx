@@ -4,7 +4,7 @@ import MuiMenuOpenIcon from '@mui/icons-material/MenuOpen';
 import { IconProps } from './types/iconTypes';
 
 export default function MenuIcon(props: IconProps): JSX.Element {
-  const { color = 'primary', size = 'medium', variant = 'outlined' } = props;
+  const { color = 'inherit', size = 'medium', variant = 'filled' } = props;
 
   if (variant === 'filled') {
     return <MuiMenuOpenIcon className="rgf-icon" color={color} fontSize={size} />;
