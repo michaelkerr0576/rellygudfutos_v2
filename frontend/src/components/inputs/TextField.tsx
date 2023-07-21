@@ -13,6 +13,10 @@ export interface TextFieldProps {
 }
 
 const StyledTextField = styled('div')(({ theme }): { [key: string]: any } => ({
+  '.MuiInputBase-root': {
+    paddingRight: 0,
+  },
+
   padding: theme.spacing(2, 0),
 }));
 

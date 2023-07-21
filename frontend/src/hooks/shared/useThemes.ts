@@ -102,10 +102,10 @@ const typography = {
 const lightTheme = {
   palette: {
     primary: {
-      main: alpha(common.black, 0.9),
+      main: alpha(common.black, 0.85),
     },
     secondary: {
-      main: alpha(common.black, 0.75),
+      main: alpha(common.black, 0.7),
     },
   },
   typography,
