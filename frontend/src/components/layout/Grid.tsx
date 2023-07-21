@@ -9,16 +9,17 @@ type HorizontalAlignment = 'start' | 'center' | 'end' | 'spaceBetween' | 'spaceE
 export interface GridProps {
   children: React.ReactNode;
   className?: MuiGridProps['className'];
-  desktop?: number;
+  desktop?: number | 'auto';
   desktopOffset?: number;
   direction?: Direction;
   horizontalAlignment?: HorizontalAlignment;
   isContainer?: MuiGridProps['container'];
-  laptop?: number;
+  laptop?: number | 'auto';
   laptopOffset?: number;
-  mobile?: number;
+  mobile?: number | 'auto';
   mobileOffset?: number;
-  tablet?: number;
+  spacing?: MuiGridProps['spacing']; // * The gap elements in theme.spacing()
+  tablet?: number | 'auto';
   tabletOffset?: number;
 }
 
@@ -35,6 +36,7 @@ export default function Grid(props: GridProps): JSX.Element {
     laptopOffset = undefined,
     mobile = undefined,
     mobileOffset = undefined,
+    spacing = 0,
     tablet = undefined,
     tabletOffset = undefined,
   } = props;
@@ -66,6 +68,7 @@ export default function Grid(props: GridProps): JSX.Element {
       laptopOffset={laptopOffset}
       mobile={mobile}
       mobileOffset={mobileOffset}
+      spacing={spacing}
       tablet={tablet}
       tabletOffset={tabletOffset}
     >

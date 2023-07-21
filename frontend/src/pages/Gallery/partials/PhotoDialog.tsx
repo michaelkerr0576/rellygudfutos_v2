@@ -1,7 +1,6 @@
 import { useParams } from 'react-router-dom';
 
-import { styled, useTheme } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
+import { styled } from '@mui/material/styles';
 
 import ApertureIcon from '@/assets/icons/ApertureIcon';
 import CameraIcon from '@/assets/icons/CameraIcon';
@@ -21,7 +20,7 @@ import Alert from '@/components/feedback/Alert';
 import CircularProgress from '@/components/feedback/CircularProgress';
 import Button from '@/components/inputs/Button';
 import Box from '@/components/layout/Box';
-import Stack from '@/components/layout/Stack';
+import Grid from '@/components/layout/Grid';
 import Paper from '@/components/surfaces/Paper';
 import usePhoto from '@/hooks/queries/usePhoto';
 import useErrorMessage from '@/hooks/shared/useErrorMessage';
@@ -68,8 +67,6 @@ const StyledPhotoDialog = styled(Dialog)(({ theme }): { [key: string]: any } => 
 }));
 
 export default function PhotoDialog(): JSX.Element {
-  const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.between('mobile', 'laptop'));
   const { photoId = '' } = useParams();
 
   const { isPhotoDialogOpen, togglePhotoDialog } = useGallery();
@@ -132,53 +129,61 @@ export default function PhotoDialog(): JSX.Element {
       const settingsShutterSpeed = photo?.data.settings.shutterSpeed || '';
 
       return (
-        <Box className="rgf-photoDialog--contentDetails">
-          <Stack direction={isSmallScreen ? 'column' : 'row'}>
-            <Stack className="rgf-photoDialog--contentDetailsColumnOne" direction="column">
-              <TypographyIcon
-                startIcon={<PersonIcon color="secondary" size="small" variant="filled" />}
-                typography={<Typography color="secondary">{photographerName}</Typography>}
-              />
+        <Grid className="rgf-photoDialog--contentDetails" isContainer>
+          <Grid
+            className="rgf-photoDialog--contentDetailsColumnOne"
+            direction="column"
+            mobile={12}
+            laptop="auto"
+          >
+            <TypographyIcon
+              startIcon={<PersonIcon color="secondary" size="small" variant="filled" />}
+              typography={<Typography color="secondary">{photographerName}</Typography>}
+            />
 
-              <TypographyIcon
-                startIcon={<LocationIcon color="secondary" size="small" variant="filled" />}
-                typography={<Typography color="secondary">{location}</Typography>}
-              />
+            <TypographyIcon
+              startIcon={<LocationIcon color="secondary" size="small" variant="filled" />}
+              typography={<Typography color="secondary">{location}</Typography>}
+            />
 
-              <TypographyIcon
-                startIcon={<CameraIcon color="secondary" size="small" variant="filled" />}
-                typography={<Typography color="secondary">{equipmentCamera}</Typography>}
-              />
+            <TypographyIcon
+              startIcon={<CameraIcon color="secondary" size="small" variant="filled" />}
+              typography={<Typography color="secondary">{equipmentCamera}</Typography>}
+            />
 
-              <TypographyIcon
-                startIcon={<LensIcon color="secondary" size="small" />}
-                typography={<Typography color="secondary">{equipmentLens}</Typography>}
-              />
-            </Stack>
+            <TypographyIcon
+              startIcon={<LensIcon color="secondary" size="small" />}
+              typography={<Typography color="secondary">{equipmentLens}</Typography>}
+            />
+          </Grid>
 
-            <Stack className="rgf-photoDialog--contentDetailsColumnTwo" direction="column">
-              <TypographyIcon
-                startIcon={<ApertureIcon color="secondary" size="small" variant="filled" />}
-                typography={<Typography color="secondary">{settingsAperture}</Typography>}
-              />
+          <Grid
+            className="rgf-photoDialog--contentDetailsColumnTwo"
+            direction="column"
+            mobile={12}
+            laptop="auto"
+          >
+            <TypographyIcon
+              startIcon={<ApertureIcon color="secondary" size="small" variant="filled" />}
+              typography={<Typography color="secondary">{settingsAperture}</Typography>}
+            />
 
-              <TypographyIcon
-                startIcon={<FocalLengthIcon color="secondary" size="small" />}
-                typography={<Typography color="secondary">{settingsFocalLength}</Typography>}
-              />
+            <TypographyIcon
+              startIcon={<FocalLengthIcon color="secondary" size="small" />}
+              typography={<Typography color="secondary">{settingsFocalLength}</Typography>}
+            />
 
-              <TypographyIcon
-                startIcon={<LightIcon color="secondary" size="small" variant="filled" />}
-                typography={<Typography color="secondary">{settingsIso} ISO</Typography>}
-              />
+            <TypographyIcon
+              startIcon={<LightIcon color="secondary" size="small" variant="filled" />}
+              typography={<Typography color="secondary">{settingsIso} ISO</Typography>}
+            />
 
-              <TypographyIcon
-                startIcon={<ShutterSpeedIcon color="secondary" size="small" />}
-                typography={<Typography color="secondary">{settingsShutterSpeed}</Typography>}
-              />
-            </Stack>
-          </Stack>
-        </Box>
+            <TypographyIcon
+              startIcon={<ShutterSpeedIcon color="secondary" size="small" />}
+              typography={<Typography color="secondary">{settingsShutterSpeed}</Typography>}
+            />
+          </Grid>
+        </Grid>
       );
     };
 
