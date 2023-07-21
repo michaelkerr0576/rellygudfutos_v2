@@ -28,6 +28,7 @@ import Paper from '@/components/surfaces/Paper';
 import usePhoto from '@/hooks/queries/usePhoto';
 import useErrorMessage from '@/hooks/shared/useErrorMessage';
 import { PhotoTag } from '@/types/api/photo.types';
+import { formatDateTime } from '@/utils/dateTime.utils';
 
 import useGallery from '../hooks/useGallery';
 
@@ -87,13 +88,16 @@ export default function PhotoDialog(): JSX.Element {
     const renderDialogContentTitle = (): JSX.Element => {
       const title = photo?.data.title || '';
       const captureDate = photo?.data.captureDate || '';
+      const formattedCaptureDate = formatDateTime(captureDate);
 
       return (
         <Paper className="rgf-photoDialog--contentTitle" elevation={1}>
           <Stack justifyContent="spaceBetween" spacing={1}>
             <Typography variant="h3">{title}</Typography>
 
-            <Typography align="right" color="secondary" variant="subtitle">{`${captureDate}`}</Typography>
+            <Typography align="right" color="secondary" variant="subtitle">
+              {formattedCaptureDate}
+            </Typography>
           </Stack>
         </Paper>
       );
@@ -196,12 +200,14 @@ export default function PhotoDialog(): JSX.Element {
     };
 
     const renderDialogContentDate = (): JSX.Element => {
-      // TODO - format date from BE
       const captureDate = photo?.data.captureDate || '';
+      const formattedCaptureDate = formatDateTime(captureDate, 'full', 'short');
 
       return (
         <Box className="rgf-photoDialog--contentDate">
-          <Typography color="secondary" variant="subtitle">{`${captureDate}`}</Typography>
+          <Typography color="secondary" variant="subtitle">
+            {formattedCaptureDate}
+          </Typography>
         </Box>
       );
     };
@@ -224,7 +230,7 @@ export default function PhotoDialog(): JSX.Element {
 
     return (
       <>
-        <Image alt={title} maxWidth="100%" src={imageUrl} variant="square" />
+        <Image alt={title} maxWidth="100%" maxHeight="85vh" src={imageUrl} variant="square" />
 
         <Box className="rgf-photoDialog--content">
           {renderDialogContentTitle()}

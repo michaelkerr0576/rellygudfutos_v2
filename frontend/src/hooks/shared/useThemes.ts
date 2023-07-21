@@ -114,10 +114,10 @@ const lightTheme = {
 const darkTheme = {
   palette: {
     primary: {
-      main: alpha(common.white, 0.9),
+      main: alpha(common.white, 0.95),
     },
     secondary: {
-      main: alpha(common.white, 0.75),
+      main: alpha(common.white, 0.8),
     },
   },
   typography,

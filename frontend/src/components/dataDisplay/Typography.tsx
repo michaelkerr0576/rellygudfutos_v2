@@ -28,8 +28,6 @@ const StyledMuiTypography = styled(MuiTypography)((): { [key: string]: any } => 
     marginBottom: 0,
     maxWidth: '60ch', // character width
   },
-
-  width: '100%',
 }));
 
 export default function Typography(props: TypographyProps): JSX.Element {
