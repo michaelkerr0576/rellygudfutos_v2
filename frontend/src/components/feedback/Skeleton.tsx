@@ -2,7 +2,7 @@ import clsx from 'clsx';
 
 import MuiSkeleton, { SkeletonProps as MuiSkeletonProps } from '@mui/material/Skeleton';
 
-type Variant = 'circular' | 'rectangular' | 'rounded';
+type Variant = 'circular' | 'rectangular' | 'rounded' | 'text';
 
 export interface SkeletonProps {
   children?: MuiSkeletonProps['children']; // * Optional children to infer width and height from

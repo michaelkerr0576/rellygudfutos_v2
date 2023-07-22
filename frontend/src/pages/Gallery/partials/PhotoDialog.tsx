@@ -19,7 +19,6 @@ import Image from '@/components/dataDisplay/Image';
 import Typography from '@/components/dataDisplay/Typography';
 import TypographyIcon from '@/components/dataDisplay/TypographyIcon';
 import Alert from '@/components/feedback/Alert';
-import CircularProgress from '@/components/feedback/CircularProgress';
 import Button from '@/components/inputs/Button';
 import Box from '@/components/layout/Box';
 import Grid from '@/components/layout/Grid';
@@ -31,6 +30,7 @@ import { PhotoTag } from '@/types/api/photo.types';
 import { formatDateTime } from '@/utils/dateTime.utils';
 
 import useGallery from '../hooks/useGallery';
+import PhotoDialogContentSkeleton from '../skeletons/PhotoDialogContent.skeleton';
 
 const StyledPhotoDialog = styled(Dialog)(({ theme }): { [key: string]: any } => ({
   '.rgf-dialog--content': {
@@ -92,7 +92,7 @@ export default function PhotoDialog(): JSX.Element {
 
       return (
         <Paper className="rgf-photoDialog--contentTitle" elevation={1}>
-          <Stack justifyContent="spaceBetween" spacing={1}>
+          <Stack alignItems="center" justifyContent="spaceBetween" spacing={1}>
             <Typography variant="h3">{title}</Typography>
 
             <Typography align="right" color="secondary" variant="subtitle">
@@ -220,17 +220,17 @@ export default function PhotoDialog(): JSX.Element {
       );
     }
 
-    // TODO - Replace with skeleton loader
     if (isLoading) {
-      return <CircularProgress />;
+      return <PhotoDialogContentSkeleton />;
     }
 
     const imageUrl = photo?.data.image.url || '';
+    const imageHeight = photo?.data.image.height || 'inherit';
     const title = photo?.data.title || '';
 
     return (
       <>
-        <Image alt={title} maxWidth="100%" maxHeight="85vh" src={imageUrl} variant="square" />
+        <Image alt={title} maxHeight={`${imageHeight}px`} maxWidth="100%" src={imageUrl} variant="square" />
 
         <Box className="rgf-photoDialog--content">
           {renderDialogContentTitle()}
