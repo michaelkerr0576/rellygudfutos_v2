@@ -24,9 +24,13 @@ export interface TextFieldProps {
 }
 
 const StyledTextField = styled('div')(({ theme }): { [key: string]: any } => ({
-  '&.rgf-textField--helperText': {
-    height: '75px',
-    padding: theme.spacing(0, 0),
+  '&.rgf-textField--outlinedHelperText': {
+    height: '95px',
+    padding: theme.spacing(1, 0),
+  },
+  '&.rgf-textField--standardHelperText': {
+    height: '80px',
+    padding: theme.spacing(1, 0),
   },
   '.MuiInputBase-root': {
     paddingRight: theme.spacing(1),
@@ -82,7 +86,8 @@ export default function TextField(props: TextFieldProps): JSX.Element {
 
   const textFieldStyles = clsx('rgf-textField', {
     [className]: !!className,
-    'rgf-textField--helperText': !!hasHelperText,
+    'rgf-textField--outlinedHelperText': !!hasHelperText && variant === 'outlined',
+    'rgf-textField--standardHelperText': !!hasHelperText && variant === 'standard',
   });
 
   return (

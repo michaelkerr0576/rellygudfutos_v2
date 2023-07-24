@@ -88,12 +88,12 @@ export default function LoginForm(): JSX.Element {
       <Grid isContainer>
         <Grid
           mobile={12}
-          tablet={10}
-          tabletOffset={1}
-          laptop={8}
-          laptopOffset={2}
-          desktop={6}
-          desktopOffset={3}
+          tablet={8}
+          tabletOffset={2}
+          laptop={6}
+          laptopOffset={3}
+          desktop={4}
+          desktopOffset={4}
         >
           {renderEmailField()}
 
