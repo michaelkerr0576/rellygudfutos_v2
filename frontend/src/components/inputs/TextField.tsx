@@ -25,8 +25,8 @@ export interface TextFieldProps {
 
 const StyledTextField = styled('div')(({ theme }): { [key: string]: any } => ({
   '&.rgf-textField--helperText': {
-    height: '70px',
-    padding: theme.spacing(0),
+    height: '75px',
+    padding: theme.spacing(0, 0),
   },
   '.MuiInputBase-root': {
     paddingRight: theme.spacing(1),

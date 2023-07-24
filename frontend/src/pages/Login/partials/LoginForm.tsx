@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import { useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 
@@ -21,7 +20,12 @@ export default function LoginForm(): JSX.Element {
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm<LoginFormInput>();
+  } = useForm<LoginFormInput>({
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  });
   const onSubmit: SubmitHandler<LoginFormInput> = (data): void => console.log(data);
 
   // TODO - move to hook
@@ -35,15 +39,16 @@ export default function LoginForm(): JSX.Element {
       name="email"
       control={control}
       rules={{ required: true }}
-      render={({ field }): JSX.Element => (
+      render={({ field: { value, onChange } }): JSX.Element => (
         <TextField
-          {...field}
           hasHelperText
-          helperText="test error"
+          helperText={errors?.email ? 'test error' : ''}
           isError={!!errors?.email}
           label="Email"
+          onChange={onChange}
           startAdornment={<AccountCircleIcon color="secondary" />}
           type="email"
+          value={value}
         />
       )}
     />
@@ -54,9 +59,8 @@ export default function LoginForm(): JSX.Element {
       name="password"
       control={control}
       rules={{ required: true }}
-      render={({ field }): JSX.Element => (
+      render={({ field: { value, onChange } }): JSX.Element => (
         <TextField
-          {...field}
           endAdornment={
             <IconButton
               ariaLabel="toggle password visibility"
@@ -67,11 +71,13 @@ export default function LoginForm(): JSX.Element {
             </IconButton>
           }
           hasHelperText
-          helperText="test error"
+          helperText={errors?.password ? 'test error' : ''}
           isError={!!errors?.password}
           label="Password"
+          onChange={onChange}
           startAdornment={<LockIcon color="secondary" />}
           type={showPassword ? 'text' : 'password'}
+          value={value}
         />
       )}
     />
