@@ -11,6 +11,7 @@ import { Photo } from '@/types/api/photo.types';
 
 import { GALLERY_MAX_WIDTH } from '../constants';
 import useGallery from '../hooks/useGallery';
+import GallerySkeleton from '../skeletons/Gallery.skeleton';
 
 const StyledGallery = styled('div')(({ theme }): { [key: string]: any } => ({
   margin: theme.spacing(-1),
@@ -34,7 +35,7 @@ export default function Gallery(): JSX.Element {
   }
 
   if (isLoading) {
-    return <CircularProgress />;
+    return <GallerySkeleton variant={galleryVariant} />;
   }
 
   return (

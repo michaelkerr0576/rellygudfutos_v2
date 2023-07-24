@@ -8,6 +8,7 @@ export interface SkeletonProps {
   children?: MuiSkeletonProps['children']; // * Optional children to infer width and height from
   className?: MuiSkeletonProps['className'];
   height?: string;
+  minHeight?: string;
   variant?: Variant;
   width?: string;
 }
@@ -17,6 +18,7 @@ export default function Skeleton(props: SkeletonProps): JSX.Element {
     children = null,
     className = '',
     height = undefined,
+    minHeight = 'inherit',
     variant = 'rounded',
     width = undefined,
   } = props;
@@ -26,6 +28,9 @@ export default function Skeleton(props: SkeletonProps): JSX.Element {
       animation="wave"
       className={clsx('rgf-skeleton', `rgf-skeleton--${variant}`, { [className]: !!className })}
       height={height}
+      style={{
+        minHeight,
+      }}
       variant={variant}
       width={width}
     >

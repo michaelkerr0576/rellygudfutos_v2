@@ -1,7 +1,7 @@
 export const PAGE = 1;
 
 // #region Photo Pagination
-export const PHOTO_LIMIT = 5;
+export const PHOTO_LIMIT = 10;
 // #endregion
 
 // #region Tag Pagination

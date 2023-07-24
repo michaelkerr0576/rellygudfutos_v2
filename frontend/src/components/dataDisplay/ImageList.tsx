@@ -12,9 +12,9 @@ export const IMAGE_CONTAINER_COLUMNS = 3;
 export const IMAGE_LANDSCAPE_COLUMNS = 2;
 export const IMAGE_PORTRAIT_COLUMNS = 1;
 
-export const IMAGE_ROWS = 3;
-export const IMAGE_LANDSCAPE_ROWS = 1;
-export const IMAGE_PORTRAIT_ROWS = 2;
+export const IMAGE_ROWS = 10;
+export const IMAGE_LANDSCAPE_ROWS = 13;
+export const IMAGE_PORTRAIT_ROWS = 14;
 
 export const IMAGE_LARGE_SCREEN_GAP = 16; // * The gap between images in px
 export const IMAGE_SMALL_SCREEN_GAP = 8; // * The gap between images in px
@@ -23,8 +23,8 @@ type AspectRatio = 'landscape' | 'portrait';
 type Variant = 'grid' | 'list';
 
 type Img = {
-  url: string;
   height: number;
+  url: string;
   width: number;
 };
 
@@ -38,6 +38,7 @@ type ImageListItem = {
 export interface ImageListProps {
   className?: MuiImageListProps['className'];
   images: ImageListItem[];
+  isPermanentlyLoading?: boolean; // * Used for skeleton loaders
   lastImageRef?: RefObject<any> | ((node?: Element | null) => void);
   maxWidth?: string;
   onClick: (imageId: string) => void;
@@ -55,7 +56,15 @@ const StyledMuiImageList = styled(MuiImageList)((): { [key: string]: any } => ({
 }));
 
 export default function ImageList(props: ImageListProps): JSX.Element {
-  const { className = '', images, lastImageRef = undefined, maxWidth = 'inherit', onClick, variant } = props;
+  const {
+    className = '',
+    images,
+    isPermanentlyLoading = undefined,
+    lastImageRef = undefined,
+    maxWidth = 'inherit',
+    onClick,
+    variant,
+  } = props;
 
   const theme = useTheme();
   const isMobileScreen = useMediaQuery(theme.breakpoints.only('mobile'));
@@ -105,6 +114,7 @@ export default function ImageList(props: ImageListProps): JSX.Element {
             alt={imageTitle}
             imageFit="cover"
             imageRef={isLastImage ? lastImageRef : undefined}
+            isPermanentlyLoading={isPermanentlyLoading}
             maxHeight={`${imageHeight}px`}
             maxWidth={`${imageWidth}px`}
             src={imageUrl}

@@ -1,4 +1,5 @@
-import { styled } from '@mui/material/styles';
+import { styled, useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 import Chip from '@/components/dataDisplay/Chip';
 import Divider from '@/components/dataDisplay/Divider';
@@ -9,6 +10,8 @@ import Box from '@/components/layout/Box';
 import Grid from '@/components/layout/Grid';
 import Stack from '@/components/layout/Stack';
 import Paper from '@/components/surfaces/Paper';
+
+import { LANDSCAPE_PHOTO_LARGE_SCREEN_HEIGHT, LANDSCAPE_PHOTO_SMALL_SCREEN_HEIGHT } from '../constants';
 
 const StyledPhotoDialogContentSkeleton = styled('div')(({ theme }): { [key: string]: any } => ({
   '.rgf-photoDialog--contentDate, .rgf-photoDialog--contentCaption, .rgf-photoDialog--contentDetails, .rgf-photoDialog--contentTags, .rgf-photoDialog--contentTitle':
@@ -33,14 +36,21 @@ const StyledPhotoDialogContentSkeleton = styled('div')(({ theme }): { [key: stri
 }));
 
 export default function PhotoDialogContentSkeleton(): JSX.Element {
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.between('mobile', 'laptop'));
+
   const renderImageSkeleton = (): JSX.Element => (
-    <Skeleton width="100%">
+    <Skeleton
+      minHeight={isSmallScreen ? LANDSCAPE_PHOTO_SMALL_SCREEN_HEIGHT : LANDSCAPE_PHOTO_LARGE_SCREEN_HEIGHT}
+      width="100%"
+    >
       <Image
-        alt="Image skeleton"
+        alt="Image skeleton loader"
+        isPermanentlyLoading
         maxHeight="720px"
+        maxWidth="1080px"
         src="../../../../src/assets/images/greyBackground_landscape.jpg"
         variant="square"
-        maxWidth="1080px"
       />
     </Skeleton>
   );
@@ -70,6 +80,14 @@ export default function PhotoDialogContentSkeleton(): JSX.Element {
         <Chip label="Tag 2" onClick={(): void => {}} />
       </Skeleton>
     </Stack>
+  );
+
+  const renderCaptionSkeleton = (): JSX.Element => (
+    <Box className="rgf-photoDialog--contentCaption">
+      <Skeleton width={isSmallScreen ? '100%' : '50%'} variant="text" />
+      <Skeleton width={isSmallScreen ? '100%' : '50%'} variant="text" />
+      <Skeleton width={isSmallScreen ? '50%' : '25%'} variant="text" />
+    </Box>
   );
 
   const renderDetailsSkeleton = (): JSX.Element => (
@@ -127,6 +145,10 @@ export default function PhotoDialogContentSkeleton(): JSX.Element {
       {renderTitleSkeleton()}
 
       {renderTagsSkeleton()}
+
+      <Divider />
+
+      {renderCaptionSkeleton()}
 
       <Divider />
 

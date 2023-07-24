@@ -13,6 +13,7 @@ export interface ImageProps {
   className?: string;
   imageFit?: ImageFit;
   imageRef?: RefObject<any> | ((node?: Element | null) => void);
+  isPermanentlyLoading?: boolean; // * Used for skeleton loaders
   maxHeight?: string;
   maxWidth?: string;
   src: string;
@@ -31,6 +32,7 @@ export default function Image(props: ImageProps): JSX.Element {
     className = '',
     imageFit = 'contain',
     imageRef = undefined,
+    isPermanentlyLoading = undefined,
     maxHeight = 'inherit',
     maxWidth = 'inherit',
     src,
@@ -57,7 +59,7 @@ export default function Image(props: ImageProps): JSX.Element {
     />
   );
 
-  if (isLoading) {
+  if (isPermanentlyLoading || isLoading) {
     return <Skeleton>{renderImage()}</Skeleton>;
   }
 
