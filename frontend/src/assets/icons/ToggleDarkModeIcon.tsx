@@ -5,16 +5,16 @@ import MuiBrightness7OutlinedIcon from '@mui/icons-material/Brightness7Outlined'
 
 import { IconProps } from './types/iconTypes';
 
-type Mode = 'dark' | 'light';
+type Type = 'dark' | 'light';
 
 export interface ToggleDarkModeIconProps extends IconProps {
-  mode: Mode;
+  type: Type;
 }
 
 export default function ToggleDarkModeIcon(props: ToggleDarkModeIconProps): JSX.Element {
-  const { color = 'inherit', size = 'medium', mode, variant = 'filled' } = props;
+  const { color = 'inherit', size = 'medium', type, variant = 'filled' } = props;
 
-  if (mode === 'dark') {
+  if (type === 'dark') {
     if (variant === 'filled') {
       return <MuiBrightness4Icon className="rgf-icon" color={color} fontSize={size} />;
     }

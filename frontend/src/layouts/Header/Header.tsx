@@ -60,7 +60,7 @@ export default function Header(): JSX.Element {
 
   const renderAccountAction = (): JSX.Element => {
     // TODO - figure out global state for isLoggedIn and other account details
-    const isLoggedIn = false;
+    const isLoggedIn = true;
     if (isLoggedIn) {
       return <AccountDrawer />;
     }

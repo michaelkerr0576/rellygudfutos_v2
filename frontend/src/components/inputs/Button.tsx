@@ -9,8 +9,9 @@ export interface ButtonProps {
   className?: MuiButtonProps['className'];
   endIcon?: JSX.Element;
   isFullWidth?: boolean;
-  onClick: MuiButtonProps['onClick'];
+  onClick?: MuiButtonProps['onClick'];
   startIcon?: JSX.Element;
+  type?: MuiButtonProps['type'];
   variant?: Variant;
 }
 
@@ -20,8 +21,9 @@ export default function Button(props: ButtonProps): JSX.Element {
     className = '',
     endIcon = null,
     isFullWidth = false,
-    onClick,
+    onClick = undefined,
     startIcon = null,
+    type = 'button',
     variant = 'primary',
   } = props;
 
@@ -45,6 +47,7 @@ export default function Button(props: ButtonProps): JSX.Element {
       onClick={onClick}
       size="large"
       startIcon={startIcon}
+      type={type}
       variant={getVariant()}
     >
       {children}

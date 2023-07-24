@@ -83,10 +83,11 @@ export default function SearchDrawer(): JSX.Element {
     <Box className="rgf-searchDrawer--searchField">
       {renderRow(
         <TextField
-          endAdornmentIcon={<SearchIcon variant="outlined" />}
+          endAdornment={<SearchIcon variant="outlined" />}
           label="Search"
           onChange={handleGallerySearch}
           value={gallerySearch}
+          variant="outlined"
         />,
       )}
 

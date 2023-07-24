@@ -64,7 +64,7 @@ export default function GalleryBottomNavigation(): JSX.Element {
           {
             icon: (
               <ToggleDarkModeIcon
-                mode={colorMode}
+                type={colorMode}
                 variant={galleryNavigationValue === GalleryNavigationValue.MODE ? 'filled' : 'outlined'}
               />
             ),

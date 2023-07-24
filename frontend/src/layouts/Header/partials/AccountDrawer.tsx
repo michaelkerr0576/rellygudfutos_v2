@@ -5,6 +5,7 @@ import { styled } from '@mui/material/styles';
 import AccountIcon from '@/assets/icons/AccountIcon';
 import DashboardIcon from '@/assets/icons/DashboardIcon';
 import LoginIcon from '@/assets/icons/LoginIcon';
+import LogoutIcon from '@/assets/icons/LogoutIcon';
 import Avatar, { Size } from '@/components/dataDisplay/Avatar';
 import Divider from '@/components/dataDisplay/Divider';
 import List from '@/components/dataDisplay/List';
@@ -64,10 +65,17 @@ export default function AccountDrawer(): JSX.Element {
               navigateTo: '/account/dashboard',
               onClick: (): void => toggleAccountDrawer(false),
             },
+            // TODO - remove login page route from AccountDrawer here
             {
               icon: <LoginIcon />,
               label: 'Login',
               navigateTo: '/account/login',
+              onClick: (): void => toggleAccountDrawer(false),
+            },
+            {
+              icon: <LogoutIcon />,
+              label: 'Logout',
+              navigateTo: '/',
               onClick: (): void => toggleAccountDrawer(false),
             },
           ]}
