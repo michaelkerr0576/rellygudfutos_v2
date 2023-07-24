@@ -2,7 +2,9 @@ import { useNavigate } from 'react-router-dom';
 
 import { styled } from '@mui/material/styles';
 
+import LoginIcon from '@/assets/icons/LoginIcon';
 import RellygudfutosLogo from '@/assets/logos/RellygudfutosLogo';
+import IconButton from '@/components/inputs/IconButton';
 import LogoButton from '@/components/inputs/LogoButton';
 import Container from '@/components/layout/Container';
 import Stack from '@/components/layout/Stack';
@@ -42,27 +44,48 @@ const StyledHeader = styled('header')(({ theme }): { [key: string]: any } => ({
 export default function Header(): JSX.Element {
   const navigate = useNavigate();
 
-  const renderLogoButton = (): JSX.Element => (
-    <LogoButton
-      ariaLabel="really good photos"
-      className="rgf-header--rellygudfutosLogoButton"
-      onClick={(): void => navigate('/')}
-    >
-      <RellygudfutosLogo />
-    </LogoButton>
+  const renderSiteAction = (): JSX.Element => (
+    <Stack alignItems="center">
+      <MenuDrawer />
+
+      <LogoButton
+        ariaLabel="really good photos"
+        className="rgf-header--rellygudfutosLogoButton"
+        onClick={(): void => navigate('/')}
+      >
+        <RellygudfutosLogo />
+      </LogoButton>
+    </Stack>
   );
+
+  const renderAccountAction = (): JSX.Element => {
+    // TODO - figure out global state for isLoggedIn and other account details
+    const isLoggedIn = false;
+    if (isLoggedIn) {
+      return <AccountDrawer />;
+    }
+
+    return (
+      <IconButton
+        ariaLabel="login"
+        className="rgf-header--loginButton"
+        edge="end"
+        onClick={(): void => navigate('/account/login')}
+      >
+        <LoginIcon size="large" />
+      </IconButton>
+    );
+  };
 
   return (
     <ErrorBoundary identifier="Header">
       <StyledHeader className="rgf-header">
         <Paper elevation={1}>
           <Container>
-            <Stack alignItems="center">
-              <MenuDrawer />
+            <Stack alignItems="center" justifyContent="spaceBetween">
+              {renderSiteAction()}
 
-              {renderLogoButton()}
-
-              <AccountDrawer />
+              {renderAccountAction()}
             </Stack>
           </Container>
         </Paper>

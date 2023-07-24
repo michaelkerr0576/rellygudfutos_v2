@@ -2,6 +2,7 @@ import { useLocation } from 'react-router-dom';
 
 import { styled } from '@mui/material/styles';
 
+import AccountIcon from '@/assets/icons/AccountIcon';
 import DashboardIcon from '@/assets/icons/DashboardIcon';
 import LoginIcon from '@/assets/icons/LoginIcon';
 import Avatar, { Size } from '@/components/dataDisplay/Avatar';
@@ -49,6 +50,12 @@ export default function AccountDrawer(): JSX.Element {
 
         <List
           listItems={[
+            {
+              icon: <AccountIcon variant={pathname.includes('/account/profile') ? 'filled' : 'outlined'} />,
+              label: 'Profile',
+              navigateTo: '/account/profile',
+              onClick: (): void => toggleAccountDrawer(false),
+            },
             {
               icon: (
                 <DashboardIcon variant={pathname.includes('/account/dashboard') ? 'filled' : 'outlined'} />

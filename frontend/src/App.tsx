@@ -11,6 +11,7 @@ import Header from '@/layouts/Header/Header';
 import DashboardPage from '@/pages/Dashboard/Dashboard.page';
 import GalleryPage from '@/pages/Gallery/Gallery.page';
 import LoginPage from '@/pages/Login/Login.page';
+import ProfilePage from '@/pages/Profile/Profile.page';
 
 const queryClient = new QueryClient();
 
@@ -33,6 +34,7 @@ export default function App(): JSX.Element {
               <Route path="/account">
                 <Route index element={<LoginPage />} />
                 <Route path="login" element={<LoginPage />} />
+                <Route path="profile" element={<ProfilePage />} />
                 <Route path="dashboard" element={<DashboardPage />} />
               </Route>
 
