@@ -12,7 +12,9 @@ import Paper from '@/components/surfaces/Paper';
 
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 
+import useMenu from './hooks/useMenu';
 import AccountDrawer from './partials/AccountDrawer';
+import LoginDialog from './partials/LoginDialog';
 import MenuDrawer from './partials/MenuDrawer';
 import { FIXED_HEADER_HEIGHT } from './constants';
 
@@ -43,6 +45,7 @@ const StyledHeader = styled('header')(({ theme }): { [key: string]: any } => ({
 
 export default function Header(): JSX.Element {
   const navigate = useNavigate();
+  const { isLoginDialogOpen, toggleLoginDialog } = useMenu();
 
   const renderSiteAction = (): JSX.Element => (
     <Stack alignItems="center">
@@ -60,7 +63,7 @@ export default function Header(): JSX.Element {
 
   const renderAccountAction = (): JSX.Element => {
     // TODO - figure out global state for isLoggedIn and other account details
-    const isLoggedIn = true;
+    const isLoggedIn = false;
     if (isLoggedIn) {
       return <AccountDrawer />;
     }
@@ -70,7 +73,7 @@ export default function Header(): JSX.Element {
         ariaLabel="login"
         className="rgf-header--loginButton"
         edge="end"
-        onClick={(): void => navigate('/account/login')}
+        onClick={(): void => toggleLoginDialog(true)}
       >
         <LoginIcon size="large" />
       </IconButton>
@@ -90,6 +93,8 @@ export default function Header(): JSX.Element {
           </Container>
         </Paper>
       </StyledHeader>
+
+      {isLoginDialogOpen && <LoginDialog />}
     </ErrorBoundary>
   );
 }

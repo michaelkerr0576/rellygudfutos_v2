@@ -5,17 +5,19 @@ import AccountCircleIcon from '@/assets/icons/AccountCircleIcon';
 import LockIcon from '@/assets/icons/LockIcon';
 import LoginIcon from '@/assets/icons/LoginIcon';
 import VisibilityIcon from '@/assets/icons/VisibilityIcon';
+import Dialog from '@/components/dataDisplay/Dialog';
 import Button from '@/components/inputs/Button';
 import IconButton from '@/components/inputs/IconButton';
 import TextField from '@/components/inputs/TextField';
-import Grid from '@/components/layout/Grid';
+
+import useMenu from '../hooks/useMenu';
 
 interface LoginFormInput {
   email: string;
   password: string;
 }
 
-export default function LoginForm(): JSX.Element {
+export default function LoginDialog(): JSX.Element {
   const {
     handleSubmit,
     control,
@@ -27,6 +29,8 @@ export default function LoginForm(): JSX.Element {
     },
   });
   const onSubmit: SubmitHandler<LoginFormInput> = (data): void => console.log(data);
+
+  const { isLoginDialogOpen, toggleLoginDialog } = useMenu();
 
   // TODO - move to hook
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -41,6 +45,7 @@ export default function LoginForm(): JSX.Element {
       rules={{ required: true }}
       render={({ field: { value, onChange } }): JSX.Element => (
         <TextField
+          className="rgf-loginDialog--emailField"
           hasHelperText
           helperText={errors?.email ? 'test error' : ''}
           isError={!!errors?.email}
@@ -61,6 +66,7 @@ export default function LoginForm(): JSX.Element {
       rules={{ required: true }}
       render={({ field: { value, onChange } }): JSX.Element => (
         <TextField
+          className="rgf-loginDialog--passwordField"
           endAdornment={
             <IconButton
               ariaLabel="toggle password visibility"
@@ -83,28 +89,29 @@ export default function LoginForm(): JSX.Element {
     />
   );
 
+  const renderDialogActions = (): JSX.Element => (
+    <Button
+      className="rgf-loginDialog--loginButton"
+      isFullWidth
+      onClick={handleSubmit(onSubmit)}
+      startIcon={<LoginIcon />}
+      type="submit"
+    >
+      Login
+    </Button>
+  );
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <Grid isContainer>
-        <Grid
-          mobile={12}
-          tablet={8}
-          tabletOffset={2}
-          laptop={6}
-          laptopOffset={3}
-          desktop={4}
-          desktopOffset={4}
-        >
-          {renderEmailField()}
+    <Dialog
+      className="rgf-loginDialog"
+      dialogActions={renderDialogActions()}
+      setIsOpen={(isOpen): void => toggleLoginDialog(isOpen)}
+      isOpen={isLoginDialogOpen}
+      title="Login"
+    >
+      {renderEmailField()}
 
-          {renderPasswordField()}
-
-          {/* // TODO - move submit button to fixed bottom bar */}
-          <Button isFullWidth startIcon={<LoginIcon />} type="submit">
-            LOGIN
-          </Button>
-        </Grid>
-      </Grid>
-    </form>
+      {renderPasswordField()}
+    </Dialog>
   );
 }

@@ -4,7 +4,6 @@ import { styled } from '@mui/material/styles';
 
 import AccountIcon from '@/assets/icons/AccountIcon';
 import DashboardIcon from '@/assets/icons/DashboardIcon';
-import LoginIcon from '@/assets/icons/LoginIcon';
 import LogoutIcon from '@/assets/icons/LogoutIcon';
 import Avatar, { Size } from '@/components/dataDisplay/Avatar';
 import Divider from '@/components/dataDisplay/Divider';
@@ -14,7 +13,7 @@ import IconButton from '@/components/inputs/IconButton';
 import Box from '@/components/layout/Box';
 import Stack from '@/components/layout/Stack';
 import Drawer from '@/components/navigation/Drawer';
-import useMenu from '@/hooks/shared/useMenu';
+import useMenu from '@/layouts/Header/hooks/useMenu';
 
 const StyledDrawer = styled(Drawer)(({ theme }): { [key: string]: any } => ({
   '.rgf-accountDrawer--header': {
@@ -63,13 +62,6 @@ export default function AccountDrawer(): JSX.Element {
               ),
               label: 'Dashboard',
               navigateTo: '/account/dashboard',
-              onClick: (): void => toggleAccountDrawer(false),
-            },
-            // TODO - remove login page route from AccountDrawer here
-            {
-              icon: <LoginIcon />,
-              label: 'Login',
-              navigateTo: '/account/login',
               onClick: (): void => toggleAccountDrawer(false),
             },
             {

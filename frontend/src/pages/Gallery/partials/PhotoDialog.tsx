@@ -254,7 +254,7 @@ export default function PhotoDialog(): JSX.Element {
   };
 
   const renderDialogActions = (): JSX.Element => (
-    <Stack justifyContent="end" spacing={1}>
+    <Stack alignItems="center" justifyContent="end" spacing={1}>
       <Button onClick={(): void => {}} startIcon={<ShareIcon size="large" />} variant="tertiary">
         Share
       </Button>

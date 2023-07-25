@@ -23,6 +23,7 @@ const useStore = create<State>()(
         galleryTagsFilter: [],
         galleryVariant: GalleryVariant.GRID,
         isAccountDrawerOpen: false,
+        isLoginDialogOpen: false,
         isMenuDrawerOpen: false,
         isPhotoDialogOpen: false,
         isSearchDrawerOpen: false,
@@ -39,6 +40,8 @@ const useStore = create<State>()(
           set({ galleryVariant }, false, 'SET_GALLERY_VARIANT'),
         setIsAccountDrawerOpen: (isAccountDrawerOpen: boolean): void =>
           set({ isAccountDrawerOpen }, false, 'SET_IS_ACCOUNT_DRAWER_OPEN'),
+        setIsLoginDialogOpen: (isLoginDialogOpen: boolean): void =>
+          set({ isLoginDialogOpen }, false, 'SET_IS_LOGIN_DIALOG_OPEN'),
         setIsMenuDrawerOpen: (isMenuDrawerOpen: boolean): void =>
           set({ isMenuDrawerOpen }, false, 'SET_IS_MENU_DRAWER_OPEN'),
         setIsPhotoDialogOpen: (isPhotoDialogOpen: boolean): void =>

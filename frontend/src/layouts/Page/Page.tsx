@@ -1,7 +1,7 @@
 import { styled } from '@mui/material/styles';
 
 import Container from '@/components/layout/Container';
-import { FIXED_GALLERY_BOTTOM_NAVIGATION_HEIGHT } from '@/pages/Gallery/constants';
+import { FIXED_BOTTOM_APP_BAR_HEIGHT } from '@/utils/constants';
 
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import { FIXED_HEADER_HEIGHT } from '../Header/constants';
@@ -16,7 +16,7 @@ const StyledPage = styled('main')(({ theme }): { [key: string]: any } => ({
     padding: theme.spacing(2),
   },
 
-  height: `calc(100vh - (${FIXED_HEADER_HEIGHT} + ${FIXED_GALLERY_BOTTOM_NAVIGATION_HEIGHT}))`,
+  height: `calc(100vh - (${FIXED_HEADER_HEIGHT} + ${FIXED_BOTTOM_APP_BAR_HEIGHT}))`,
   overflowY: 'auto',
 }));
 

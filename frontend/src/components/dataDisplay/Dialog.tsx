@@ -12,6 +12,7 @@ import BackIcon from '@/assets/icons/BackIcon';
 import CloseIcon from '@/assets/icons/CloseIcon';
 import MoreOptionsIcon from '@/assets/icons/MoreOptionsIcon';
 import { FIXED_HEADER_HEIGHT } from '@/layouts/Header/constants';
+import { FIXED_BOTTOM_APP_BAR_HEIGHT } from '@/utils/constants';
 
 import IconButton, { ICON_BUTTON_HEIGHT_WIDTH } from '../inputs/IconButton';
 import Box from '../layout/Box';
@@ -36,8 +37,9 @@ export interface DialogProps {
 const StyledMuiDialog = styled(MuiDialog)(({ theme }): { [key: string]: any } => ({
   '.MuiDialogActions-root': {
     display: 'inherit',
-    height: '56px',
+    height: FIXED_BOTTOM_APP_BAR_HEIGHT,
     justifyContent: 'inherit',
+    padding: theme.spacing(0.86, 1),
   },
   '.MuiDialogContent-root': {
     minHeight: '400px',
@@ -93,7 +95,7 @@ export default function Dialog(props: DialogProps): JSX.Element {
         className="rgf-dialog--titleText"
         id="dialog-title"
         maxLines={2}
-        variant="h3"
+        variant="h2"
       >
         {title}
       </Typography>

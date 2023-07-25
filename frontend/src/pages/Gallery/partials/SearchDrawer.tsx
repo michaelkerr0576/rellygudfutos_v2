@@ -13,8 +13,8 @@ import Stack from '@/components/layout/Stack';
 import Drawer from '@/components/navigation/Drawer';
 import Paper from '@/components/surfaces/Paper';
 import { GallerySortBy } from '@/types/store.types';
+import { FIXED_BOTTOM_APP_BAR_HEIGHT } from '@/utils/constants';
 
-import { SEARCH_DRAWER_BUTTON_ACTIONS_HEIGHT } from '../constants';
 import useGallery from '../hooks/useGallery';
 
 // TODO - replace with API data
@@ -38,10 +38,11 @@ const tags = [
 
 const StyledDrawer = styled(Drawer)(({ theme }): { [key: string]: any } => ({
   '.rgf-drawer--children': {
-    marginBottom: SEARCH_DRAWER_BUTTON_ACTIONS_HEIGHT,
+    marginBottom: FIXED_BOTTOM_APP_BAR_HEIGHT,
   },
   '.rgf-searchDrawer--actionButtonGroup': {
     '.rgf-stack': {
+      height: FIXED_BOTTOM_APP_BAR_HEIGHT,
       padding: theme.spacing(1),
     },
 
@@ -137,7 +138,7 @@ export default function SearchDrawer(): JSX.Element {
   const renderActionButtonGroup = (): JSX.Element => (
     <Paper className="rgf-searchDrawer--actionButtonGroup" elevation={24}>
       {renderRow(
-        <Stack spacing={1}>
+        <Stack alignItems="center" spacing={1}>
           <Button
             isFullWidth
             onClick={handleClearFilters}

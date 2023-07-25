@@ -39,6 +39,7 @@ export interface State {
   galleryTagsFilter: GalleryTagsFilter;
   galleryVariant: GalleryVariant;
   isAccountDrawerOpen: boolean;
+  isLoginDialogOpen: boolean;
   isMenuDrawerOpen: boolean;
   isPhotoDialogOpen: boolean;
   isSearchDrawerOpen: boolean;
@@ -49,6 +50,7 @@ export interface State {
   setGalleryTagsFilter: (tags: GalleryTagsFilter) => void;
   setGalleryVariant: (variant: GalleryVariant) => void;
   setIsAccountDrawerOpen: (isOpen: boolean) => void;
+  setIsLoginDialogOpen: (isOpen: boolean) => void;
   setIsMenuDrawerOpen: (isOpen: boolean) => void;
   setIsPhotoDialogOpen: (isOpen: boolean) => void;
   setIsSearchDrawerOpen: (isOpen: boolean) => void;

@@ -5,7 +5,7 @@ import MuiSkeleton, { SkeletonProps as MuiSkeletonProps } from '@mui/material/Sk
 type Variant = 'circular' | 'rectangular' | 'rounded' | 'text';
 
 export interface SkeletonProps {
-  children?: MuiSkeletonProps['children']; // * Optional children to infer width and height from
+  children?: React.ReactNode; // * Optional children to infer width and height from
   className?: MuiSkeletonProps['className'];
   height?: string;
   minHeight?: string;
