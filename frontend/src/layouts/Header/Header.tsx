@@ -56,7 +56,7 @@ export default function Header(): JSX.Element {
         className="rgf-header--rellygudfutosLogoButton"
         onClick={(): void => navigate('/')}
       >
-        <RellygudfutosLogo />
+        <RellygudfutosLogo size="small" />
       </LogoButton>
     </Stack>
   );
@@ -75,7 +75,7 @@ export default function Header(): JSX.Element {
         edge="end"
         onClick={(): void => toggleLoginDialog(true)}
       >
-        <LoginIcon size="large" />
+        <LoginIcon />
       </IconButton>
     );
   };

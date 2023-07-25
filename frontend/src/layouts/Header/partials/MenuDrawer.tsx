@@ -5,7 +5,6 @@ import { styled } from '@mui/material/styles';
 import DarkModeIcon from '@/assets/icons/DarkModeIcon';
 import GalleryIcon from '@/assets/icons/GalleryIcon';
 import MenuIcon from '@/assets/icons/MenuIcon';
-import { IconProps } from '@/assets/icons/types/iconTypes';
 import RellygudfutosLogo from '@/assets/logos/RellygudfutosLogo';
 import Divider from '@/components/dataDisplay/Divider';
 import List from '@/components/dataDisplay/List';
@@ -32,9 +31,9 @@ export default function MenuDrawer(): JSX.Element {
   const { colorMode, toggleColorMode } = useThemes();
   const { isMenuDrawerOpen, toggleMenuDrawer } = useMenu();
 
-  const renderMenuButton = (isDrawerOpen: boolean, size?: IconProps['size']): JSX.Element => (
+  const renderMenuButton = (isDrawerOpen: boolean): JSX.Element => (
     <IconButton ariaLabel="menu" edge="start" onClick={(): void => toggleMenuDrawer(isDrawerOpen)}>
-      <MenuIcon size={size} variant={isMenuDrawerOpen ? 'filled' : 'outlined'} />
+      <MenuIcon variant={isMenuDrawerOpen ? 'filled' : 'outlined'} />
     </IconButton>
   );
 
@@ -57,7 +56,7 @@ export default function MenuDrawer(): JSX.Element {
 
   return (
     <Box className="rgf-menuDrawer">
-      {renderMenuButton(true, 'large')}
+      {renderMenuButton(true)}
 
       <StyledDrawer anchor="left" isOpen={isMenuDrawerOpen} setIsOpen={toggleMenuDrawer}>
         {renderDrawerHeader()}
