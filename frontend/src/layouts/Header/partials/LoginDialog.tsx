@@ -9,6 +9,7 @@ import Dialog from '@/components/dataDisplay/Dialog';
 import Button from '@/components/inputs/Button';
 import IconButton from '@/components/inputs/IconButton';
 import TextField from '@/components/inputs/TextField';
+import useUserLogin from '@/hooks/queries/useUserLogin';
 
 import useMenu from '../hooks/useMenu';
 
@@ -28,7 +29,14 @@ export default function LoginDialog(): JSX.Element {
       password: '',
     },
   });
-  const onSubmit: SubmitHandler<LoginFormInput> = (data): void => console.log(data);
+
+  const { mutate: loginUser } = useUserLogin();
+
+  const onSubmit: SubmitHandler<LoginFormInput> = async (data): Promise<void> => {
+    const { email, password } = data;
+
+    loginUser({ email, password });
+  };
 
   const { isLoginDialogOpen, toggleLoginDialog } = useMenu();
 

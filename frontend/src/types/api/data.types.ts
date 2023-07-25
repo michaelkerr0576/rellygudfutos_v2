@@ -4,6 +4,7 @@ import { AxiosError } from 'axios';
 export interface ApiResponse<T> {
   data: T;
   message: string;
+  token?: string;
 }
 
 export interface ApiResponsePaginated<T> extends ApiResponse<T> {

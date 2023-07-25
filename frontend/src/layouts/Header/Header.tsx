@@ -72,7 +72,7 @@ export default function Header(): JSX.Element {
       <IconButton
         ariaLabel="login"
         className="rgf-header--loginButton"
-        edge="end"
+        edge="start"
         onClick={(): void => toggleLoginDialog(true)}
       >
         <LoginIcon />

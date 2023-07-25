@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 
 import { AlertProps } from '@/components/feedback/Alert';
 import { ApiErrorResponse } from '@/types/api/data.types';
+import { getErrorMessage } from '@/utils/api.utils';
 
 export interface UseError {
   errorCode: number | null;
@@ -13,21 +14,6 @@ export default function useError(
   error: ApiErrorResponse | null,
   defaultErrorMessage = 'There was an unexpected error',
 ): UseError {
-  const getErrorMessage = (message: string): string => {
-    if (!message) {
-      return defaultErrorMessage;
-    }
-
-    // * Remove last character if it is a fullstop = keeps messaging to user consistent
-    const isLastCharFullstop = message.lastIndexOf('.') === message.length - 1;
-    if (isLastCharFullstop) {
-      const removedFullstop = message.substring(0, message.length - 1);
-      return removedFullstop;
-    }
-
-    return message;
-  };
-
   const getSeverity = (code: number): AlertProps['severity'] => {
     const firstTwoNumbers = String(code).substring(0, 2);
     const is400ErrorCode = firstTwoNumbers === '40';
@@ -41,11 +27,10 @@ export default function useError(
 
   const { errorCode, errorMessage, errorSeverity } = useMemo((): UseError => {
     const code = error?.response?.status;
-    const message = error?.response?.data?.message;
 
     return {
       errorCode: code || null,
-      errorMessage: message ? getErrorMessage(message) : null,
+      errorMessage: code ? getErrorMessage(error, defaultErrorMessage) : null,
       errorSeverity: code ? getSeverity(code) : null,
     };
   }, [error?.response?.status]);

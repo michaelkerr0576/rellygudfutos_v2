@@ -1,6 +1,7 @@
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom';
+import { SnackbarProvider } from 'notistack';
 
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
@@ -22,6 +23,9 @@ export default function App(): JSX.Element {
       <QueryClientProvider client={queryClient}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
+
+          <SnackbarProvider autoHideDuration={3000} />
+
           <Router>
             <Header />
             <Routes>
