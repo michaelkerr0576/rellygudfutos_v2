@@ -1,7 +1,7 @@
 import { styled } from '@mui/material/styles';
 
 import Container from '@/components/layout/Container';
-import { FIXED_BOTTOM_APP_BAR_HEIGHT } from '@/utils/constants';
+import { FIXED_BOTTOM_APP_BAR_HEIGHT } from '@/constants/style.constants';
 
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import { FIXED_HEADER_HEIGHT } from '../Header/constants';

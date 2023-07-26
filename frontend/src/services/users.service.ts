@@ -2,6 +2,11 @@ import axios from 'axios';
 
 import { ApiResponse } from '@/types/api/data.types';
 
+/* 
+ $ usersService
+  - postUserLogin
+*/
+
 const API_BASE_URL = '/api/users';
 
 export const postUserLogin = async (email: string, password: string): Promise<ApiResponse<any>> => {

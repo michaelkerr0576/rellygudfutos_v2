@@ -38,8 +38,8 @@ const StyledMuiSwipeableDrawer = styled(MuiSwipeableDrawer)(({ theme }): { [key:
     zIndex: theme.zIndex.drawer,
   },
   '.rgf-list, .rgf-divider': {
-    marginLeft: -16,
-    marginRight: -16,
+    marginLeft: theme.spacing(-2),
+    marginRight: theme.spacing(-2),
   },
 
   [theme.breakpoints.up('laptop')]: {

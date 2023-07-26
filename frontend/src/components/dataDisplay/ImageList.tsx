@@ -67,7 +67,7 @@ export default function ImageList(props: ImageListProps): JSX.Element {
   } = props;
 
   const theme = useTheme();
-  const isMobileScreen = useMediaQuery(theme.breakpoints.only('mobile'));
+  const isSmallScreen = useMediaQuery(theme.breakpoints.between('mobile', 'laptop'));
 
   const renderImageListItems = (): JSX.Element[] =>
     images.map((image, index): JSX.Element => {
@@ -127,7 +127,7 @@ export default function ImageList(props: ImageListProps): JSX.Element {
     <StyledMuiImageList
       className={clsx('rgf-imageList', `rgf-imageList--${variant}`, { [className]: !!className })}
       cols={IMAGE_CONTAINER_COLUMNS}
-      gap={isMobileScreen ? IMAGE_SMALL_SCREEN_GAP : IMAGE_LARGE_SCREEN_GAP}
+      gap={isSmallScreen ? IMAGE_SMALL_SCREEN_GAP : IMAGE_LARGE_SCREEN_GAP}
       style={{ maxWidth }}
       variant="quilted"
     >

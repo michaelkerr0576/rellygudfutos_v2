@@ -1,5 +1,10 @@
 import { ApiErrorResponse } from '@/types/api/data.types';
 
+/* 
+ $ apiUtils
+  - getErrorMessage
+*/
+
 export const getErrorMessage = (
   error: ApiErrorResponse,
   defaultErrorMessage = 'There was an unexpected error',

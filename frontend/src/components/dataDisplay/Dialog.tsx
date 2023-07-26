@@ -11,8 +11,8 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import BackIcon from '@/assets/icons/BackIcon';
 import CloseIcon from '@/assets/icons/CloseIcon';
 import MoreOptionsIcon from '@/assets/icons/MoreOptionsIcon';
+import { FIXED_BOTTOM_APP_BAR_HEIGHT } from '@/constants/style.constants';
 import { FIXED_HEADER_HEIGHT } from '@/layouts/Header/constants';
-import { FIXED_BOTTOM_APP_BAR_HEIGHT } from '@/utils/constants';
 
 import IconButton, { ICON_BUTTON_HEIGHT_WIDTH } from '../inputs/IconButton';
 import Box from '../layout/Box';
@@ -47,7 +47,7 @@ const StyledMuiDialog = styled(MuiDialog)(({ theme }): { [key: string]: any } =>
   },
   '.MuiDialogTitle-root': {
     height: FIXED_HEADER_HEIGHT,
-    padding: theme.spacing(1, 2),
+    padding: theme.spacing(1, 1.5),
   },
   '.rgf-dialog--titleCloseButton': {
     order: 1,
@@ -61,6 +61,9 @@ const StyledMuiDialog = styled(MuiDialog)(({ theme }): { [key: string]: any } =>
   },
 
   [theme.breakpoints.up('laptop')]: {
+    '.MuiDialogTitle-root': {
+      padding: theme.spacing(1, 2),
+    },
     '.rgf-dialog--titleCloseButton': {
       order: 3,
     },

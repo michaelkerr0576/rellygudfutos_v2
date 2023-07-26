@@ -23,7 +23,7 @@ const StyledHeader = styled('header')(({ theme }): { [key: string]: any } => ({
     marginLeft: 'auto',
   },
   '.rgf-container': {
-    padding: theme.spacing(0, 1),
+    padding: theme.spacing(0, 1.5),
   },
   '.rgf-header--rellygudfutosLogoButton': {
     height: FIXED_HEADER_HEIGHT,

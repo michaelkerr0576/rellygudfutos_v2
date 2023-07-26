@@ -4,6 +4,12 @@ import { PAGE, PHOTO_LIMIT } from '@/constants/pagination.constants';
 import { ApiResponse, ApiResponsePaginated } from '@/types/api/data.types';
 import { Photo } from '@/types/api/photo.types';
 
+/* 
+ $ photosService
+  - getPhoto
+  - getPhotos
+*/
+
 const API_BASE_URL = '/api/photos';
 
 export const getPhoto = async (id: string): Promise<ApiResponse<Photo>> => {

@@ -1,3 +1,4 @@
+import { useCookies } from 'react-cookie';
 import { useMutation, UseMutationResult } from 'react-query';
 import { enqueueSnackbar } from 'notistack';
 
@@ -6,6 +7,7 @@ import { postUserLogin } from '@/services/users.service';
 import { ApiErrorResponse, ApiResponse } from '@/types/api/data.types';
 import { User } from '@/types/api/user.types';
 import { getErrorMessage } from '@/utils/api.utils';
+import { getFutureDateInDays } from '@/utils/dateTime.utils';
 
 interface RequestPayload {
   email: string;
@@ -17,6 +19,7 @@ export default function useUserLogin(): UseMutationResult<
   ApiErrorResponse,
   RequestPayload
 > {
+  const [, setCookie] = useCookies(['rgf-token']);
   const { toggleLoginDialog } = useMenu();
 
   return useMutation({
@@ -27,8 +30,14 @@ export default function useUserLogin(): UseMutationResult<
       enqueueSnackbar(errorMessage, { variant: 'error' });
     },
     onSuccess: (data: ApiResponse<User>): void => {
-      enqueueSnackbar(data.message, { variant: 'success' });
-      // TODO - do something with token
+      const successMessage = data.message;
+      enqueueSnackbar(successMessage, { variant: 'success' });
+
+      // TODO - might replace with a more secure flow
+      const authToken = data?.token;
+      const thirtyDays = getFutureDateInDays(30);
+      setCookie('rgf-token', authToken, { expires: thirtyDays });
+
       toggleLoginDialog(false);
     },
   });

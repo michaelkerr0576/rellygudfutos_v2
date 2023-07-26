@@ -50,7 +50,7 @@ const useStore = create<State>()(
           set({ isSearchDrawerOpen }, false, 'SET_IS_SEARCH_DRAWER_OPEN'),
       }),
       {
-        name: 'state-storage', // * Local storage key
+        name: 'rgf-state', // * Local storage key
       },
     ),
   ),
