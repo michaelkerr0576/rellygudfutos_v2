@@ -9,10 +9,10 @@ import LogoButton from '@/components/inputs/LogoButton';
 import Container from '@/components/layout/Container';
 import Stack from '@/components/layout/Stack';
 import Paper from '@/components/surfaces/Paper';
+import useMenu from '@/hooks/shared/useMenu';
 
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 
-import useMenu from './hooks/useMenu';
 import AccountDrawer from './partials/AccountDrawer';
 import LoginDialog from './partials/LoginDialog';
 import MenuDrawer from './partials/MenuDrawer';
@@ -63,7 +63,7 @@ export default function Header(): JSX.Element {
 
   const renderAccountAction = (): JSX.Element => {
     // TODO - figure out global state for isLoggedIn and other account details
-    const isLoggedIn = false;
+    const isLoggedIn = true;
     if (isLoggedIn) {
       return <AccountDrawer />;
     }

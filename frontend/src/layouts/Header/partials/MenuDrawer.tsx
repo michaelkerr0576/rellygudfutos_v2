@@ -14,8 +14,8 @@ import Switch from '@/components/inputs/Switch';
 import Box from '@/components/layout/Box';
 import Stack from '@/components/layout/Stack';
 import Drawer from '@/components/navigation/Drawer';
+import useMenu from '@/hooks/shared/useMenu';
 import useThemes from '@/hooks/shared/useThemes';
-import useMenu from '@/layouts/Header/hooks/useMenu';
 import { ColorMode } from '@/types/store.types';
 
 const StyledDrawer = styled(Drawer)(({ theme }): { [key: string]: any } => ({

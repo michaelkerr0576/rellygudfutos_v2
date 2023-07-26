@@ -9,6 +9,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import useThemes from '@/hooks/shared/useThemes';
 import ErrorBoundary from '@/layouts/ErrorBoundary/ErrorBoundary';
 import Header from '@/layouts/Header/Header';
+import ProtectedRoute from '@/layouts/ProtectedRoute/ProtectedRoute';
 import DashboardPage from '@/pages/Dashboard/Dashboard.page';
 import GalleryPage from '@/pages/Gallery/Gallery.page';
 import ProfilePage from '@/pages/Profile/Profile.page';
@@ -32,12 +33,12 @@ export default function App(): JSX.Element {
               <Route path="/">
                 <Route index element={<GalleryPage />} />
                 <Route path="/photo/:photoId" element={<GalleryPage />} />
+                <Route path="/account/login" element={<GalleryPage />} />
               </Route>
 
-              <Route path="/account">
-                <Route path="login" element={<GalleryPage />} />
-                <Route path="profile" element={<ProfilePage />} />
-                <Route path="dashboard" element={<DashboardPage />} />
+              <Route element={<ProtectedRoute />}>
+                <Route path="/account/profile" element={<ProfilePage />} />
+                <Route path="/account/dashboard" element={<DashboardPage />} />
               </Route>
 
               <Route path="/*" element={<Navigate replace to="/" />} />

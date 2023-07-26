@@ -9,9 +9,10 @@ export const getErrorMessage = (
   error: ApiErrorResponse,
   defaultErrorMessage = 'There was an unexpected error',
 ): string => {
+  const status = error?.response?.status;
   const errorMessage = error?.response?.data?.message;
 
-  if (!errorMessage) {
+  if (status === 500 || !errorMessage) {
     return defaultErrorMessage;
   }
 

@@ -10,8 +10,7 @@ import Button from '@/components/inputs/Button';
 import IconButton from '@/components/inputs/IconButton';
 import TextField from '@/components/inputs/TextField';
 import useUserLogin from '@/hooks/queries/useUserLogin';
-
-import useMenu from '../hooks/useMenu';
+import useMenu from '@/hooks/shared/useMenu';
 
 interface LoginFormInput {
   email: string;

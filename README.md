@@ -305,6 +305,17 @@ Examples of data that needs to go into global state:
 
 - [Zustand Docs](https://docs.pmnd.rs/zustand/introduction)
 
+### Authentication
+
+We will not store JWT tokens in local storage or session storage. That's not secure! Not really necessary for this app to be that secure but why not.
+
+The user login will persist when the React app is refreshed, reloaded, or revisited unless the user logs out or the refresh token has expired.
+
+**Useful Links:**
+
+- [Youtube React Query Tutorial - Dave Gray](https://www.youtube.com/watch?v=27KeYk-5vJw&ab_channel=DaveGray)
+- [React Router Private Routes - Robin Wieruch](https://www.robinwieruch.de/react-router-private-routes/)
+
 ### Error Boundary
 
 Error boundaries are React components that catch JavaScript errors anywhere in their child component tree, log those errors, and display a fallback UI. Better than the app crashing.

@@ -2,7 +2,7 @@ import { useCookies } from 'react-cookie';
 import { useMutation, UseMutationResult } from 'react-query';
 import { enqueueSnackbar } from 'notistack';
 
-import useMenu from '@/layouts/Header/hooks/useMenu';
+import useMenu from '@/hooks/shared/useMenu';
 import { postUserLogin } from '@/services/users.service';
 import { ApiErrorResponse, ApiResponse } from '@/types/api/data.types';
 import { User } from '@/types/api/user.types';

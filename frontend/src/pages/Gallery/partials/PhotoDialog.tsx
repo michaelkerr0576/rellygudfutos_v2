@@ -80,10 +80,6 @@ export default function PhotoDialog(): JSX.Element {
     'There was an error retrieving the photo from the server. Please try refreshing the page or go back to the Gallery';
   const { errorMessage, errorSeverity } = useErrorMessage(error, defaultErrorMessage);
 
-  if (!photoId) {
-    togglePhotoDialog(false);
-  }
-
   const renderDialogContent = (): JSX.Element => {
     const renderDialogContentTitle = (): JSX.Element => {
       const title = photo?.data.title || '';
