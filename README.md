@@ -18,6 +18,7 @@ This application will be using the MERN stack. MERN stands for MongoDB, Express,
 **Useful Links:**
 
 - [Youtube Tutorial - Traversy Media](https://www.youtube.com/playlist?list=PLillGF-RfqbbQeVSccR9PGKHzPJSWqcsm)
+- [Node Full Course - Dave Gray](https://www.youtube.com/watch?v=27KeYk-5vJw&ab_channel=DaveGray)
 
 ### File Structure
 
@@ -125,7 +126,7 @@ Decided to use an in-memory database over mocks. This will allow the tests to be
 - [Unit Testing Controllers](https://medium.com/craft-academy/unit-testing-express-api-c55cb709b3ac)
 - [Regex Generator](https://regex-generator.olafneumann.org/?sampleText=2020-03-12T13%3A34%3A56.123Z&flags=i&onlyPatterns=true&matchWholeLine=false&selection=0%7CDate,10%7CCharacter,11%7CTime,23%7CCharacter)
 
-### User Authorisation
+### Authentication
 
 Depending on the role of the user, they will have different authorisations.
 
@@ -151,6 +152,7 @@ Depending on the role of the user, they will have different authorisations.
 **Useful Links:**
 
 - [User Role Based Authorisation](https://jasonwatmore.com/post/2018/11/28/nodejs-role-based-authorization-tutorial-with-example-api)
+- [Node Full Course Chapter 10 Authentication - Dave Gray](https://www.youtube.com/watch?v=27KeYk-5vJw&ab_channel=DaveGray)
 
 ### Sorting, Filtering and Pagination
 
@@ -313,7 +315,7 @@ The user login will persist when the React app is refreshed, reloaded, or revisi
 
 **Useful Links:**
 
-- [Youtube React Query Tutorial - Dave Gray](https://www.youtube.com/watch?v=27KeYk-5vJw&ab_channel=DaveGray)
+- [Persistent User Login Authentication - Dave Gray](https://www.youtube.com/watch?v=27KeYk-5vJw&ab_channel=DaveGray)
 - [React Router Private Routes - Robin Wieruch](https://www.robinwieruch.de/react-router-private-routes/)
 
 ### Error Boundary

@@ -8,8 +8,8 @@ const [firstTag, secondTag] = tagsRequestFixture;
 export default {
   limit: 1,
   page: 2,
+  photographerId: userAdminRequestFixture._id,
   search: 'test',
   sort: enm.PhotoSortOptions.OLDEST,
-  tags: [firstTag._id, secondTag._id],
-  user: userAdminRequestFixture._id,
+  tagIds: [firstTag._id, secondTag._id],
 };

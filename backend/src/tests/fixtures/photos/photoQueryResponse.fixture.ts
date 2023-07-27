@@ -1,6 +1,6 @@
 import photoQueryFixture from './photoQuery.fixture';
 
-const [firstTag, secondTag] = photoQueryFixture.tags;
+const [firstTag, secondTag] = photoQueryFixture.tagIds;
 
 export default {
   endIndex: 2,
@@ -23,7 +23,7 @@ export default {
       },
     ],
     photographer: {
-      _id: photoQueryFixture.user,
+      _id: photoQueryFixture.photographerId,
     },
     tags: {
       _id: [firstTag, secondTag],

@@ -332,9 +332,9 @@ describe('Photos Controller', () => {
       });
     });
 
-    test('Expect to return 200 get photos filtered by tags', async () => {
+    test('Expect to return 200 get photos filtered by tagIds', async () => {
       const mockRequest: Partial<Request> = {
-        query: { tags: [tagsRequestFixture[1]._id] },
+        query: { tagIds: [tagsRequestFixture[1]._id] },
       };
 
       // * Script: populate memory server with test data
@@ -359,9 +359,9 @@ describe('Photos Controller', () => {
       });
     });
 
-    test('Expect to return 200 get photos filtered by user', async () => {
+    test('Expect to return 200 get photos filtered by photographerId', async () => {
       const mockRequest: Partial<Request> = {
-        query: { user: photoUserIdFixture as any },
+        query: { photographerId: photoUserIdFixture as any },
       };
 
       // * Script: populate memory server with test data

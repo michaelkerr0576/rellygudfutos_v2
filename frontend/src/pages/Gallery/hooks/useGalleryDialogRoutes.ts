@@ -13,21 +13,25 @@ export default function useGalleryDialogRoutes(): void {
   const { isPhotoDialogOpen, togglePhotoDialog } = useGallery();
 
   useEffect((): void => {
-    if (!isLoginDialogOpen && location.pathname === '/account/login') {
+    const isLoginUrl = !isLoginDialogOpen && location.pathname === '/account/login';
+    if (isLoginUrl) {
       toggleLoginDialog(true);
     }
 
-    if (isLoginDialogOpen && location.pathname === '/') {
+    const isGalleryUrl = isLoginDialogOpen && location.pathname === '/';
+    if (isGalleryUrl) {
       toggleLoginDialog(false);
     }
   }, []);
 
   useEffect((): void => {
-    if (!isPhotoDialogOpen && location.pathname === `/photo/${photoId}`) {
+    const isPhotoUrl = !isPhotoDialogOpen && location.pathname === `/photo/${photoId}`;
+    if (isPhotoUrl) {
       togglePhotoDialog(true);
     }
 
-    if (isPhotoDialogOpen && location.pathname === '/') {
+    const isGalleryUrl = isPhotoDialogOpen && location.pathname === '/';
+    if (isGalleryUrl) {
       togglePhotoDialog(false);
     }
   }, []);

@@ -1,7 +1,17 @@
+import { PaginationQueryParams } from './data.types';
+
 // #region Photo Enum
 export enum PhotoAspectRatio {
   LANDSCAPE = 'landscape',
   PORTRAIT = 'portrait',
+}
+
+export enum PhotoSortOptions {
+  NEWEST = 'newest',
+  OLDEST = 'oldest',
+  TITLE_AZ = 'title_az',
+  TITLE_ZA = 'title_za',
+  RANDOM = 'random',
 }
 // #endregion
 
@@ -51,5 +61,14 @@ interface PhotoSettings {
 export interface PhotoTag {
   _id: string;
   tag: string;
+}
+// #endregion
+
+// #region Photo Query Param Types
+export interface GetPhotosQueryParams extends PaginationQueryParams {
+  photographerId?: string;
+  search?: string;
+  sort?: PhotoSortOptions;
+  tagIds?: string[];
 }
 // #endregion

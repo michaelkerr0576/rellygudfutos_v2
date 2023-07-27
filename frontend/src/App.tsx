@@ -30,17 +30,20 @@ export default function App(): JSX.Element {
           <Router>
             <Header />
             <Routes>
+              {/* // * Public routes */}
               <Route path="/">
                 <Route index element={<GalleryPage />} />
                 <Route path="/photo/:photoId" element={<GalleryPage />} />
                 <Route path="/account/login" element={<GalleryPage />} />
               </Route>
 
+              {/* // * Protected routes */}
               <Route element={<ProtectedRoute />}>
                 <Route path="/account/profile" element={<ProfilePage />} />
                 <Route path="/account/dashboard" element={<DashboardPage />} />
               </Route>
 
+              {/* // * Catch all */}
               <Route path="/*" element={<Navigate replace to="/" />} />
             </Routes>
           </Router>
