@@ -12,6 +12,8 @@ import IconButton from '@/components/inputs/IconButton';
 import useUserLogin from '@/hooks/queries/useUserLogin';
 import useMenu from '@/hooks/shared/useMenu';
 
+import { emailFieldValidationRules, passwordFieldValidationRules } from '../utils/loginForm.utils';
+
 interface LoginFormInput {
   email: string;
   password: string;
@@ -49,6 +51,7 @@ export default function LoginDialog(): JSX.Element {
       name="email"
       startAdornment={<AccountCircleIcon color="secondary" />}
       type="email"
+      validationRules={emailFieldValidationRules}
     />
   );
 
@@ -69,6 +72,7 @@ export default function LoginDialog(): JSX.Element {
       name="password"
       startAdornment={<LockIcon color="secondary" />}
       type={showPassword ? 'text' : 'password'}
+      validationRules={passwordFieldValidationRules}
     />
   );
 

@@ -16,6 +16,7 @@ export interface TextFieldProps {
   inputRef?: MuiTextFieldProps['inputRef'];
   isError?: MuiTextFieldProps['error'];
   label: string;
+  maxCharacterLength?: number;
   onChange: (value: string) => void;
   startAdornment?: JSX.Element;
   type?: MuiTextFieldProps['type'];
@@ -43,6 +44,7 @@ export default function TextField(props: TextFieldProps): JSX.Element {
     inputRef = null,
     isError = false,
     label,
+    maxCharacterLength = 100,
     onChange,
     startAdornment = null,
     type = 'text',
@@ -87,6 +89,10 @@ export default function TextField(props: TextFieldProps): JSX.Element {
           error={isError}
           fullWidth
           helperText={helperText}
+          inputProps={{
+            maxLength: maxCharacterLength,
+          }}
+          // eslint-disable-next-line react/jsx-no-duplicate-props
           InputProps={{
             endAdornment: renderEndAdornment(),
             startAdornment: renderOutlinedStartAdornment(),

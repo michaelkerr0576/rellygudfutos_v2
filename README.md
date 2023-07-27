@@ -27,9 +27,9 @@ General project structuring. Split into Frontend and Backend. Each folder contai
 
 **Useful Links:**
 
-- [Node Architecture](https://softwareontheroad.com/ideal-nodejs-project-structure/)
-- [Express Architecture](https://blog.logrocket.com/organizing-express-js-project-structure-better-productivity/)
-- [React Architecture](https://www.taniarascia.com/react-architecture-directory-structure/)
+- [Node Architecture - Software On The Road](https://softwareontheroad.com/ideal-nodejs-project-structure/)
+- [Express Architecture - LogRocket](https://blog.logrocket.com/organizing-express-js-project-structure-better-productivity/)
+- [React Architecture - Tania Rascia](https://www.taniarascia.com/react-architecture-directory-structure/)
 
 ### Typescript
 
@@ -39,9 +39,9 @@ Typescript will be used across Frontend and Backend. The behaviour can be custom
 
 **Useful Links:**
 
-- [Typescript Cheat Sheet](https://www.typescriptlang.org/cheatsheets)
-- [Typescript Compiler Options](https://www.typescriptlang.org/tsconfig)
-- [Typescript Organising Types](https://www.becomebetterprogrammer.com/typescript-organizing-and-storing-types-and-interfaces/)
+- [Typescript Cheat Sheet - Docs](https://www.typescriptlang.org/cheatsheets)
+- [Typescript Compiler Options - Docs](https://www.typescriptlang.org/tsconfig)
+- [Typescript Organising Types - Become Better Programmer](https://www.becomebetterprogrammer.com/typescript-organizing-and-storing-types-and-interfaces/)
 
 ### Eslint & Airbnb Style Guide
 
@@ -49,9 +49,9 @@ Airbnb introduces it as the “Most reasonable approach to JavaScript”. To che
 
 **Useful Links:**
 
-- [Setting Up](https://dev.to/devdammak/setting-up-eslint-in-your-javascript-project-with-vs-code-2amf)
-- [Eslint Rules](https://eslint.org/docs/rules/)
-- [Airbnb Style Guide](https://airbnb.io/javascript/react/)
+- [Setting Up - Dev.to](https://dev.to/devdammak/setting-up-eslint-in-your-javascript-project-with-vs-code-2amf)
+- [Eslint Rules Rules - Docs](https://eslint.org/docs/rules/)
+- [Airbnb Style Guide - Docs](https://airbnb.io/javascript/react/)
 - [Youtube Tutorial - Traversy Media](https://www.youtube.com/watch?v=SydnKbGc7W8&ab_channel=TraversyMedia)
 
 ### Path Aliases
@@ -62,9 +62,9 @@ See `tsconfig.paths.json` in frontend and backend folders for configured paths. 
 
 **Useful Links:**
 
-- [Config tsconfig.json](https://www.typescriptlang.org/tsconfig#paths)
-- [Config eslintrc.js](https://github.com/alexgorbatchev/eslint-import-resolver-typescript)
-- [Stack Overflow Troubleshoot](https://stackoverflow.com/questions/69932369/setting-up-eslint-import-resolver-typescript-in-monorepo)
+- [Config tsconfig.json Paths - Docs](https://www.typescriptlang.org/tsconfig#paths)
+- [Config eslintrc.js - Alex Gorbatchev](https://github.com/alexgorbatchev/eslint-import-resolver-typescript)
+- [Stack Overflow Troubleshoot - Stack Overflow](https://stackoverflow.com/questions/69932369/setting-up-eslint-import-resolver-typescript-in-monorepo)
 
 ### Testing
 
@@ -72,7 +72,7 @@ The goal is to have good enough test coverage that any change I make does not ca
 
 **Useful Links:**
 
-- [Run Tests Before Commit](https://dev.to/bqardi/testing-and-formatting-before-commit-43i5)
+- [Run Tests Before Commit - Dev.to](https://dev.to/bqardi/testing-and-formatting-before-commit-43i5)
 
 ## Backend
 
@@ -82,7 +82,7 @@ Setting up the Backend to be Typescript. Everything Typescript!
 
 **Useful Links:**
 
-- [Setting Up](https://developer.okta.com/blog/2018/11/15/node-express-typescript)
+- [Setting Up - Okta Developer](https://developer.okta.com/blog/2018/11/15/node-express-typescript)
 
 ### MongoDB & Mongoose
 
@@ -119,12 +119,12 @@ Decided to use an in-memory database over mocks. This will allow the tests to be
 
 - [Youtube Tutorial Best Practices - MongoDB](https://www.youtube.com/watch?v=QAqK-R9HUhc&ab_channel=MongoDB)
 - [Youtube Tutorial Anti Patterns - MongoDB](https://www.youtube.com/watch?v=8CZs-0it9r4&ab_channel=MongoDB)
-- [Mongoose Typescript Schema](https://thecodebarbarian.com/working-with-mongoose-in-typescript.html)
-- [Mongoose Docs](https://mongoosejs.com/docs/)
-- [Testing with Mongoose - Jest](https://javascript.plainenglish.io/unit-testing-node-js-mongoose-using-jest-106a39b8393d)
-- [Testing with Mongoose - mongodb-memory-server](https://dev.to/remrkabledev/testing-with-mongodb-memory-server-4ja2)
-- [mongodb-memory-server Docs](https://github.com/nodkz/mongodb-memory-server)
-- [Unit Testing Controllers](https://medium.com/craft-academy/unit-testing-express-api-c55cb709b3ac)
+- [Mongoose Typescript Schema - The Code Barbarian](https://thecodebarbarian.com/working-with-mongoose-in-typescript.html)
+- [Mongoose - Docs](https://mongoosejs.com/docs/)
+- [Testing with Mongoose - Jest - Medium](https://javascript.plainenglish.io/unit-testing-node-js-mongoose-using-jest-106a39b8393d)
+- [Testing with Mongoose - mongodb-memory-server - Dev.to](https://dev.to/remrkabledev/testing-with-mongodb-memory-server-4ja2)
+- [Mongodb-memory-server - Docs](https://github.com/nodkz/mongodb-memory-server)
+- [Unit Testing Controllers - Medium](https://medium.com/craft-academy/unit-testing-express-api-c55cb709b3ac)
 - [Regex Generator](https://regex-generator.olafneumann.org/?sampleText=2020-03-12T13%3A34%3A56.123Z&flags=i&onlyPatterns=true&matchWholeLine=false&selection=0%7CDate,10%7CCharacter,11%7CTime,23%7CCharacter)
 
 ### Authentication
@@ -152,7 +152,7 @@ Depending on the role of the user, they will have different authorisations.
 
 **Useful Links:**
 
-- [User Role Based Authorisation](https://jasonwatmore.com/post/2018/11/28/nodejs-role-based-authorization-tutorial-with-example-api)
+- [User Role Based Authorisation - Jason Watmore](https://jasonwatmore.com/post/2018/11/28/nodejs-role-based-authorization-tutorial-with-example-api)
 - [Node Full Course Chapter 10 Authentication - Dave Gray](https://www.youtube.com/watch?v=27KeYk-5vJw&ab_channel=DaveGray)
 
 ### Sorting, Filtering and Pagination
@@ -173,10 +173,10 @@ Sorting and Filtering will also have to be done on the Backend because there wil
 
 **Useful Links:**
 
-- [Node Sorting, Filtering and Pagination](https://medium.com/swlh/node-js-api-add-crud-operations-with-pagination-filtering-grouping-and-sorting-capabilities-55375ad0b774)
-- [MongoDB Sorting, Filtering and Pagination](https://jeffdevslife.com/p/1-mongodb-query-of-advanced-filtering-sorting-limit-field-and-pagination-with-mongoose/)
-- [MongoDB Filtering Query 1](https://www.mongodb.com/docs/manual/reference/operator/query/all/)
-- [MongoDB Filtering Query 2](https://www.mongodb.com/docs/manual/reference/operator/query/regex/)
+- [Node Sorting, Filtering and Pagination - Medium](https://medium.com/swlh/node-js-api-add-crud-operations-with-pagination-filtering-grouping-and-sorting-capabilities-55375ad0b774)
+- [MongoDB Sorting, Filtering and Pagination - Jeff Devs Life](https://jeffdevslife.com/p/1-mongodb-query-of-advanced-filtering-sorting-limit-field-and-pagination-with-mongoose/)
+- [MongoDB Filtering Query 1 - Docs](https://www.mongodb.com/docs/manual/reference/operator/query/all/)
+- [MongoDB Filtering Query 2 - Docs](https://www.mongodb.com/docs/manual/reference/operator/query/regex/)
 - [Youtube Pagination Tutorial - Web Dev Simplified](https://www.youtube.com/watch?v=ZX3qt0UWifc&ab_channel=WebDevSimplified)
 
 ### Upload Images
@@ -192,7 +192,7 @@ The photos will be uploaded to an image CDN, in this case AWS S3 Bucket. Sharp w
 **Useful Links:**
 
 - [Youtube AWS S3 Bucket Tutorial - Sam Meech-Ward](https://www.sammeechward.com/storing-images-in-s3-from-node-server)
-- [Sharp Docs](https://sharp.pixelplumbing.com/)
+- [Sharp - Docs](https://sharp.pixelplumbing.com/)
 
 ## Frontend
 
@@ -252,9 +252,9 @@ We all love React but there is a lot of mistakes that can be made. Top things I 
 - [Youtube React UseEffect Best Practices - Web Dev Simplified](https://www.youtube.com/watch?v=MFj_S0Nof90&ab_channel=WebDevSimplified)
 - [Youtube React Other Hook Best Practices - Web Dev Simplified](https://www.youtube.com/watch?v=GGo3MVBFr1A&ab_channel=WebDevSimplified)
 - [Youtube React Strict Mode - Web Dev Simplified](https://www.youtube.com/watch?v=XUwzASyHr4Q&ab_channel=WebDevSimplified)
-- [Understanding Referential Equality in React](https://blog.bitsrc.io/understanding-referential-equality-in-react-a8fb3769be0)
-- [React Query Fetch Cancellation](https://tanstack.com/query/v4/docs/guides/query-cancellation)
-- [React React useEffect Cleanup](https://blog.logrocket.com/understanding-react-useeffect-cleanup-function/)
+- [Understanding Referential Equality in React - Medium](https://blog.bitsrc.io/understanding-referential-equality-in-react-a8fb3769be0)
+- [React Query Fetch Cancellation - Tanstack](https://tanstack.com/query/v4/docs/guides/query-cancellation)
+- [React React useEffect Cleanup - LogRocket](https://blog.logrocket.com/understanding-react-useeffect-cleanup-function/)
 - [When to useMemo and useCallback - Kent C. Dodds](https://kentcdodds.com/blog/usememo-and-usecallback)
 
 ### Vite.js
@@ -263,7 +263,7 @@ I wanted to avoid slow webpack so Vite.js it is.
 
 **Useful Links:**
 
-- [Vite.js Docs](https://vitejs.dev/guide/)
+- [Vite.js - Docs](https://vitejs.dev/guide/)
 
 ### Material UI
 
@@ -273,9 +273,9 @@ Each component will have a `className` to make it easier to customize from a par
 
 **Useful Links:**
 
-- [Material UI Docs](https://mui.com/material-ui/getting-started/overview/)
-- [Material UI Theming](https://mui.com/material-ui/customization/theming/)
-- [Material UI Style Components](https://mui.com/material-ui/customization/how-to-customize/#2-reusable-component)
+- [Material UI - Docs](https://mui.com/material-ui/getting-started/overview/)
+- [Material UI Theming - Docs](https://mui.com/material-ui/customization/theming/)
+- [Material UI Style Components - Docs](https://mui.com/material-ui/customization/how-to-customize/#2-reusable-component)
 
 ### React Query
 
@@ -289,14 +289,14 @@ Examples of hooks that will take data from API calls:
 
 **Useful Links:**
 
-- [React Query Docs](https://react-query-v3.tanstack.com/overview)
+- [React Query - Docs](https://react-query-v3.tanstack.com/overview)
 - [React Query Infinite Query - TanStack](https://tanstack.com/query/v4/docs/react/guides/infinite-queries)
 - [React Query Infinite Query - Medium](https://articles.wesionary.team/how-to-implement-infinite-scroll-using-react-query-5fd7c425908f)
 - [Youtube React Query Tutorial - Codevolution](https://www.youtube.com/watch?v=VtWkSCZX0Ec&list=PLC3y8-rFHvwjTELCrPrcZlo6blLBUspd2&ab_channel=Codevolution)
 
 ### Zustand
 
-Super lightweight client-side state. For this application, Redux is overkill when using React Query and it is easier to set up then React's useContext.
+Super lightweight client-side state. For this application, Redux is overkill when using React Query and it is easier to set up then React's `useContext`.
 
 Examples of data that needs to go into global state:
 
@@ -319,6 +319,17 @@ The user login will persist when the React app is refreshed, reloaded, or revisi
 - [Persistent User Login Authentication - Dave Gray](https://www.youtube.com/watch?v=27KeYk-5vJw&ab_channel=DaveGray)
 - [React Router Private Routes - Robin Wieruch](https://www.robinwieruch.de/react-router-private-routes/)
 
+### Forms
+
+React-hook-form is a super light weight library that is the right amount of magic without it turning into a black box of wtf (Formik is an example of that in my humble opinion). It can integrate well with Material-Ui and handle a lot of validation very smoothly.
+
+**Useful Links:**
+
+- [React Hook Form - Docs](https://www.react-hook-form.com/get-started/)
+- [React Hook Form Validation - Docs](https://react-hook-form.com/docs/useform/register#options)
+- [React Hook Form With Material UI - LogRocket](https://blog.logrocket.com/using-material-ui-with-react-hook-form/)
+- [Formik - Docs](https://formik.org/docs/overview)
+
 ### Error Boundary
 
 Error boundaries are React components that catch JavaScript errors anywhere in their child component tree, log those errors, and display a fallback UI. Better than the app crashing.
@@ -327,7 +338,7 @@ The approach will be to wrap the top-level route components to display a “Some
 
 **Useful Links:**
 
-- [Error Boundary Docs](https://reactjs.org/docs/error-boundaries.html)
+- [Error Boundary - Docs](https://reactjs.org/docs/error-boundaries.html)
 
 ## Retrospective
 
@@ -339,10 +350,10 @@ The regret is not trying Next.js out first before finishing a fully fleshed out 
 
 **Useful Links:**
 
-- [Next.js Docs](https://nextjs.org/docs)
-- [GraphQL Docs](https://graphql.org/)
-- [Next.js Custom Server](https://nextjs.org/docs/advanced-features/custom-server)
-- [Setting Up with React Query](https://prateeksurana.me/blog/mastering-data-fetching-with-react-query-and-next-js/)
+- [Next.js - Docs](https://nextjs.org/docs)
+- [GraphQL - Docs](https://graphql.org/)
+- [Next.js Custom Server - Docs](https://nextjs.org/docs/advanced-features/custom-server)
+- [Setting Up with React Query - Prateek Surana](https://prateeksurana.me/blog/mastering-data-fetching-with-react-query-and-next-js/)
 - [Youtube Next.js Tutorial - Traversy Media](https://www.youtube.com/watch?v=mTz0GXj8NN0&ab_channel=TraversyMedia)
 - [Youtube Next.js Tutorial - Fireship](https://www.youtube.com/watch?v=Sklc_fQBmcs&ab_channel=Fireship)
 
@@ -354,9 +365,11 @@ By handling imports like `import * as alias`, it sacrifices on optimal tree shak
 
 100% do not take this approach for large external libraries like `lodash` or `MaterialUI`, import what you need from them.
 
+I went with the `import * as alias` approach for the Backend Development and went the opposite for the Frontend Development. Knowing what I know now I would probably have done the Backend in a similar manner.
+
 **Useful Links:**
 
-- [Tree Shaking](https://developer.mozilla.org/en-US/docs/Glossary/Tree_shaking)
+- [Tree Shaking - Mozilla Docs](https://developer.mozilla.org/en-US/docs/Glossary/Tree_shaking)
 
 ## Terminal
 

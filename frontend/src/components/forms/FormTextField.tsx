@@ -1,4 +1,4 @@
-import { Control, Controller } from 'react-hook-form';
+import { Control, Controller, RegisterOptions } from 'react-hook-form';
 import clsx from 'clsx';
 
 import { styled } from '@mui/material/styles';
@@ -13,6 +13,7 @@ export interface FormTextFieldProps {
   name: string;
   startAdornment?: TextFieldProps['startAdornment'];
   type?: TextFieldProps['type'];
+  validationRules?: RegisterOptions;
   variant?: TextFieldProps['variant'];
 }
 
@@ -36,6 +37,7 @@ export default function FormTextField(props: FormTextFieldProps): JSX.Element {
     name,
     startAdornment = undefined,
     type = 'text',
+    validationRules = undefined,
     variant = 'standard',
   } = props;
 
@@ -49,14 +51,12 @@ export default function FormTextField(props: FormTextFieldProps): JSX.Element {
     <Controller
       name={name}
       control={control}
-      // TODO - switch out rules for prop
-      rules={{ required: true }}
+      rules={validationRules}
       render={({ field: { onChange, ref, value }, fieldState: { error } }): JSX.Element => (
         <StyledTextField
           className={formTextFieldStyles}
           endAdornment={endAdornment}
-          // TODO - better validation text
-          helperText={error ? 'test error' : ''}
+          helperText={error?.message ? error.message : ''}
           inputRef={ref}
           isError={!!error}
           label={label}
