@@ -12,7 +12,6 @@ type Variant = 'standard' | 'outlined';
 export interface TextFieldProps {
   className?: MuiTextFieldProps['className'];
   endAdornment?: JSX.Element;
-  hasHelperText?: boolean;
   helperText?: MuiTextFieldProps['helperText'];
   inputRef?: MuiTextFieldProps['inputRef'];
   isError?: MuiTextFieldProps['error'];
@@ -25,18 +24,10 @@ export interface TextFieldProps {
 }
 
 const StyledTextField = styled('div')(({ theme }): { [key: string]: any } => ({
-  '&.rgf-textField--outlinedHelperText': {
-    height: '95px',
-    padding: theme.spacing(1, 0),
-  },
-  '&.rgf-textField--standardHelperText': {
-    height: '80px',
-    padding: theme.spacing(1, 0),
-  },
   '.MuiInputBase-root': {
     paddingRight: theme.spacing(1),
   },
-  '.rgf-textField--startAdornmentIconStandard': {
+  '.rgf-textField--startAdornmentStandard': {
     display: 'flex',
     paddingTop: theme.spacing(2.5),
   },
@@ -48,7 +39,6 @@ export default function TextField(props: TextFieldProps): JSX.Element {
   const {
     className = '',
     endAdornment = null,
-    hasHelperText = false,
     helperText = '',
     inputRef = null,
     isError = false,
@@ -67,7 +57,7 @@ export default function TextField(props: TextFieldProps): JSX.Element {
       return null;
     }
 
-    return <Box className="rgf-textField--startAdornmentIconStandard">{startAdornment}</Box>;
+    return <Box className="rgf-textField--startAdornmentStandard">{startAdornment}</Box>;
   };
 
   const renderOutlinedStartAdornment = (): JSX.Element | null => {
@@ -86,14 +76,10 @@ export default function TextField(props: TextFieldProps): JSX.Element {
     return <MuiInputAdornment position="end">{endAdornment}</MuiInputAdornment>;
   };
 
-  const textFieldStyles = clsx('rgf-textField', {
-    [className]: !!className,
-    'rgf-textField--outlinedHelperText': !!hasHelperText && variant === 'outlined',
-    'rgf-textField--standardHelperText': !!hasHelperText && variant === 'standard',
-  });
-
   return (
-    <StyledTextField className={textFieldStyles}>
+    <StyledTextField
+      className={clsx('rgf-textField', `rgf-textField--${variant}`, { [className]: !!className })}
+    >
       <Stack spacing={1}>
         {variant === 'standard' && renderStandardStartAdornment()}
 
