@@ -1,9 +1,9 @@
 /* eslint-disable sort-keys */
 import { model, Schema, Types } from 'mongoose';
 
+import * as con from '@/constants/regex.constants';
 import * as enm from '@/types/enums/db.enum';
 import * as inf from '@/types/interfaces/db.interface';
-import * as regexUtils from '@/utils/regex.utils';
 
 import * as validateUtils from './utils/validate.utils';
 import * as validateMessageUtils from './utils/validateMessage.utils';
@@ -71,7 +71,7 @@ const photoSchema = new Schema<inf.Photo>(
         trim: true,
         minLength: 2,
         maxLength: 7,
-        match: regexUtils.cameraLensAperture,
+        match: con.CAMERA_LENS_APERTURE_REGEX,
       },
       focalLength: {
         type: String,
@@ -79,7 +79,7 @@ const photoSchema = new Schema<inf.Photo>(
         trim: true,
         minLength: 2,
         maxLength: 7,
-        match: regexUtils.cameraLensFocalLength,
+        match: con.CAMERA_LENS_FOCAL_LENGTH_REGEX,
       },
       iso: {
         type: String,
@@ -87,7 +87,7 @@ const photoSchema = new Schema<inf.Photo>(
         trim: true,
         minLength: 2,
         maxLength: 7,
-        match: regexUtils.cameraIso,
+        match: con.CAMERA_ISO_REGEX,
       },
       shutterSpeed: {
         type: String,
@@ -95,14 +95,14 @@ const photoSchema = new Schema<inf.Photo>(
         trim: true,
         minLength: 2,
         maxLength: 7,
-        match: regexUtils.cameraLensShutterSpeed,
+        match: con.CAMERA_LENS_SHUTTER_SPEED_REGEX,
       },
     },
     storeUrl: {
       type: String,
       required: true,
       trim: true,
-      match: regexUtils.urlLink,
+      match: con.URL_LINK_REGEX,
     },
     tags: {
       type: [Types.ObjectId],

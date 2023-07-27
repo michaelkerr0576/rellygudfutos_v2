@@ -5,7 +5,7 @@ export default function ProtectedRoute(): JSX.Element {
   const isAuthenticated = false;
 
   if (!isAuthenticated) {
-    return <Navigate replace to="/" />;
+    return <Navigate replace to="/account/login" />;
   }
 
   return <Outlet />;

@@ -1,9 +1,9 @@
 /* eslint-disable sort-keys */
 import { model, Schema, Types } from 'mongoose';
 
+import * as con from '@/constants/regex.constants';
 import * as enm from '@/types/enums/db.enum';
 import * as inf from '@/types/interfaces/db.interface';
-import * as regexUtils from '@/utils/regex.utils';
 
 import * as validateUtils from './utils/validate.utils';
 import * as validateMessageUtils from './utils/validateMessage.utils';
@@ -18,7 +18,7 @@ const userSchema = new Schema<inf.User>(
       lowercase: true,
       unique: true,
       maxLength: 100,
-      match: regexUtils.emailAddress,
+      match: con.EMAIL_ADDRESS_REGEX,
     },
     equipment: {
       cameras: {
@@ -55,7 +55,7 @@ const userSchema = new Schema<inf.User>(
       required: true,
       trim: true,
       maxLength: 100,
-      match: regexUtils.personName,
+      match: con.PERSON_NAME_REGEX,
     },
     password: {
       type: String,

@@ -1,12 +1,12 @@
 import { NextFunction, Request, Response } from 'express';
 import { LeanDocument, Types } from 'mongoose';
 
+import * as con from '@/constants/regex.constants';
 import PhotoModel from '@/models/Photo.model';
 import * as photosDbService from '@/services/photosDb.service';
 import * as enm from '@/types/enums/db.enum';
 import * as inf from '@/types/interfaces/db.interface';
 import * as generalUtils from '@/utils/general.utils';
-import * as regexUtils from '@/utils/regex.utils';
 
 import * as controllerUtils from './utils/controller.utils';
 import * as photosControllerUtils from './utils/photosController.utils';
@@ -32,7 +32,7 @@ export const addPhoto = async (request: Request, response: Response, next: NextF
     return Promise.resolve(next(controllerUtils.handleRequiredError(response, 'Photo')));
   }
 
-  const isAuthorisedFileType = regexUtils.imageFile.test(file.originalname);
+  const isAuthorisedFileType = con.IMAGE_FILE_REGEX.test(file.originalname);
   if (!isAuthorisedFileType) {
     return Promise.resolve(
       next(controllerUtils.handleFileTypeError(response, '.gif, jpeg, .jpg, .tiff, .png, .webp, .bmp')),

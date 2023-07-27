@@ -19,6 +19,7 @@ This application will be using the MERN stack. MERN stands for MongoDB, Express,
 
 - [Youtube Tutorial - Traversy Media](https://www.youtube.com/playlist?list=PLillGF-RfqbbQeVSccR9PGKHzPJSWqcsm)
 - [Node Full Course - Dave Gray](https://www.youtube.com/watch?v=27KeYk-5vJw&ab_channel=DaveGray)
+- [React Register & Login Course - Dave Gray](https://www.youtube.com/playlist?list=PL0Zuz27SZ-6PRCpm9clX0WiBEMB70FWwd)
 
 ### File Structure
 

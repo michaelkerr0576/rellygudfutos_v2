@@ -39,10 +39,10 @@ export default function LoginDialog(): JSX.Element {
 
   const { isLoginDialogOpen, toggleLoginDialog } = useMenu();
 
-  // TODO - move to hook
+  // TODO - move useState hook
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
-  // TODO - move to hook
+  // TODO - move handles to hook
   const handleClickShowPassword = (): void => setShowPassword((isShown): boolean => !isShown);
 
   const renderEmailField = (): JSX.Element => (
@@ -50,11 +50,12 @@ export default function LoginDialog(): JSX.Element {
       name="email"
       control={control}
       rules={{ required: true }}
-      render={({ field: { value, onChange } }): JSX.Element => (
+      render={({ field: { value, onChange, ref } }): JSX.Element => (
         <TextField
           className="rgf-loginDialog--emailField"
           hasHelperText
           helperText={errors?.email ? 'test error' : ''}
+          inputRef={ref}
           isError={!!errors?.email}
           label="Email"
           onChange={onChange}
@@ -71,7 +72,7 @@ export default function LoginDialog(): JSX.Element {
       name="password"
       control={control}
       rules={{ required: true }}
-      render={({ field: { value, onChange } }): JSX.Element => (
+      render={({ field: { value, onChange, ref } }): JSX.Element => (
         <TextField
           className="rgf-loginDialog--passwordField"
           endAdornment={
@@ -85,6 +86,7 @@ export default function LoginDialog(): JSX.Element {
           }
           hasHelperText
           helperText={errors?.password ? 'test error' : ''}
+          inputRef={ref}
           isError={!!errors?.password}
           label="Password"
           onChange={onChange}

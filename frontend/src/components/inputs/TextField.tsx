@@ -14,6 +14,7 @@ export interface TextFieldProps {
   endAdornment?: JSX.Element;
   hasHelperText?: boolean;
   helperText?: MuiTextFieldProps['helperText'];
+  inputRef?: MuiTextFieldProps['inputRef'];
   isError?: MuiTextFieldProps['error'];
   label: string;
   onChange: (value: string) => void;
@@ -49,11 +50,12 @@ export default function TextField(props: TextFieldProps): JSX.Element {
     endAdornment = null,
     hasHelperText = false,
     helperText = '',
+    inputRef = null,
+    isError = false,
     label,
     onChange,
     startAdornment = null,
     type = 'text',
-    isError = false,
     value,
     variant = 'standard',
   } = props;
@@ -103,6 +105,7 @@ export default function TextField(props: TextFieldProps): JSX.Element {
             endAdornment: renderEndAdornment(),
             startAdornment: renderOutlinedStartAdornment(),
           }}
+          inputRef={inputRef}
           label={label}
           onChange={handleOnChange}
           type={type}
