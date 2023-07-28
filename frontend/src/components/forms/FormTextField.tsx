@@ -10,6 +10,7 @@ export interface FormTextFieldProps {
   control: Control<any>;
   endAdornment?: TextFieldProps['endAdornment'];
   label: string;
+  maxCharacterLength?: TextFieldProps['maxCharacterLength'];
   name: string;
   startAdornment?: TextFieldProps['startAdornment'];
   type?: TextFieldProps['type'];
@@ -34,6 +35,7 @@ export default function FormTextField(props: FormTextFieldProps): JSX.Element {
     control,
     endAdornment = undefined,
     label,
+    maxCharacterLength = undefined,
     name,
     startAdornment = undefined,
     type = 'text',
@@ -60,6 +62,7 @@ export default function FormTextField(props: FormTextFieldProps): JSX.Element {
           inputRef={ref}
           isError={!!error}
           label={label}
+          maxCharacterLength={maxCharacterLength}
           onChange={onChange}
           startAdornment={startAdornment}
           type={type}

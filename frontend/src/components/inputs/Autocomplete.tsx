@@ -13,6 +13,7 @@ export interface AutocompleteProps {
   className?: string;
   fieldId: string;
   label: string;
+  maxCharacterLength?: number;
   noOptionsLabel: string;
   onChange: (values: Option[]) => void;
   options: Option[];
@@ -24,7 +25,16 @@ const StyledAutocomplete = styled('div')(({ theme }): { [key: string]: any } => 
 }));
 
 export default function Autocomplete(props: AutocompleteProps): JSX.Element {
-  const { className = '', fieldId, label, noOptionsLabel, onChange, options, value } = props;
+  const {
+    className = '',
+    fieldId,
+    label,
+    maxCharacterLength = 100,
+    noOptionsLabel,
+    onChange,
+    options,
+    value,
+  } = props;
 
   const handleOnChange = (_event: React.SyntheticEvent<Element, Event>, values: Option[]): void =>
     onChange(values);
@@ -43,8 +53,17 @@ export default function Autocomplete(props: AutocompleteProps): JSX.Element {
         noOptionsText={noOptionsLabel}
         onChange={handleOnChange}
         options={options}
-        // eslint-disable-next-line react/jsx-props-no-spreading
-        renderInput={(params): JSX.Element => <MuiTextField {...params} label={label} />}
+        renderInput={(params): JSX.Element => (
+          <MuiTextField
+            // eslint-disable-next-line react/jsx-props-no-spreading
+            {...params}
+            inputProps={{
+              ...params.inputProps,
+              maxLength: maxCharacterLength,
+            }}
+            label={label}
+          />
+        )}
         value={value}
       />
     </StyledAutocomplete>
