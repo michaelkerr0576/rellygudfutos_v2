@@ -2,13 +2,16 @@ import clsx from 'clsx';
 
 import MuiButton, { ButtonProps as MuiButtonProps } from '@mui/material/Button';
 
+import CircularProgress from '../feedback/CircularProgress';
+
 type Variant = 'primary' | 'secondary' | 'tertiary';
 
 export interface ButtonProps {
   children: React.ReactNode;
   className?: MuiButtonProps['className'];
   endIcon?: JSX.Element;
-  isFullWidth?: boolean;
+  isFullWidth?: MuiButtonProps['fullWidth'];
+  isLoading?: boolean;
   onClick?: MuiButtonProps['onClick'];
   startIcon?: JSX.Element;
   type?: MuiButtonProps['type'];
@@ -22,6 +25,7 @@ export default function Button(props: ButtonProps): JSX.Element {
     endIcon = null,
     isFullWidth = false,
     onClick = undefined,
+    isLoading = false,
     startIcon = null,
     type = 'button',
     variant = 'primary',
@@ -46,7 +50,8 @@ export default function Button(props: ButtonProps): JSX.Element {
       fullWidth={isFullWidth}
       onClick={onClick}
       size="large"
-      startIcon={startIcon}
+      disabled={isLoading}
+      startIcon={isLoading ? <CircularProgress variant="inline" /> : startIcon}
       type={type}
       variant={getVariant()}
     >

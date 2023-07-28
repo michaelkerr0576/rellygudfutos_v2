@@ -20,22 +20,25 @@ interface LoginFormInput {
 }
 
 export default function LoginDialog(): JSX.Element {
-  const { handleSubmit, control } = useForm<LoginFormInput>({
+  const {
+    control,
+    formState: { isSubmitting },
+    handleSubmit,
+  } = useForm<LoginFormInput>({
     defaultValues: {
       email: '',
       password: '',
     },
   });
 
-  const { mutate: loginUser } = useUserLogin();
+  const { mutate: loginUser, isLoading } = useUserLogin();
+  const { isLoginDialogOpen, toggleLoginDialog } = useMenu();
 
   const onSubmit: SubmitHandler<LoginFormInput> = async (data): Promise<void> => {
     const { email, password } = data;
 
     loginUser({ email, password });
   };
-
-  const { isLoginDialogOpen, toggleLoginDialog } = useMenu();
 
   // TODO - move useState hook
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -80,6 +83,7 @@ export default function LoginDialog(): JSX.Element {
     <Button
       className="rgf-loginDialog--loginButton"
       isFullWidth
+      isLoading={isSubmitting || isLoading}
       onClick={handleSubmit(onSubmit)}
       startIcon={<LoginIcon />}
       type="submit"

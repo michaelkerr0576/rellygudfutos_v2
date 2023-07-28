@@ -8,7 +8,7 @@ import Box from '../layout/Box';
 
 export const LOADING_SPINNER_LARGE_SIZE = '64px';
 export const LOADING_SPINNER_MEDIUM_SIZE = '44px';
-export const LOADING_SPINNER_SMALL_SIZE = '24px';
+export const LOADING_SPINNER_SMALL_SIZE = '22px';
 export const LOADING_PANEL_HEIGHT = '108px';
 
 type Variant = 'page' | 'panel' | 'inline';
