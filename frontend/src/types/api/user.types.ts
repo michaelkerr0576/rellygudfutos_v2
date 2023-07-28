@@ -21,3 +21,10 @@ interface UserEquipment {
   lenses: string[];
 }
 // #endregion
+
+// #region User Request Payload Types
+export interface PostUserLoginRequestPayload {
+  email: string;
+  password: string;
+}
+// #endregion

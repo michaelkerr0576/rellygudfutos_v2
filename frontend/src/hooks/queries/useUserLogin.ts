@@ -5,26 +5,20 @@ import { enqueueSnackbar } from 'notistack';
 import useMenu from '@/hooks/shared/useMenu';
 import { postUserLogin } from '@/services/users.service';
 import { ApiErrorResponse, ApiResponse } from '@/types/api/data.types';
-import { User } from '@/types/api/user.types';
+import { PostUserLoginRequestPayload, User } from '@/types/api/user.types';
 import { getErrorMessage } from '@/utils/api.utils';
 import { getFutureDateInDays } from '@/utils/dateTime.utils';
-
-interface RequestPayload {
-  email: string;
-  password: string;
-}
 
 export default function useUserLogin(): UseMutationResult<
   ApiResponse<User>,
   ApiErrorResponse,
-  RequestPayload
+  PostUserLoginRequestPayload
 > {
   const [, setCookie] = useCookies(['rgf-token']);
   const { toggleLoginDialog } = useMenu();
 
   return useMutation({
-    mutationFn: (request: RequestPayload): Promise<ApiResponse<User>> =>
-      postUserLogin(request.email, request.password),
+    mutationFn: (requestPayload): Promise<ApiResponse<User>> => postUserLogin(requestPayload),
     onError(error: ApiErrorResponse): void {
       const errorMessage = getErrorMessage(error);
       enqueueSnackbar(errorMessage, { variant: 'error' });
