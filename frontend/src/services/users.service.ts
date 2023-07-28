@@ -7,12 +7,10 @@ import { PostUserLoginRequestPayload, User } from '@/types/api/user.types';
   - postUserLogin
 */
 
-const API_BASE_URL = '/api/users';
-
 export const postUserLogin = async (
   requestPayload: PostUserLoginRequestPayload,
 ): Promise<ApiResponse<User>> => {
-  const { data } = await axiosPublic.post<ApiResponse<User>>(`${API_BASE_URL}/login`, requestPayload);
+  const { data } = await axiosPublic.post<ApiResponse<User>>('/users/login', requestPayload);
 
   return data;
 };

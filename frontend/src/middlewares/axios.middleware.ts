@@ -1,15 +1,13 @@
 import axios from 'axios';
 
-const baseURL = import.meta.env.BASE_URL || '';
-
 export const axiosPublic = axios.create({
-  baseURL,
+  baseURL: '/api',
   headers: { 'Content-Type': 'application/json' },
   withCredentials: false,
 });
 
 export const axiosPrivate = axios.create({
-  baseURL,
+  baseURL: '/api',
   headers: { 'Content-Type': 'application/json' },
   withCredentials: true,
 });

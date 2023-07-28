@@ -8,10 +8,8 @@ import { GetPhotosQueryParams, Photo } from '@/types/api/photo.types';
   - getPhotos
 */
 
-const API_BASE_URL = '/api/photos';
-
 export const getPhoto = async (id: string): Promise<ApiResponse<Photo>> => {
-  const { data } = await axiosPublic.get<ApiResponse<Photo>>(`${API_BASE_URL}/${id}`);
+  const { data } = await axiosPublic.get<ApiResponse<Photo>>(`/photos/${id}`);
 
   return data;
 };
@@ -19,7 +17,7 @@ export const getPhoto = async (id: string): Promise<ApiResponse<Photo>> => {
 export const getPhotos = async (
   queryParams: GetPhotosQueryParams,
 ): Promise<ApiResponsePaginated<Photo[]>> => {
-  const { data } = await axiosPublic.get<ApiResponsePaginated<Photo[]>>(`${API_BASE_URL}`, {
+  const { data } = await axiosPublic.get<ApiResponsePaginated<Photo[]>>('/photos', {
     params: queryParams,
   });
 
