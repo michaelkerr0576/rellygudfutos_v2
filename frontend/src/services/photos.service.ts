@@ -1,5 +1,4 @@
-import axios from 'axios';
-
+import { axiosPublic } from '@/middlewares/axios.middleware';
 import { ApiResponse, ApiResponsePaginated } from '@/types/api/data.types';
 import { GetPhotosQueryParams, Photo } from '@/types/api/photo.types';
 
@@ -12,7 +11,7 @@ import { GetPhotosQueryParams, Photo } from '@/types/api/photo.types';
 const API_BASE_URL = '/api/photos';
 
 export const getPhoto = async (id: string): Promise<ApiResponse<Photo>> => {
-  const { data } = await axios.get<ApiResponse<Photo>>(`${API_BASE_URL}/${id}`);
+  const { data } = await axiosPublic.get<ApiResponse<Photo>>(`${API_BASE_URL}/${id}`);
 
   return data;
 };
@@ -20,7 +19,9 @@ export const getPhoto = async (id: string): Promise<ApiResponse<Photo>> => {
 export const getPhotos = async (
   queryParams: GetPhotosQueryParams,
 ): Promise<ApiResponsePaginated<Photo[]>> => {
-  const { data } = await axios.get<ApiResponsePaginated<Photo[]>>(`${API_BASE_URL}`, { params: queryParams });
+  const { data } = await axiosPublic.get<ApiResponsePaginated<Photo[]>>(`${API_BASE_URL}`, {
+    params: queryParams,
+  });
 
   return data;
 };

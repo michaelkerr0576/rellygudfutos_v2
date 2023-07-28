@@ -12,6 +12,8 @@
       "@/hooks/*": ["./src/hooks/*"],
       "@/layouts/": ["./src/layouts/"],
       "@/layouts/*": ["./src/layouts/*"],
+      "@/middlewares/": ["./src/middlewares/"],
+      "@/middlewares/*": ["./src/middlewares/*"],
       "@/pages/": ["./src/pages/"],
       "@/pages/*": ["./src/pages/*"],
       "@/partials/": ["./src/partials/"],
