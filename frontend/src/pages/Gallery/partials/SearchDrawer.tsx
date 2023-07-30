@@ -13,7 +13,7 @@ import Stack from '@/components/layout/Stack';
 import Drawer from '@/components/navigation/Drawer';
 import Paper from '@/components/surfaces/Paper';
 import { FIXED_BOTTOM_APP_BAR_HEIGHT } from '@/constants/style.constants';
-import { GallerySortBy } from '@/types/store.types';
+import { GallerySortBy } from '@/types/store/gallery.types';
 
 import useGallery from '../hooks/useGallery';
 

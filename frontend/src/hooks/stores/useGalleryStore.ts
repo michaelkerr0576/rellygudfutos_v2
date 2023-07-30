@@ -2,32 +2,26 @@ import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 
 import {
-  ColorMode,
   GalleryNavigationValue,
   GallerySortBy,
+  GalleryState,
   GalleryTagsFilter,
   GalleryVariant,
-  State,
-} from '@/types/store.types';
+} from '@/types/store/gallery.types';
 
-const useStore = create<State>()(
+const useGalleryStore = create<GalleryState>()(
   // * Enables Redux devtools
   devtools(
     // * Persists state to local storage
     persist(
-      (set, _get): State => ({
-        colorMode: undefined, // * colorMode undefined while waiting for user preference in browser
+      (set, _get): GalleryState => ({
         galleryNavigationValue: GalleryNavigationValue.HOME,
         gallerySearch: '',
         gallerySortBy: GallerySortBy.NEWEST,
         galleryTagsFilter: [],
         galleryVariant: GalleryVariant.GRID,
-        isAccountDrawerOpen: false,
-        isLoginDialogOpen: false,
-        isMenuDrawerOpen: false,
         isPhotoDialogOpen: false,
         isSearchDrawerOpen: false,
-        setColorMode: (colorMode: ColorMode): void => set({ colorMode }, false, 'SET_COLOR_MODE'),
         setGalleryNavigationValue: (galleryNavigationValue: GalleryNavigationValue): void =>
           set({ galleryNavigationValue }, false, 'SET_GALLERY_NAVIGATION_VALUE'),
         setGallerySearch: (gallerySearch: string): void =>
@@ -38,22 +32,16 @@ const useStore = create<State>()(
           set({ galleryTagsFilter }, false, 'SET_GALLERY_TAGS_FILTER'),
         setGalleryVariant: (galleryVariant: GalleryVariant): void =>
           set({ galleryVariant }, false, 'SET_GALLERY_VARIANT'),
-        setIsAccountDrawerOpen: (isAccountDrawerOpen: boolean): void =>
-          set({ isAccountDrawerOpen }, false, 'SET_IS_ACCOUNT_DRAWER_OPEN'),
-        setIsLoginDialogOpen: (isLoginDialogOpen: boolean): void =>
-          set({ isLoginDialogOpen }, false, 'SET_IS_LOGIN_DIALOG_OPEN'),
-        setIsMenuDrawerOpen: (isMenuDrawerOpen: boolean): void =>
-          set({ isMenuDrawerOpen }, false, 'SET_IS_MENU_DRAWER_OPEN'),
         setIsPhotoDialogOpen: (isPhotoDialogOpen: boolean): void =>
           set({ isPhotoDialogOpen }, false, 'SET_IS_PHOTO_DIALOG_OPEN'),
         setIsSearchDrawerOpen: (isSearchDrawerOpen: boolean): void =>
           set({ isSearchDrawerOpen }, false, 'SET_IS_SEARCH_DRAWER_OPEN'),
       }),
       {
-        name: 'rgf-state', // * Local storage key
+        name: 'rgf-state--gallery', // * Local storage key
       },
     ),
   ),
 );
 
-export default useStore;
+export default useGalleryStore;

@@ -1,9 +1,4 @@
 // #region State Enum
-export enum ColorMode {
-  LIGHT = 'light',
-  DARK = 'dark',
-}
-
 export enum GallerySortBy {
   NEWEST = 'newest',
   OLDEST = 'oldest',
@@ -31,27 +26,19 @@ export type GalleryTagsFilter = { id: number; label: string }[];
 // #endregion
 
 // #region State Interfaces
-export interface State {
-  colorMode: ColorMode | undefined;
+export interface GalleryState {
   galleryNavigationValue: GalleryNavigationValue;
   gallerySearch: string;
   gallerySortBy: GallerySortBy;
   galleryTagsFilter: GalleryTagsFilter;
   galleryVariant: GalleryVariant;
-  isAccountDrawerOpen: boolean;
-  isLoginDialogOpen: boolean;
-  isMenuDrawerOpen: boolean;
   isPhotoDialogOpen: boolean;
   isSearchDrawerOpen: boolean;
-  setColorMode: (colorMode: ColorMode) => void;
   setGalleryNavigationValue: (value: GalleryNavigationValue) => void;
   setGallerySearch: (search: string) => void;
   setGallerySortBy: (sortBy: GallerySortBy) => void;
   setGalleryTagsFilter: (tags: GalleryTagsFilter) => void;
   setGalleryVariant: (variant: GalleryVariant) => void;
-  setIsAccountDrawerOpen: (isOpen: boolean) => void;
-  setIsLoginDialogOpen: (isOpen: boolean) => void;
-  setIsMenuDrawerOpen: (isOpen: boolean) => void;
   setIsPhotoDialogOpen: (isOpen: boolean) => void;
   setIsSearchDrawerOpen: (isOpen: boolean) => void;
 }

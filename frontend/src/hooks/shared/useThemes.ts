@@ -4,8 +4,9 @@ import { common } from '@mui/material/colors';
 import { alpha, createTheme, Theme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
-import useStore from '@/store/useStore';
-import { ColorMode, State } from '@/types/store.types';
+import { ColorMode, ThemeState } from '@/types/store/theme.types';
+
+import useThemeStore from '../stores/useThemeStore';
 
 declare module '@mui/material/styles' {
   interface BreakpointOverrides {
@@ -27,11 +28,6 @@ export interface UseThemes {
   colorMode: ColorMode;
   theme: Theme;
   toggleColorMode: () => void;
-}
-
-interface UseThemesState {
-  colorMode: State['colorMode'];
-  setColorMode: State['setColorMode'];
 }
 
 const breakpoints = {
@@ -128,8 +124,8 @@ export default function useThemes(): UseThemes {
 
   const defaultColorMode = doesUserPreferDarkMode ? ColorMode.DARK : ColorMode.LIGHT;
 
-  const { colorMode, setColorMode } = useStore(
-    (state): UseThemesState => ({
+  const { colorMode, setColorMode } = useThemeStore(
+    (state): ThemeState => ({
       colorMode: state.colorMode || defaultColorMode,
       setColorMode: state.setColorMode,
     }),

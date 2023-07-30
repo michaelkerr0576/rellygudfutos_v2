@@ -1,13 +1,13 @@
 import { useNavigate } from 'react-router-dom';
 
-import useStore from '@/store/useStore';
+import useGalleryStore from '@/hooks/stores/useGalleryStore';
 import {
   GalleryNavigationValue,
   GallerySortBy,
+  GalleryState,
   GalleryTagsFilter,
   GalleryVariant,
-  State,
-} from '@/types/store.types';
+} from '@/types/store/gallery.types';
 
 export interface UseGallery {
   galleryNavigationValue: GalleryNavigationValue;
@@ -23,23 +23,6 @@ export interface UseGallery {
   toggleGalleryNavigationValue: (value: string) => void;
   togglePhotoDialog: (isOpen: boolean, photoId?: string) => void;
   toggleSearchDrawer: (isOpen: boolean) => void;
-}
-
-interface UseGalleryState {
-  galleryNavigationValue: State['galleryNavigationValue'];
-  gallerySearch: State['gallerySearch'];
-  gallerySortBy: State['gallerySortBy'];
-  galleryTagsFilter: State['galleryTagsFilter'];
-  galleryVariant: State['galleryVariant'];
-  isPhotoDialogOpen: State['isPhotoDialogOpen'];
-  isSearchDrawerOpen: State['isSearchDrawerOpen'];
-  setGalleryNavigationValue: State['setGalleryNavigationValue'];
-  setGallerySearch: State['setGallerySearch'];
-  setGallerySortBy: State['setGallerySortBy'];
-  setGalleryTagsFilter: State['setGalleryTagsFilter'];
-  setGalleryVariant: State['setGalleryVariant'];
-  setIsPhotoDialogOpen: State['setIsPhotoDialogOpen'];
-  setIsSearchDrawerOpen: State['setIsSearchDrawerOpen'];
 }
 
 export default function useGallery(): UseGallery {
@@ -59,8 +42,8 @@ export default function useGallery(): UseGallery {
     setGalleryVariant,
     setIsPhotoDialogOpen,
     setIsSearchDrawerOpen,
-  } = useStore(
-    (state): UseGalleryState => ({
+  } = useGalleryStore(
+    (state): GalleryState => ({
       galleryNavigationValue: state.galleryNavigationValue,
       gallerySearch: state.gallerySearch,
       gallerySortBy: state.gallerySortBy,

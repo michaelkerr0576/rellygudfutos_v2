@@ -298,11 +298,16 @@ Examples of hooks that will take data from API calls:
 
 Super lightweight client-side state. For this application, Redux is overkill when using React Query and it is easier to set up then React's `useContext`.
 
+Zustand allows for multiple stores where you can easily configure where you want the state to persist to local storage. This is really handy if you want models/dialogs or menu drawers to remain open on refresh or revisit.
+
 Examples of data that needs to go into global state:
 
 1. **Theme**
 
 - Toggling light and dark mode throughout the app.
+- Modals/dialogs or menu drawers being open or not.
+- Gallery filters, search and sorting.
+- User authorisation (Will not be persisted to local storage for obvious security concerns).
 
 **Useful Links:**
 

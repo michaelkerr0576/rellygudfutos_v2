@@ -16,7 +16,7 @@ import Stack from '@/components/layout/Stack';
 import Drawer from '@/components/navigation/Drawer';
 import useMenu from '@/hooks/shared/useMenu';
 import useThemes from '@/hooks/shared/useThemes';
-import { ColorMode } from '@/types/store.types';
+import { ColorMode } from '@/types/store/theme.types';
 
 const StyledDrawer = styled(Drawer)(({ theme }): { [key: string]: any } => ({
   '.rgf-menuDrawer--header': {

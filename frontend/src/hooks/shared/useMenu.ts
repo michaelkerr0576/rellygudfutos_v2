@@ -1,7 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 
-import useStore from '@/store/useStore';
-import { State } from '@/types/store.types';
+import { MenuState } from '@/types/store/menu.types';
+
+import useMenuStore from '../stores/useMenuStore';
 
 export interface UseMenu {
   isAccountDrawerOpen: boolean;
@@ -10,15 +11,6 @@ export interface UseMenu {
   toggleAccountDrawer: (isOpen: boolean) => void;
   toggleLoginDialog: (isOpen: boolean) => void;
   toggleMenuDrawer: (isOpen: boolean) => void;
-}
-
-interface UseMenuState {
-  isAccountDrawerOpen: State['isAccountDrawerOpen'];
-  isLoginDialogOpen: State['isLoginDialogOpen'];
-  isMenuDrawerOpen: State['isMenuDrawerOpen'];
-  setIsAccountDrawerOpen: State['setIsAccountDrawerOpen'];
-  setIsLoginDialogOpen: State['setIsLoginDialogOpen'];
-  setIsMenuDrawerOpen: State['setIsMenuDrawerOpen'];
 }
 
 export default function useMenu(): UseMenu {
@@ -30,8 +22,8 @@ export default function useMenu(): UseMenu {
     setIsAccountDrawerOpen,
     setIsLoginDialogOpen,
     setIsMenuDrawerOpen,
-  } = useStore(
-    (state): UseMenuState => ({
+  } = useMenuStore(
+    (state): MenuState => ({
       isAccountDrawerOpen: state.isAccountDrawerOpen,
       isLoginDialogOpen: state.isLoginDialogOpen,
       isMenuDrawerOpen: state.isMenuDrawerOpen,
