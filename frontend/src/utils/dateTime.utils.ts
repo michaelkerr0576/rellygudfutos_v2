@@ -3,7 +3,6 @@ type DateTimeStyle = 'full' | 'long' | 'medium' | 'short' | undefined;
 /* 
  $ dateTimeUtils
   - formatDateTime
-  - getFutureDateInDays
 */
 
 export const formatDateTime = (
@@ -22,11 +21,4 @@ export const formatDateTime = (
   }).format(newDate);
 
   return formattedDate;
-};
-
-export const getFutureDateInDays = (days: number): Date => {
-  const futureDate = new Date();
-  futureDate.setDate(futureDate.getDate() + days);
-
-  return futureDate;
 };

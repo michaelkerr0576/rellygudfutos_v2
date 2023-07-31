@@ -22,7 +22,10 @@ export enum GalleryVariant {
 // #endregion
 
 // #region State Types
-export type GalleryTagsFilter = { id: number; label: string }[];
+export type GalleryTagsFilter = {
+  id: number;
+  label: string;
+}[];
 // #endregion
 
 // #region State Interfaces

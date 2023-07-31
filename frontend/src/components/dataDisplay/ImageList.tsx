@@ -8,13 +8,13 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 
 import Image from './Image';
 
-export const IMAGE_CONTAINER_COLUMNS = 3;
-export const IMAGE_LANDSCAPE_COLUMNS = 2;
-export const IMAGE_PORTRAIT_COLUMNS = 1;
+export const IMAGE_CONTAINER_COLUMNS = 8;
+export const IMAGE_LANDSCAPE_COLUMNS = 5;
+export const IMAGE_PORTRAIT_COLUMNS = 3;
 
-export const IMAGE_ROWS = 10;
-export const IMAGE_LANDSCAPE_ROWS = 13;
-export const IMAGE_PORTRAIT_ROWS = 14;
+export const IMAGE_ROWS = 8;
+export const IMAGE_LANDSCAPE_ROWS = 6;
+export const IMAGE_PORTRAIT_ROWS = 8;
 
 export const IMAGE_LARGE_SCREEN_GAP = 16; // * The gap between images in px
 export const IMAGE_SMALL_SCREEN_GAP = 8; // * The gap between images in px

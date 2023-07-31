@@ -4,11 +4,14 @@ import { AxiosError } from 'axios';
 export interface ApiResponse<T> {
   data: T;
   message: string;
-  token?: string;
 }
 
 export interface ApiResponsePaginated<T> extends ApiResponse<T> {
   pagination: Pagination;
+}
+
+export interface ApiResponseToken<T> extends ApiResponse<T> {
+  token: string;
 }
 
 export interface Pagination {

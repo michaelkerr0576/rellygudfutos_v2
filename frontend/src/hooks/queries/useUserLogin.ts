@@ -1,36 +1,39 @@
-import { useCookies } from 'react-cookie';
 import { useMutation, UseMutationResult } from 'react-query';
 import { enqueueSnackbar } from 'notistack';
 
 import useMenu from '@/hooks/shared/useMenu';
 import { postUserLogin } from '@/services/users.service';
-import { ApiErrorResponse, ApiResponse } from '@/types/api/data.types';
-import { PostUserLoginRequestPayload, User } from '@/types/api/user.types';
+import { ApiErrorResponse, ApiResponseToken } from '@/types/api/data.types';
+import { PostUserLoginRequestPayload, User, UserRole } from '@/types/api/user.types';
+import { AuthRole } from '@/types/store/auth.types';
 import { getErrorMessage } from '@/utils/api.utils';
-import { getFutureDateInDays } from '@/utils/dateTime.utils';
+
+import useAuth from '../shared/useAuth';
 
 export default function useUserLogin(): UseMutationResult<
-  ApiResponse<User>,
+  ApiResponseToken<User>,
   ApiErrorResponse,
   PostUserLoginRequestPayload
 > {
-  const [, setCookie] = useCookies(['rgf-token']);
+  const { setAuth } = useAuth();
   const { toggleLoginDialog } = useMenu();
 
   return useMutation({
-    mutationFn: (requestPayload): Promise<ApiResponse<User>> => postUserLogin(requestPayload),
+    mutationFn: (requestPayload): Promise<ApiResponseToken<User>> => postUserLogin(requestPayload),
     onError(error: ApiErrorResponse): void {
       const errorMessage = getErrorMessage(error);
       enqueueSnackbar(errorMessage, { variant: 'error' });
     },
-    onSuccess: (data: ApiResponse<User>): void => {
-      const successMessage = data.message;
+    onSuccess: (data: ApiResponseToken<User>): void => {
+      const {
+        data: { role },
+        message: successMessage,
+        token,
+      } = data;
       enqueueSnackbar(successMessage, { variant: 'success' });
 
-      // TODO - might replace with a more secure flow
-      const authToken = data?.token;
-      const thirtyDays = getFutureDateInDays(30);
-      setCookie('rgf-token', authToken, { expires: thirtyDays });
+      const authRole = role === UserRole.ADMIN ? AuthRole.ADMIN : AuthRole.USER;
+      setAuth({ role: authRole, token });
 
       toggleLoginDialog(false);
     },

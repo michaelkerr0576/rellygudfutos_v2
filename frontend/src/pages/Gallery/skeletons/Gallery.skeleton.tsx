@@ -82,36 +82,6 @@ export default function GallerySkeleton(props: GallerySkeletonProps): JSX.Elemen
       },
       title: 'Image skeleton loader',
     },
-    {
-      _id: '7',
-      aspectRatio: PhotoAspectRatio.PORTRAIT,
-      image: {
-        height: 1080,
-        url: '../../../../src/assets/images/greyBackground_portrait.jpg',
-        width: 720,
-      },
-      title: 'Image skeleton loader',
-    },
-    {
-      _id: '8',
-      aspectRatio: PhotoAspectRatio.LANDSCAPE,
-      image: {
-        height: 720,
-        url: '../../../../src/assets/images/greyBackground_landscape.jpg',
-        width: 1080,
-      },
-      title: 'Image skeleton loader',
-    },
-    {
-      _id: '9',
-      aspectRatio: PhotoAspectRatio.PORTRAIT,
-      image: {
-        height: 1080,
-        url: '../../../../src/assets/images/greyBackground_portrait.jpg',
-        width: 720,
-      },
-      title: 'Image skeleton loader',
-    },
   ];
 
   return (

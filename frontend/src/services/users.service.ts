@@ -1,5 +1,5 @@
 import { axiosPublic } from '@/middlewares/axios.middleware';
-import { ApiResponse } from '@/types/api/data.types';
+import { ApiResponseToken } from '@/types/api/data.types';
 import { PostUserLoginRequestPayload, User } from '@/types/api/user.types';
 
 /* 
@@ -9,8 +9,8 @@ import { PostUserLoginRequestPayload, User } from '@/types/api/user.types';
 
 export const postUserLogin = async (
   requestPayload: PostUserLoginRequestPayload,
-): Promise<ApiResponse<User>> => {
-  const { data } = await axiosPublic.post<ApiResponse<User>>('/users/login', requestPayload);
+): Promise<ApiResponseToken<User>> => {
+  const { data } = await axiosPublic.post<ApiResponseToken<User>>('/users/login', requestPayload);
 
   return data;
 };
