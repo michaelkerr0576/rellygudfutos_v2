@@ -6,10 +6,14 @@ export interface UseAuth {
   hasAdminAccess: boolean;
   hasReadOnlyAccess: boolean;
   hasUserAccess: boolean;
+  isAdmin: boolean;
+  isReadOnly: boolean;
+  isUser: boolean;
   setAuth: (auth: Auth) => void;
+  token: string;
 }
 
-export default function useAuth(accessLevel = AuthRole.READ): UseAuth {
+export default function useAuth(): UseAuth {
   const { auth, setAuth } = useAuthStore(
     (state): AuthState => ({
       auth: state.auth,
@@ -17,24 +21,28 @@ export default function useAuth(accessLevel = AuthRole.READ): UseAuth {
     }),
   );
 
-  const { role } = auth;
+  const { role, token } = auth;
 
   const isAdmin = role === AuthRole.ADMIN;
   const isUser = role === AuthRole.USER;
   const isReadOnly = role === AuthRole.READ;
 
-  const adminAccessLevels = [AuthRole.ADMIN, AuthRole.USER, AuthRole.READ];
-  const userAccessLevels = [AuthRole.USER, AuthRole.READ];
-  const readOnlyAccessLevels = [AuthRole.READ];
+  const adminAccessLevels = [AuthRole.ADMIN];
+  const userAccessLevels = [AuthRole.ADMIN, AuthRole.USER];
+  const readOnlyAccessLevels = [AuthRole.ADMIN, AuthRole.USER, AuthRole.READ];
 
-  const hasAdminAccess = isAdmin && adminAccessLevels.includes(accessLevel);
-  const hasUserAccess = isUser && userAccessLevels.includes(accessLevel);
-  const hasReadOnlyAccess = isReadOnly && readOnlyAccessLevels.includes(accessLevel);
+  const hasAdminAccess = adminAccessLevels.includes(role);
+  const hasUserAccess = userAccessLevels.includes(role);
+  const hasReadOnlyAccess = readOnlyAccessLevels.includes(role);
 
   return {
     hasAdminAccess,
     hasReadOnlyAccess,
     hasUserAccess,
+    isAdmin,
+    isReadOnly,
+    isUser,
     setAuth,
+    token,
   };
 }

@@ -10,9 +10,16 @@ export interface ProtectedRouteProps {
 export default function ProtectedRoute(props: ProtectedRouteProps): JSX.Element {
   const { accessLevel } = props;
 
-  const { hasAdminAccess, hasUserAccess } = useAuth(accessLevel);
+  const { hasAdminAccess, hasUserAccess } = useAuth();
 
-  if (hasAdminAccess || hasUserAccess) {
+  const isAdminProtected = accessLevel === AuthRole.ADMIN;
+  const isUserProtected = accessLevel === AuthRole.USER;
+
+  if (isAdminProtected && hasAdminAccess) {
+    return <Outlet />;
+  }
+
+  if (isUserProtected && (hasAdminAccess || hasUserAccess)) {
     return <Outlet />;
   }
 
