@@ -1,12 +1,20 @@
 import { Navigate, Outlet } from 'react-router-dom';
 
-export default function ProtectedRoute(): JSX.Element {
-  // TODO - create hook for authenticating user
-  const isAuthenticated = false;
+import useAuth from '@/hooks/shared/useAuth';
+import { AuthRole } from '@/types/store/auth.types';
 
-  if (!isAuthenticated) {
-    return <Navigate replace to="/account/login" />;
+export interface ProtectedRouteProps {
+  accessLevel: AuthRole;
+}
+
+export default function ProtectedRoute(props: ProtectedRouteProps): JSX.Element {
+  const { accessLevel } = props;
+
+  const { hasAdminAccess, hasUserAccess } = useAuth(accessLevel);
+
+  if (hasAdminAccess || hasUserAccess) {
+    return <Outlet />;
   }
 
-  return <Outlet />;
+  return <Navigate replace to="/account/login" />;
 }

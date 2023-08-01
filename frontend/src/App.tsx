@@ -13,6 +13,7 @@ import ProtectedRoute from '@/layouts/ProtectedRoute/ProtectedRoute';
 import DashboardPage from '@/pages/Dashboard/Dashboard.page';
 import GalleryPage from '@/pages/Gallery/Gallery.page';
 import ProfilePage from '@/pages/Profile/Profile.page';
+import { AuthRole } from '@/types/store/auth.types';
 
 const queryClient = new QueryClient();
 
@@ -31,14 +32,12 @@ export default function App(): JSX.Element {
             <Header />
             <Routes>
               {/* // * Public routes */}
-              <Route path="/">
-                <Route index element={<GalleryPage />} />
-                <Route path="/photo/:photoId" element={<GalleryPage />} />
-                <Route path="/account/login" element={<GalleryPage />} />
-              </Route>
+              <Route path="/" element={<GalleryPage />} />
+              <Route path="/photo/:photoId" element={<GalleryPage />} />
+              <Route path="/account/login" element={<GalleryPage />} />
 
-              {/* // * Protected routes */}
-              <Route element={<ProtectedRoute />}>
+              {/* // * Protected routes at a user level */}
+              <Route element={<ProtectedRoute accessLevel={AuthRole.USER} />}>
                 <Route path="/account/profile" element={<ProfilePage />} />
                 <Route path="/account/dashboard" element={<DashboardPage />} />
               </Route>
