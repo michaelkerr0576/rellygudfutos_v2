@@ -23,5 +23,5 @@ export default function ProtectedRoute(props: ProtectedRouteProps): JSX.Element 
     return <Outlet />;
   }
 
-  return <Navigate replace to="/account/login" />;
+  return <Navigate replace to="/login" />;
 }

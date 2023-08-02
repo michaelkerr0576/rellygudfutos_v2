@@ -1,4 +1,5 @@
-import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import useGalleryStore from '@/hooks/stores/useGalleryStore';
 import {
@@ -21,12 +22,15 @@ export interface UseGallery {
   isPhotoDialogOpen: boolean;
   isSearchDrawerOpen: boolean;
   toggleGalleryNavigationValue: (value: string) => void;
-  togglePhotoDialog: (isOpen: boolean, photoId?: string) => void;
+  togglePhotoDialog: (isOpen: boolean, newPhotoId?: string) => void;
   toggleSearchDrawer: (isOpen: boolean) => void;
 }
 
 export default function useGallery(): UseGallery {
+  const { photoId = '' } = useParams();
+  const location = useLocation();
   const navigate = useNavigate();
+
   const {
     galleryNavigationValue,
     gallerySearch,
@@ -76,9 +80,9 @@ export default function useGallery(): UseGallery {
     setGalleryNavigationValue(value as GalleryNavigationValue);
   };
 
-  const togglePhotoDialog = (isOpen: boolean, photoId?: string): void => {
-    if (photoId && isOpen) {
-      navigate(`/photo/${photoId}`);
+  const togglePhotoDialog = (isOpen: boolean, newPhotoId?: string): void => {
+    if (newPhotoId && isOpen) {
+      navigate(`/photo/${newPhotoId}`);
     } else {
       navigate('/');
     }
@@ -87,6 +91,20 @@ export default function useGallery(): UseGallery {
   };
 
   const toggleSearchDrawer = (isOpen: boolean): void => setIsSearchDrawerOpen(isOpen);
+
+  useEffect((): void => {
+    // * Check if photo URL is a direct link on first render
+    const isPhotoUrl = photoId && location.pathname === `/photo/${photoId}`;
+    if (!isPhotoDialogOpen && isPhotoUrl) {
+      togglePhotoDialog(true, photoId);
+    }
+
+    // * Check if user removed /photo/:photoId from URL and refreshed
+    const isGalleryUrl = location.pathname === '/';
+    if (isPhotoDialogOpen && isGalleryUrl) {
+      togglePhotoDialog(false);
+    }
+  }, []);
 
   return {
     galleryNavigationValue,

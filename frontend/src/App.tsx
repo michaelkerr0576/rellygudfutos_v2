@@ -9,9 +9,11 @@ import { ThemeProvider } from '@mui/material/styles';
 import useThemes from '@/hooks/shared/useThemes';
 import ErrorBoundary from '@/layouts/ErrorBoundary/ErrorBoundary';
 import Header from '@/layouts/Header/Header';
+import LoginDialog from '@/layouts/Header/partials/LoginDialog';
 import ProtectedRoute from '@/layouts/ProtectedRoute/ProtectedRoute';
 import DashboardPage from '@/pages/Dashboard/Dashboard.page';
 import GalleryPage from '@/pages/Gallery/Gallery.page';
+import PhotoDialog from '@/pages/Gallery/partials/PhotoDialog';
 import ProfilePage from '@/pages/Profile/Profile.page';
 import { AuthRole } from '@/types/store/auth.types';
 
@@ -32,9 +34,11 @@ export default function App(): JSX.Element {
             <Header />
             <Routes>
               {/* // * Public routes */}
-              <Route path="/" element={<GalleryPage />} />
-              <Route path="/photo/:photoId" element={<GalleryPage />} />
-              <Route path="/account/login" element={<GalleryPage />} />
+              <Route path="/" element={<GalleryPage />}>
+                {/* // * Gallery dialog routes */}
+                <Route path="photo/:photoId" element={<PhotoDialog />} />
+                <Route path="login" element={<LoginDialog />} />
+              </Route>
 
               {/* // * Protected routes at a user level */}
               <Route element={<ProtectedRoute accessLevel={AuthRole.USER} />}>
