@@ -16,8 +16,6 @@
       "@/middlewares/*": ["./src/middlewares/*"],
       "@/pages/": ["./src/pages/"],
       "@/pages/*": ["./src/pages/*"],
-      "@/partials/": ["./src/partials/"],
-      "@/partials/*": ["./src/partials/*"],
       "@/services/": ["./src/services/"],
       "@/services/*": ["./src/services/*"],
       "@/tests/": ["./src/tests/"],
