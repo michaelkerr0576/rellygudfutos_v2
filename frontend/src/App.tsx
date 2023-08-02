@@ -36,8 +36,8 @@ export default function App(): JSX.Element {
               {/* // * Public routes */}
               <Route path="/" element={<GalleryPage />}>
                 {/* // * Gallery dialog routes */}
-                <Route path="photo/:photoId" element={<PhotoDialog />} />
-                <Route path="login" element={<LoginDialog />} />
+                <Route path="/photo/:photoId" element={<PhotoDialog />} />
+                <Route path="/login" element={<LoginDialog />} />
               </Route>
 
               {/* // * Protected routes at a user level */}
