@@ -1,4 +1,6 @@
+// #region Common Pagination
 export const PAGE = 1;
+// #endregion
 
 // #region Photo Pagination
 export const PHOTO_LIMIT = 10;

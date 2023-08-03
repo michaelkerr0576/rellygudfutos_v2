@@ -18,7 +18,7 @@ This application will be using the MERN stack. MERN stands for MongoDB, Express,
 **Useful Links:**
 
 - [Youtube Tutorial - Traversy Media](https://www.youtube.com/playlist?list=PLillGF-RfqbbQeVSccR9PGKHzPJSWqcsm)
-- [Node Full Course - Dave Gray](https://www.youtube.com/watch?v=27KeYk-5vJw&ab_channel=DaveGray)
+- [Node Full Course - Dave Gray](https://www.youtube.com/watch?v=f2EqECiTBL8&t=13502s&ab_channel=DaveGray)
 - [React Register & Login Course - Dave Gray](https://www.youtube.com/playlist?list=PL0Zuz27SZ-6PRCpm9clX0WiBEMB70FWwd)
 
 ### File Structure
@@ -153,7 +153,7 @@ Depending on the role of the user, they will have different authorisations.
 **Useful Links:**
 
 - [User Role Based Authorisation - Jason Watmore](https://jasonwatmore.com/post/2018/11/28/nodejs-role-based-authorization-tutorial-with-example-api)
-- [Node Full Course Chapter 10 Authentication - Dave Gray](https://www.youtube.com/watch?v=27KeYk-5vJw&ab_channel=DaveGray)
+- [Node Full Course Chapter 10 Authentication - Dave Gray](https://www.youtube.com/watch?v=f2EqECiTBL8&t=13502s&ab_channel=DaveGray)
 
 ### Sorting, Filtering and Pagination
 
@@ -332,7 +332,7 @@ The refresh token can be terminated if the user logs out.
 
 **Useful Links:**
 
-- [Persistent User Login Authentication - Dave Gray](https://www.youtube.com/watch?v=27KeYk-5vJw&ab_channel=DaveGray)
+- [React Register & Login Course - Dave Gray](https://www.youtube.com/playlist?list=PL0Zuz27SZ-6PRCpm9clX0WiBEMB70FWwd)
 - [React Router Private Routes - Robin Wieruch](https://www.robinwieruch.de/react-router-private-routes/)
 
 ### Forms
