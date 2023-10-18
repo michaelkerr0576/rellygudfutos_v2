@@ -35,6 +35,7 @@ export interface DialogProps {
 }
 
 const StyledMuiDialog = styled(MuiDialog)(({ theme }): { [key: string]: any } => ({
+  // #region Mui Overrides
   '.MuiDialogActions-root': {
     display: 'inherit',
     height: FIXED_BOTTOM_APP_BAR_HEIGHT,
@@ -49,26 +50,37 @@ const StyledMuiDialog = styled(MuiDialog)(({ theme }): { [key: string]: any } =>
     height: FIXED_HEADER_HEIGHT,
     padding: theme.spacing(1, 1.5),
   },
-  '.rgf-dialog--titleCloseButton': {
-    order: 1,
-  },
-  '.rgf-dialog--titleMoreOptionsButton': {
-    order: 3,
-    width: ICON_BUTTON_HEIGHT_WIDTH,
-  },
-  '.rgf-dialog--titleText': {
-    order: 2,
+  // #endregion
+  '.rgf': {
+    '&-dialog': {
+      '&--titleCloseButton': {
+        order: 1,
+      },
+      '&--titleMoreOptionsButton': {
+        order: 3,
+        width: ICON_BUTTON_HEIGHT_WIDTH,
+      },
+      '&--titleText': {
+        order: 2,
+      },
+    },
   },
 
   [theme.breakpoints.up('laptop')]: {
+    // #region Mui Overrides
     '.MuiDialogTitle-root': {
       padding: theme.spacing(1, 2),
     },
-    '.rgf-dialog--titleCloseButton': {
-      order: 3,
-    },
-    '.rgf-dialog--titleMoreOptionsButton': {
-      order: 1,
+    // #endregion
+    '.rgf': {
+      '&-dialog': {
+        '&--titleCloseButton': {
+          order: 3,
+        },
+        '&--titleMoreOptionsButton': {
+          order: 1,
+        },
+      },
     },
   },
 }));

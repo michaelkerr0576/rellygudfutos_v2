@@ -16,8 +16,12 @@ import Drawer from '@/components/navigation/Drawer';
 import useMenu from '@/hooks/shared/useMenu';
 
 const StyledDrawer = styled(Drawer)(({ theme }): { [key: string]: any } => ({
-  '.rgf-accountDrawer--header': {
-    padding: theme.spacing(1, 0),
+  '.rgf': {
+    '&-accountDrawer': {
+      '&--header': {
+        padding: theme.spacing(1, 0),
+      },
+    },
   },
 }));
 

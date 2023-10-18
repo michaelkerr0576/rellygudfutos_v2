@@ -28,9 +28,11 @@ export interface ListProps {
 }
 
 const StyledMuiList = styled(MuiList)((): { [key: string]: any } => ({
+  // #region Mui Overrides
   '.MuiListSubheader-root': {
     backgroundColor: 'inherit',
   },
+  // #endregion
 }));
 
 export default function List(props: ListProps): JSX.Element {

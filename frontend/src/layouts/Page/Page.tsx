@@ -12,8 +12,10 @@ export interface PageProps {
 }
 
 const StyledPage = styled('main')(({ theme }): { [key: string]: any } => ({
-  '.rgf-container': {
-    padding: theme.spacing(2),
+  '.rgf': {
+    '&-container': {
+      padding: theme.spacing(2),
+    },
   },
 
   height: `calc(100vh - (${FIXED_HEADER_HEIGHT} + ${FIXED_BOTTOM_APP_BAR_HEIGHT}))`,

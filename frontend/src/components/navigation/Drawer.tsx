@@ -25,26 +25,34 @@ export interface DrawerProps {
 }
 
 const StyledMuiSwipeableDrawer = styled(MuiSwipeableDrawer)(({ theme }): { [key: string]: any } => ({
-  '.rgf-drawer--children': {
-    display: 'flex',
-    flexDirection: 'column',
-    overflowY: 'auto',
-    padding: theme.spacing(0, 2),
-  },
-  '.rgf-drawer--expandDrawerButton': {
-    left: 0,
-    position: 'sticky',
-    right: 0,
-    zIndex: theme.zIndex.drawer,
-  },
-  '.rgf-list, .rgf-divider': {
-    marginLeft: theme.spacing(-2),
-    marginRight: theme.spacing(-2),
+  '.rgf': {
+    '&-drawer': {
+      '&--children': {
+        display: 'flex',
+        flexDirection: 'column',
+        overflowY: 'auto',
+        padding: theme.spacing(0, 2),
+      },
+      '&--expandDrawerButton': {
+        left: 0,
+        position: 'sticky',
+        right: 0,
+        zIndex: theme.zIndex.drawer,
+      },
+    },
+    '&-list, &-divider': {
+      marginLeft: theme.spacing(-2),
+      marginRight: theme.spacing(-2),
+    },
   },
 
   [theme.breakpoints.up('laptop')]: {
-    '.rgf-drawer--children': {
-      height: 'auto',
+    '.rgf': {
+      '&-drawer': {
+        '&--children': {
+          height: 'auto',
+        },
+      },
     },
   },
 }));

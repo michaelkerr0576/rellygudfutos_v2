@@ -33,37 +33,45 @@ import useGallery from '../hooks/useGallery';
 import PhotoDialogContentSkeleton from '../skeletons/PhotoDialogContent.skeleton';
 
 const StyledPhotoDialog = styled(Dialog)(({ theme }): { [key: string]: any } => ({
-  '.rgf-dialog--content': {
-    minHeight: '80vh',
-    padding: 0,
-  },
-  '.rgf-photoDialog--content': {
-    '.rgf-photoDialog--contentDate, .rgf-photoDialog--contentCaption, .rgf-photoDialog--contentDetails, .rgf-photoDialog--contentTitle':
-      {
+  '.rgf': {
+    '&-dialog': {
+      '&--content': {
+        minHeight: '80vh',
+        padding: 0,
+      },
+    },
+    '&-photoDialog': {
+      '&--content': {
+        '&Date, &Caption, &Details, &Title': {
+          padding: theme.spacing(1.5, 2),
+        },
+        '&Tags': {
+          '.rgf-chip': {
+            margin: theme.spacing(0.5, 1),
+          },
+
+          padding: theme.spacing(1, 0),
+        },
+        '.rgf-typographyIcon': {
+          padding: theme.spacing(0.5, 0),
+        },
+
+        paddingBottom: theme.spacing(3),
+      },
+
+      '&--error': {
         padding: theme.spacing(1.5, 2),
       },
-    '.rgf-photoDialog--contentTags': {
-      '.rgf-chip': {
-        margin: theme.spacing(0.5, 1),
-      },
-
-      padding: theme.spacing(1, 0),
     },
-    '.rgf-typographyIcon': {
-      padding: theme.spacing(0.5, 0),
-    },
-
-    paddingBottom: theme.spacing(3),
-  },
-  '.rgf-photoDialog--error': {
-    padding: theme.spacing(1.5, 2),
   },
 
   [theme.breakpoints.up('laptop')]: {
-    '.rgf-photoDialog--content': {
-      '.rgf-photoDialog--contentDetails': {
-        '.rgf-photoDialog--contentDetailsColumnOne': {
-          paddingRight: theme.spacing(4),
+    '.rgf': {
+      '&-photoDialog': {
+        '&--content': {
+          '&DetailsColumnOne': {
+            paddingRight: theme.spacing(4),
+          },
         },
       },
     },

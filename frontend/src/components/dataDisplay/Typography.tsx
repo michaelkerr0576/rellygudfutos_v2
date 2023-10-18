@@ -18,15 +18,19 @@ export interface TypographyProps {
 }
 
 const StyledMuiTypography = styled(MuiTypography)((): { [key: string]: any } => ({
-  '&.rgf-typography--maxLines': {
-    display: '-webkit-box',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    WebkitBoxOrient: 'vertical',
-  },
-  '&.rgf-typography--paragraph': {
-    marginBottom: 0,
-    maxWidth: '60ch', // character width
+  '.rgf': {
+    '&-typography': {
+      '&--maxLines': {
+        display: '-webkit-box',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        WebkitBoxOrient: 'vertical',
+      },
+      '&--paragraph': {
+        marginBottom: 0,
+        maxWidth: '60ch', // character width
+      },
+    },
   },
 }));
 

@@ -46,10 +46,14 @@ export interface ImageListProps {
 }
 
 const StyledMuiImageList = styled(MuiImageList)((): { [key: string]: any } => ({
-  '.rgf-imageList--listItem': {
-    cursor: 'pointer',
-    display: 'flex',
-    justifyContent: 'center',
+  '.rgf': {
+    '&-imageList': {
+      '&--listItem': {
+        cursor: 'pointer',
+        display: 'flex',
+        justifyContent: 'center',
+      },
+    },
   },
 
   margin: '0 auto',

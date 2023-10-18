@@ -8,9 +8,11 @@ export interface RellygudfutosLogoProps {
 }
 
 const StyledRellygudfutosLogo = styled('div')((): { [key: string]: any } => ({
+  // #region Mui Overrides
   '.MuiSvgIcon-root': {
     width: 'auto',
   },
+  // #endregion
 
   display: 'flex',
 }));

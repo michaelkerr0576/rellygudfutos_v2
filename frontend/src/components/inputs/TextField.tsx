@@ -25,12 +25,18 @@ export interface TextFieldProps {
 }
 
 const StyledTextField = styled('div')(({ theme }): { [key: string]: any } => ({
+  // #region Mui Overrides
   '.MuiInputBase-root': {
     paddingRight: theme.spacing(1),
   },
-  '.rgf-textField--startAdornmentStandard': {
-    display: 'flex',
-    paddingTop: theme.spacing(2.5),
+  // #endregion
+  '.rgf': {
+    '&-textField': {
+      '&--startAdornmentStandard': {
+        display: 'flex',
+        paddingTop: theme.spacing(2.5),
+      },
+    },
   },
 
   padding: theme.spacing(2, 0),

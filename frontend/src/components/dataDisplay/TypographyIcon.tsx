@@ -10,9 +10,11 @@ export interface TypographyIconProps {
 }
 
 const StyledTypographyIcon = styled('div')(({ theme }): { [key: string]: any } => ({
-  '.rgf-typography': {
-    padding: theme.spacing(0, 1),
-    width: 'auto',
+  '.rgf': {
+    '&-typography': {
+      padding: theme.spacing(0, 1),
+      width: 'auto',
+    },
   },
 
   display: 'flex',

@@ -19,8 +19,12 @@ import useThemes from '@/hooks/shared/useThemes';
 import { ColorMode } from '@/types/store/theme.types';
 
 const StyledDrawer = styled(Drawer)(({ theme }): { [key: string]: any } => ({
-  '.rgf-menuDrawer--header': {
-    padding: theme.spacing(1, 0),
+  '.rgf': {
+    '&-menuDrawer': {
+      '&--header': {
+        padding: theme.spacing(1, 0),
+      },
+    },
   },
 }));
 

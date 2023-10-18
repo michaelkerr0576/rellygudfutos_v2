@@ -11,9 +11,11 @@ export interface AlertProps {
 }
 
 const StyledMuiAlert = styled(MuiAlert)(({ theme }): { [key: string]: any } => ({
+  // #region Mui Overrides
   '.MuiAlertTitle-root': {
     fontWeight: theme.typography.fontWeightBold,
   },
+  // #endregion
 }));
 
 export default function Alert(props: AlertProps): JSX.Element {

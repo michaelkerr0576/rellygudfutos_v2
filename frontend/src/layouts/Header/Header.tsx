@@ -19,15 +19,19 @@ import MenuDrawer from './partials/MenuDrawer';
 import { FIXED_HEADER_HEIGHT } from './constants';
 
 const StyledHeader = styled('header')(({ theme }): { [key: string]: any } => ({
-  '.rgf-accountDrawer': {
-    marginLeft: 'auto',
-  },
-  '.rgf-container': {
-    padding: theme.spacing(0, 1.5),
-  },
-  '.rgf-header--rellygudfutosLogoButton': {
-    height: FIXED_HEADER_HEIGHT,
-    paddingLeft: theme.spacing(1),
+  '.rgf': {
+    '&-accountDrawer': {
+      marginLeft: 'auto',
+    },
+    '&-container': {
+      padding: theme.spacing(0, 1.5),
+    },
+    '&-header': {
+      '&--rellygudfutosLogoButton': {
+        height: FIXED_HEADER_HEIGHT,
+        paddingLeft: theme.spacing(1),
+      },
+    },
   },
 
   left: 0,
@@ -37,8 +41,10 @@ const StyledHeader = styled('header')(({ theme }): { [key: string]: any } => ({
   zIndex: theme.zIndex.appBar,
 
   [theme.breakpoints.up('laptop')]: {
-    '.rgf-container': {
-      padding: theme.spacing(0, 2),
+    '.rgf': {
+      '&-container': {
+        padding: theme.spacing(0, 2),
+      },
     },
   },
 }));

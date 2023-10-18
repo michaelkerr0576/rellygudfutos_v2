@@ -14,22 +14,31 @@ import Paper from '@/components/surfaces/Paper';
 import { LANDSCAPE_PHOTO_LARGE_SCREEN_HEIGHT, LANDSCAPE_PHOTO_SMALL_SCREEN_HEIGHT } from '../constants';
 
 const StyledPhotoDialogContentSkeleton = styled('div')(({ theme }): { [key: string]: any } => ({
-  '.rgf-photoDialog--contentDate, .rgf-photoDialog--contentCaption, .rgf-photoDialog--contentDetails, .rgf-photoDialog--contentTags, .rgf-photoDialog--contentTitle':
-    {
-      padding: theme.spacing(1.5, 2),
-    },
-  '.rgf-photoDialog--contentTags': {
-    '.rgf-chip': {
-      margin: theme.spacing(0.5, 1),
+  '.rgf': {
+    '&-photoDialog': {
+      '&--content': {
+        '&Date, &Caption, &Details, &Tags, &Title': {
+          padding: theme.spacing(1.5, 2),
+        },
+      },
+      '&--contentTags': {
+        '.rgf-chip': {
+          margin: theme.spacing(0.5, 1),
+        },
+      },
     },
   },
 
   paddingBottom: theme.spacing(3),
 
   [theme.breakpoints.up('laptop')]: {
-    '.rgf-photoDialog--contentDetails': {
-      '.rgf-photoDialog--contentDetailsColumnOne': {
-        paddingRight: theme.spacing(4),
+    '.rgf': {
+      '&-photoDialog': {
+        '&--content': {
+          '&DetailsColumnOne': {
+            paddingRight: theme.spacing(4),
+          },
+        },
       },
     },
   },

@@ -37,20 +37,26 @@ const tags = [
 ];
 
 const StyledDrawer = styled(Drawer)(({ theme }): { [key: string]: any } => ({
-  '.rgf-drawer--children': {
-    marginBottom: FIXED_BOTTOM_APP_BAR_HEIGHT,
-  },
-  '.rgf-searchDrawer--actionButtonGroup': {
-    '.rgf-stack': {
-      height: FIXED_BOTTOM_APP_BAR_HEIGHT,
-      padding: theme.spacing(1),
+  '.rgf': {
+    '&-drawer': {
+      '&--children': {
+        marginBottom: FIXED_BOTTOM_APP_BAR_HEIGHT,
+      },
     },
+    '&-searchDrawer': {
+      '&--actionButtonGroup': {
+        '.rgf-stack': {
+          height: FIXED_BOTTOM_APP_BAR_HEIGHT,
+          padding: theme.spacing(1),
+        },
 
-    bottom: 0,
-    left: 0,
-    position: 'fixed',
-    right: 0,
-    zIndex: theme.zIndex.drawer,
+        bottom: 0,
+        left: 0,
+        position: 'fixed',
+        right: 0,
+        zIndex: theme.zIndex.drawer,
+      },
+    },
   },
 }));
 
