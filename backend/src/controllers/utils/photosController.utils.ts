@@ -88,7 +88,7 @@ export const getPhotosFilter = (
   }
 
   const searchString = search.toString();
-  if (searchString.length > 3) {
+  if (searchString.length > 2) {
     const pattern = new RegExp(searchString, 'i');
 
     filter = {

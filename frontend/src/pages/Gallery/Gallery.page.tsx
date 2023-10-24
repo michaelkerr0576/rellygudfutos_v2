@@ -22,6 +22,7 @@ export default function GalleryPage(): JSX.Element {
     isError: isPhotosError,
     isFetchingNextPage: isFetchingNextPhotoPage,
     isLoading: isPhotosLoading,
+    isRefetching: isPhotosRefetching,
     refetch: refetchPhotos,
   } = usePhotos({
     search: gallerySearch,
@@ -43,7 +44,7 @@ export default function GalleryPage(): JSX.Element {
         error={photosError}
         isError={isPhotosError}
         isFetchingNextPage={isFetchingNextPhotoPage}
-        isLoading={isPhotosLoading}
+        isLoading={isPhotosLoading || isPhotosRefetching}
         lastImageRef={inViewPhotoRef}
         photos={photos}
       />
