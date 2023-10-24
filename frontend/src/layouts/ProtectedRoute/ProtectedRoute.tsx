@@ -16,6 +16,7 @@ export default function ProtectedRoute(props: ProtectedRouteProps): JSX.Element 
   const isUserProtected = accessLevel === AuthRole.USER;
 
   const { hasAdminAccess, hasUserAccess } = useAuth();
+
   useProtectedRoute(hasAdminAccess, hasUserAccess, isAdminProtected, isUserProtected);
 
   if (isAdminProtected && hasAdminAccess) {

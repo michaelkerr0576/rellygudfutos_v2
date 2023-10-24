@@ -1,11 +1,12 @@
 import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 
+import { PhotoSortOptions } from '@/types/api/photo.types';
 import {
   GalleryNavigationValue,
-  GallerySortBy,
   GalleryState,
   GalleryTagsFilter,
+  GalleryTagsFilterIds,
   GalleryVariant,
 } from '@/types/store/gallery.types';
 
@@ -17,8 +18,9 @@ const useGalleryStore = create<GalleryState>()(
       (set, _get): GalleryState => ({
         galleryNavigationValue: GalleryNavigationValue.HOME,
         gallerySearch: '',
-        gallerySortBy: GallerySortBy.NEWEST,
+        gallerySortBy: PhotoSortOptions.NEWEST,
         galleryTagsFilter: [],
+        galleryTagsFilterIds: [],
         galleryVariant: GalleryVariant.GRID,
         isPhotoDialogOpen: false,
         isSearchDrawerOpen: false,
@@ -26,10 +28,12 @@ const useGalleryStore = create<GalleryState>()(
           set({ galleryNavigationValue }, false, 'SET_GALLERY_NAVIGATION_VALUE'),
         setGallerySearch: (gallerySearch: string): void =>
           set({ gallerySearch }, false, 'SET_GALLERY_SEARCH_VALUE'),
-        setGallerySortBy: (gallerySortBy: GallerySortBy): void =>
+        setGallerySortBy: (gallerySortBy: PhotoSortOptions): void =>
           set({ gallerySortBy }, false, 'SET_GALLERY_SORT_BY'),
         setGalleryTagsFilter: (galleryTagsFilter: GalleryTagsFilter): void =>
           set({ galleryTagsFilter }, false, 'SET_GALLERY_TAGS_FILTER'),
+        setGalleryTagsFilterIds: (galleryTagsFilterIds: GalleryTagsFilterIds): void =>
+          set({ galleryTagsFilterIds }, false, 'SET_GALLERY_TAGS_FILTER_IDS'),
         setGalleryVariant: (galleryVariant: GalleryVariant): void =>
           set({ galleryVariant }, false, 'SET_GALLERY_VARIANT'),
         setIsPhotoDialogOpen: (isPhotoDialogOpen: boolean): void =>

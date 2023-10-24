@@ -69,6 +69,6 @@ export interface GetPhotosQueryParams extends PaginationQueryParams {
   photographerId?: string;
   search?: string;
   sort?: PhotoSortOptions;
-  tagIds?: string[];
+  tagIds?: number[];
 }
 // #endregion

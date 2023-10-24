@@ -29,8 +29,8 @@ interface PaginationPreviousNext {
 }
 
 export interface PaginationQueryParams {
-  limit: number;
-  page: number;
+  limit?: number;
+  page?: number;
 }
 
 export type ApiErrorResponse = AxiosError<ApiErrorResponseData>;

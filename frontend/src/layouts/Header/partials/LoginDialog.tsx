@@ -32,6 +32,7 @@ export default function LoginDialog(): JSX.Element {
   });
 
   const { mutate: loginUser, isLoading } = useUserLogin();
+
   const { isLoginDialogOpen, toggleLoginDialog } = useMenu();
 
   const onSubmit: SubmitHandler<LoginFormInput> = async (data): Promise<void> => {

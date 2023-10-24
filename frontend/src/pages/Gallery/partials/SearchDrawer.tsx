@@ -13,7 +13,6 @@ import Stack from '@/components/layout/Stack';
 import Drawer from '@/components/navigation/Drawer';
 import Paper from '@/components/surfaces/Paper';
 import { FIXED_BOTTOM_APP_BAR_HEIGHT } from '@/constants/style.constants';
-import { GallerySortBy } from '@/types/store/gallery.types';
 
 import useGallery from '../hooks/useGallery';
 
@@ -35,6 +34,10 @@ const tags = [
   { id: 14, label: 'Cityscape 5' },
   { id: 15, label: 'Cityscape 6' },
 ];
+
+export interface SearchDrawerProps {
+  onApplyFilter: () => void;
+}
 
 const StyledDrawer = styled(Drawer)(({ theme }): { [key: string]: any } => ({
   '.rgf': {
@@ -60,23 +63,20 @@ const StyledDrawer = styled(Drawer)(({ theme }): { [key: string]: any } => ({
   },
 }));
 
-export default function SearchDrawer(): JSX.Element {
+export default function SearchDrawer(props: SearchDrawerProps): JSX.Element {
+  const { onApplyFilter } = props;
+
   const {
     gallerySearch,
     gallerySortBy,
     galleryTagsFilter,
+    handleClearFilters,
     handleGallerySearch,
     handleGallerySortBy,
     handleGalleryTagsFilter,
     isSearchDrawerOpen,
     toggleSearchDrawer,
   } = useGallery();
-
-  const handleClearFilters = (): void => {
-    handleGallerySearch('');
-    handleGallerySortBy(GallerySortBy.NEWEST);
-    handleGalleryTagsFilter([]);
-  };
 
   const renderRow = (children: React.ReactNode): JSX.Element => (
     <Grid isContainer>
@@ -154,7 +154,7 @@ export default function SearchDrawer(): JSX.Element {
             Clear
           </Button>
 
-          <Button isFullWidth onClick={(): void => {}} startIcon={<FilterIcon size="large" type="on" />}>
+          <Button isFullWidth onClick={onApplyFilter} startIcon={<FilterIcon size="large" type="on" />}>
             Apply
           </Button>
         </Stack>,

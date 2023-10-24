@@ -7,9 +7,11 @@ import useGallery from './useGallery';
 
 export default function useGalleryDialogRoutes(): void {
   const location = useLocation();
+
   const { photoId = '' } = useParams();
 
   const { isLoginDialogOpen, toggleLoginDialog } = useMenu();
+
   const { isPhotoDialogOpen, togglePhotoDialog } = useGallery();
 
   const isMounted = useRef<boolean>(true);

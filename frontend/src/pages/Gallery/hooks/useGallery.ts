@@ -1,20 +1,23 @@
 import { useNavigate } from 'react-router-dom';
 
 import useGalleryStore from '@/hooks/stores/useGalleryStore';
+import { PhotoSortOptions } from '@/types/api/photo.types';
 import {
   GalleryNavigationValue,
-  GallerySortBy,
   GalleryState,
   GalleryTagsFilter,
+  GalleryTagsFilterIds,
   GalleryVariant,
 } from '@/types/store/gallery.types';
 
 export interface UseGallery {
   galleryNavigationValue: GalleryNavigationValue;
   gallerySearch: string;
-  gallerySortBy: GallerySortBy;
+  gallerySortBy: PhotoSortOptions;
   galleryTagsFilter: GalleryTagsFilter;
+  galleryTagsFilterIds: GalleryTagsFilterIds;
   galleryVariant: GalleryVariant;
+  handleClearFilters: () => void;
   handleGallerySearch: (search: string) => void;
   handleGallerySortBy: (sortBy: string) => void;
   handleGalleryTagsFilter: (tags: GalleryTagsFilter) => void;
@@ -33,6 +36,7 @@ export default function useGallery(): UseGallery {
     gallerySearch,
     gallerySortBy,
     galleryTagsFilter,
+    galleryTagsFilterIds,
     galleryVariant,
     isPhotoDialogOpen,
     isSearchDrawerOpen,
@@ -40,6 +44,7 @@ export default function useGallery(): UseGallery {
     setGallerySearch,
     setGallerySortBy,
     setGalleryTagsFilter,
+    setGalleryTagsFilterIds,
     setGalleryVariant,
     setIsPhotoDialogOpen,
     setIsSearchDrawerOpen,
@@ -49,6 +54,7 @@ export default function useGallery(): UseGallery {
       gallerySearch: state.gallerySearch,
       gallerySortBy: state.gallerySortBy,
       galleryTagsFilter: state.galleryTagsFilter,
+      galleryTagsFilterIds: state.galleryTagsFilterIds,
       galleryVariant: state.galleryVariant,
       isPhotoDialogOpen: state.isPhotoDialogOpen,
       isSearchDrawerOpen: state.isSearchDrawerOpen,
@@ -56,6 +62,7 @@ export default function useGallery(): UseGallery {
       setGallerySearch: state.setGallerySearch,
       setGallerySortBy: state.setGallerySortBy,
       setGalleryTagsFilter: state.setGalleryTagsFilter,
+      setGalleryTagsFilterIds: state.setGalleryTagsFilterIds,
       setGalleryVariant: state.setGalleryVariant,
       setIsPhotoDialogOpen: state.setIsPhotoDialogOpen,
       setIsSearchDrawerOpen: state.setIsSearchDrawerOpen,
@@ -64,9 +71,19 @@ export default function useGallery(): UseGallery {
 
   const handleGallerySearch = (search: string): void => setGallerySearch(search);
 
-  const handleGallerySortBy = (sort: string): void => setGallerySortBy(sort as GallerySortBy);
+  const handleGallerySortBy = (sort: string): void => setGallerySortBy(sort as PhotoSortOptions);
 
-  const handleGalleryTagsFilter = (tags: GalleryTagsFilter): void => setGalleryTagsFilter(tags);
+  const handleGalleryTagsFilter = (tags: GalleryTagsFilter): void => {
+    const tagIds = tags.map((tag): number => tag.id);
+    setGalleryTagsFilter(tags);
+    setGalleryTagsFilterIds(tagIds);
+  };
+
+  const handleClearFilters = (): void => {
+    handleGallerySearch('');
+    handleGallerySortBy(PhotoSortOptions.NEWEST);
+    handleGalleryTagsFilter([]);
+  };
 
   const toggleGalleryNavigationValue = (value: string): void => {
     const isGalleryVariantChange = value === GalleryVariant.GRID || value === GalleryVariant.LIST;
@@ -94,7 +111,9 @@ export default function useGallery(): UseGallery {
     gallerySearch,
     gallerySortBy,
     galleryTagsFilter,
+    galleryTagsFilterIds,
     galleryVariant,
+    handleClearFilters,
     handleGallerySearch,
     handleGallerySortBy,
     handleGalleryTagsFilter,

@@ -30,7 +30,7 @@ const StyledSelect = styled('div')(({ theme }): { [key: string]: any } => ({
 export default function Select(props: SelectProps): JSX.Element {
   const { className = '', fieldId, label, onChange, options, value } = props;
 
-  const handleOnChange = (event: MuiSelectChangeEvent): void => onChange(event.target.value);
+  const handleChange = (event: MuiSelectChangeEvent): void => onChange(event.target.value);
 
   const renderMenuItems = (): JSX.Element[] =>
     options.map(
@@ -49,7 +49,7 @@ export default function Select(props: SelectProps): JSX.Element {
           id={`rgf-${fieldId}`}
           label={label}
           labelId={`rgf-${fieldId}-label`}
-          onChange={handleOnChange}
+          onChange={handleChange}
           value={value}
           variant="outlined"
         >

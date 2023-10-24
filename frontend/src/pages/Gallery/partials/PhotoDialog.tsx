@@ -82,6 +82,7 @@ export default function PhotoDialog(): JSX.Element {
   const { photoId = '' } = useParams();
 
   const { isPhotoDialogOpen, togglePhotoDialog } = useGallery();
+
   const { data: photo, isError, isLoading, error } = usePhoto(photoId);
 
   const defaultErrorMessage =

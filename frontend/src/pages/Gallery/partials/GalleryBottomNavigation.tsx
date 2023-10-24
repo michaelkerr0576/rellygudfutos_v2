@@ -10,10 +10,9 @@ import { GalleryNavigationValue } from '@/types/store/gallery.types';
 
 import useGallery from '../hooks/useGallery';
 
-import SearchDrawer from './SearchDrawer';
-
 export default function GalleryBottomNavigation(): JSX.Element {
   const { colorMode, toggleColorMode } = useThemes();
+
   const { toggleSearchDrawer, galleryNavigationValue, toggleGalleryNavigationValue } = useGallery();
 
   return (
@@ -76,8 +75,6 @@ export default function GalleryBottomNavigation(): JSX.Element {
         selectedValue={galleryNavigationValue}
         setSelectedValue={toggleGalleryNavigationValue}
       />
-
-      <SearchDrawer />
     </Box>
   );
 }

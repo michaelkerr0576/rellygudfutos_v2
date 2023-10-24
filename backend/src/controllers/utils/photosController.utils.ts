@@ -76,7 +76,7 @@ export const getPhotosFilter = (
   search: string,
   tagIds: string[],
 ): typDb.PhotosFilterColumnsWithPattern => {
-  let filter = {};
+  let filter: typDb.PhotosFilterColumnsWithPattern = {};
 
   if (photographerId) {
     filter = { ...filter, photographer: { _id: photographerId } };
@@ -84,7 +84,7 @@ export const getPhotosFilter = (
 
   const tagIdsArray = Array.isArray(tagIds) ? tagIds : [];
   if (tagIdsArray.length > 0) {
-    filter = { ...filter, tags: { _id: tagIdsArray } };
+    filter = { ...filter, tags: { $in: tagIdsArray } };
   }
 
   const searchString = search.toString();

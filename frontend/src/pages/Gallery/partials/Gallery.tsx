@@ -1,17 +1,27 @@
+import { RefObject } from 'react';
+
 import { styled } from '@mui/material/styles';
 
 import ImageList from '@/components/dataDisplay/ImageList';
 import Alert from '@/components/feedback/Alert';
 import CircularProgress, { LOADING_PANEL_HEIGHT } from '@/components/feedback/CircularProgress';
 import Box from '@/components/layout/Box';
-import usePhotos from '@/hooks/queries/usePhotos';
 import useErrorMessage from '@/hooks/shared/useErrorMessage';
-import useInfinitePagination from '@/hooks/shared/useInfinitePagination';
+import { ApiErrorResponse } from '@/types/api/data.types';
 import { Photo } from '@/types/api/photo.types';
 
 import { GALLERY_MAX_WIDTH } from '../constants';
 import useGallery from '../hooks/useGallery';
 import GallerySkeleton from '../skeletons/Gallery.skeleton';
+
+export interface GalleryProps {
+  error: ApiErrorResponse | null;
+  isError: boolean;
+  isFetchingNextPage: boolean;
+  isLoading: boolean;
+  lastImageRef: RefObject<any> | ((node?: Element | null) => void);
+  photos: Photo[];
+}
 
 const StyledGallery = styled('div')(({ theme }): { [key: string]: any } => ({
   margin: theme.spacing(-1),
@@ -21,10 +31,10 @@ const StyledGallery = styled('div')(({ theme }): { [key: string]: any } => ({
   },
 }));
 
-export default function Gallery(): JSX.Element {
+export default function Gallery(props: GalleryProps): JSX.Element {
+  const { error, isError, isFetchingNextPage, isLoading, lastImageRef, photos } = props;
+
   const { galleryVariant, togglePhotoDialog } = useGallery();
-  const { data, error, fetchNextPage, isError, isFetchingNextPage, isLoading } = usePhotos();
-  const { data: photos, inViewRef } = useInfinitePagination<Photo>(data?.pages, fetchNextPage);
 
   const defaultErrorMessage =
     'There was an error retrieving photos from the server. Please try refreshing the page';
@@ -42,7 +52,7 @@ export default function Gallery(): JSX.Element {
     <StyledGallery className="rgf-gallery">
       <ImageList
         images={photos}
-        lastImageRef={inViewRef}
+        lastImageRef={lastImageRef}
         maxWidth={GALLERY_MAX_WIDTH}
         onClick={(photoId): void => togglePhotoDialog(true, photoId)}
         variant={galleryVariant}

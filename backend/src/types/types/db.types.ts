@@ -27,8 +27,6 @@ export type QueryStatus = { status: enm.QueryStatus };
 
 export type SortDirection = typeof con.ASCENDING | typeof con.DESCENDING;
 
-export type RegexPattern = typeof RegExp;
-
 // #region Photo Types
 export type PhotosQuery = PaginationQuery & {
   filter: PhotosFilterColumnsWithPattern;
@@ -37,8 +35,8 @@ export type PhotosQuery = PaginationQuery & {
 
 export type PhotosFilterColumnsWithPattern = {
   photographer?: { _id: string };
-  tags?: { _id: string[] };
-  $or?: [{ [Key in PhotosSearchColumns as any]?: RegexPattern }];
+  tags?: { $in: string[] };
+  $or?: [{ caption: { $regex: RegExp } }, { location: { $regex: RegExp } }, { title: { $regex: RegExp } }];
 };
 
 export type PhotosSearchColumns = 'caption' | 'location' | 'title';

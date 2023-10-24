@@ -36,7 +36,7 @@ export default function Autocomplete(props: AutocompleteProps): JSX.Element {
     value,
   } = props;
 
-  const handleOnChange = (_event: React.SyntheticEvent<Element, Event>, values: Option[]): void =>
+  const handleChange = (_event: React.SyntheticEvent<Element, Event>, values: Option[]): void =>
     onChange(values);
 
   return (
@@ -51,7 +51,7 @@ export default function Autocomplete(props: AutocompleteProps): JSX.Element {
         isOptionEqualToValue={(option, propValue): boolean => option.label === propValue.label}
         multiple
         noOptionsText={noOptionsLabel}
-        onChange={handleOnChange}
+        onChange={handleChange}
         options={options}
         renderInput={(params): JSX.Element => (
           <MuiTextField

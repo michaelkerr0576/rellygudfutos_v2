@@ -51,6 +51,7 @@ const StyledHeader = styled('header')(({ theme }): { [key: string]: any } => ({
 
 export default function Header(): JSX.Element {
   const navigate = useNavigate();
+
   const { isLoginDialogOpen, toggleLoginDialog } = useMenu();
 
   const renderSiteAction = (): JSX.Element => (

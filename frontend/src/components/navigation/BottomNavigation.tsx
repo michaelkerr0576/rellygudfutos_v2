@@ -35,7 +35,7 @@ const StyledBottomNavigation = styled('div')(({ theme }): { [key: string]: any }
 export default function BottomNavigation(props: BottomNavigationProps): JSX.Element {
   const { actions, className = '', selectedValue, setSelectedValue } = props;
 
-  const handleOnChange = (_event: React.SyntheticEvent, newValue: string): void => setSelectedValue(newValue);
+  const handleChange = (_event: React.SyntheticEvent, newValue: string): void => setSelectedValue(newValue);
 
   const renderActions = (): JSX.Element[] =>
     actions.map(
@@ -53,7 +53,7 @@ export default function BottomNavigation(props: BottomNavigationProps): JSX.Elem
   return (
     <StyledBottomNavigation className={clsx('rgf-bottomNavigation', { [className]: !!className })}>
       <Paper elevation={24}>
-        <MuiBottomNavigation value={selectedValue} onChange={handleOnChange}>
+        <MuiBottomNavigation value={selectedValue} onChange={handleChange}>
           {renderActions()}
         </MuiBottomNavigation>
       </Paper>

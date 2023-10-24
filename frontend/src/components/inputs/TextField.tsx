@@ -58,7 +58,7 @@ export default function TextField(props: TextFieldProps): JSX.Element {
     variant = 'standard',
   } = props;
 
-  const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>): void => onChange(event.target.value);
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => onChange(event.target.value);
 
   const renderStandardStartAdornment = (): JSX.Element | null => {
     if (variant === 'outlined' || !startAdornment) {
@@ -105,7 +105,7 @@ export default function TextField(props: TextFieldProps): JSX.Element {
           }}
           inputRef={inputRef}
           label={label}
-          onChange={handleOnChange}
+          onChange={handleChange}
           type={type}
           value={value}
           variant={variant}
