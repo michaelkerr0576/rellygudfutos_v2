@@ -19,7 +19,7 @@ export interface FormTextFieldProps {
 }
 
 const StyledTextField = styled(TextField)(({ theme }): { [key: string]: any } => ({
-  '.rgf': {
+  '&.rgf': {
     '&-formTextField': {
       '&--outlined': {
         height: '95px',

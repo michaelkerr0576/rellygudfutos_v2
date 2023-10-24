@@ -18,7 +18,7 @@ export interface TypographyProps {
 }
 
 const StyledMuiTypography = styled(MuiTypography)((): { [key: string]: any } => ({
-  '.rgf': {
+  '&.rgf': {
     '&-typography': {
       '&--maxLines': {
         display: '-webkit-box',
