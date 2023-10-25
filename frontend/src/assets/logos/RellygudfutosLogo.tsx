@@ -20,15 +20,15 @@ const StyledRellygudfutosLogo = styled('div')((): { [key: string]: any } => ({
 export default function RellygudfutosLogo(props: RellygudfutosLogoProps): JSX.Element {
   const { size = 'medium' } = props;
 
-  const getHeight = (): string => {
+  const getHeight = (): number => {
     switch (size) {
       case 'small':
-        return '22px';
+        return 22;
       case 'large':
-        return '40px';
+        return 40;
       case 'medium':
       default:
-        return '30px';
+        return 30;
     }
   };
 

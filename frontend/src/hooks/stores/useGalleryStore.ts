@@ -16,15 +16,15 @@ const useGalleryStore = create<GalleryState>()(
     // * Persists state to local storage
     persist(
       (set, _get): GalleryState => ({
+        isFilterDrawerOpen: false,
         isPhotoDialogOpen: false,
-        isSearchDrawerOpen: false,
         layoutVariant: LayoutVariant.GRID,
         navigationValue: NavigationValue.HOME,
         search: '',
+        setIsFilterDrawerOpen: (isFilterDrawerOpen: boolean): void =>
+          set({ isFilterDrawerOpen }, false, 'SET_IS_FILTER_DRAWER_OPEN'),
         setIsPhotoDialogOpen: (isPhotoDialogOpen: boolean): void =>
           set({ isPhotoDialogOpen }, false, 'SET_IS_PHOTO_DIALOG_OPEN'),
-        setIsSearchDrawerOpen: (isSearchDrawerOpen: boolean): void =>
-          set({ isSearchDrawerOpen }, false, 'SET_IS_SEARCH_DRAWER_OPEN'),
         setLayoutVariant: (layoutVariant: LayoutVariant): void =>
           set({ layoutVariant }, false, 'SET_LAYOUT_VARIANT'),
         setNavigationValue: (navigationValue: NavigationValue): void =>

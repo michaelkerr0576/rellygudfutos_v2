@@ -22,10 +22,10 @@ const StyledTextField = styled(TextField)(({ theme }): { [key: string]: any } =>
   '&.rgf': {
     '&-formTextField': {
       '&--outlined': {
-        height: '95px',
+        height: 95,
       },
       '&--standard': {
-        height: '80px',
+        height: 80,
       },
     },
   },

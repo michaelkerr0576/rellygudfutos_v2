@@ -14,8 +14,8 @@ export interface ImageProps {
   imageFit?: ImageFit;
   imageRef?: RefObject<any> | ((node?: Element | null) => void);
   isPermanentlyLoading?: boolean; // * Used for skeleton loaders
-  maxHeight?: string;
-  maxWidth?: string;
+  maxHeight?: number;
+  maxWidth?: number;
   src: string;
   variant?: Variant;
 }

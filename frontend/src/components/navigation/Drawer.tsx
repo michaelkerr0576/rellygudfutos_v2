@@ -12,7 +12,7 @@ import Box from '../layout/Box';
 import Grid from '../layout/Grid';
 import Paper from '../surfaces/Paper';
 
-export const BOTTOM_DRAWER_MOBILE_TOP_OFFSET = '210px';
+export const BOTTOM_DRAWER_MOBILE_TOP_OFFSET = 210;
 
 type Anchor = 'left' | 'right' | 'bottom';
 

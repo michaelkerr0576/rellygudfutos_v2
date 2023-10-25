@@ -1,1 +1,1 @@
-export const FIXED_HEADER_HEIGHT = '50px';
+export const FIXED_HEADER_HEIGHT = 50;

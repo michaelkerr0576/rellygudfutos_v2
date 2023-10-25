@@ -18,7 +18,7 @@ export interface UsePagination<T> {
 
 export default function usePagination<T>(
   fetchedPages: ApiResponsePaginated<T[]>[] | undefined,
-  fetchNextPage: () => void,
+  onFetchNextPage: () => void,
 ): UsePagination<T> {
   const { ref: inViewRef, inView } = useInView({ threshold: 1 });
 
@@ -49,7 +49,7 @@ export default function usePagination<T>(
 
   useEffect((): void => {
     if (inView && hasNextPage) {
-      fetchNextPage();
+      onFetchNextPage();
     }
   }, [inView, hasNextPage]);
 

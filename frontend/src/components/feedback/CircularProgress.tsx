@@ -6,10 +6,10 @@ import MuiCircularProgress, {
 
 import Box from '../layout/Box';
 
-export const LOADING_SPINNER_LARGE_SIZE = '64px';
-export const LOADING_SPINNER_MEDIUM_SIZE = '44px';
-export const LOADING_SPINNER_SMALL_SIZE = '22px';
-export const LOADING_PANEL_HEIGHT = '108px';
+export const LOADING_SPINNER_LARGE_SIZE = 64;
+export const LOADING_SPINNER_MEDIUM_SIZE = 44;
+export const LOADING_SPINNER_SMALL_SIZE = 22;
+export const LOADING_PANEL_HEIGHT = 108;
 
 type Variant = 'page' | 'panel' | 'inline';
 
@@ -27,7 +27,7 @@ export default function CircularProgress(props: CircularProgressProps): JSX.Elem
     justifyContent?: string;
     left?: string;
     padding?: string;
-    height?: string;
+    height?: number;
     position?: string;
     top?: string;
   } => {
@@ -55,7 +55,7 @@ export default function CircularProgress(props: CircularProgressProps): JSX.Elem
     }
   };
 
-  const getSize = (): string => {
+  const getSize = (): number => {
     switch (variant) {
       case 'page':
         return LOADING_SPINNER_LARGE_SIZE;

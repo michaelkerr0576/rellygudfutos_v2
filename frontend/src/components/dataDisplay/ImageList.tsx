@@ -40,7 +40,7 @@ export interface ImageListProps {
   images: ImageListItem[];
   isPermanentlyLoading?: boolean; // * Used for skeleton loaders
   lastImageRef?: RefObject<any> | ((node?: Element | null) => void);
-  maxWidth?: string;
+  maxWidth?: number;
   onClick: (imageId: string) => void;
   variant: Variant;
 }
@@ -119,8 +119,8 @@ export default function ImageList(props: ImageListProps): JSX.Element {
             imageFit="cover"
             imageRef={isLastImage ? lastImageRef : undefined}
             isPermanentlyLoading={isPermanentlyLoading}
-            maxHeight={`${imageHeight}px`}
-            maxWidth={`${imageWidth}px`}
+            maxHeight={imageHeight}
+            maxWidth={imageWidth}
             src={imageUrl}
           />
         </MuiImageListItem>

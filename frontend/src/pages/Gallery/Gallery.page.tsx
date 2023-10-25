@@ -5,10 +5,10 @@ import { Photo } from '@/types/api/photo.types';
 
 import useGallery from './hooks/useGallery';
 import useGalleryDialogRoutes from './hooks/useGalleryDialogRoutes';
+import FilterDrawer from './partials/FilterDrawer';
 import Gallery from './partials/Gallery';
 import GalleryBottomNavigation from './partials/GalleryBottomNavigation';
 import PhotoDialog from './partials/PhotoDialog';
-import SearchDrawer from './partials/SearchDrawer';
 
 export default function GalleryPage(): JSX.Element {
   useGalleryDialogRoutes();
@@ -18,12 +18,12 @@ export default function GalleryPage(): JSX.Element {
   const {
     data: photosData,
     error: photosError,
-    fetchNextPage: fetchNextPhotoPage,
+    fetchNextPage: onFetchNextPhotoPage,
     isError: isPhotosError,
     isFetchingNextPage: isFetchingNextPhotoPage,
     isLoading: isPhotosLoading,
     isRefetching: isPhotosRefetching,
-    refetch: refetchPhotos,
+    refetch: onRefetchPhotos,
   } = usePhotos({
     search,
     sort: sortBy,
@@ -32,14 +32,8 @@ export default function GalleryPage(): JSX.Element {
 
   const { data: photos, inViewRef: inViewPhotoRef } = useInfinitePagination<Photo>(
     photosData?.pages,
-    fetchNextPhotoPage,
+    onFetchNextPhotoPage,
   );
-
-  // PUT HOOK useGalleryFilter
-
-  const handleRefetchPhotos = (): void => {
-    refetchPhotos();
-  };
 
   return (
     <Page pageName="Gallery">
@@ -54,7 +48,7 @@ export default function GalleryPage(): JSX.Element {
 
       <GalleryBottomNavigation />
 
-      <SearchDrawer onApplyFilter={handleRefetchPhotos} />
+      <FilterDrawer onRefetchPhotos={onRefetchPhotos} />
 
       {isPhotoDialogOpen && <PhotoDialog />}
     </Page>

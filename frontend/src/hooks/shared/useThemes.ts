@@ -43,13 +43,13 @@ const components = {
   MuiCssBaseline: {
     styleOverrides: {
       '&::-webkit-scrollbar': {
-        width: '7px',
+        width: 7,
       },
       '&::-webkit-scrollbar-thumb': {
         backgroundClip: 'content-box',
         backgroundColor: alpha(common.black, 0.4),
         border: 'solid 2px transparent',
-        borderRadius: '3.5px',
+        borderRadius: 3.5,
         position: 'fixed',
       },
       '&::-webkit-scrollbar-track': {
@@ -59,10 +59,10 @@ const components = {
 
       '@media only screen and (min-width: 640px)': {
         '&::-webkit-scrollbar': {
-          width: '12px',
+          width: 12,
         },
         '&::-webkit-scrollbar-thumb': {
-          borderRadius: '6px',
+          borderRadius: 6,
         },
       },
     },

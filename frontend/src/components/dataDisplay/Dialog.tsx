@@ -43,7 +43,7 @@ const StyledMuiDialog = styled(MuiDialog)(({ theme }): { [key: string]: any } =>
     padding: theme.spacing(0.86, 1),
   },
   '.MuiDialogContent-root': {
-    minHeight: '400px',
+    minHeight: 400,
     padding: theme.spacing(1, 2),
   },
   '.MuiDialogTitle-root': {

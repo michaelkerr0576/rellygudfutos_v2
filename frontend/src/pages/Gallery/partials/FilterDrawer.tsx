@@ -3,6 +3,7 @@ import { styled } from '@mui/material/styles';
 import FilterIcon from '@/assets/icons/FilterIcon';
 import SearchIcon from '@/assets/icons/SearchIcon';
 import Divider from '@/components/dataDisplay/Divider';
+import Alert from '@/components/feedback/Alert';
 import Autocomplete from '@/components/inputs/Autocomplete';
 import Button from '@/components/inputs/Button';
 import Select from '@/components/inputs/Select';
@@ -12,10 +13,11 @@ import Grid from '@/components/layout/Grid';
 import Stack from '@/components/layout/Stack';
 import Drawer from '@/components/navigation/Drawer';
 import Paper from '@/components/surfaces/Paper';
-import { FIXED_BOTTOM_APP_BAR_HEIGHT } from '@/constants/style.constants';
+import { ALERT_ONE_LINE_HEIGHT, FIXED_BOTTOM_APP_BAR_HEIGHT } from '@/constants/style.constants';
 import { PhotoSortOptions } from '@/types/api/photo.types';
 
 import useGallery from '../hooks/useGallery';
+import useGalleryFilter from '../hooks/useGalleryFilter';
 
 // TODO - replace with API data
 const tags = [
@@ -36,18 +38,18 @@ const tags = [
   { id: 15, label: 'Cityscape 6' },
 ];
 
-export interface SearchDrawerProps {
-  onApplyFilter: () => void;
+export interface FilterDrawerProps {
+  onRefetchPhotos: () => void;
 }
 
 const StyledDrawer = styled(Drawer)(({ theme }): { [key: string]: any } => ({
   '.rgf': {
     '&-drawer': {
       '&--children': {
-        marginBottom: FIXED_BOTTOM_APP_BAR_HEIGHT,
+        marginBottom: FIXED_BOTTOM_APP_BAR_HEIGHT + ALERT_ONE_LINE_HEIGHT + 32,
       },
     },
-    '&-searchDrawer': {
+    '&-filterDrawer': {
       '&--actionButtonGroup': {
         '.rgf-stack': {
           height: FIXED_BOTTOM_APP_BAR_HEIGHT,
@@ -60,24 +62,30 @@ const StyledDrawer = styled(Drawer)(({ theme }): { [key: string]: any } => ({
         right: 0,
         zIndex: theme.zIndex.drawer,
       },
+      '&--dirtyFiltersAlert': {
+        bottom: FIXED_BOTTOM_APP_BAR_HEIGHT,
+        left: 0,
+        padding: theme.spacing(2, 2),
+        position: 'fixed',
+        right: 0,
+      },
     },
   },
 }));
 
-export default function SearchDrawer(props: SearchDrawerProps): JSX.Element {
-  const { onApplyFilter } = props;
+export default function FilterDrawer(props: FilterDrawerProps): JSX.Element {
+  const { onRefetchPhotos } = props;
+
+  const { isFilterDrawerOpen, search, sortBy, tagsFilter, toggleFilterDrawer } = useGallery();
 
   const {
+    handleApplyFilters,
     handleClearFilters,
     handleSearch,
     handleSortBy,
     handleTagsFilter,
-    isSearchDrawerOpen,
-    search,
-    sortBy,
-    tagsFilter,
-    toggleSearchDrawer,
-  } = useGallery();
+    isFiltersDirty,
+  } = useGalleryFilter(onRefetchPhotos, toggleFilterDrawer);
 
   const renderRow = (children: React.ReactNode): JSX.Element => (
     <Grid isContainer>
@@ -88,7 +96,7 @@ export default function SearchDrawer(props: SearchDrawerProps): JSX.Element {
   );
 
   const renderSearchField = (): JSX.Element => (
-    <Box className="rgf-searchDrawer--searchField">
+    <Box className="rgf-filterDrawer--searchField">
       {renderRow(
         <TextField
           endAdornment={<SearchIcon variant="outlined" />}
@@ -104,10 +112,10 @@ export default function SearchDrawer(props: SearchDrawerProps): JSX.Element {
   );
 
   const renderTagsFilter = (): JSX.Element => (
-    <Box className="rgf-searchDrawer--tagsFilter">
+    <Box className="rgf-filterDrawer--tagsFilter">
       {renderRow(
         <Autocomplete
-          fieldId="search-drawer-tags-autocomplete"
+          fieldId="filter-drawer-tags-autocomplete"
           label="Tags"
           noOptionsLabel="No tags"
           onChange={handleTagsFilter}
@@ -121,10 +129,10 @@ export default function SearchDrawer(props: SearchDrawerProps): JSX.Element {
   );
 
   const renderSortBySelect = (): JSX.Element => (
-    <Box className="rgf-searchDrawer--sortBySelect">
+    <Box className="rgf-filterDrawer--sortBySelect">
       {renderRow(
         <Select
-          fieldId="search-drawer-sort-select"
+          fieldId="filter-drawer-sort-select"
           label="Sort"
           onChange={handleSortBy}
           options={[
@@ -142,8 +150,14 @@ export default function SearchDrawer(props: SearchDrawerProps): JSX.Element {
     </Box>
   );
 
+  const renderDirtyFiltersAlert = (): JSX.Element => (
+    <Box className="rgf-filterDrawer--dirtyFiltersAlert">
+      {renderRow(<Alert message="There is unsaved filters " severity="warning" />)}
+    </Box>
+  );
+
   const renderActionButtonGroup = (): JSX.Element => (
-    <Paper className="rgf-searchDrawer--actionButtonGroup" elevation={24}>
+    <Paper className="rgf-filterDrawer--actionButtonGroup" elevation={24}>
       {renderRow(
         <Stack alignItems="center" spacing={1}>
           <Button
@@ -155,7 +169,7 @@ export default function SearchDrawer(props: SearchDrawerProps): JSX.Element {
             Clear
           </Button>
 
-          <Button isFullWidth onClick={onApplyFilter} startIcon={<FilterIcon size="large" type="on" />}>
+          <Button isFullWidth onClick={handleApplyFilters} startIcon={<FilterIcon size="large" type="on" />}>
             Apply
           </Button>
         </Stack>,
@@ -166,15 +180,17 @@ export default function SearchDrawer(props: SearchDrawerProps): JSX.Element {
   return (
     <StyledDrawer
       anchor="bottom"
-      className="rgf-searchDrawer"
-      isOpen={isSearchDrawerOpen}
-      setIsOpen={toggleSearchDrawer}
+      className="rgf-filterDrawer"
+      isOpen={isFilterDrawerOpen}
+      setIsOpen={toggleFilterDrawer}
     >
       {renderSearchField()}
 
       {renderTagsFilter()}
 
       {renderSortBySelect()}
+
+      {isFiltersDirty && renderDirtyFiltersAlert()}
 
       {renderActionButtonGroup()}
     </StyledDrawer>

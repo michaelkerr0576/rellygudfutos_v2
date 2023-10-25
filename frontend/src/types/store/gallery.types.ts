@@ -26,13 +26,13 @@ export type TagsFilter = {
 
 // #region State Interfaces
 export interface GalleryState {
+  isFilterDrawerOpen: boolean;
   isPhotoDialogOpen: boolean;
-  isSearchDrawerOpen: boolean;
   layoutVariant: LayoutVariant;
   navigationValue: NavigationValue;
   search: string;
+  setIsFilterDrawerOpen: (isOpen: boolean) => void;
   setIsPhotoDialogOpen: (isOpen: boolean) => void;
-  setIsSearchDrawerOpen: (isOpen: boolean) => void;
   setLayoutVariant: (variant: LayoutVariant) => void;
   setNavigationValue: (value: NavigationValue) => void;
   setSearch: (search: string) => void;
@@ -42,5 +42,30 @@ export interface GalleryState {
   sortBy: PhotoSortOptions;
   tagsFilter: TagsFilter;
   tagsFilterIds: TagsFilterIds;
+}
+
+export interface UseGalleryState {
+  isFilterDrawerOpen: GalleryState['isFilterDrawerOpen'];
+  isPhotoDialogOpen: GalleryState['isPhotoDialogOpen'];
+  layoutVariant: GalleryState['layoutVariant'];
+  navigationValue: GalleryState['navigationValue'];
+  search: GalleryState['search'];
+  setIsFilterDrawerOpen: GalleryState['setIsFilterDrawerOpen'];
+  setIsPhotoDialogOpen: GalleryState['setIsPhotoDialogOpen'];
+  setLayoutVariant: GalleryState['setLayoutVariant'];
+  setNavigationValue: GalleryState['setNavigationValue'];
+  sortBy: GalleryState['sortBy'];
+  tagsFilter: GalleryState['tagsFilter'];
+  tagsFilterIds: GalleryState['tagsFilterIds'];
+}
+
+export interface UseGalleryFilterState {
+  search: GalleryState['search'];
+  setSearch: GalleryState['setSearch'];
+  setSortBy: GalleryState['setSortBy'];
+  setTagsFilter: GalleryState['setTagsFilter'];
+  setTagsFilterIds: GalleryState['setTagsFilterIds'];
+  sortBy: GalleryState['sortBy'];
+  tagsFilterIds: GalleryState['tagsFilterIds'];
 }
 // #endregion

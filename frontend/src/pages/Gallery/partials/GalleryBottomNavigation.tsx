@@ -13,7 +13,7 @@ import useGallery from '../hooks/useGallery';
 export default function GalleryBottomNavigation(): JSX.Element {
   const { colorMode, toggleColorMode } = useThemes();
 
-  const { toggleSearchDrawer, navigationValue, toggleNavigationValue } = useGallery();
+  const { toggleFilterDrawer, navigationValue, toggleNavigationValue } = useGallery();
 
   return (
     <Box className="rgf-galleryBottomNavigation">
@@ -37,7 +37,7 @@ export default function GalleryBottomNavigation(): JSX.Element {
           {
             icon: <SearchIcon variant={navigationValue === NavigationValue.SEARCH ? 'filled' : 'outlined'} />,
             label: 'Search',
-            onClick: (): void => toggleSearchDrawer(true),
+            onClick: (): void => toggleFilterDrawer(true),
             value: NavigationValue.SEARCH,
           },
           {
