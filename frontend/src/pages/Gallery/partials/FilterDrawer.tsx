@@ -46,7 +46,7 @@ const StyledDrawer = styled(Drawer)(({ theme }): { [key: string]: any } => ({
   '.rgf': {
     '&-drawer': {
       '&--children': {
-        marginBottom: FIXED_BOTTOM_APP_BAR_HEIGHT + ALERT_ONE_LINE_HEIGHT + 32,
+        marginBottom: FIXED_BOTTOM_APP_BAR_HEIGHT + ALERT_ONE_LINE_HEIGHT + 32, // + top and bottom padding for alert
       },
     },
     '&-filterDrawer': {
@@ -62,7 +62,7 @@ const StyledDrawer = styled(Drawer)(({ theme }): { [key: string]: any } => ({
         right: 0,
         zIndex: theme.zIndex.drawer,
       },
-      '&--dirtyFiltersAlert': {
+      '&--dirtyFilterAlert': {
         bottom: FIXED_BOTTOM_APP_BAR_HEIGHT,
         left: 0,
         padding: theme.spacing(2, 2),
@@ -84,7 +84,7 @@ export default function FilterDrawer(props: FilterDrawerProps): JSX.Element {
     handleSearch,
     handleSortBy,
     handleTagsFilter,
-    isFiltersDirty,
+    isFilterDirty,
   } = useGalleryFilter(onRefetchPhotos, toggleFilterDrawer);
 
   const renderRow = (children: React.ReactNode): JSX.Element => (
@@ -150,9 +150,9 @@ export default function FilterDrawer(props: FilterDrawerProps): JSX.Element {
     </Box>
   );
 
-  const renderDirtyFiltersAlert = (): JSX.Element => (
-    <Box className="rgf-filterDrawer--dirtyFiltersAlert">
-      {renderRow(<Alert message="There is unsaved filters " severity="warning" />)}
+  const renderDirtyFilterAlert = (): JSX.Element => (
+    <Box className="rgf-filterDrawer--dirtyFilterAlert">
+      {renderRow(<Alert message="Apply filter to see results " severity="warning" />)}
     </Box>
   );
 
@@ -190,7 +190,7 @@ export default function FilterDrawer(props: FilterDrawerProps): JSX.Element {
 
       {renderSortBySelect()}
 
-      {isFiltersDirty && renderDirtyFiltersAlert()}
+      {isFilterDirty && renderDirtyFilterAlert()}
 
       {renderActionButtonGroup()}
     </StyledDrawer>

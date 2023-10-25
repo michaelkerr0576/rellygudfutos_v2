@@ -11,7 +11,7 @@ export interface UseGalleryFilter {
   handleSearch: (search: string) => void;
   handleSortBy: (sortBy: string) => void;
   handleTagsFilter: (tags: TagsFilter) => void;
-  isFiltersDirty: boolean;
+  isFilterDirty: boolean;
 }
 
 export default function useGalleryFilter(
@@ -31,7 +31,7 @@ export default function useGalleryFilter(
       }),
     );
 
-  const [isFiltersDirty, setIsFiltersDirty] = useState<boolean>(false);
+  const [isFilterDirty, setIsFilterDirty] = useState<boolean>(false);
 
   const previousSearch = usePrevious(search);
   const previousSortBy = usePrevious(sortBy);
@@ -44,9 +44,9 @@ export default function useGalleryFilter(
       const isSearchChanged = previousSearch !== search;
       const isSortByChanged = previousSortBy !== sortBy;
       const isTagsChanged = previousTagsFilterIds.length !== tagsFilterIds.length;
-      const isFiltersChanged = isSearchChanged || isSortByChanged || isTagsChanged;
+      const hasFiltersChanged = isSearchChanged || isSortByChanged || isTagsChanged;
 
-      setIsFiltersDirty(isFiltersChanged);
+      setIsFilterDirty(hasFiltersChanged);
     }
   }, [search, sortBy, tagsFilterIds.length]);
 
@@ -68,7 +68,7 @@ export default function useGalleryFilter(
 
   const handleApplyFilters = (): void => {
     onRefetchPhotos();
-    setIsFiltersDirty(false);
+    setIsFilterDirty(false);
     toggleFilterDrawer(false);
   };
 
@@ -78,6 +78,6 @@ export default function useGalleryFilter(
     handleSearch,
     handleSortBy,
     handleTagsFilter,
-    isFiltersDirty,
+    isFilterDirty,
   };
 }
