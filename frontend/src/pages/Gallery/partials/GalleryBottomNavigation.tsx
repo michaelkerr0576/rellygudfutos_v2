@@ -6,74 +6,62 @@ import ToggleDarkModeIcon from '@/assets/icons/ToggleDarkModeIcon';
 import Box from '@/components/layout/Box';
 import BottomNavigation from '@/components/navigation/BottomNavigation';
 import useThemes from '@/hooks/shared/useThemes';
-import { GalleryNavigationValue } from '@/types/store/gallery.types';
+import { NavigationValue } from '@/types/store/gallery.types';
 
 import useGallery from '../hooks/useGallery';
 
 export default function GalleryBottomNavigation(): JSX.Element {
   const { colorMode, toggleColorMode } = useThemes();
 
-  const { toggleSearchDrawer, galleryNavigationValue, toggleGalleryNavigationValue } = useGallery();
+  const { toggleSearchDrawer, navigationValue, toggleNavigationValue } = useGallery();
 
   return (
     <Box className="rgf-galleryBottomNavigation">
       <BottomNavigation
         actions={[
           {
-            icon: (
-              <HomeIcon
-                variant={galleryNavigationValue === GalleryNavigationValue.HOME ? 'filled' : 'outlined'}
-              />
-            ),
+            icon: <HomeIcon variant={navigationValue === NavigationValue.HOME ? 'filled' : 'outlined'} />,
             label: 'Home',
             // TODO - fix scrollTo top and make scroll.utils file
             onClick: (): void => window.scrollTo(0, 0),
-            value: GalleryNavigationValue.HOME,
+            value: NavigationValue.HOME,
           },
           {
             icon: (
-              <PhotoGridIcon
-                variant={galleryNavigationValue === GalleryNavigationValue.GRID ? 'filled' : 'outlined'}
-              />
+              <PhotoGridIcon variant={navigationValue === NavigationValue.GRID ? 'filled' : 'outlined'} />
             ),
             label: 'Grid',
             onClick: (): void => {},
-            value: GalleryNavigationValue.GRID,
+            value: NavigationValue.GRID,
           },
           {
-            icon: (
-              <SearchIcon
-                variant={galleryNavigationValue === GalleryNavigationValue.SEARCH ? 'filled' : 'outlined'}
-              />
-            ),
+            icon: <SearchIcon variant={navigationValue === NavigationValue.SEARCH ? 'filled' : 'outlined'} />,
             label: 'Search',
             onClick: (): void => toggleSearchDrawer(true),
-            value: GalleryNavigationValue.SEARCH,
+            value: NavigationValue.SEARCH,
           },
           {
             icon: (
-              <PhotoListIcon
-                variant={galleryNavigationValue === GalleryNavigationValue.LIST ? 'filled' : 'outlined'}
-              />
+              <PhotoListIcon variant={navigationValue === NavigationValue.LIST ? 'filled' : 'outlined'} />
             ),
             label: 'List',
             onClick: (): void => {},
-            value: GalleryNavigationValue.LIST,
+            value: NavigationValue.LIST,
           },
           {
             icon: (
               <ToggleDarkModeIcon
                 type={colorMode}
-                variant={galleryNavigationValue === GalleryNavigationValue.MODE ? 'filled' : 'outlined'}
+                variant={navigationValue === NavigationValue.MODE ? 'filled' : 'outlined'}
               />
             ),
             label: colorMode === 'dark' ? 'Dark' : 'Light',
             onClick: toggleColorMode,
-            value: GalleryNavigationValue.MODE,
+            value: NavigationValue.MODE,
           },
         ]}
-        selectedValue={galleryNavigationValue}
-        setSelectedValue={toggleGalleryNavigationValue}
+        selectedValue={navigationValue}
+        setSelectedValue={toggleNavigationValue}
       />
     </Box>
   );

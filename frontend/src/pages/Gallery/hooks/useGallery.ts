@@ -3,27 +3,27 @@ import { useNavigate } from 'react-router-dom';
 import useGalleryStore from '@/hooks/stores/useGalleryStore';
 import { PhotoSortOptions } from '@/types/api/photo.types';
 import {
-  GalleryNavigationValue,
   GalleryState,
-  GalleryTagsFilter,
-  GalleryTagsFilterIds,
-  GalleryVariant,
+  LayoutVariant,
+  NavigationValue,
+  TagsFilter,
+  TagsFilterIds,
 } from '@/types/store/gallery.types';
 
 export interface UseGallery {
-  galleryNavigationValue: GalleryNavigationValue;
-  gallerySearch: string;
-  gallerySortBy: PhotoSortOptions;
-  galleryTagsFilter: GalleryTagsFilter;
-  galleryTagsFilterIds: GalleryTagsFilterIds;
-  galleryVariant: GalleryVariant;
   handleClearFilters: () => void;
-  handleGallerySearch: (search: string) => void;
-  handleGallerySortBy: (sortBy: string) => void;
-  handleGalleryTagsFilter: (tags: GalleryTagsFilter) => void;
+  handleSearch: (search: string) => void;
+  handleSortBy: (sortBy: string) => void;
+  handleTagsFilter: (tags: TagsFilter) => void;
   isPhotoDialogOpen: boolean;
   isSearchDrawerOpen: boolean;
-  toggleGalleryNavigationValue: (value: string) => void;
+  layoutVariant: LayoutVariant;
+  navigationValue: NavigationValue;
+  search: string;
+  sortBy: PhotoSortOptions;
+  tagsFilter: TagsFilter;
+  tagsFilterIds: TagsFilterIds;
+  toggleNavigationValue: (value: string) => void;
   togglePhotoDialog: (isOpen: boolean, photoId?: string) => void;
   toggleSearchDrawer: (isOpen: boolean) => void;
 }
@@ -32,66 +32,66 @@ export default function useGallery(): UseGallery {
   const navigate = useNavigate();
 
   const {
-    galleryNavigationValue,
-    gallerySearch,
-    gallerySortBy,
-    galleryTagsFilter,
-    galleryTagsFilterIds,
-    galleryVariant,
     isPhotoDialogOpen,
     isSearchDrawerOpen,
-    setGalleryNavigationValue,
-    setGallerySearch,
-    setGallerySortBy,
-    setGalleryTagsFilter,
-    setGalleryTagsFilterIds,
-    setGalleryVariant,
+    layoutVariant,
+    navigationValue,
+    search,
     setIsPhotoDialogOpen,
     setIsSearchDrawerOpen,
+    setLayoutVariant,
+    setNavigationValue,
+    setSearch,
+    setSortBy,
+    setTagsFilter,
+    setTagsFilterIds,
+    sortBy,
+    tagsFilter,
+    tagsFilterIds,
   } = useGalleryStore(
     (state): GalleryState => ({
-      galleryNavigationValue: state.galleryNavigationValue,
-      gallerySearch: state.gallerySearch,
-      gallerySortBy: state.gallerySortBy,
-      galleryTagsFilter: state.galleryTagsFilter,
-      galleryTagsFilterIds: state.galleryTagsFilterIds,
-      galleryVariant: state.galleryVariant,
       isPhotoDialogOpen: state.isPhotoDialogOpen,
       isSearchDrawerOpen: state.isSearchDrawerOpen,
-      setGalleryNavigationValue: state.setGalleryNavigationValue,
-      setGallerySearch: state.setGallerySearch,
-      setGallerySortBy: state.setGallerySortBy,
-      setGalleryTagsFilter: state.setGalleryTagsFilter,
-      setGalleryTagsFilterIds: state.setGalleryTagsFilterIds,
-      setGalleryVariant: state.setGalleryVariant,
+      layoutVariant: state.layoutVariant,
+      navigationValue: state.navigationValue,
+      search: state.search,
       setIsPhotoDialogOpen: state.setIsPhotoDialogOpen,
       setIsSearchDrawerOpen: state.setIsSearchDrawerOpen,
+      setLayoutVariant: state.setLayoutVariant,
+      setNavigationValue: state.setNavigationValue,
+      setSearch: state.setSearch,
+      setSortBy: state.setSortBy,
+      setTagsFilter: state.setTagsFilter,
+      setTagsFilterIds: state.setTagsFilterIds,
+      sortBy: state.sortBy,
+      tagsFilter: state.tagsFilter,
+      tagsFilterIds: state.tagsFilterIds,
     }),
   );
 
-  const handleGallerySearch = (search: string): void => setGallerySearch(search);
+  const handleSearch = (value: string): void => setSearch(value);
 
-  const handleGallerySortBy = (sort: string): void => setGallerySortBy(sort as PhotoSortOptions);
+  const handleSortBy = (sort: string): void => setSortBy(sort as PhotoSortOptions);
 
-  const handleGalleryTagsFilter = (tags: GalleryTagsFilter): void => {
+  const handleTagsFilter = (tags: TagsFilter): void => {
     const tagIds = tags.map((tag): number => tag.id);
-    setGalleryTagsFilter(tags);
-    setGalleryTagsFilterIds(tagIds);
+    setTagsFilter(tags);
+    setTagsFilterIds(tagIds);
   };
 
   const handleClearFilters = (): void => {
-    handleGallerySearch('');
-    handleGallerySortBy(PhotoSortOptions.NEWEST);
-    handleGalleryTagsFilter([]);
+    handleSearch('');
+    handleSortBy(PhotoSortOptions.NEWEST);
+    handleTagsFilter([]);
   };
 
-  const toggleGalleryNavigationValue = (value: string): void => {
-    const isGalleryVariantChange = value === GalleryVariant.GRID || value === GalleryVariant.LIST;
-    if (isGalleryVariantChange) {
-      setGalleryVariant(value as GalleryVariant);
+  const toggleNavigationValue = (value: string): void => {
+    const isLayoutVariantChange = value === LayoutVariant.GRID || value === LayoutVariant.LIST;
+    if (isLayoutVariantChange) {
+      setLayoutVariant(value as LayoutVariant);
     }
 
-    setGalleryNavigationValue(value as GalleryNavigationValue);
+    setNavigationValue(value as NavigationValue);
   };
 
   const togglePhotoDialog = (isOpen: boolean, photoId?: string): void => {
@@ -107,19 +107,19 @@ export default function useGallery(): UseGallery {
   const toggleSearchDrawer = (isOpen: boolean): void => setIsSearchDrawerOpen(isOpen);
 
   return {
-    galleryNavigationValue,
-    gallerySearch,
-    gallerySortBy,
-    galleryTagsFilter,
-    galleryTagsFilterIds,
-    galleryVariant,
     handleClearFilters,
-    handleGallerySearch,
-    handleGallerySortBy,
-    handleGalleryTagsFilter,
+    handleSearch,
+    handleSortBy,
+    handleTagsFilter,
     isPhotoDialogOpen,
     isSearchDrawerOpen,
-    toggleGalleryNavigationValue,
+    layoutVariant,
+    navigationValue,
+    search,
+    sortBy,
+    tagsFilter,
+    tagsFilterIds,
+    toggleNavigationValue,
     togglePhotoDialog,
     toggleSearchDrawer,
   };

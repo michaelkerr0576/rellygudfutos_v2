@@ -33,7 +33,8 @@ export default function usePagination<T>(
   const previousPage = pagination?.next?.page;
 
   const fetchedPagesData = useMemo((): T[] => {
-    if (!fetchedPages?.length) {
+    const hasPages = fetchedPages?.length;
+    if (!hasPages) {
       return [];
     }
 

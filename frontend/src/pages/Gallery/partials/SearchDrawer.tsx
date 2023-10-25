@@ -13,6 +13,7 @@ import Stack from '@/components/layout/Stack';
 import Drawer from '@/components/navigation/Drawer';
 import Paper from '@/components/surfaces/Paper';
 import { FIXED_BOTTOM_APP_BAR_HEIGHT } from '@/constants/style.constants';
+import { PhotoSortOptions } from '@/types/api/photo.types';
 
 import useGallery from '../hooks/useGallery';
 
@@ -67,14 +68,14 @@ export default function SearchDrawer(props: SearchDrawerProps): JSX.Element {
   const { onApplyFilter } = props;
 
   const {
-    gallerySearch,
-    gallerySortBy,
-    galleryTagsFilter,
     handleClearFilters,
-    handleGallerySearch,
-    handleGallerySortBy,
-    handleGalleryTagsFilter,
+    handleSearch,
+    handleSortBy,
+    handleTagsFilter,
     isSearchDrawerOpen,
+    search,
+    sortBy,
+    tagsFilter,
     toggleSearchDrawer,
   } = useGallery();
 
@@ -92,8 +93,8 @@ export default function SearchDrawer(props: SearchDrawerProps): JSX.Element {
         <TextField
           endAdornment={<SearchIcon variant="outlined" />}
           label="Search"
-          onChange={handleGallerySearch}
-          value={gallerySearch}
+          onChange={handleSearch}
+          value={search}
           variant="outlined"
         />,
       )}
@@ -109,9 +110,9 @@ export default function SearchDrawer(props: SearchDrawerProps): JSX.Element {
           fieldId="search-drawer-tags-autocomplete"
           label="Tags"
           noOptionsLabel="No tags"
-          onChange={handleGalleryTagsFilter}
+          onChange={handleTagsFilter}
           options={tags}
-          value={galleryTagsFilter}
+          value={tagsFilter}
         />,
       )}
 
@@ -125,15 +126,15 @@ export default function SearchDrawer(props: SearchDrawerProps): JSX.Element {
         <Select
           fieldId="search-drawer-sort-select"
           label="Sort"
-          onChange={handleGallerySortBy}
+          onChange={handleSortBy}
           options={[
-            { id: 'newest', label: 'Newest' },
-            { id: 'oldest', label: 'Oldest' },
-            { id: 'title_az', label: 'Title (a-z)' },
-            { id: 'title_za', label: 'Title (z-a)' },
-            { id: 'random', label: 'Random' },
+            { id: PhotoSortOptions.NEWEST, label: 'Newest' },
+            { id: PhotoSortOptions.OLDEST, label: 'Oldest' },
+            { id: PhotoSortOptions.TITLE_AZ, label: 'Title (a-z)' },
+            { id: PhotoSortOptions.TITLE_ZA, label: 'Title (z-a)' },
+            { id: PhotoSortOptions.RANDOM, label: 'Random' },
           ]}
-          value={gallerySortBy}
+          value={sortBy}
         />,
       )}
 

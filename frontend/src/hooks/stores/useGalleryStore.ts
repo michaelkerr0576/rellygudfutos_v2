@@ -3,11 +3,11 @@ import { devtools, persist } from 'zustand/middleware';
 
 import { PhotoSortOptions } from '@/types/api/photo.types';
 import {
-  GalleryNavigationValue,
   GalleryState,
-  GalleryTagsFilter,
-  GalleryTagsFilterIds,
-  GalleryVariant,
+  LayoutVariant,
+  NavigationValue,
+  TagsFilter,
+  TagsFilterIds,
 } from '@/types/store/gallery.types';
 
 const useGalleryStore = create<GalleryState>()(
@@ -16,30 +16,27 @@ const useGalleryStore = create<GalleryState>()(
     // * Persists state to local storage
     persist(
       (set, _get): GalleryState => ({
-        galleryNavigationValue: GalleryNavigationValue.HOME,
-        gallerySearch: '',
-        gallerySortBy: PhotoSortOptions.NEWEST,
-        galleryTagsFilter: [],
-        galleryTagsFilterIds: [],
-        galleryVariant: GalleryVariant.GRID,
         isPhotoDialogOpen: false,
         isSearchDrawerOpen: false,
-        setGalleryNavigationValue: (galleryNavigationValue: GalleryNavigationValue): void =>
-          set({ galleryNavigationValue }, false, 'SET_GALLERY_NAVIGATION_VALUE'),
-        setGallerySearch: (gallerySearch: string): void =>
-          set({ gallerySearch }, false, 'SET_GALLERY_SEARCH_VALUE'),
-        setGallerySortBy: (gallerySortBy: PhotoSortOptions): void =>
-          set({ gallerySortBy }, false, 'SET_GALLERY_SORT_BY'),
-        setGalleryTagsFilter: (galleryTagsFilter: GalleryTagsFilter): void =>
-          set({ galleryTagsFilter }, false, 'SET_GALLERY_TAGS_FILTER'),
-        setGalleryTagsFilterIds: (galleryTagsFilterIds: GalleryTagsFilterIds): void =>
-          set({ galleryTagsFilterIds }, false, 'SET_GALLERY_TAGS_FILTER_IDS'),
-        setGalleryVariant: (galleryVariant: GalleryVariant): void =>
-          set({ galleryVariant }, false, 'SET_GALLERY_VARIANT'),
+        layoutVariant: LayoutVariant.GRID,
+        navigationValue: NavigationValue.HOME,
+        search: '',
         setIsPhotoDialogOpen: (isPhotoDialogOpen: boolean): void =>
           set({ isPhotoDialogOpen }, false, 'SET_IS_PHOTO_DIALOG_OPEN'),
         setIsSearchDrawerOpen: (isSearchDrawerOpen: boolean): void =>
           set({ isSearchDrawerOpen }, false, 'SET_IS_SEARCH_DRAWER_OPEN'),
+        setLayoutVariant: (layoutVariant: LayoutVariant): void =>
+          set({ layoutVariant }, false, 'SET_LAYOUT_VARIANT'),
+        setNavigationValue: (navigationValue: NavigationValue): void =>
+          set({ navigationValue }, false, 'SET_NAVIGATION_VALUE'),
+        setSearch: (search: string): void => set({ search }, false, 'SET_SEARCH_VALUE'),
+        setSortBy: (sortBy: PhotoSortOptions): void => set({ sortBy }, false, 'SET_SORT_BY'),
+        setTagsFilter: (tagsFilter: TagsFilter): void => set({ tagsFilter }, false, 'SET_TAGS_FILTER'),
+        setTagsFilterIds: (tagsFilterIds: TagsFilterIds): void =>
+          set({ tagsFilterIds }, false, 'SET_TAGS_FILTER_IDS'),
+        sortBy: PhotoSortOptions.NEWEST,
+        tagsFilter: [],
+        tagsFilterIds: [],
       }),
       {
         name: 'rgf-state--gallery', // * Local storage key

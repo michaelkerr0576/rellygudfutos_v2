@@ -34,7 +34,7 @@ const StyledGallery = styled('div')(({ theme }): { [key: string]: any } => ({
 export default function Gallery(props: GalleryProps): JSX.Element {
   const { error, isError, isFetchingNextPage, isLoading, lastImageRef, photos } = props;
 
-  const { galleryVariant, togglePhotoDialog } = useGallery();
+  const { layoutVariant, togglePhotoDialog } = useGallery();
 
   const defaultErrorMessage =
     'There was an error retrieving photos from the server. Please try refreshing the page';
@@ -45,7 +45,7 @@ export default function Gallery(props: GalleryProps): JSX.Element {
   }
 
   if (isLoading) {
-    return <GallerySkeleton variant={galleryVariant} />;
+    return <GallerySkeleton variant={layoutVariant} />;
   }
 
   return (
@@ -55,7 +55,7 @@ export default function Gallery(props: GalleryProps): JSX.Element {
         lastImageRef={lastImageRef}
         maxWidth={GALLERY_MAX_WIDTH}
         onClick={(photoId): void => togglePhotoDialog(true, photoId)}
-        variant={galleryVariant}
+        variant={layoutVariant}
       />
 
       <Box style={{ height: LOADING_PANEL_HEIGHT }}>

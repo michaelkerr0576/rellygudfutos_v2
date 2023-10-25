@@ -1,7 +1,7 @@
 import { PhotoSortOptions } from '../api/photo.types';
 
 // #region State Enum
-export enum GalleryNavigationValue {
+export enum NavigationValue {
   HOME = 'home',
   GRID = 'grid',
   LIST = 'list',
@@ -9,16 +9,16 @@ export enum GalleryNavigationValue {
   SEARCH = 'search',
 }
 
-export enum GalleryVariant {
+export enum LayoutVariant {
   GRID = 'grid',
   LIST = 'list',
 }
 // #endregion
 
 // #region State Types
-export type GalleryTagsFilterIds = number[];
+export type TagsFilterIds = number[];
 
-export type GalleryTagsFilter = {
+export type TagsFilter = {
   id: number;
   label: string;
 }[];
@@ -26,21 +26,21 @@ export type GalleryTagsFilter = {
 
 // #region State Interfaces
 export interface GalleryState {
-  galleryNavigationValue: GalleryNavigationValue;
-  gallerySearch: string;
-  gallerySortBy: PhotoSortOptions;
-  galleryTagsFilter: GalleryTagsFilter;
-  galleryTagsFilterIds: GalleryTagsFilterIds;
-  galleryVariant: GalleryVariant;
   isPhotoDialogOpen: boolean;
   isSearchDrawerOpen: boolean;
-  setGalleryNavigationValue: (value: GalleryNavigationValue) => void;
-  setGallerySearch: (search: string) => void;
-  setGallerySortBy: (sortBy: PhotoSortOptions) => void;
-  setGalleryTagsFilter: (tags: GalleryTagsFilter) => void;
-  setGalleryTagsFilterIds: (tags: GalleryTagsFilterIds) => void;
-  setGalleryVariant: (variant: GalleryVariant) => void;
+  layoutVariant: LayoutVariant;
+  navigationValue: NavigationValue;
+  search: string;
   setIsPhotoDialogOpen: (isOpen: boolean) => void;
   setIsSearchDrawerOpen: (isOpen: boolean) => void;
+  setLayoutVariant: (variant: LayoutVariant) => void;
+  setNavigationValue: (value: NavigationValue) => void;
+  setSearch: (search: string) => void;
+  setSortBy: (sortBy: PhotoSortOptions) => void;
+  setTagsFilter: (tags: TagsFilter) => void;
+  setTagsFilterIds: (tags: TagsFilterIds) => void;
+  sortBy: PhotoSortOptions;
+  tagsFilter: TagsFilter;
+  tagsFilterIds: TagsFilterIds;
 }
 // #endregion

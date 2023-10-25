@@ -13,7 +13,7 @@ import SearchDrawer from './partials/SearchDrawer';
 export default function GalleryPage(): JSX.Element {
   useGalleryDialogRoutes();
 
-  const { gallerySearch, gallerySortBy, galleryTagsFilterIds, isPhotoDialogOpen } = useGallery();
+  const { search, sortBy, tagsFilterIds, isPhotoDialogOpen } = useGallery();
 
   const {
     data: photosData,
@@ -25,14 +25,17 @@ export default function GalleryPage(): JSX.Element {
     isRefetching: isPhotosRefetching,
     refetch: refetchPhotos,
   } = usePhotos({
-    search: gallerySearch,
-    sort: gallerySortBy,
-    tagIds: galleryTagsFilterIds,
+    search,
+    sort: sortBy,
+    tagIds: tagsFilterIds,
   });
+
   const { data: photos, inViewRef: inViewPhotoRef } = useInfinitePagination<Photo>(
     photosData?.pages,
     fetchNextPhotoPage,
   );
+
+  // PUT HOOK useGalleryFilter
 
   const handleRefetchPhotos = (): void => {
     refetchPhotos();
