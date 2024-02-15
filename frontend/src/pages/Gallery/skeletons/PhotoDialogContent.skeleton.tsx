@@ -56,8 +56,8 @@ export default function PhotoDialogContentSkeleton(): JSX.Element {
       <Image
         alt="Image skeleton loader"
         isPermanentlyLoading
-        maxHeight="720px"
-        maxWidth="1080px"
+        maxHeight={720}
+        maxWidth={1080}
         src="../../../../src/assets/images/greyBackground_landscape.jpg"
         variant="square"
       />
@@ -82,10 +82,10 @@ export default function PhotoDialogContentSkeleton(): JSX.Element {
 
   const renderTagsSkeleton = (): JSX.Element => (
     <Stack className="rgf-photoDialog--contentTags" spacing={2}>
-      <Skeleton height="32px">
+      <Skeleton height={32}>
         <Chip label="Tag 1" />
       </Skeleton>
-      <Skeleton height="32px">
+      <Skeleton height={32}>
         <Chip label="Tag 2" />
       </Skeleton>
     </Stack>
@@ -102,37 +102,37 @@ export default function PhotoDialogContentSkeleton(): JSX.Element {
   const renderDetailsSkeleton = (): JSX.Element => (
     <Grid className="rgf-photoDialog--contentDetails" isContainer>
       <Grid className="rgf-photoDialog--contentDetailsColumnOne" direction="column" mobile={12} laptop="auto">
-        <Skeleton variant="text" height="32px">
+        <Skeleton variant="text" height={32}>
           <Typography>Mr Skeleton Skelly</Typography>{' '}
         </Skeleton>
 
-        <Skeleton variant="text" height="32px">
+        <Skeleton variant="text" height={32}>
           <Typography>Skeleton Lane, Skellyville</Typography>{' '}
         </Skeleton>
 
-        <Skeleton variant="text" height="32px">
+        <Skeleton variant="text" height={32}>
           <Typography>Skeleton camera name</Typography>{' '}
         </Skeleton>
 
-        <Skeleton variant="text" height="32px">
+        <Skeleton variant="text" height={32}>
           <Typography>Skeleton lens name</Typography>{' '}
         </Skeleton>
       </Grid>
 
       <Grid className="rgf-photoDialog--contentDetailsColumnTwo" direction="column" mobile={12} laptop="auto">
-        <Skeleton variant="text" height="32px">
+        <Skeleton variant="text" height={32}>
           <Typography>f/1.8</Typography>{' '}
         </Skeleton>
 
-        <Skeleton variant="text" height="32px">
+        <Skeleton variant="text" height={32}>
           <Typography>700mm</Typography>{' '}
         </Skeleton>
 
-        <Skeleton variant="text" height="32px">
+        <Skeleton variant="text" height={32}>
           <Typography>100 ISO</Typography>{' '}
         </Skeleton>
 
-        <Skeleton variant="text" height="32px">
+        <Skeleton variant="text" height={32}>
           <Typography>1/1000</Typography>{' '}
         </Skeleton>
       </Grid>
