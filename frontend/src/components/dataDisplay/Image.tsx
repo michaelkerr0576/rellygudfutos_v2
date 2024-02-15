@@ -13,17 +13,26 @@ export interface ImageProps {
   className?: string;
   imageFit?: ImageFit;
   imageRef?: RefObject<any> | ((node?: Element | null) => void);
+  isOnClickNewTabEnabled?: boolean;
   isPermanentlyLoading?: boolean; // * Used for skeleton loaders
-  maxHeight?: number;
-  maxWidth?: number;
+  maxHeight?: string | number;
+  maxWidth?: string | number;
   src: string;
   variant?: Variant;
 }
 
 const StyledImg = styled('img')(({ theme }): { [key: string]: any } => ({
-  backgroundColor: alpha(theme.palette.common.black, 0.75),
-  display: 'block',
-  width: '100%',
+  '&.rgf': {
+    '&-image': {
+      '&--clickable': {
+        cursor: 'pointer',
+      },
+
+      backgroundColor: alpha(theme.palette.common.black, 0.75),
+      display: 'block',
+      width: '100%',
+    },
+  },
 }));
 
 export default function Image(props: ImageProps): JSX.Element {
@@ -32,6 +41,7 @@ export default function Image(props: ImageProps): JSX.Element {
     className = '',
     imageFit = 'contain',
     imageRef = undefined,
+    isOnClickNewTabEnabled = false,
     isPermanentlyLoading = undefined,
     maxHeight = 'inherit',
     maxWidth = 'inherit',
@@ -41,23 +51,35 @@ export default function Image(props: ImageProps): JSX.Element {
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const renderImage = (ref?: ImageProps['imageRef']): JSX.Element => (
-    <StyledImg
-      alt={alt}
-      className={clsx('rgf-image', `rgf-image--${variant}`, { [className]: !!className })}
-      loading="lazy"
-      onLoad={(): void => setIsLoading(false)}
-      src={src}
-      ref={ref}
-      style={{
-        borderRadius: variant === 'rounded' ? 4 : 0,
-        height: imageFit === 'cover' ? '100%' : 'inherit',
-        maxHeight,
-        maxWidth,
-        objectFit: imageFit,
-      }}
-    />
-  );
+  const openImageInNewTab = (): void => {
+    window.open(src, '_blank');
+  };
+
+  const renderImage = (ref?: ImageProps['imageRef']): JSX.Element => {
+    const imageStyles = clsx('rgf-image', `rgf-image--${variant}`, {
+      [className]: !!className,
+      'rgf-image--clickable': isOnClickNewTabEnabled,
+    });
+
+    return (
+      <StyledImg
+        alt={alt}
+        className={imageStyles}
+        loading="lazy"
+        onClick={isOnClickNewTabEnabled ? openImageInNewTab : undefined}
+        onLoad={(): void => setIsLoading(false)}
+        ref={ref}
+        src={src}
+        style={{
+          borderRadius: variant === 'rounded' ? 4 : 0,
+          height: imageFit === 'cover' ? '100%' : 'inherit',
+          maxHeight,
+          maxWidth,
+          objectFit: imageFit,
+        }}
+      />
+    );
+  };
 
   if (isPermanentlyLoading || isLoading) {
     return <Skeleton>{renderImage()}</Skeleton>;

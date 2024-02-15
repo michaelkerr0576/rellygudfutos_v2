@@ -2,12 +2,12 @@ import { styled } from '@mui/material/styles';
 
 import ImageList from '@/components/dataDisplay/ImageList';
 import { PhotoAspectRatio } from '@/types/api/photo.types';
-import { GalleryVariant } from '@/types/store/gallery.types';
+import { LayoutVariant } from '@/types/store/gallery.types';
 
 import { GALLERY_MAX_WIDTH } from '../constants';
 
 export interface GallerySkeletonProps {
-  variant: GalleryVariant;
+  variant: LayoutVariant;
 }
 
 const StyledGallerySkeleton = styled('div')(({ theme }): { [key: string]: any } => ({

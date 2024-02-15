@@ -7,10 +7,10 @@ type Variant = 'circular' | 'rectangular' | 'rounded' | 'text';
 export interface SkeletonProps {
   children?: React.ReactNode; // * Optional children to infer width and height from
   className?: MuiSkeletonProps['className'];
-  height?: string;
-  minHeight?: string;
+  height?: string | number;
+  minHeight?: string | number;
   variant?: Variant;
-  width?: string;
+  width?: string | number;
 }
 
 export default function Skeleton(props: SkeletonProps): JSX.Element {

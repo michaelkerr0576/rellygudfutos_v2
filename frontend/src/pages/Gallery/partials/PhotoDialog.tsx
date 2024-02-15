@@ -235,7 +235,14 @@ export default function PhotoDialog(): JSX.Element {
 
     return (
       <>
-        <Image alt={title} maxHeight={`${imageHeight}px`} maxWidth="100%" src={imageUrl} variant="square" />
+        <Image
+          alt={title}
+          isOnClickNewTabEnabled
+          maxHeight={imageHeight}
+          maxWidth="100%"
+          src={imageUrl}
+          variant="square"
+        />
 
         <Box className="rgf-photoDialog--content">
           {renderDialogContentTitle()}

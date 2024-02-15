@@ -152,7 +152,7 @@ export default function FilterDrawer(props: FilterDrawerProps): JSX.Element {
 
   const renderDirtyFilterAlert = (): JSX.Element => (
     <Box className="rgf-filterDrawer--dirtyFilterAlert">
-      {renderRow(<Alert message="Apply filter to see results " severity="warning" />)}
+      {renderRow(<Alert message="Unsaved filter. Apply filter to see results " severity="warning" />)}
     </Box>
   );
 
