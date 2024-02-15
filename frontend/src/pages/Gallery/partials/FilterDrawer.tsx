@@ -100,8 +100,10 @@ export default function FilterDrawer(props: FilterDrawerProps): JSX.Element {
       {renderRow(
         <TextField
           endAdornment={<SearchIcon variant="outlined" />}
+          isClearable
           label="Search"
           onChange={handleSearch}
+          type="search"
           value={search}
           variant="outlined"
         />,

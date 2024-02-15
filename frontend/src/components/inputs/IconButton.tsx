@@ -9,11 +9,19 @@ export interface IconButtonProps {
   children: React.ReactNode;
   className?: MuiIconButtonProps['className'];
   edge?: MuiIconButtonProps['edge'];
-  onClick: MuiIconButtonProps['onClick'];
+  onClick?: MuiIconButtonProps['onClick'];
+  onMouseDown?: MuiIconButtonProps['onMouseDown'];
 }
 
 export default function IconButton(props: IconButtonProps): JSX.Element {
-  const { ariaLabel, children, className = '', onClick, edge = false } = props;
+  const {
+    ariaLabel,
+    children,
+    className = '',
+    edge = false,
+    onClick = undefined,
+    onMouseDown = undefined,
+  } = props;
 
   return (
     <MuiIconButton
@@ -21,6 +29,7 @@ export default function IconButton(props: IconButtonProps): JSX.Element {
       className={clsx('rgf-iconButton', { [className]: !!className })}
       edge={edge}
       onClick={onClick}
+      onMouseDown={onMouseDown}
       size="small"
     >
       {children}

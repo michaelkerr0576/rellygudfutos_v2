@@ -31,7 +31,6 @@ export default function GalleryBottomNavigation(): JSX.Element {
               <PhotoGridIcon variant={navigationValue === NavigationValue.GRID ? 'filled' : 'outlined'} />
             ),
             label: 'Grid',
-            onClick: (): void => {},
             value: NavigationValue.GRID,
           },
           {
@@ -45,7 +44,6 @@ export default function GalleryBottomNavigation(): JSX.Element {
               <PhotoListIcon variant={navigationValue === NavigationValue.LIST ? 'filled' : 'outlined'} />
             ),
             label: 'List',
-            onClick: (): void => {},
             value: NavigationValue.LIST,
           },
           {

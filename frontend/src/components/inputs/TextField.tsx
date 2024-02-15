@@ -1,11 +1,16 @@
+import { useState } from 'react';
 import clsx from 'clsx';
 
 import MuiInputAdornment from '@mui/material/InputAdornment';
 import { styled } from '@mui/material/styles';
 import MuiTextField, { TextFieldProps as MuiTextFieldProps } from '@mui/material/TextField';
 
+import CloseIcon from '@/assets/icons/CloseIcon';
+
 import Box from '../layout/Box';
 import Stack from '../layout/Stack';
+
+import IconButton from './IconButton';
 
 type Variant = 'standard' | 'outlined';
 
@@ -14,6 +19,7 @@ export interface TextFieldProps {
   endAdornment?: JSX.Element;
   helperText?: MuiTextFieldProps['helperText'];
   inputRef?: MuiTextFieldProps['inputRef'];
+  isClearable?: boolean;
   isError?: MuiTextFieldProps['error'];
   label: string;
   maxCharacterLength?: number;
@@ -48,6 +54,7 @@ export default function TextField(props: TextFieldProps): JSX.Element {
     endAdornment = null,
     helperText = '',
     inputRef = null,
+    isClearable = false,
     isError = false,
     label,
     maxCharacterLength = 100,
@@ -58,7 +65,15 @@ export default function TextField(props: TextFieldProps): JSX.Element {
     variant = 'standard',
   } = props;
 
+  const [isFocused, setIsFocused] = useState(false);
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => onChange(event.target.value);
+
+  const handleFocus = (): void => setIsFocused(true);
+
+  const handleBlur = (): void => setIsFocused(false);
+
+  const handleClear = (): void => onChange('');
 
   const renderStandardStartAdornment = (): JSX.Element | null => {
     if (variant === 'outlined' || !startAdornment) {
@@ -77,6 +92,22 @@ export default function TextField(props: TextFieldProps): JSX.Element {
   };
 
   const renderEndAdornment = (): JSX.Element | null => {
+    const showClearButton = isClearable && isFocused;
+    if (showClearButton) {
+      return (
+        <MuiInputAdornment position="end">
+          <IconButton
+            ariaLabel="clear"
+            className="rgf-textField--endAdornmentClear"
+            edge="end"
+            onMouseDown={handleClear} // * onClick makes the field lose focus
+          >
+            <CloseIcon />
+          </IconButton>
+        </MuiInputAdornment>
+      );
+    }
+
     if (!endAdornment) {
       return null;
     }
@@ -105,8 +136,10 @@ export default function TextField(props: TextFieldProps): JSX.Element {
           }}
           inputRef={inputRef}
           label={label}
+          onBlur={handleBlur}
           onChange={handleChange}
-          type={type}
+          onFocus={handleFocus}
+          type={type === 'search' ? 'text' : type}
           value={value}
           variant={variant}
         />

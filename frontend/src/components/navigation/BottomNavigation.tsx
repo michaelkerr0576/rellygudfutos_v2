@@ -13,7 +13,7 @@ import Paper from '../surfaces/Paper';
 type Action = {
   icon: JSX.Element;
   label: string;
-  onClick: MuiBottomNavigationPropsAction['onClick'];
+  onClick?: MuiBottomNavigationPropsAction['onClick'];
   value: string;
 };
 

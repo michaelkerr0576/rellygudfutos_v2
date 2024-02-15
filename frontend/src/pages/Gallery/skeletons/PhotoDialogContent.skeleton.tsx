@@ -83,10 +83,10 @@ export default function PhotoDialogContentSkeleton(): JSX.Element {
   const renderTagsSkeleton = (): JSX.Element => (
     <Stack className="rgf-photoDialog--contentTags" spacing={2}>
       <Skeleton height="32px">
-        <Chip label="Tag 1" onClick={(): void => {}} />
+        <Chip label="Tag 1" />
       </Skeleton>
       <Skeleton height="32px">
-        <Chip label="Tag 2" onClick={(): void => {}} />
+        <Chip label="Tag 2" />
       </Skeleton>
     </Stack>
   );
