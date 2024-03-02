@@ -1,7 +1,5 @@
 import { RefObject } from 'react';
 
-import { styled } from '@mui/material/styles';
-
 import ImageList from '@/components/dataDisplay/ImageList';
 import Alert from '@/components/feedback/Alert';
 import CircularProgress, { LOADING_PANEL_HEIGHT } from '@/components/feedback/CircularProgress';
@@ -23,14 +21,6 @@ export interface GalleryProps {
   photos: Photo[];
 }
 
-const StyledGallery = styled('div')(({ theme }): { [key: string]: any } => ({
-  margin: theme.spacing(-1),
-
-  [theme.breakpoints.up('laptop')]: {
-    margin: 0,
-  },
-}));
-
 export default function Gallery(props: GalleryProps): JSX.Element {
   const { error, isError, isFetchingNextPage, isLoading, lastImageRef, photos } = props;
 
@@ -49,7 +39,7 @@ export default function Gallery(props: GalleryProps): JSX.Element {
   }
 
   return (
-    <StyledGallery className="rgf-gallery">
+    <Box className="rgf-gallery">
       <ImageList
         images={photos}
         lastImageRef={lastImageRef}
@@ -61,6 +51,6 @@ export default function Gallery(props: GalleryProps): JSX.Element {
       <Box style={{ height: LOADING_PANEL_HEIGHT }}>
         {isFetchingNextPage ? <CircularProgress variant="panel" /> : null}
       </Box>
-    </StyledGallery>
+    </Box>
   );
 }

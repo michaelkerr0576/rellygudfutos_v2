@@ -5,6 +5,7 @@ import { Photo } from '@/types/api/photo.types';
 
 import useGallery from './hooks/useGallery';
 import useGalleryDialogRoutes from './hooks/useGalleryDialogRoutes';
+import FilterDisplay from './partials/FilterDisplay';
 import FilterDrawer from './partials/FilterDrawer';
 import Gallery from './partials/Gallery';
 import GalleryBottomNavigation from './partials/GalleryBottomNavigation';
@@ -36,7 +37,9 @@ export default function GalleryPage(): JSX.Element {
   );
 
   return (
-    <Page pageName="Gallery">
+    <Page pageName="gallery">
+      <FilterDisplay />
+
       <Gallery
         error={photosError}
         isError={isPhotosError}

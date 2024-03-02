@@ -1,7 +1,7 @@
+import FilterAltIcon from '@/assets/icons/FilterAltIcon';
 import HomeIcon from '@/assets/icons/HomeIcon';
 import PhotoGridIcon from '@/assets/icons/PhotoGridIcon';
 import PhotoListIcon from '@/assets/icons/PhotoListIcon';
-import SearchIcon from '@/assets/icons/SearchIcon';
 import ToggleDarkModeIcon from '@/assets/icons/ToggleDarkModeIcon';
 import Box from '@/components/layout/Box';
 import BottomNavigation from '@/components/navigation/BottomNavigation';
@@ -34,8 +34,8 @@ export default function GalleryBottomNavigation(): JSX.Element {
             value: NavigationValue.GRID,
           },
           {
-            icon: <SearchIcon variant={navigationValue === NavigationValue.SEARCH ? 'filled' : 'outlined'} />,
-            label: 'Search',
+            icon: <FilterAltIcon />,
+            label: 'Filter',
             onClick: (): void => toggleFilterDrawer(true),
             value: NavigationValue.SEARCH,
           },
