@@ -11,7 +11,7 @@ export interface IconButtonProps {
   onClick: BoxProps['onClick'];
 }
 
-const StyledBox = styled(Box)((): { [key: string]: any } => ({
+const StyledLogoButton = styled(Box)((): { [key: string]: any } => ({
   alignItems: 'center',
   cursor: 'pointer',
   display: 'flex',
@@ -21,13 +21,13 @@ export default function LogoButton(props: IconButtonProps): JSX.Element {
   const { ariaLabel, children, className = '', onClick } = props;
 
   return (
-    <StyledBox
+    <StyledLogoButton
       ariaLabel={ariaLabel}
       ariaRole="button"
       className={clsx('rgf-logoButton', { [className]: !!className })}
       onClick={onClick}
     >
       {children}
-    </StyledBox>
+    </StyledLogoButton>
   );
 }

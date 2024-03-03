@@ -16,6 +16,13 @@ export enum LayoutVariant {
 // #endregion
 
 // #region State Types
+export type SortByOption = {
+  id: PhotoSortOptions;
+  label: string;
+};
+
+export type SortByOptions = Record<PhotoSortOptions, SortByOption>;
+
 export type TagsFilterIds = number[];
 
 export type TagsFilter = {

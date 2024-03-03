@@ -5,6 +5,7 @@ import { PhotoSortOptions } from '@/types/api/photo.types';
 import {
   LayoutVariant,
   NavigationValue,
+  SortByOptions,
   TagsFilter,
   TagsFilterIds,
   UseGalleryState,
@@ -17,6 +18,7 @@ export interface UseGallery {
   navigationValue: NavigationValue;
   search: string;
   sortBy: PhotoSortOptions;
+  sortByOptions: SortByOptions;
   tagsFilter: TagsFilter;
   tagsFilterIds: TagsFilterIds;
   toggleFilterDrawer: (isOpen: boolean) => void;
@@ -57,6 +59,14 @@ export default function useGallery(): UseGallery {
     }),
   );
 
+  const sortByOptions = {
+    [PhotoSortOptions.NEWEST]: { id: PhotoSortOptions.NEWEST, label: 'Newest' },
+    [PhotoSortOptions.OLDEST]: { id: PhotoSortOptions.OLDEST, label: 'Oldest' },
+    [PhotoSortOptions.TITLE_AZ]: { id: PhotoSortOptions.TITLE_AZ, label: 'Title (a-z)' },
+    [PhotoSortOptions.TITLE_ZA]: { id: PhotoSortOptions.TITLE_ZA, label: 'Title (z-a)' },
+    [PhotoSortOptions.RANDOM]: { id: PhotoSortOptions.RANDOM, label: 'Random' },
+  };
+
   const toggleFilterDrawer = (isOpen: boolean): void => setIsFilterDrawerOpen(isOpen);
 
   const toggleNavigationValue = (value: string): void => {
@@ -85,6 +95,7 @@ export default function useGallery(): UseGallery {
     navigationValue,
     search,
     sortBy,
+    sortByOptions,
     tagsFilter,
     tagsFilterIds,
     toggleFilterDrawer,

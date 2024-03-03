@@ -1,6 +1,5 @@
-import { styled } from '@mui/material/styles';
-
 import ImageList from '@/components/dataDisplay/ImageList';
+import Box from '@/components/layout/Box';
 import { PhotoAspectRatio } from '@/types/api/photo.types';
 import { LayoutVariant } from '@/types/store/gallery.types';
 
@@ -9,14 +8,6 @@ import { GALLERY_MAX_WIDTH } from '../constants';
 export interface GallerySkeletonProps {
   variant: LayoutVariant;
 }
-
-const StyledGallerySkeleton = styled('div')(({ theme }): { [key: string]: any } => ({
-  margin: theme.spacing(-1),
-
-  [theme.breakpoints.up('laptop')]: {
-    margin: 0,
-  },
-}));
 
 export default function GallerySkeleton(props: GallerySkeletonProps): JSX.Element {
   const { variant } = props;
@@ -85,7 +76,7 @@ export default function GallerySkeleton(props: GallerySkeletonProps): JSX.Elemen
   ];
 
   return (
-    <StyledGallerySkeleton className="rgf-gallery">
+    <Box className="rgf-gallery">
       <ImageList
         images={photosSkeleton}
         isPermanentlyLoading
@@ -93,6 +84,6 @@ export default function GallerySkeleton(props: GallerySkeletonProps): JSX.Elemen
         onClick={(): void => {}}
         variant={variant}
       />
-    </StyledGallerySkeleton>
+    </Box>
   );
 }

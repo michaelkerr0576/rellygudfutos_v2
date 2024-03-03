@@ -13,13 +13,14 @@ type Option = {
   id: string;
   label: string;
 };
+type OptionDictionary = Record<string, Option>;
 
 export interface SelectProps {
   className?: MuiSelectProps['className'];
   fieldId: string;
   label: string;
   onChange: (value: string) => void;
-  options: Option[];
+  options: OptionDictionary | Option[];
   value: string;
 }
 
@@ -32,14 +33,20 @@ export default function Select(props: SelectProps): JSX.Element {
 
   const handleChange = (event: MuiSelectChangeEvent): void => onChange(event.target.value);
 
-  const renderMenuItems = (): JSX.Element[] =>
-    options.map(
-      (option: Option): JSX.Element => (
-        <MuiMenuItem key={option.id} value={option.id}>
-          {option.label}
-        </MuiMenuItem>
-      ),
+  const renderMenuItems = (): JSX.Element[] => {
+    const renderMenuItem = (option: Option): JSX.Element => (
+      <MuiMenuItem key={option.id} value={option.id}>
+        {option.label}
+      </MuiMenuItem>
     );
+
+    const isArray = Array.isArray(options);
+    if (isArray) {
+      return options.map(renderMenuItem);
+    }
+
+    return Object.values(options).map(renderMenuItem);
+  };
 
   return (
     <StyledSelect className={clsx('rgf-select', { [className]: !!className })}>

@@ -58,9 +58,10 @@ export default function Typography(props: TypographyProps): JSX.Element {
   };
 
   const typographyStyles = clsx('rgf-typography', `rgf-typography--${variant}`, {
-    [className]: !!className,
     'rgf-typography--maxLines': !!maxLines,
     'rgf-typography--paragraph': !!isParagraph,
+    // eslint-disable-next-line sort-keys
+    [className]: !!className,
   });
 
   return (

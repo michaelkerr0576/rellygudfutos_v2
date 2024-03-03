@@ -2,6 +2,8 @@ import clsx from 'clsx';
 
 import { styled } from '@mui/material/styles';
 
+import Stack from '../layout/Stack';
+
 export interface TypographyIconProps {
   className?: string;
   endIcon?: JSX.Element;
@@ -9,10 +11,9 @@ export interface TypographyIconProps {
   typography: JSX.Element;
 }
 
-const StyledTypographyIcon = styled('div')(({ theme }): { [key: string]: any } => ({
+const StyledTypographyIcon = styled('div')((): { [key: string]: any } => ({
   '.rgf': {
     '&-typography': {
-      padding: theme.spacing(0, 1),
       width: 'auto',
     },
   },
@@ -25,9 +26,11 @@ export default function TypographyIcon(props: TypographyIconProps): JSX.Element 
 
   return (
     <StyledTypographyIcon className={clsx('rgf-typographyIcon', { [className]: !!className })}>
-      {startIcon}
-      {typography}
-      {endIcon}
+      <Stack alignItems="center" spacing={1}>
+        {startIcon}
+        {typography}
+        {endIcon}
+      </Stack>
     </StyledTypographyIcon>
   );
 }

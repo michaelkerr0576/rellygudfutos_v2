@@ -48,9 +48,10 @@ export default function FormTextField(props: FormTextFieldProps): JSX.Element {
   } = props;
 
   const formTextFieldStyles = clsx('rgf-formTextField', {
-    [className]: !!className,
     'rgf-formTextField--outlined': variant === 'outlined',
     'rgf-formTextField--standard': variant === 'standard',
+    // eslint-disable-next-line sort-keys
+    [className]: !!className,
   });
 
   return (

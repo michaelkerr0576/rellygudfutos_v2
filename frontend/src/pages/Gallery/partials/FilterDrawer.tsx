@@ -14,7 +14,6 @@ import Stack from '@/components/layout/Stack';
 import Drawer from '@/components/navigation/Drawer';
 import Paper from '@/components/surfaces/Paper';
 import { ALERT_ONE_LINE_HEIGHT, FIXED_BOTTOM_APP_BAR_HEIGHT } from '@/constants/style.constants';
-import { PhotoSortOptions } from '@/types/api/photo.types';
 
 import useGallery from '../hooks/useGallery';
 import useGalleryFilter from '../hooks/useGalleryFilter';
@@ -76,7 +75,7 @@ const StyledDrawer = styled(Drawer)(({ theme }): { [key: string]: any } => ({
 export default function FilterDrawer(props: FilterDrawerProps): JSX.Element {
   const { onRefetchPhotos } = props;
 
-  const { isFilterDrawerOpen, search, sortBy, tagsFilter, toggleFilterDrawer } = useGallery();
+  const { isFilterDrawerOpen, search, sortBy, sortByOptions, tagsFilter, toggleFilterDrawer } = useGallery();
 
   const {
     handleApplyFilters,
@@ -137,13 +136,7 @@ export default function FilterDrawer(props: FilterDrawerProps): JSX.Element {
           fieldId="filter-drawer-sort-select"
           label="Sort"
           onChange={handleSortBy}
-          options={[
-            { id: PhotoSortOptions.NEWEST, label: 'Newest' },
-            { id: PhotoSortOptions.OLDEST, label: 'Oldest' },
-            { id: PhotoSortOptions.TITLE_AZ, label: 'Title (a-z)' },
-            { id: PhotoSortOptions.TITLE_ZA, label: 'Title (z-a)' },
-            { id: PhotoSortOptions.RANDOM, label: 'Random' },
-          ]}
+          options={sortByOptions}
           value={sortBy}
         />,
       )}

@@ -11,6 +11,7 @@ import { styled } from '@mui/material/styles';
 import Paper from '../surfaces/Paper';
 
 type Action = {
+  // TODO - add aria labels for each gallery navigation option
   icon: JSX.Element;
   label: string;
   onClick?: MuiBottomNavigationPropsAction['onClick'];

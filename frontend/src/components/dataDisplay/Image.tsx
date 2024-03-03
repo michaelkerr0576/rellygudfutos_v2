@@ -57,8 +57,9 @@ export default function Image(props: ImageProps): JSX.Element {
 
   const renderImage = (ref?: ImageProps['imageRef']): JSX.Element => {
     const imageStyles = clsx('rgf-image', `rgf-image--${variant}`, {
-      [className]: !!className,
       'rgf-image--clickable': isOnClickNewTabEnabled,
+      // eslint-disable-next-line sort-keys
+      [className]: !!className,
     });
 
     return (

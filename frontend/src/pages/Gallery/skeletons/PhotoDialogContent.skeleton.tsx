@@ -68,7 +68,7 @@ export default function PhotoDialogContentSkeleton(): JSX.Element {
     <Paper className="rgf-photoDialog--contentTitle" elevation={1}>
       <Stack alignItems="center" justifyContent="spaceBetween" spacing={1}>
         <Skeleton>
-          <Typography variant="h3">Skeleton title</Typography>{' '}
+          <Typography variant="h3">Skeleton title</Typography>
         </Skeleton>
 
         <Skeleton variant="text">
@@ -103,37 +103,37 @@ export default function PhotoDialogContentSkeleton(): JSX.Element {
     <Grid className="rgf-photoDialog--contentDetails" isContainer>
       <Grid className="rgf-photoDialog--contentDetailsColumnOne" direction="column" mobile={12} laptop="auto">
         <Skeleton variant="text" height={32}>
-          <Typography>Mr Skeleton Skelly</Typography>{' '}
+          <Typography>Mr Skeleton Skelly</Typography>
         </Skeleton>
 
         <Skeleton variant="text" height={32}>
-          <Typography>Skeleton Lane, Skellyville</Typography>{' '}
+          <Typography>Skeleton Lane, Skellyville</Typography>
         </Skeleton>
 
         <Skeleton variant="text" height={32}>
-          <Typography>Skeleton camera name</Typography>{' '}
+          <Typography>Skeleton camera name</Typography>
         </Skeleton>
 
         <Skeleton variant="text" height={32}>
-          <Typography>Skeleton lens name</Typography>{' '}
+          <Typography>Skeleton lens name</Typography>
         </Skeleton>
       </Grid>
 
       <Grid className="rgf-photoDialog--contentDetailsColumnTwo" direction="column" mobile={12} laptop="auto">
         <Skeleton variant="text" height={32}>
-          <Typography>f/1.8</Typography>{' '}
+          <Typography>f/1.8</Typography>
         </Skeleton>
 
         <Skeleton variant="text" height={32}>
-          <Typography>700mm</Typography>{' '}
+          <Typography>700mm</Typography>
         </Skeleton>
 
         <Skeleton variant="text" height={32}>
-          <Typography>100 ISO</Typography>{' '}
+          <Typography>100 ISO</Typography>
         </Skeleton>
 
         <Skeleton variant="text" height={32}>
-          <Typography>1/1000</Typography>{' '}
+          <Typography>1/1000</Typography>
         </Skeleton>
       </Grid>
     </Grid>
