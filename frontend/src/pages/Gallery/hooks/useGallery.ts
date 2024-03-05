@@ -5,9 +5,8 @@ import { PhotoSortOptions } from '@/types/api/photo.types';
 import {
   LayoutVariant,
   NavigationValue,
-  SortByOptions,
-  TagsFilter,
-  TagsFilterIds,
+  SortByOptionDictionary,
+  TagFilter,
   UseGalleryState,
 } from '@/types/store/gallery.types';
 
@@ -18,9 +17,9 @@ export interface UseGallery {
   navigationValue: NavigationValue;
   search: string;
   sortBy: PhotoSortOptions;
-  sortByOptions: SortByOptions;
-  tagsFilter: TagsFilter;
-  tagsFilterIds: TagsFilterIds;
+  sortByOptions: SortByOptionDictionary;
+  tagsFilter: TagFilter[];
+  tagsFilterIds: number[];
   toggleFilterDrawer: (isOpen: boolean) => void;
   toggleNavigationValue: (value: string) => void;
   togglePhotoDialog: (isOpen: boolean, photoId?: string) => void;

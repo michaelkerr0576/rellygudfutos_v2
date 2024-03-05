@@ -2,17 +2,17 @@ import { useEffect, useState } from 'react';
 
 import useGalleryStore from '@/hooks/stores/useGalleryStore';
 import { PhotoSortOptions } from '@/types/api/photo.types';
-import { TagsFilter, UseGalleryFilterState } from '@/types/store/gallery.types';
+import { TagFilter, UseGalleryFilterState } from '@/types/store/gallery.types';
 
 export interface UseGalleryFilter {
   draftSearch: string;
   draftSortBy: string;
-  draftTagsFilter: TagsFilter;
+  draftTagsFilter: TagFilter[];
   handleApplyFilters: () => void;
   handleClearFilters: () => void;
   handleSearch: (search: string) => void;
   handleSortBy: (sortBy: string) => void;
-  handleTagsFilter: (tags: TagsFilter) => void;
+  handleTagsFilter: (tags: TagFilter[]) => void;
   isFilterDirty: boolean;
 }
 
@@ -38,7 +38,7 @@ export default function useGalleryFilter(props: UseGalleryFilterProps): UseGalle
 
   const [draftSearch, setDraftSearch] = useState<string>(search);
   const [draftSortBy, setDraftSortBy] = useState<PhotoSortOptions>(sortBy);
-  const [draftTagsFilter, setDraftTagsFilter] = useState<TagsFilter>(tagsFilter);
+  const [draftTagsFilter, setDraftTagsFilter] = useState<TagFilter[]>(tagsFilter);
   const [isFilterDirty, setIsFilterDirty] = useState<boolean>(false);
 
   useEffect((): void => {
@@ -54,7 +54,7 @@ export default function useGalleryFilter(props: UseGalleryFilterProps): UseGalle
 
   const handleSortBy = (sort: string): void => setDraftSortBy(sort as PhotoSortOptions);
 
-  const handleTagsFilter = (tags: TagsFilter): void => setDraftTagsFilter(tags);
+  const handleTagsFilter = (tags: TagFilter[]): void => setDraftTagsFilter(tags);
 
   const handleClearFilters = (): void => {
     setDraftSearch('');

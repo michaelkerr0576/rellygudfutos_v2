@@ -9,50 +9,59 @@ import Typography from '@/components/dataDisplay/Typography';
 import TypographyIcon from '@/components/dataDisplay/TypographyIcon';
 import IconButton from '@/components/inputs/IconButton';
 import Stack from '@/components/layout/Stack';
+import { TagFilter } from '@/types/store/gallery.types';
 
 import useGallery from '../hooks/useGallery';
-
-/* eslint-disable @typescript-eslint/no-unused-vars */
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface FilterDisplayProps {}
 
 const StyledFilterDisplay = styled('div')(({ theme }): { [key: string]: any } => ({
   paddingBottom: theme.spacing(1),
 }));
 
-export default function FilterDisplay(props: FilterDisplayProps): JSX.Element {
+export default function FilterDisplay(): JSX.Element {
   const { search, sortBy, sortByOptions, tagsFilter, toggleFilterDrawer } = useGallery();
 
   const renderActiveFilters = (): JSX.Element => {
-    // eslint-disable-next-line arrow-body-style
-    const renderTagsAndSearchChips = (): JSX.Element => {
-      // TODO - Finish Tag chips
-      // TODO - Finish Search display Chip or TypographyIcon
+    const renderSortBy = (): JSX.Element => (
+      <TypographyIcon
+        className="rgf-filterDisplay--activeFilterSort"
+        endIcon={<ArrowDropDownIcon color="secondary" />}
+        typography={
+          <Typography color="secondary" variant="h3">
+            {sortByOptions[sortBy].label}
+          </Typography>
+        }
+      />
+    );
+
+    const renderFilterChips = (): JSX.Element => {
+      const showTagChips = tagsFilter.length > 0;
+      const showSearchChip = search.length > 0;
+
       return (
-        <>
-          <Chip label="test" startIcon={<TagIcon color="secondary" size="small" />} />
-          <Chip
-            label="test"
-            startIcon={<SearchIcon color="secondary" size="small" variant="outlined" />}
-            variant="outlined"
-          />
-        </>
+        <Stack className="rgf-filterDisplay--activeFilterChips" spacing={0.5}>
+          {showTagChips &&
+            tagsFilter.map(
+              (tag: TagFilter): JSX.Element => (
+                <Chip key={tag.id} label={tag.label} startIcon={<TagIcon color="secondary" size="small" />} />
+              ),
+            )}
+
+          {showSearchChip && (
+            <Chip
+              label={search}
+              startIcon={<SearchIcon color="secondary" size="small" variant="outlined" />}
+              variant="outlined"
+            />
+          )}
+        </Stack>
       );
     };
 
     return (
       <Stack alignItems="end" className="rgf-filterDisplay--activeFilters" hasDivider spacing={2}>
-        <TypographyIcon
-          className="rgf-filterDisplay--activeFiltersSortBy"
-          endIcon={<ArrowDropDownIcon color="secondary" />}
-          typography={
-            <Typography color="secondary" variant="h3">
-              {sortByOptions[sortBy].label}
-            </Typography>
-          }
-        />
+        {renderSortBy()}
 
-        {renderTagsAndSearchChips()}
+        {renderFilterChips()}
       </Stack>
     );
   };

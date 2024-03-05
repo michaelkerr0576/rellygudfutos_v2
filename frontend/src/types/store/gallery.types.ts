@@ -21,14 +21,12 @@ export type SortByOption = {
   label: string;
 };
 
-export type SortByOptions = Record<PhotoSortOptions, SortByOption>;
+export type SortByOptionDictionary = Record<PhotoSortOptions, SortByOption>;
 
-export type TagsFilterIds = number[];
-
-export type TagsFilter = {
+export type TagFilter = {
   id: number;
   label: string;
-}[];
+};
 // #endregion
 
 // #region State Interfaces
@@ -44,11 +42,11 @@ export interface GalleryState {
   setNavigationValue: (value: NavigationValue) => void;
   setSearch: (search: string) => void;
   setSortBy: (sortBy: PhotoSortOptions) => void;
-  setTagsFilter: (tags: TagsFilter) => void;
-  setTagsFilterIds: (tags: TagsFilterIds) => void;
+  setTagsFilter: (tags: TagFilter[]) => void;
+  setTagsFilterIds: (tags: number[]) => void;
   sortBy: PhotoSortOptions;
-  tagsFilter: TagsFilter;
-  tagsFilterIds: TagsFilterIds;
+  tagsFilter: TagFilter[];
+  tagsFilterIds: number[];
 }
 
 export interface UseGalleryState {

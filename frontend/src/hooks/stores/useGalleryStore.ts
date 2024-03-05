@@ -2,13 +2,7 @@ import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 
 import { PhotoSortOptions } from '@/types/api/photo.types';
-import {
-  GalleryState,
-  LayoutVariant,
-  NavigationValue,
-  TagsFilter,
-  TagsFilterIds,
-} from '@/types/store/gallery.types';
+import { GalleryState, LayoutVariant, NavigationValue, TagFilter } from '@/types/store/gallery.types';
 
 const useGalleryStore = create<GalleryState>()(
   // * Enables Redux devtools
@@ -31,8 +25,8 @@ const useGalleryStore = create<GalleryState>()(
           set({ navigationValue }, false, 'SET_NAVIGATION_VALUE'),
         setSearch: (search: string): void => set({ search }, false, 'SET_SEARCH_VALUE'),
         setSortBy: (sortBy: PhotoSortOptions): void => set({ sortBy }, false, 'SET_SORT_BY'),
-        setTagsFilter: (tagsFilter: TagsFilter): void => set({ tagsFilter }, false, 'SET_TAGS_FILTER'),
-        setTagsFilterIds: (tagsFilterIds: TagsFilterIds): void =>
+        setTagsFilter: (tagsFilter: TagFilter[]): void => set({ tagsFilter }, false, 'SET_TAGS_FILTER'),
+        setTagsFilterIds: (tagsFilterIds: number[]): void =>
           set({ tagsFilterIds }, false, 'SET_TAGS_FILTER_IDS'),
         sortBy: PhotoSortOptions.NEWEST,
         tagsFilter: [],
