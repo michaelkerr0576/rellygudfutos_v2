@@ -28,7 +28,7 @@ export default function Gallery(props: GalleryProps): JSX.Element {
 
   const defaultErrorMessage =
     'There was an error retrieving photos from the server. Please try refreshing the page';
-  const { errorMessage, errorSeverity } = useErrorMessage(error, defaultErrorMessage);
+  const { errorMessage, errorSeverity } = useErrorMessage({ defaultErrorMessage, error });
 
   if (isError) {
     return <Alert message={errorMessage || defaultErrorMessage} severity={errorSeverity || 'error'} />;
@@ -49,7 +49,7 @@ export default function Gallery(props: GalleryProps): JSX.Element {
       />
 
       <Box style={{ height: LOADING_PANEL_HEIGHT }}>
-        {isFetchingNextPage ? <CircularProgress variant="panel" /> : null}
+        {isFetchingNextPage && <CircularProgress variant="panel" />}
       </Box>
     </Box>
   );

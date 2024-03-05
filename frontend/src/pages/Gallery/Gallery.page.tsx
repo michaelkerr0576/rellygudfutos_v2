@@ -23,35 +23,31 @@ export default function GalleryPage(): JSX.Element {
     isError: isPhotosError,
     isFetchingNextPage: isFetchingNextPhotoPage,
     isLoading: isPhotosLoading,
-    isRefetching: isPhotosRefetching,
-    refetch: onRefetchPhotos,
   } = usePhotos({
     search,
     sort: sortBy,
     tagIds: tagsFilterIds,
   });
 
-  const { data: photos, inViewRef: inViewPhotoRef } = useInfinitePagination<Photo>(
-    photosData?.pages,
-    onFetchNextPhotoPage,
-  );
+  const { data: photos, inViewRef: inViewPhotoRef } = useInfinitePagination<Photo>({
+    fetchedPages: photosData?.pages,
+    onFetchNextPage: onFetchNextPhotoPage,
+  });
 
   return (
-    <Page pageName="gallery">
+    <Page bottomNavigation={<GalleryBottomNavigation />} pageName="gallery">
       <FilterDisplay />
 
       <Gallery
         error={photosError}
         isError={isPhotosError}
         isFetchingNextPage={isFetchingNextPhotoPage}
-        isLoading={isPhotosLoading || isPhotosRefetching}
+        isLoading={isPhotosLoading}
         lastImageRef={inViewPhotoRef}
         photos={photos}
       />
 
-      <GalleryBottomNavigation />
-
-      <FilterDrawer onRefetchPhotos={onRefetchPhotos} />
+      <FilterDrawer />
 
       {isPhotoDialogOpen && <PhotoDialog />}
     </Page>

@@ -73,6 +73,6 @@ export interface UseGalleryFilterState {
   setTagsFilter: GalleryState['setTagsFilter'];
   setTagsFilterIds: GalleryState['setTagsFilterIds'];
   sortBy: GalleryState['sortBy'];
-  tagsFilterIds: GalleryState['tagsFilterIds'];
+  tagsFilter: GalleryState['tagsFilter'];
 }
 // #endregion

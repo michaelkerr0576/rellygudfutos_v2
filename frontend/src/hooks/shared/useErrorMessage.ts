@@ -10,10 +10,14 @@ export interface UseError {
   errorSeverity: AlertProps['severity'] | null;
 }
 
-export default function useError(
-  error: ApiErrorResponse | null,
-  defaultErrorMessage = 'There was an unexpected error',
-): UseError {
+export interface UseErrorProps {
+  error: ApiErrorResponse | null;
+  defaultErrorMessage?: string;
+}
+
+export default function useError(props: UseErrorProps): UseError {
+  const { error, defaultErrorMessage = 'There was an unexpected error' } = props;
+
   const getSeverity = (code: number): AlertProps['severity'] => {
     const firstTwoNumbers = String(code).substring(0, 2);
     const is400ErrorCode = firstTwoNumbers === '40';

@@ -37,10 +37,6 @@ const tags = [
   { id: 15, label: 'Cityscape 6' },
 ];
 
-export interface FilterDrawerProps {
-  onRefetchPhotos: () => void;
-}
-
 const StyledDrawer = styled(Drawer)(({ theme }): { [key: string]: any } => ({
   '.rgf': {
     '&-drawer': {
@@ -72,19 +68,20 @@ const StyledDrawer = styled(Drawer)(({ theme }): { [key: string]: any } => ({
   },
 }));
 
-export default function FilterDrawer(props: FilterDrawerProps): JSX.Element {
-  const { onRefetchPhotos } = props;
-
-  const { isFilterDrawerOpen, search, sortBy, sortByOptions, tagsFilter, toggleFilterDrawer } = useGallery();
+export default function FilterDrawer(): JSX.Element {
+  const { isFilterDrawerOpen, sortByOptions, toggleFilterDrawer } = useGallery();
 
   const {
+    draftSearch,
+    draftSortBy,
+    draftTagsFilter,
     handleApplyFilters,
     handleClearFilters,
     handleSearch,
     handleSortBy,
     handleTagsFilter,
     isFilterDirty,
-  } = useGalleryFilter(onRefetchPhotos, toggleFilterDrawer);
+  } = useGalleryFilter({ toggleFilterDrawer });
 
   const renderRow = (children: React.ReactNode): JSX.Element => (
     <Grid isContainer>
@@ -103,7 +100,7 @@ export default function FilterDrawer(props: FilterDrawerProps): JSX.Element {
           label="Search"
           onChange={handleSearch}
           type="search"
-          value={search}
+          value={draftSearch}
           variant="outlined"
         />,
       )}
@@ -121,7 +118,7 @@ export default function FilterDrawer(props: FilterDrawerProps): JSX.Element {
           noOptionsLabel="No tags"
           onChange={handleTagsFilter}
           options={tags}
-          value={tagsFilter}
+          value={draftTagsFilter}
         />,
       )}
 
@@ -137,7 +134,7 @@ export default function FilterDrawer(props: FilterDrawerProps): JSX.Element {
           label="Sort"
           onChange={handleSortBy}
           options={sortByOptions}
-          value={sortBy}
+          value={draftSortBy}
         />,
       )}
 

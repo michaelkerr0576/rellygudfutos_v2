@@ -30,10 +30,10 @@ export default function FilterDisplay(props: FilterDisplayProps): JSX.Element {
       // TODO - Finish Search display Chip or TypographyIcon
       return (
         <>
-          <Chip icon={<TagIcon color="secondary" size="small" />} label="test" />
+          <Chip label="test" startIcon={<TagIcon color="secondary" size="small" />} />
           <Chip
-            icon={<SearchIcon color="secondary" size="small" variant="outlined" />}
             label="test"
+            startIcon={<SearchIcon color="secondary" size="small" variant="outlined" />}
             variant="outlined"
           />
         </>

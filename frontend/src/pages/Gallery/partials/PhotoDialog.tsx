@@ -87,7 +87,7 @@ export default function PhotoDialog(): JSX.Element {
 
   const defaultErrorMessage =
     'There was an error retrieving the photo from the server. Please try refreshing the page or go back to the Gallery';
-  const { errorMessage, errorSeverity } = useErrorMessage(error, defaultErrorMessage);
+  const { errorMessage, errorSeverity } = useErrorMessage({ defaultErrorMessage, error });
 
   const renderDialogContent = (): JSX.Element => {
     const renderDialogContentTitle = (): JSX.Element => {

@@ -16,10 +16,14 @@ export interface UsePagination<T> {
   total?: number;
 }
 
-export default function usePagination<T>(
-  fetchedPages: ApiResponsePaginated<T[]>[] | undefined,
-  onFetchNextPage: () => void,
-): UsePagination<T> {
+export interface UsePaginationProps<T> {
+  fetchedPages: ApiResponsePaginated<T[]>[] | undefined;
+  onFetchNextPage: () => void;
+}
+
+export default function usePagination<T>(props: UsePaginationProps<T>): UsePagination<T> {
+  const { fetchedPages, onFetchNextPage } = props;
+
   const { ref: inViewRef, inView } = useInView({ threshold: 1 });
 
   const pagination = fetchedPages && fetchedPages[fetchedPages.length - 1]?.pagination;

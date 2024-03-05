@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 
 import useGalleryStore from '@/hooks/stores/useGalleryStore';
-import usePrevious from '@/hooks/utils/usePrevious';
 import { PhotoSortOptions } from '@/types/api/photo.types';
 import { TagsFilter, UseGalleryFilterState } from '@/types/store/gallery.types';
 
 export interface UseGalleryFilter {
+  draftSearch: string;
+  draftSortBy: string;
+  draftTagsFilter: TagsFilter;
   handleApplyFilters: () => void;
   handleClearFilters: () => void;
   handleSearch: (search: string) => void;
@@ -14,11 +16,14 @@ export interface UseGalleryFilter {
   isFilterDirty: boolean;
 }
 
-export default function useGalleryFilter(
-  onRefetchPhotos: () => void,
-  toggleFilterDrawer: (isOpen: boolean) => void,
-): UseGalleryFilter {
-  const { search, setSearch, setSortBy, setTagsFilter, setTagsFilterIds, sortBy, tagsFilterIds } =
+export interface UseGalleryFilterProps {
+  toggleFilterDrawer: (isOpen: boolean) => void;
+}
+
+export default function useGalleryFilter(props: UseGalleryFilterProps): UseGalleryFilter {
+  const { toggleFilterDrawer } = props;
+
+  const { search, setSearch, setSortBy, setTagsFilter, setTagsFilterIds, sortBy, tagsFilter } =
     useGalleryStore(
       (state): UseGalleryFilterState => ({
         search: state.search,
@@ -27,52 +32,51 @@ export default function useGalleryFilter(
         setTagsFilter: state.setTagsFilter,
         setTagsFilterIds: state.setTagsFilterIds,
         sortBy: state.sortBy,
-        tagsFilterIds: state.tagsFilterIds,
+        tagsFilter: state.tagsFilter,
       }),
     );
 
+  const [draftSearch, setDraftSearch] = useState<string>(search);
+  const [draftSortBy, setDraftSortBy] = useState<PhotoSortOptions>(sortBy);
+  const [draftTagsFilter, setDraftTagsFilter] = useState<TagsFilter>(tagsFilter);
   const [isFilterDirty, setIsFilterDirty] = useState<boolean>(false);
 
-  const previousSearch = usePrevious(search);
-  const previousSortBy = usePrevious(sortBy);
-  const previousTagsFilterIds = usePrevious(tagsFilterIds);
-
   useEffect((): void => {
-    const hasPreviousValues =
-      typeof previousSearch === 'string' && !!previousSortBy && !!previousTagsFilterIds;
-    if (hasPreviousValues) {
-      const isSearchChanged = previousSearch !== search;
-      const isSortByChanged = previousSortBy !== sortBy;
-      const isTagsChanged = previousTagsFilterIds.length !== tagsFilterIds.length;
-      const hasFiltersChanged = isSearchChanged || isSortByChanged || isTagsChanged;
+    const isSearchChanged = draftSearch !== search;
+    const isSortByChanged = draftSortBy !== sortBy;
+    const isTagsChanged = draftTagsFilter.length !== tagsFilter.length;
+    const hasFiltersChanged = isSearchChanged || isSortByChanged || isTagsChanged;
 
-      setIsFilterDirty(hasFiltersChanged);
-    }
-  }, [search, sortBy, tagsFilterIds.length]);
+    setIsFilterDirty(hasFiltersChanged);
+  }, [draftSearch, draftSortBy, draftTagsFilter.length]);
 
-  const handleSearch = (value: string): void => setSearch(value);
+  const handleSearch = (value: string): void => setDraftSearch(value);
 
-  const handleSortBy = (sort: string): void => setSortBy(sort as PhotoSortOptions);
+  const handleSortBy = (sort: string): void => setDraftSortBy(sort as PhotoSortOptions);
 
-  const handleTagsFilter = (tags: TagsFilter): void => {
-    const tagIds = tags.map((tag): number => tag.id);
-    setTagsFilter(tags);
-    setTagsFilterIds(tagIds);
-  };
+  const handleTagsFilter = (tags: TagsFilter): void => setDraftTagsFilter(tags);
 
   const handleClearFilters = (): void => {
-    handleSearch('');
-    handleSortBy(PhotoSortOptions.NEWEST);
-    handleTagsFilter([]);
+    setDraftSearch('');
+    setDraftSortBy(PhotoSortOptions.NEWEST);
+    setDraftTagsFilter([]);
   };
 
-  const handleApplyFilters = (): void => {
-    onRefetchPhotos();
+  const handleApplyFilters = async (): Promise<void> => {
+    const draftTagIds = draftTagsFilter.map((tag): number => tag.id);
+
+    setSearch(draftSearch);
+    setSortBy(draftSortBy);
+    setTagsFilter(draftTagsFilter);
+    setTagsFilterIds(draftTagIds);
     setIsFilterDirty(false);
     toggleFilterDrawer(false);
   };
 
   return {
+    draftSearch,
+    draftSortBy,
+    draftTagsFilter,
     handleApplyFilters,
     handleClearFilters,
     handleSearch,
