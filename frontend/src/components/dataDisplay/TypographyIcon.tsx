@@ -11,7 +11,7 @@ export interface TypographyIconProps {
   typography: JSX.Element;
 }
 
-const StyledTypographyIcon = styled('div')((): { [key: string]: any } => ({
+const StyledTypographyIcon = styled(Stack)((): { [key: string]: any } => ({
   '.rgf': {
     '&-typography': {
       width: 'auto',
@@ -25,12 +25,14 @@ export default function TypographyIcon(props: TypographyIconProps): JSX.Element 
   const { className = '', endIcon = null, startIcon = null, typography } = props;
 
   return (
-    <StyledTypographyIcon className={clsx('rgf-typographyIcon', { [className]: !!className })}>
-      <Stack alignItems="center" spacing={1}>
-        {startIcon}
-        {typography}
-        {endIcon}
-      </Stack>
+    <StyledTypographyIcon
+      alignItems="center"
+      className={clsx('rgf-typographyIcon', { [className]: !!className })}
+      spacing={1}
+    >
+      {startIcon}
+      {typography}
+      {endIcon}
     </StyledTypographyIcon>
   );
 }

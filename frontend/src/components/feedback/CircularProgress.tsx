@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import MuiCircularProgress, {
   CircularProgressProps as MuiCircularProgressProps,
 } from '@mui/material/CircularProgress';
+import { styled } from '@mui/material/styles';
 
 import Box from '../layout/Box';
 
@@ -11,49 +12,44 @@ export const LOADING_SPINNER_MEDIUM_SIZE = 44;
 export const LOADING_SPINNER_SMALL_SIZE = 22;
 export const LOADING_PANEL_HEIGHT = 108;
 
+type Color = 'inherit' | 'secondary';
 type Variant = 'page' | 'panel' | 'inline';
 
 export interface CircularProgressProps {
   className?: MuiCircularProgressProps['className'];
+  color?: Color;
   variant?: Variant;
 }
 
-export default function CircularProgress(props: CircularProgressProps): JSX.Element {
-  const { className = '', variant = 'page' } = props;
+const StyledCircularProgress = styled(Box)((): { [key: string]: any } => ({
+  '&.rgf': {
+    '&-circularProgress': {
+      '&--inline': {
+        left: `calc(50% - (${LOADING_SPINNER_SMALL_SIZE}/2))`,
+        position: 'absolute',
+        top: `calc(50% - (${LOADING_SPINNER_SMALL_SIZE}/2))`,
+      },
+      '&--page': {
+        bottom: 0,
+        height: '100vh',
+        left: 0,
+        position: 'absolute',
+        right: 0,
+        top: 0,
+      },
+      '&--panel': {
+        height: LOADING_PANEL_HEIGHT,
+      },
+    },
+  },
 
-  const getStyle = (): {
-    alignItems?: string;
-    display?: string;
-    justifyContent?: string;
-    left?: string;
-    padding?: string;
-    height?: number;
-    position?: string;
-    top?: string;
-  } => {
-    switch (variant) {
-      case 'page':
-        return {
-          left: `calc(50% - (${LOADING_SPINNER_LARGE_SIZE}/2))`,
-          position: 'fixed',
-          top: `calc(50% - (${LOADING_SPINNER_LARGE_SIZE}/2))`,
-        };
-      case 'panel':
-        return {
-          alignItems: 'center',
-          display: 'flex',
-          height: LOADING_PANEL_HEIGHT,
-          justifyContent: 'center',
-        };
-      case 'inline':
-      default:
-        return {
-          alignItems: 'center',
-          display: 'flex',
-          justifyContent: 'center',
-        };
-    }
-  };
+  alignItems: 'center',
+  display: 'flex',
+  justifyContent: 'center',
+}));
+
+export default function CircularProgress(props: CircularProgressProps): JSX.Element {
+  const { className = '', color = 'secondary', variant = 'page' } = props;
 
   const getSize = (): number => {
     switch (variant) {
@@ -67,14 +63,13 @@ export default function CircularProgress(props: CircularProgressProps): JSX.Elem
     }
   };
 
+  const circularProgressStyles = clsx('rgf-circularProgress', `rgf-circularProgress--${variant}`, {
+    [className]: !!className,
+  });
+
   return (
-    <Box
-      className={clsx('rgf-circularProgress', `rgf-circularProgress--${variant}`, {
-        [className]: !!className,
-      })}
-      style={getStyle()}
-    >
-      <MuiCircularProgress size={getSize()} />
-    </Box>
+    <StyledCircularProgress className={circularProgressStyles}>
+      <MuiCircularProgress color={color} size={getSize()} />
+    </StyledCircularProgress>
   );
 }

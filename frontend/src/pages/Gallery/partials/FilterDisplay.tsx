@@ -5,8 +5,8 @@ import FilterAltIcon from '@/assets/icons/FilterAltIcon';
 import SearchIcon from '@/assets/icons/SearchIcon';
 import TagIcon from '@/assets/icons/TagIcon';
 import Chip from '@/components/dataDisplay/Chip';
-import Typography from '@/components/dataDisplay/Typography';
-import TypographyIcon from '@/components/dataDisplay/TypographyIcon';
+import Divider from '@/components/dataDisplay/Divider';
+import Button from '@/components/inputs/Button';
 import IconButton from '@/components/inputs/IconButton';
 import Stack from '@/components/layout/Stack';
 import { TagFilter } from '@/types/store/gallery.types';
@@ -14,54 +14,41 @@ import { TagFilter } from '@/types/store/gallery.types';
 import useGallery from '../hooks/useGallery';
 
 const StyledFilterDisplay = styled('div')(({ theme }): { [key: string]: any } => ({
+  '.rgf': {
+    '&-filterDisplay': {
+      '&--activeFilterChips': {
+        marginLeft: theme.spacing(1.5),
+      },
+    },
+  },
+
   paddingBottom: theme.spacing(1),
 }));
 
 export default function FilterDisplay(): JSX.Element {
-  const { search, sortBy, sortByOptions, tagsFilter, toggleFilterDrawer } = useGallery();
+  const { isFilterDrawerOpen, search, sortBy, sortByOptions, tagsFilter, toggleFilterDrawer } = useGallery();
 
-  const renderActiveFilters = (): JSX.Element => {
-    const renderSortBy = (): JSX.Element => (
-      <TypographyIcon
-        className="rgf-filterDisplay--activeFilterSort"
-        endIcon={<ArrowDropDownIcon color="secondary" />}
-        typography={
-          <Typography color="secondary" variant="h3">
-            {sortByOptions[sortBy].label}
-          </Typography>
-        }
-      />
-    );
-
-    const renderFilterChips = (): JSX.Element => {
-      const showTagChips = tagsFilter.length > 0;
-      const showSearchChip = search.length > 0;
-
-      return (
-        <Stack className="rgf-filterDisplay--activeFilterChips" spacing={0.5}>
-          {showTagChips &&
-            tagsFilter.map(
-              (tag: TagFilter): JSX.Element => (
-                <Chip key={tag.id} label={tag.label} startIcon={<TagIcon color="secondary" size="small" />} />
-              ),
-            )}
-
-          {showSearchChip && (
-            <Chip
-              label={search}
-              startIcon={<SearchIcon color="secondary" size="small" variant="outlined" />}
-              variant="outlined"
-            />
-          )}
-        </Stack>
-      );
-    };
+  // TODO - Turn renderFilterChips into a carousel and limit the amount of chars a chip can have
+  const renderFilterChips = (): JSX.Element => {
+    const showTagChips = tagsFilter.length > 0;
+    const showSearchChip = search.length > 0;
 
     return (
-      <Stack alignItems="end" className="rgf-filterDisplay--activeFilters" hasDivider spacing={2}>
-        {renderSortBy()}
+      <Stack className="rgf-filterDisplay--activeFilterChips" spacing={0.5}>
+        {showTagChips &&
+          tagsFilter.map(
+            (tag: TagFilter): JSX.Element => (
+              <Chip key={tag.id} label={tag.label} startIcon={<TagIcon color="secondary" size="small" />} />
+            ),
+          )}
 
-        {renderFilterChips()}
+        {showSearchChip && (
+          <Chip
+            label={search}
+            startIcon={<SearchIcon color="secondary" size="small" variant="outlined" />}
+            variant="outlined"
+          />
+        )}
       </Stack>
     );
   };
@@ -70,19 +57,35 @@ export default function FilterDisplay(): JSX.Element {
     <IconButton
       ariaLabel="toggle filter"
       className="rgf-filterDisplay--filterButton"
-      edge="end"
+      edge="start"
       onClick={(): void => toggleFilterDrawer(true)}
     >
       <FilterAltIcon />
     </IconButton>
   );
 
+  const renderSortByButton = (): JSX.Element => (
+    <Button
+      color="secondary"
+      endIcon={<ArrowDropDownIcon type={isFilterDrawerOpen ? 'open' : 'closed'} />}
+      onClick={(): void => toggleFilterDrawer(true)}
+      variant="tertiary"
+    >
+      {sortByOptions[sortBy].label}
+    </Button>
+  );
+
   return (
     <StyledFilterDisplay className="rgf-filterDisplay">
-      <Stack alignItems="end" justifyContent="spaceBetween">
-        {renderActiveFilters()}
-
+      <Stack alignItems="center" spacing={0.5}>
         {renderFilterButton()}
+
+        {renderSortByButton()}
+
+        {/* // TODO - make divider a little less long */}
+        <Divider orientation="vertical" />
+
+        {renderFilterChips()}
       </Stack>
     </StyledFilterDisplay>
   );

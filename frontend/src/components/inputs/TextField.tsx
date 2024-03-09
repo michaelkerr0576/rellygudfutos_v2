@@ -30,7 +30,7 @@ export interface TextFieldProps {
   variant?: Variant;
 }
 
-const StyledTextField = styled('div')(({ theme }): { [key: string]: any } => ({
+const StyledTextField = styled(Stack)(({ theme }): { [key: string]: any } => ({
   // #region Mui Overrides
   '.MuiInputBase-root': {
     paddingRight: theme.spacing(1),
@@ -118,32 +118,31 @@ export default function TextField(props: TextFieldProps): JSX.Element {
   return (
     <StyledTextField
       className={clsx('rgf-textField', `rgf-textField--${variant}`, { [className]: !!className })}
+      spacing={1}
     >
-      <Stack spacing={1}>
-        {variant === 'standard' && renderStandardStartAdornment()}
+      {variant === 'standard' && renderStandardStartAdornment()}
 
-        <MuiTextField
-          error={isError}
-          fullWidth
-          helperText={helperText}
-          inputProps={{
-            maxLength: maxCharacterLength,
-          }}
-          // eslint-disable-next-line react/jsx-no-duplicate-props
-          InputProps={{
-            endAdornment: renderEndAdornment(),
-            startAdornment: renderOutlinedStartAdornment(),
-          }}
-          inputRef={inputRef}
-          label={label}
-          onBlur={handleBlur}
-          onChange={handleChange}
-          onFocus={handleFocus}
-          type={type === 'search' ? 'text' : type}
-          value={value}
-          variant={variant}
-        />
-      </Stack>
+      <MuiTextField
+        error={isError}
+        fullWidth
+        helperText={helperText}
+        inputProps={{
+          maxLength: maxCharacterLength,
+        }}
+        // eslint-disable-next-line react/jsx-no-duplicate-props
+        InputProps={{
+          endAdornment: renderEndAdornment(),
+          startAdornment: renderOutlinedStartAdornment(),
+        }}
+        inputRef={inputRef}
+        label={label}
+        onBlur={handleBlur}
+        onChange={handleChange}
+        onFocus={handleFocus}
+        type={type === 'search' ? 'text' : type}
+        value={value}
+        variant={variant}
+      />
     </StyledTextField>
   );
 }

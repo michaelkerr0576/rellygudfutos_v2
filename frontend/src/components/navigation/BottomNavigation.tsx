@@ -25,7 +25,7 @@ export interface BottomNavigationProps {
   setSelectedValue: (value: string) => void;
 }
 
-const StyledBottomNavigation = styled('div')(({ theme }): { [key: string]: any } => ({
+const StyledBottomNavigation = styled(Paper)(({ theme }): { [key: string]: any } => ({
   bottom: 0,
   left: 0,
   position: 'fixed',
@@ -52,12 +52,13 @@ export default function BottomNavigation(props: BottomNavigationProps): JSX.Elem
     );
 
   return (
-    <StyledBottomNavigation className={clsx('rgf-bottomNavigation', { [className]: !!className })}>
-      <Paper elevation={24}>
-        <MuiBottomNavigation value={selectedValue} onChange={handleChange}>
-          {renderActions()}
-        </MuiBottomNavigation>
-      </Paper>
+    <StyledBottomNavigation
+      className={clsx('rgf-bottomNavigation', { [className]: !!className })}
+      elevation={24}
+    >
+      <MuiBottomNavigation value={selectedValue} onChange={handleChange}>
+        {renderActions()}
+      </MuiBottomNavigation>
     </StyledBottomNavigation>
   );
 }

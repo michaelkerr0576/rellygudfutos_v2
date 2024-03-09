@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 
 import { common } from '@mui/material/colors';
 import { alpha, createTheme, Theme } from '@mui/material/styles';
+import { TypographyOptions } from '@mui/material/styles/createTypography';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 import { ColorMode, ThemeState } from '@/types/store/theme.types';
@@ -21,6 +22,12 @@ declare module '@mui/material/styles' {
     tablet: true;
     laptop: true;
     desktop: true;
+  }
+  interface Theme {
+    typography: TypographyOptions & {
+      // * Custom typography
+      fontWeightSemiBold: number;
+    };
   }
 }
 
@@ -71,6 +78,11 @@ const components = {
 
 const typography = {
   fontFamily: ['Roboto', 'Helvetica', 'Arial', 'sans-serif'].join(','),
+  fontWeightBold: 700,
+  fontWeightLight: 300,
+  fontWeightMedium: 500,
+  fontWeightRegular: 400,
+  fontWeightSemiBold: 600,
   h1: {
     fontSize: '2rem',
   },
