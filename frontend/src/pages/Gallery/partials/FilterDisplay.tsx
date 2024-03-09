@@ -26,7 +26,8 @@ const StyledFilterDisplay = styled('div')(({ theme }): { [key: string]: any } =>
 }));
 
 export default function FilterDisplay(): JSX.Element {
-  const { isFilterDrawerOpen, search, sortBy, sortByOptions, tagsFilter, toggleFilterDrawer } = useGallery();
+  const { handleOpenFilterDrawer, isFilterDrawerOpen, search, sortBy, sortByOptions, tagsFilter } =
+    useGallery();
 
   // TODO - Turn renderFilterChips into a carousel and limit the amount of chars a chip can have
   const renderFilterChips = (): JSX.Element => {
@@ -58,7 +59,7 @@ export default function FilterDisplay(): JSX.Element {
       ariaLabel="toggle filter"
       className="rgf-filterDisplay--filterButton"
       edge="start"
-      onClick={(): void => toggleFilterDrawer(true)}
+      onClick={handleOpenFilterDrawer}
     >
       <FilterAltIcon />
     </IconButton>
@@ -68,7 +69,7 @@ export default function FilterDisplay(): JSX.Element {
     <Button
       color="secondary"
       endIcon={<ArrowDropDownIcon type={isFilterDrawerOpen ? 'open' : 'closed'} />}
-      onClick={(): void => toggleFilterDrawer(true)}
+      onClick={handleOpenFilterDrawer}
       variant="tertiary"
     >
       {sortByOptions[sortBy].label}

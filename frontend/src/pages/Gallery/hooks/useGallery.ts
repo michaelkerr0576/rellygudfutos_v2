@@ -11,6 +11,13 @@ import {
 } from '@/types/store/gallery.types';
 
 export interface UseGallery {
+  handleChangeNavigationValue: (value: string) => void;
+  handleCloseFilterDrawer: () => void;
+  handleClosePhotoDialog: () => void;
+  handleOpenFilterDrawer: () => void;
+  handleOpenPhotoDialog: (photoId?: string) => void;
+  handleToggleFilterDrawer: (isOpen: boolean) => void;
+  handleTogglePhotoDialog: (isOpen: boolean, photoId?: string) => void;
   isFilterDrawerOpen: boolean;
   isPhotoDialogOpen: boolean;
   layoutVariant: LayoutVariant;
@@ -20,9 +27,6 @@ export interface UseGallery {
   sortByOptions: SortByOptionDictionary;
   tagsFilter: TagFilter[];
   tagsFilterIds: number[];
-  toggleFilterDrawer: (isOpen: boolean) => void;
-  toggleNavigationValue: (value: string) => void;
-  togglePhotoDialog: (isOpen: boolean, photoId?: string) => void;
 }
 
 export default function useGallery(): UseGallery {
@@ -66,18 +70,13 @@ export default function useGallery(): UseGallery {
     [PhotoSortOptions.RANDOM]: { id: PhotoSortOptions.RANDOM, label: 'Random' },
   };
 
-  const toggleFilterDrawer = (isOpen: boolean): void => setIsFilterDrawerOpen(isOpen);
+  const handleToggleFilterDrawer = (isOpen: boolean): void => setIsFilterDrawerOpen(isOpen);
 
-  const toggleNavigationValue = (value: string): void => {
-    const isLayoutVariantChange = value === LayoutVariant.GRID || value === LayoutVariant.LIST;
-    if (isLayoutVariantChange) {
-      setLayoutVariant(value as LayoutVariant);
-    }
+  const handleOpenFilterDrawer = (): void => handleToggleFilterDrawer(true);
 
-    setNavigationValue(value as NavigationValue);
-  };
+  const handleCloseFilterDrawer = (): void => handleToggleFilterDrawer(false);
 
-  const togglePhotoDialog = (isOpen: boolean, photoId?: string): void => {
+  const handleTogglePhotoDialog = (isOpen: boolean, photoId?: string): void => {
     if (photoId && isOpen) {
       navigate(`/photo/${photoId}`);
     } else {
@@ -87,7 +86,27 @@ export default function useGallery(): UseGallery {
     setIsPhotoDialogOpen(isOpen);
   };
 
+  const handleOpenPhotoDialog = (photoId?: string): void => handleTogglePhotoDialog(true, photoId);
+
+  const handleClosePhotoDialog = (): void => handleTogglePhotoDialog(false);
+
+  const handleChangeNavigationValue = (value: string): void => {
+    const isLayoutVariantChange = value === LayoutVariant.GRID || value === LayoutVariant.LIST;
+    if (isLayoutVariantChange) {
+      setLayoutVariant(value as LayoutVariant);
+    }
+
+    setNavigationValue(value as NavigationValue);
+  };
+
   return {
+    handleChangeNavigationValue,
+    handleCloseFilterDrawer,
+    handleClosePhotoDialog,
+    handleOpenFilterDrawer,
+    handleOpenPhotoDialog,
+    handleToggleFilterDrawer,
+    handleTogglePhotoDialog,
     isFilterDrawerOpen,
     isPhotoDialogOpen,
     layoutVariant,
@@ -97,8 +116,5 @@ export default function useGallery(): UseGallery {
     sortByOptions,
     tagsFilter,
     tagsFilterIds,
-    toggleFilterDrawer,
-    toggleNavigationValue,
-    togglePhotoDialog,
   };
 }

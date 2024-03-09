@@ -33,12 +33,12 @@ export default function MenuDrawer(): JSX.Element {
 
   const { pathname } = useLocation();
 
-  const { colorMode, toggleColorMode } = useThemes();
+  const { colorMode, handleToggleColorMode } = useThemes();
 
-  const { isMenuDrawerOpen, toggleMenuDrawer } = useMenu();
+  const { handleCloseMenuDrawer, handleToggleMenuDrawer, isMenuDrawerOpen } = useMenu();
 
   const renderMenuButton = (isDrawerOpen: boolean): JSX.Element => (
-    <IconButton ariaLabel="menu" edge="start" onClick={(): void => toggleMenuDrawer(isDrawerOpen)}>
+    <IconButton ariaLabel="menu" edge="start" onClick={(): void => handleToggleMenuDrawer(isDrawerOpen)}>
       <MenuIcon variant={isMenuDrawerOpen ? 'filled' : 'outlined'} />
     </IconButton>
   );
@@ -46,14 +46,14 @@ export default function MenuDrawer(): JSX.Element {
   const renderDrawerHeader = (): JSX.Element => {
     const handleLogoButtonClick = (): void => {
       navigate('/');
-      toggleMenuDrawer(false);
+      handleCloseMenuDrawer();
     };
 
     return (
       <Stack className="rgf-menuDrawer--header" alignItems="center" spacing={0.5}>
         {renderMenuButton(false)}
 
-        <LogoButton ariaLabel="really good photos" onClick={(): void => handleLogoButtonClick()}>
+        <LogoButton ariaLabel="really good photos" onClick={handleLogoButtonClick}>
           <RellygudfutosLogo size="small" />
         </LogoButton>
       </Stack>
@@ -64,7 +64,7 @@ export default function MenuDrawer(): JSX.Element {
     <Box className="rgf-menuDrawer">
       {renderMenuButton(true)}
 
-      <StyledDrawer anchor="left" isOpen={isMenuDrawerOpen} setIsOpen={toggleMenuDrawer}>
+      <StyledDrawer anchor="left" isOpen={isMenuDrawerOpen} setIsOpen={handleToggleMenuDrawer}>
         {renderDrawerHeader()}
 
         <Divider />
@@ -75,7 +75,7 @@ export default function MenuDrawer(): JSX.Element {
               icon: <GalleryIcon variant={pathname === '/' ? 'filled' : 'outlined'} />,
               label: 'Gallery',
               navigateTo: '/',
-              onClick: (): void => toggleMenuDrawer(false),
+              onClick: handleCloseMenuDrawer,
             },
           ]}
           subHeader="Navigation"
@@ -87,16 +87,11 @@ export default function MenuDrawer(): JSX.Element {
           listItems={[
             {
               action: (
-                <Switch
-                  ariaLabel="switch-dark-mode"
-                  edge="end"
-                  isChecked={colorMode === ColorMode.DARK}
-                  onChange={(): void => {}}
-                />
+                <Switch ariaLabel="switch-dark-mode" edge="end" isChecked={colorMode === ColorMode.DARK} />
               ),
               icon: <DarkModeIcon variant={colorMode === ColorMode.DARK ? 'filled' : 'outlined'} />,
               label: 'Dark mode',
-              onClick: toggleColorMode,
+              onClick: handleToggleColorMode,
             },
           ]}
           subHeader="Settings"

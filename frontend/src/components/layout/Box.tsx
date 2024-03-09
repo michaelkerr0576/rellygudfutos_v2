@@ -19,7 +19,7 @@ export default function Box(props: BoxProps): JSX.Element {
     boxRef = undefined,
     children = null,
     className = '',
-    onClick = (): void => {},
+    onClick = undefined,
     style = undefined,
   } = props;
 

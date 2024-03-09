@@ -40,7 +40,7 @@ export default function List(props: ListProps): JSX.Element {
 
   const renderListItems = (): JSX.Element[] => {
     const renderListItem = (listItem: ListItem): JSX.Element => {
-      const { action = null, icon, label, onClick = (): void => {} } = listItem;
+      const { action = null, icon, label, onClick = undefined } = listItem;
 
       return (
         <MuiListItemButton onClick={onClick}>

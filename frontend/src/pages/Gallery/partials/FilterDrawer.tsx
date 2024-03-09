@@ -69,7 +69,7 @@ const StyledDrawer = styled(Drawer)(({ theme }): { [key: string]: any } => ({
 }));
 
 export default function FilterDrawer(): JSX.Element {
-  const { isFilterDrawerOpen, sortByOptions, toggleFilterDrawer } = useGallery();
+  const { handleToggleFilterDrawer, isFilterDrawerOpen, sortByOptions } = useGallery();
 
   const {
     draftSearch,
@@ -81,7 +81,7 @@ export default function FilterDrawer(): JSX.Element {
     handleSortBy,
     handleTagsFilter,
     isFilterDirty,
-  } = useGalleryFilter({ toggleFilterDrawer });
+  } = useGalleryFilter({ toggleFilterDrawer: handleToggleFilterDrawer });
 
   const renderRow = (children: React.ReactNode): JSX.Element => (
     <Grid isContainer>
@@ -174,7 +174,7 @@ export default function FilterDrawer(): JSX.Element {
       anchor="bottom"
       className="rgf-filterDrawer"
       isOpen={isFilterDrawerOpen}
-      setIsOpen={toggleFilterDrawer}
+      setIsOpen={handleToggleFilterDrawer}
     >
       {renderSearchField()}
 

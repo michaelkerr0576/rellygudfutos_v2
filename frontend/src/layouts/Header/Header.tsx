@@ -52,7 +52,9 @@ const StyledHeader = styled('header')(({ theme }): { [key: string]: any } => ({
 export default function Header(): JSX.Element {
   const navigate = useNavigate();
 
-  const { isLoginDialogOpen, toggleLoginDialog } = useMenu();
+  const { handleOpenLoginDialog, isLoginDialogOpen } = useMenu();
+
+  const handleNavigateGallery = (): void => navigate('/');
 
   const renderSiteAction = (): JSX.Element => (
     <Stack alignItems="center">
@@ -61,7 +63,7 @@ export default function Header(): JSX.Element {
       <LogoButton
         ariaLabel="really good photos"
         className="rgf-header--rellygudfutosLogoButton"
-        onClick={(): void => navigate('/')}
+        onClick={handleNavigateGallery}
       >
         <RellygudfutosLogo size="small" />
       </LogoButton>
@@ -80,7 +82,7 @@ export default function Header(): JSX.Element {
         ariaLabel="login"
         className="rgf-header--loginButton"
         edge="start"
-        onClick={(): void => toggleLoginDialog(true)}
+        onClick={handleOpenLoginDialog}
       >
         <LoginIcon />
       </IconButton>

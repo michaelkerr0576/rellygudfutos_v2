@@ -11,9 +11,9 @@ import { NavigationValue } from '@/types/store/gallery.types';
 import useGallery from '../hooks/useGallery';
 
 export default function GalleryBottomNavigation(): JSX.Element {
-  const { colorMode, toggleColorMode } = useThemes();
+  const { handleToggleColorMode, colorMode } = useThemes();
 
-  const { toggleFilterDrawer, navigationValue, toggleNavigationValue } = useGallery();
+  const { handleChangeNavigationValue, handleOpenFilterDrawer, navigationValue } = useGallery();
 
   return (
     <Box className="rgf-galleryBottomNavigation">
@@ -36,7 +36,7 @@ export default function GalleryBottomNavigation(): JSX.Element {
           {
             icon: <FilterAltIcon />,
             label: 'Filter',
-            onClick: (): void => toggleFilterDrawer(true),
+            onClick: handleOpenFilterDrawer,
             value: NavigationValue.SEARCH,
           },
           {
@@ -54,12 +54,12 @@ export default function GalleryBottomNavigation(): JSX.Element {
               />
             ),
             label: colorMode === 'dark' ? 'Dark' : 'Light',
-            onClick: toggleColorMode,
+            onClick: handleToggleColorMode,
             value: NavigationValue.MODE,
           },
         ]}
         selectedValue={navigationValue}
-        setSelectedValue={toggleNavigationValue}
+        setSelectedValue={handleChangeNavigationValue}
       />
     </Box>
   );

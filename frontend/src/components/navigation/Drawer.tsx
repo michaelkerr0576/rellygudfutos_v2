@@ -62,20 +62,13 @@ export default function Drawer(props: DrawerProps): JSX.Element {
 
   const isBottomDrawer = anchor === 'bottom';
 
-  const toggleDrawer =
-    (isDrawerOpen: boolean) =>
-    (event: React.KeyboardEvent | React.MouseEvent): void => {
-      const ìsTabOrShiftKeydown =
-        event &&
-        event.type === 'keydown' &&
-        ((event as React.KeyboardEvent).key === 'Tab' || (event as React.KeyboardEvent).key === 'Shift');
+  const handleOpenDrawer = (): void => {
+    setIsOpen(true);
+  };
 
-      if (ìsTabOrShiftKeydown) {
-        return;
-      }
-
-      setIsOpen(isDrawerOpen);
-    };
+  const handleCloseDrawer = (): void => {
+    setIsOpen(false);
+  };
 
   const drawerStyles = clsx('rgf-drawer', {
     [className]: !!className,
@@ -86,14 +79,14 @@ export default function Drawer(props: DrawerProps): JSX.Element {
       anchor={anchor}
       className={drawerStyles}
       disableSwipeToOpen
-      onClose={toggleDrawer(false)}
-      onOpen={toggleDrawer(true)}
+      onClose={handleCloseDrawer}
+      onOpen={handleOpenDrawer}
       open={isOpen}
     >
       {isBottomDrawer && (
         <Paper className="rgf-drawer--expandDrawerButton" elevation={1}>
           <Grid justifyContent="center">
-            <IconButton ariaLabel="less" onClick={(): void => setIsOpen(false)}>
+            <IconButton ariaLabel="less" onClick={handleCloseDrawer}>
               <ExpandIcon type={isOpen ? 'less' : 'more'} size="large" />
             </IconButton>
           </Grid>

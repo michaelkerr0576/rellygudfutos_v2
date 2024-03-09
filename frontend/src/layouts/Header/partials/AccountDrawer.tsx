@@ -28,10 +28,10 @@ const StyledDrawer = styled(Drawer)(({ theme }): { [key: string]: any } => ({
 export default function AccountDrawer(): JSX.Element {
   const { pathname } = useLocation();
 
-  const { isAccountDrawerOpen, toggleAccountDrawer } = useMenu();
+  const { handleCloseAccountDrawer, handleToggleAccountDrawer, isAccountDrawerOpen } = useMenu();
 
   const renderAccountButton = (isDrawerOpen: boolean): JSX.Element => (
-    <IconButton ariaLabel="account" edge="end" onClick={(): void => toggleAccountDrawer(isDrawerOpen)}>
+    <IconButton ariaLabel="account" edge="end" onClick={(): void => handleToggleAccountDrawer(isDrawerOpen)}>
       <Avatar>M</Avatar>
     </IconButton>
   );
@@ -48,7 +48,7 @@ export default function AccountDrawer(): JSX.Element {
     <Box className="rgf-accountDrawer">
       {renderAccountButton(true)}
 
-      <StyledDrawer anchor="right" isOpen={isAccountDrawerOpen} setIsOpen={toggleAccountDrawer}>
+      <StyledDrawer anchor="right" isOpen={isAccountDrawerOpen} setIsOpen={handleToggleAccountDrawer}>
         {renderDrawerHeader()}
 
         <Divider />
@@ -59,7 +59,7 @@ export default function AccountDrawer(): JSX.Element {
               icon: <AccountIcon variant={pathname.includes('/account/profile') ? 'filled' : 'outlined'} />,
               label: 'Profile',
               navigateTo: '/account/profile',
-              onClick: (): void => toggleAccountDrawer(false),
+              onClick: handleCloseAccountDrawer,
             },
             {
               icon: (
@@ -67,13 +67,13 @@ export default function AccountDrawer(): JSX.Element {
               ),
               label: 'Dashboard',
               navigateTo: '/account/dashboard',
-              onClick: (): void => toggleAccountDrawer(false),
+              onClick: handleCloseAccountDrawer,
             },
             {
               icon: <LogoutIcon />,
               label: 'Logout',
               navigateTo: '/',
-              onClick: (): void => toggleAccountDrawer(false),
+              onClick: handleCloseAccountDrawer,
             },
           ]}
           subHeader="Account"

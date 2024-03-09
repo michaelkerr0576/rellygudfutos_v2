@@ -33,9 +33,9 @@ export default function LoginDialog(): JSX.Element {
 
   const { mutate: loginUser, isLoading } = useUserLogin();
 
-  const { isLoginDialogOpen, toggleLoginDialog } = useMenu();
+  const { handleToggleLoginDialog, isLoginDialogOpen } = useMenu();
 
-  const onSubmit: SubmitHandler<LoginFormInput> = async (data): Promise<void> => {
+  const handleOnSubmit: SubmitHandler<LoginFormInput> = async (data): Promise<void> => {
     const { email, password } = data;
 
     loginUser({ email, password });
@@ -45,7 +45,7 @@ export default function LoginDialog(): JSX.Element {
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   // TODO - move handles to hook
-  const handleClickShowPassword = (): void => setShowPassword((isShown): boolean => !isShown);
+  const handleToggleShowPassword = (): void => setShowPassword((isShown): boolean => !isShown);
 
   const renderEmailField = (): JSX.Element => (
     <FormTextField
@@ -67,7 +67,7 @@ export default function LoginDialog(): JSX.Element {
         <IconButton
           ariaLabel="toggle password visibility"
           className="rgf-dialog--titleMoreOptionsButton"
-          onClick={handleClickShowPassword}
+          onClick={handleToggleShowPassword}
         >
           <VisibilityIcon type={showPassword ? 'off' : 'on'} color="secondary" />
         </IconButton>
@@ -85,7 +85,7 @@ export default function LoginDialog(): JSX.Element {
       className="rgf-loginDialog--loginButton"
       isFullWidth
       isLoading={isSubmitting || isLoading}
-      onClick={handleSubmit(onSubmit)}
+      onClick={handleSubmit(handleOnSubmit)}
       startIcon={<LoginIcon />}
       type="submit"
     >
@@ -97,7 +97,7 @@ export default function LoginDialog(): JSX.Element {
     <Dialog
       className="rgf-loginDialog"
       dialogActions={renderDialogActions()}
-      setIsOpen={(isOpen): void => toggleLoginDialog(isOpen)}
+      setIsOpen={handleToggleLoginDialog}
       isOpen={isLoginDialogOpen}
       title="Login"
     >

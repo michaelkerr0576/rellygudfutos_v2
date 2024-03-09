@@ -100,6 +100,10 @@ export default function Dialog(props: DialogProps): JSX.Element {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.between('mobile', 'laptop'));
 
+  const handleCloseDialog = (): void => {
+    setIsOpen(false);
+  };
+
   const renderDialogTitle = (): JSX.Element => {
     const showTitle = !!title;
     const showMoreOptionsButton = !!onMoreOptionsClick;
@@ -121,7 +125,7 @@ export default function Dialog(props: DialogProps): JSX.Element {
         ariaLabel="close"
         className="rgf-dialog--titleCloseButton"
         edge={isSmallScreen ? 'start' : 'end'}
-        onClick={(): void => setIsOpen(false)}
+        onClick={handleCloseDialog}
       >
         {isSmallScreen ? <BackIcon /> : <CloseIcon />}
       </IconButton>
@@ -175,7 +179,7 @@ export default function Dialog(props: DialogProps): JSX.Element {
       fullScreen={isSmallScreen}
       fullWidth
       maxWidth={maxWidth}
-      onClose={(): void => setIsOpen(false)}
+      onClose={handleCloseDialog}
       open={isOpen}
       scroll="paper"
     >

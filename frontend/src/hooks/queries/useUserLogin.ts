@@ -17,7 +17,7 @@ export default function useUserLogin(): UseMutationResult<
 > {
   const { setAuth } = useAuth();
 
-  const { toggleLoginDialog } = useMenu();
+  const { handleCloseLoginDialog } = useMenu();
 
   return useMutation({
     mutationFn: (requestPayload): Promise<ApiResponseToken<User>> => postUserLogin(requestPayload),
@@ -36,7 +36,7 @@ export default function useUserLogin(): UseMutationResult<
       const authRole = role === UserRole.ADMIN ? AuthRole.ADMIN : AuthRole.USER;
       setAuth({ role: authRole, token });
 
-      toggleLoginDialog(false);
+      handleCloseLoginDialog();
     },
   });
 }

@@ -24,7 +24,7 @@ export interface GalleryProps {
 export default function Gallery(props: GalleryProps): JSX.Element {
   const { error, isError, isFetchingNextPage, isLoading, lastImageRef, photos } = props;
 
-  const { layoutVariant, togglePhotoDialog } = useGallery();
+  const { handleOpenPhotoDialog, layoutVariant } = useGallery();
 
   const defaultErrorMessage =
     'There was an error retrieving photos from the server. Please try refreshing the page';
@@ -44,7 +44,7 @@ export default function Gallery(props: GalleryProps): JSX.Element {
         images={photos}
         lastImageRef={lastImageRef}
         maxWidth={GALLERY_MAX_WIDTH}
-        onClick={(photoId): void => togglePhotoDialog(true, photoId)}
+        onClick={handleOpenPhotoDialog}
         variant={layoutVariant}
       />
 

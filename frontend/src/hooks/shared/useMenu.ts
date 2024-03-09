@@ -5,12 +5,18 @@ import { MenuState } from '@/types/store/menu.types';
 import useMenuStore from '../stores/useMenuStore';
 
 export interface UseMenu {
+  handleCloseAccountDrawer: () => void;
+  handleCloseLoginDialog: () => void;
+  handleCloseMenuDrawer: () => void;
+  handleOpenAccountDrawer: () => void;
+  handleOpenLoginDialog: () => void;
+  handleOpenMenuDrawer: () => void;
+  handleToggleAccountDrawer: (isOpen: boolean) => void;
+  handleToggleLoginDialog: (isOpen: boolean) => void;
+  handleToggleMenuDrawer: (isOpen: boolean) => void;
   isAccountDrawerOpen: boolean;
   isLoginDialogOpen: boolean;
   isMenuDrawerOpen: boolean;
-  toggleAccountDrawer: (isOpen: boolean) => void;
-  toggleLoginDialog: (isOpen: boolean) => void;
-  toggleMenuDrawer: (isOpen: boolean) => void;
 }
 
 export default function useMenu(): UseMenu {
@@ -34,9 +40,13 @@ export default function useMenu(): UseMenu {
     }),
   );
 
-  const toggleAccountDrawer = (isOpen: boolean): void => setIsAccountDrawerOpen(isOpen);
+  const handleToggleAccountDrawer = (isOpen: boolean): void => setIsAccountDrawerOpen(isOpen);
 
-  const toggleLoginDialog = (isOpen: boolean): void => {
+  const handleOpenAccountDrawer = (): void => handleToggleAccountDrawer(true);
+
+  const handleCloseAccountDrawer = (): void => handleToggleAccountDrawer(false);
+
+  const handleToggleLoginDialog = (isOpen: boolean): void => {
     if (isOpen) {
       navigate(`/login`);
     } else {
@@ -46,14 +56,28 @@ export default function useMenu(): UseMenu {
     setIsLoginDialogOpen(isOpen);
   };
 
-  const toggleMenuDrawer = (isOpen: boolean): void => setIsMenuDrawerOpen(isOpen);
+  const handleOpenLoginDialog = (): void => handleToggleLoginDialog(true);
+
+  const handleCloseLoginDialog = (): void => handleToggleLoginDialog(true);
+
+  const handleToggleMenuDrawer = (isOpen: boolean): void => setIsMenuDrawerOpen(isOpen);
+
+  const handleOpenMenuDrawer = (): void => handleToggleMenuDrawer(true);
+
+  const handleCloseMenuDrawer = (): void => handleToggleMenuDrawer(false);
 
   return {
+    handleCloseAccountDrawer,
+    handleCloseLoginDialog,
+    handleCloseMenuDrawer,
+    handleOpenAccountDrawer,
+    handleOpenLoginDialog,
+    handleOpenMenuDrawer,
+    handleToggleAccountDrawer,
+    handleToggleLoginDialog,
+    handleToggleMenuDrawer,
     isAccountDrawerOpen,
     isLoginDialogOpen,
     isMenuDrawerOpen,
-    toggleAccountDrawer,
-    toggleLoginDialog,
-    toggleMenuDrawer,
   };
 }

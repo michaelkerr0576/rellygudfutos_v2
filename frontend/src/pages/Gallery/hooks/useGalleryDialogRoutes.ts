@@ -10,9 +10,9 @@ export default function useGalleryDialogRoutes(): void {
 
   const { photoId = '' } = useParams();
 
-  const { isLoginDialogOpen, toggleLoginDialog } = useMenu();
+  const { handleCloseLoginDialog, handleOpenLoginDialog, isLoginDialogOpen } = useMenu();
 
-  const { isPhotoDialogOpen, togglePhotoDialog } = useGallery();
+  const { handleClosePhotoDialog, handleOpenPhotoDialog, isPhotoDialogOpen } = useGallery();
 
   const isMounted = useRef<boolean>(true);
 
@@ -21,13 +21,13 @@ export default function useGalleryDialogRoutes(): void {
       // * Check if login URL is a direct link on first render
       const isLoginUrl = location.pathname === '/login';
       if (!isLoginDialogOpen && isLoginUrl) {
-        toggleLoginDialog(true);
+        handleOpenLoginDialog();
       }
 
       // * Check if user removed /login from URL and refreshed
       const isGalleryUrl = location.pathname === '/';
       if (isLoginDialogOpen && isGalleryUrl) {
-        toggleLoginDialog(false);
+        handleCloseLoginDialog();
       }
     }
   }, []);
@@ -37,13 +37,13 @@ export default function useGalleryDialogRoutes(): void {
       // * Check if photo URL is a direct link on first render
       const isPhotoUrl = photoId && location.pathname === `/photo/${photoId}`;
       if (!isPhotoDialogOpen && isPhotoUrl) {
-        togglePhotoDialog(true, photoId);
+        handleOpenPhotoDialog(photoId);
       }
 
       // * Check if user removed /photo/:photoId from URL and refreshed
       const isGalleryUrl = location.pathname === '/';
       if (isPhotoDialogOpen && isGalleryUrl) {
-        togglePhotoDialog(false);
+        handleClosePhotoDialog();
       }
     }
   }, []);

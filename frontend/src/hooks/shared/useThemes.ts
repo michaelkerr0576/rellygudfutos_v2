@@ -33,8 +33,8 @@ declare module '@mui/material/styles' {
 
 export interface UseThemes {
   colorMode: ColorMode;
+  handleToggleColorMode: () => void;
   theme: Theme;
-  toggleColorMode: () => void;
 }
 
 const breakpoints = {
@@ -159,14 +159,14 @@ export default function useThemes(): UseThemes {
     [colorMode],
   );
 
-  const toggleColorMode = (): void => {
+  const handleToggleColorMode = (): void => {
     const toggledColorCode = colorMode === ColorMode.LIGHT ? ColorMode.DARK : ColorMode.LIGHT;
     setColorMode(toggledColorCode);
   };
 
   return {
     colorMode: colorMode as ColorMode,
+    handleToggleColorMode,
     theme,
-    toggleColorMode,
   };
 }

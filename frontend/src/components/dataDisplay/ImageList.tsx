@@ -82,6 +82,10 @@ export default function ImageList(props: ImageListProps): JSX.Element {
       const isLandscapeAspectRatio = imageAspectRatio === 'landscape';
       const isListVariant = variant === 'list';
 
+      const handleImageClick = (): void => {
+        onClick(imageId);
+      };
+
       const getColumns = (): number => {
         if (isListVariant) {
           return IMAGE_CONTAINER_COLUMNS;
@@ -111,7 +115,7 @@ export default function ImageList(props: ImageListProps): JSX.Element {
           className="rgf-imageList--listItem"
           cols={getColumns()}
           key={imageId}
-          onClick={(): void => onClick(imageId)}
+          onClick={handleImageClick}
           rows={getRows()}
         >
           <Image

@@ -7,11 +7,11 @@ export interface SwitchProps {
   className?: MuiSwitchProps['className'];
   edge?: MuiSwitchProps['edge'];
   isChecked: MuiSwitchProps['checked'];
-  onChange: MuiSwitchProps['onChange'];
+  onChange?: MuiSwitchProps['onChange'];
 }
 
 export default function Switch(props: SwitchProps): JSX.Element {
-  const { ariaLabel, className = '', edge = false, isChecked, onChange } = props;
+  const { ariaLabel, className = '', edge = false, isChecked, onChange = undefined } = props;
 
   const switchStyles = clsx('rgf-switch', {
     [className]: !!className,

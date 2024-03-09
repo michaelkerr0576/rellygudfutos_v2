@@ -51,8 +51,12 @@ export default function Image(props: ImageProps): JSX.Element {
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const openImageInNewTab = (): void => {
+  const handleOpenImageInNewTab = (): void => {
     window.open(src, '_blank');
+  };
+
+  const handleImageLoad = (): void => {
+    setIsLoading(false);
   };
 
   const renderImage = (ref?: ImageProps['imageRef']): JSX.Element => {
@@ -67,8 +71,8 @@ export default function Image(props: ImageProps): JSX.Element {
         alt={alt}
         className={imageStyles}
         loading="lazy"
-        onClick={isOnClickNewTabEnabled ? openImageInNewTab : undefined}
-        onLoad={(): void => setIsLoading(false)}
+        onClick={isOnClickNewTabEnabled ? handleOpenImageInNewTab : undefined}
+        onLoad={handleImageLoad}
         ref={ref}
         src={src}
         style={{
