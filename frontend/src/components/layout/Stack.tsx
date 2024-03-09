@@ -55,10 +55,14 @@ export default function Stack(props: StackProps): JSX.Element {
     }
   };
 
+  const stackStyles = clsx('rgf-stack', {
+    [className]: !!className,
+  });
+
   return (
     <MuiStack
       alignItems={getAlignItems()}
-      className={clsx('rgf-stack', { [className]: !!className })}
+      className={stackStyles}
       direction={direction}
       divider={hasDivider ? <Divider orientation="vertical" /> : null}
       justifyContent={getJustifyContent()}

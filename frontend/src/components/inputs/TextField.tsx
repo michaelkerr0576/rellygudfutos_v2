@@ -115,11 +115,12 @@ export default function TextField(props: TextFieldProps): JSX.Element {
     return <MuiInputAdornment position="end">{endAdornment}</MuiInputAdornment>;
   };
 
+  const textFieldStyles = clsx('rgf-textField', `rgf-textField--${variant}`, {
+    [className]: !!className,
+  });
+
   return (
-    <StyledTextField
-      className={clsx('rgf-textField', `rgf-textField--${variant}`, { [className]: !!className })}
-      spacing={1}
-    >
+    <StyledTextField className={textFieldStyles} spacing={1}>
       {variant === 'standard' && renderStandardStartAdornment()}
 
       <MuiTextField

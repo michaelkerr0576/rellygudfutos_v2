@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 
 import MuiAvatar, { AvatarProps as MuiAvatarProps } from '@mui/material/Avatar';
+import { styled } from '@mui/material/styles';
 
 export type Size = 'large' | 'medium' | 'small';
 
@@ -10,27 +11,34 @@ export interface AvatarProps {
   size?: Size;
 }
 
+const StyledMuiAvatar = styled(MuiAvatar)((): { [key: string]: any } => ({
+  '&.rgf': {
+    '&-avatar': {
+      '&--large': {
+        fontSize: '1.25rem',
+        height: 32,
+        width: 32,
+      },
+      '&--medium': {
+        fontSize: '0.95rem',
+        height: 24,
+        width: 24,
+      },
+      '&--small': {
+        fontSize: '0.85rem',
+        height: 20,
+        width: 20,
+      },
+    },
+  },
+}));
+
 export default function Avatar(props: AvatarProps): JSX.Element {
   const { children, className = '', size = 'medium' } = props;
 
-  const getStyle = (): { fontSize: string; height: number; width: number } => {
-    switch (size) {
-      case 'small':
-        return { fontSize: '0.85rem', height: 20, width: 20 };
-      case 'large':
-        return { fontSize: '1.25rem', height: 32, width: 32 };
-      case 'medium':
-      default:
-        return { fontSize: '0.95rem', height: 24, width: 24 };
-    }
-  };
+  const avatarStyles = clsx('rgf-avatar', `rgf-avatar--${size}`, {
+    [className]: !!className,
+  });
 
-  return (
-    <MuiAvatar
-      className={clsx('rgf-avatar', `rgf-chip--${size}`, { [className]: !!className })}
-      style={{ ...getStyle() }}
-    >
-      {children}
-    </MuiAvatar>
-  );
+  return <StyledMuiAvatar className={avatarStyles}>{children}</StyledMuiAvatar>;
 }

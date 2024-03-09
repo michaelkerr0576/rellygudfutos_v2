@@ -10,11 +10,11 @@ export interface DividerProps {
 export default function Divider(props: DividerProps): JSX.Element {
   const { className = '', orientation = 'horizontal' } = props;
 
+  const dividerStyles = clsx('rgf-divider', {
+    [className]: !!className,
+  });
+
   return (
-    <MuiDivider
-      className={clsx('rgf-divider', { [className]: !!className })}
-      flexItem={orientation === 'vertical'}
-      orientation={orientation}
-    />
+    <MuiDivider className={dividerStyles} flexItem={orientation === 'vertical'} orientation={orientation} />
   );
 }

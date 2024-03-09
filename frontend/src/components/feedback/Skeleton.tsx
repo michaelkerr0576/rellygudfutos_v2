@@ -23,10 +23,14 @@ export default function Skeleton(props: SkeletonProps): JSX.Element {
     width = undefined,
   } = props;
 
+  const skeletonStyles = clsx('rgf-skeleton', `rgf-skeleton--${variant}`, {
+    [className]: !!className,
+  });
+
   return (
     <MuiSkeleton
       animation="wave"
-      className={clsx('rgf-skeleton', `rgf-skeleton--${variant}`, { [className]: !!className })}
+      className={skeletonStyles}
       height={height}
       style={{
         minHeight,

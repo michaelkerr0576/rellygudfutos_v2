@@ -23,10 +23,14 @@ export default function Box(props: BoxProps): JSX.Element {
     style = undefined,
   } = props;
 
+  const boxStyles = clsx('rgf-box', {
+    [className]: !!className,
+  });
+
   return (
     <MuiBox
       aria-label={ariaLabel}
-      className={clsx('rgf-box', { [className]: !!className })}
+      className={boxStyles}
       onClick={onClick}
       ref={boxRef}
       role={ariaRole}

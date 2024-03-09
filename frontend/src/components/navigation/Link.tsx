@@ -19,8 +19,12 @@ const StyledReactRouterLink = styled(ReactRouterLink)((): { [key: string]: any }
 function Link(props: LinkProps, ref: React.Ref<HTMLAnchorElement> | undefined): JSX.Element {
   const { children, className = '', to } = props;
 
+  const linkStyles = clsx('rgf-link', {
+    [className]: !!className,
+  });
+
   return (
-    <StyledReactRouterLink className={clsx('rgf-link', { [className]: !!className })} ref={ref} to={to}>
+    <StyledReactRouterLink className={linkStyles} ref={ref} to={to}>
       {children}
     </StyledReactRouterLink>
   );

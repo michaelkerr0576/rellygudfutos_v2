@@ -20,13 +20,12 @@ const StyledLogoButton = styled(Box)((): { [key: string]: any } => ({
 export default function LogoButton(props: IconButtonProps): JSX.Element {
   const { ariaLabel, children, className = '', onClick } = props;
 
+  const logoButtonStyles = clsx('rgf-logoButton', {
+    [className]: !!className,
+  });
+
   return (
-    <StyledLogoButton
-      ariaLabel={ariaLabel}
-      ariaRole="button"
-      className={clsx('rgf-logoButton', { [className]: !!className })}
-      onClick={onClick}
-    >
+    <StyledLogoButton ariaLabel={ariaLabel} ariaRole="button" className={logoButtonStyles} onClick={onClick}>
       {children}
     </StyledLogoButton>
   );

@@ -39,8 +39,12 @@ export default function Autocomplete(props: AutocompleteProps): JSX.Element {
   const handleChange = (_event: React.SyntheticEvent<Element, Event>, values: Option[]): void =>
     onChange(values);
 
+  const autocompleteStyles = clsx('rgf-autocomplete', {
+    [className]: !!className,
+  });
+
   return (
-    <StyledAutocomplete className={clsx('rgf-autocomplete', { [className]: !!className })}>
+    <StyledAutocomplete className={autocompleteStyles}>
       <MuiAutocomplete
         disableClearable
         disableCloseOnSelect

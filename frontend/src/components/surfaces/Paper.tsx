@@ -12,12 +12,12 @@ export interface ContainerProps {
 export default function Paper(props: ContainerProps): JSX.Element {
   const { children, className = '', elevation = 3, isSquare = true } = props;
 
+  const paperStyles = clsx('rgf-paper', {
+    [className]: !!className,
+  });
+
   return (
-    <MuiPaper
-      className={clsx('rgf-paper', { [className]: !!className })}
-      elevation={elevation}
-      square={isSquare}
-    >
+    <MuiPaper className={paperStyles} elevation={elevation} square={isSquare}>
       {children}
     </MuiPaper>
   );

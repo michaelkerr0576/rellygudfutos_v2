@@ -23,10 +23,14 @@ export default function IconButton(props: IconButtonProps): JSX.Element {
     onMouseDown = undefined,
   } = props;
 
+  const iconButtonStyles = clsx('rgf-iconButton', {
+    [className]: !!className,
+  });
+
   return (
     <MuiIconButton
       aria-label={ariaLabel}
-      className={clsx('rgf-iconButton', { [className]: !!className })}
+      className={iconButtonStyles}
       edge={edge}
       onClick={onClick}
       onMouseDown={onMouseDown}

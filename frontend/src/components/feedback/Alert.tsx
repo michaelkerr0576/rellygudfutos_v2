@@ -34,11 +34,12 @@ export default function Alert(props: AlertProps): JSX.Element {
     }
   };
 
+  const alertStyles = clsx('rgf-alert', `rgf-alert--${severity}`, {
+    [className]: !!className,
+  });
+
   return (
-    <StyledMuiAlert
-      className={clsx('rgf-alert', `rgf-chip--${severity}`, { [className]: !!className })}
-      severity={severity}
-    >
+    <StyledMuiAlert className={alertStyles} severity={severity}>
       <MuiAlertTitle>{getTitleText()}</MuiAlertTitle>
       {message}
     </StyledMuiAlert>

@@ -24,12 +24,12 @@ const StyledTypographyIcon = styled(Stack)((): { [key: string]: any } => ({
 export default function TypographyIcon(props: TypographyIconProps): JSX.Element {
   const { className = '', endIcon = null, startIcon = null, typography } = props;
 
+  const typographyIconStyles = clsx('rgf-typographyIcon', {
+    [className]: !!className,
+  });
+
   return (
-    <StyledTypographyIcon
-      alignItems="center"
-      className={clsx('rgf-typographyIcon', { [className]: !!className })}
-      spacing={1}
-    >
+    <StyledTypographyIcon alignItems="center" className={typographyIconStyles} spacing={1}>
       {startIcon}
       {typography}
       {endIcon}

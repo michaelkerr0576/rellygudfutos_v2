@@ -70,10 +70,14 @@ export default function Grid(props: GridProps): JSX.Element {
     }
   };
 
+  const gridStyles = clsx('rgf-grid', {
+    [className]: !!className,
+  });
+
   return (
     <MuiGrid2
       alignItems={getAlignItems()}
-      className={clsx('rgf-grid', { [className]: !!className })}
+      className={gridStyles}
       container={isContainer || !!justifyContent}
       desktop={desktop}
       desktopOffset={desktopOffset}

@@ -53,9 +53,13 @@ export default function Button(props: ButtonProps): JSX.Element {
     }
   };
 
+  const buttonStyles = clsx('rgf-button', `rgf-button--${variant}`, {
+    [className]: !!className,
+  });
+
   return (
     <StyledMuiButton
-      className={clsx('rgf-button', `rgf-button--${variant}`, { [className]: !!className })}
+      className={buttonStyles}
       color={color}
       disabled={isDisabled || isLoading}
       endIcon={endIcon}

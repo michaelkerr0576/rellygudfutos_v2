@@ -10,8 +10,12 @@ export interface ContainerProps {
 export default function Container(props: ContainerProps): JSX.Element {
   const { children, className = '' } = props;
 
+  const containerStyles = clsx('rgf-container', {
+    [className]: !!className,
+  });
+
   return (
-    <MuiContainer className={clsx('rgf-container', { [className]: !!className })} maxWidth={false}>
+    <MuiContainer className={containerStyles} maxWidth={false}>
       {children}
     </MuiContainer>
   );

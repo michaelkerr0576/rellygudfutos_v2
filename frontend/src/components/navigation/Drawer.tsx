@@ -77,10 +77,14 @@ export default function Drawer(props: DrawerProps): JSX.Element {
       setIsOpen(isDrawerOpen);
     };
 
+  const drawerStyles = clsx('rgf-drawer', {
+    [className]: !!className,
+  });
+
   return (
     <StyledMuiSwipeableDrawer
       anchor={anchor}
-      className={clsx('rgf-drawer', { [className]: !!className })}
+      className={drawerStyles}
       disableSwipeToOpen
       onClose={toggleDrawer(false)}
       onOpen={toggleDrawer(true)}

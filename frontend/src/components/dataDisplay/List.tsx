@@ -70,11 +70,12 @@ export default function List(props: ListProps): JSX.Element {
     });
   };
 
+  const listStyles = clsx('rgf-list', {
+    [className]: !!className,
+  });
+
   return (
-    <StyledMuiList
-      className={clsx('rgf-list', { [className]: !!className })}
-      subheader={<MuiListSubheader>{subHeader}</MuiListSubheader>}
-    >
+    <StyledMuiList className={listStyles} subheader={<MuiListSubheader>{subHeader}</MuiListSubheader>}>
       {renderListItems()}
     </StyledMuiList>
   );

@@ -13,10 +13,14 @@ export interface SwitchProps {
 export default function Switch(props: SwitchProps): JSX.Element {
   const { ariaLabel, className = '', edge = false, isChecked, onChange } = props;
 
+  const switchStyles = clsx('rgf-switch', {
+    [className]: !!className,
+  });
+
   return (
     <MuiSwitch
       checked={isChecked}
-      className={clsx('rgf-switch', { [className]: !!className })}
+      className={switchStyles}
       edge={edge}
       inputProps={{
         'aria-labelledby': ariaLabel,

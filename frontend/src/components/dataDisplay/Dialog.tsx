@@ -163,11 +163,15 @@ export default function Dialog(props: DialogProps): JSX.Element {
     </Paper>
   );
 
+  const dialogStyles = clsx('rgf-dialog', {
+    [className]: !!className,
+  });
+
   return (
     <StyledMuiDialog
       aria-describedby="dialog-description"
       aria-labelledby="dialog-title"
-      className={clsx('rgf-dialog', { [className]: !!className })}
+      className={dialogStyles}
       fullScreen={isSmallScreen}
       fullWidth
       maxWidth={maxWidth}
