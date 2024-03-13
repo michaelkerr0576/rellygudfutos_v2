@@ -13,43 +13,55 @@ import { TagFilter } from '@/types/store/gallery.types';
 
 import useGallery from '../hooks/useGallery';
 
-const StyledFilterDisplay = styled('div')(({ theme }): { [key: string]: any } => ({
+const StyledFilterDisplay = styled(Stack)(({ theme }): { [key: string]: any } => ({
   '.rgf': {
     '&-filterDisplay': {
       '&--activeFilterChips': {
-        marginLeft: theme.spacing(1.5),
+        paddingLeft: theme.spacing(1),
+      },
+      '&--filterButton': {
+        minWidth: 34,
+      },
+      '&--sortButton': {
+        minWidth: 112.17,
       },
     },
   },
 
-  paddingBottom: theme.spacing(1),
+  margin: theme.spacing(0, -2, 1, 0),
+  overflowX: 'auto',
 }));
 
 export default function FilterDisplay(): JSX.Element {
   const { handleOpenFilterDrawer, isFilterDrawerOpen, search, sortBy, sortByOptions, tagsFilter } =
     useGallery();
 
-  // TODO - Turn renderFilterChips into a carousel and limit the amount of chars a chip can have
   const renderFilterChips = (): JSX.Element => {
-    const showTagChips = tagsFilter.length > 0;
     const showSearchChip = search.length > 0;
+    const showTagChips = tagsFilter.length > 0;
 
     return (
       <Stack className="rgf-filterDisplay--activeFilterChips" spacing={0.5}>
-        {showTagChips &&
-          tagsFilter.map(
-            (tag: TagFilter): JSX.Element => (
-              <Chip key={tag.id} label={tag.label} startIcon={<TagIcon color="secondary" size="small" />} />
-            ),
-          )}
-
         {showSearchChip && (
           <Chip
             label={search}
+            onClick={handleOpenFilterDrawer}
             startIcon={<SearchIcon color="secondary" size="small" variant="outlined" />}
             variant="outlined"
           />
         )}
+
+        {showTagChips &&
+          tagsFilter.map(
+            (tag: TagFilter): JSX.Element => (
+              <Chip
+                key={tag.id}
+                label={tag.label}
+                onClick={handleOpenFilterDrawer}
+                startIcon={<TagIcon color="secondary" size="small" />}
+              />
+            ),
+          )}
       </Stack>
     );
   };
@@ -67,6 +79,7 @@ export default function FilterDisplay(): JSX.Element {
 
   const renderSortByButton = (): JSX.Element => (
     <Button
+      className="rgf-filterDisplay--sortButton"
       color="secondary"
       endIcon={<ArrowDropDownIcon type={isFilterDrawerOpen ? 'open' : 'closed'} />}
       onClick={handleOpenFilterDrawer}
@@ -77,17 +90,15 @@ export default function FilterDisplay(): JSX.Element {
   );
 
   return (
-    <StyledFilterDisplay className="rgf-filterDisplay">
-      <Stack alignItems="center" spacing={0.5}>
-        {renderFilterButton()}
+    <StyledFilterDisplay alignItems="center" className="rgf-filterDisplay" spacing={0.5}>
+      {renderFilterButton()}
 
-        {renderSortByButton()}
+      {renderSortByButton()}
 
-        {/* // TODO - make divider a little less long */}
-        <Divider orientation="vertical" />
+      {/* // TODO - make divider a little less long */}
+      <Divider orientation="vertical" />
 
-        {renderFilterChips()}
-      </Stack>
+      {renderFilterChips()}
     </StyledFilterDisplay>
   );
 }

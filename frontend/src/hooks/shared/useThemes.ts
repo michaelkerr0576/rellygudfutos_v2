@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 
 import { common } from '@mui/material/colors';
-import { alpha, createTheme, Theme } from '@mui/material/styles';
+import { alpha, Components, createTheme, Theme } from '@mui/material/styles';
 import { TypographyOptions } from '@mui/material/styles/createTypography';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
@@ -46,26 +46,31 @@ const breakpoints = {
   },
 };
 
-const components = {
+const getComponents = (colorMode: ColorMode | undefined): Components<Omit<Theme, 'components'>> => ({
   MuiCssBaseline: {
     styleOverrides: {
       '&::-webkit-scrollbar': {
-        width: 7,
+        height: 8,
+        width: 8,
       },
       '&::-webkit-scrollbar-thumb': {
         backgroundClip: 'content-box',
-        backgroundColor: alpha(common.black, 0.4),
+        backgroundColor: colorMode === ColorMode.DARK ? alpha(common.white, 0.4) : alpha(common.black, 0.4),
         border: 'solid 2px transparent',
         borderRadius: 3.5,
+        cursor: 'pointer',
         position: 'fixed',
       },
       '&::-webkit-scrollbar-track': {
         // * boxShadow: (horizontalLength, shadowTop & shadowBottom, blurRadius, spreadRadius)
-        boxShadow: `inset 1px 0px 0px 0px ${alpha(common.black, 0.1)}`,
+        boxShadow: `inset 1px 0px 0px 0px ${
+          colorMode === ColorMode.DARK ? alpha(common.white, 0.4) : alpha(common.black, 0.4)
+        }`,
       },
 
       '@media only screen and (min-width: 640px)': {
         '&::-webkit-scrollbar': {
+          height: 12,
           width: 12,
         },
         '&::-webkit-scrollbar-thumb': {
@@ -74,7 +79,7 @@ const components = {
       },
     },
   },
-};
+});
 
 const typography = {
   fontFamily: ['Roboto', 'Helvetica', 'Arial', 'sans-serif'].join(','),
@@ -107,29 +112,15 @@ const typography = {
   },
 };
 
-const lightTheme = {
-  palette: {
-    primary: {
-      main: alpha(common.black, 0.85),
-    },
-    secondary: {
-      main: alpha(common.black, 0.7),
-    },
+const getPalette = (colorMode: ColorMode | undefined): any => ({
+  mode: colorMode,
+  primary: {
+    main: colorMode === ColorMode.DARK ? alpha(common.white, 0.95) : alpha(common.black, 0.85),
   },
-  typography,
-};
-
-const darkTheme = {
-  palette: {
-    primary: {
-      main: alpha(common.white, 0.95),
-    },
-    secondary: {
-      main: alpha(common.white, 0.8),
-    },
+  secondary: {
+    main: colorMode === ColorMode.DARK ? alpha(common.white, 0.8) : alpha(common.black, 0.7),
   },
-  typography,
-};
+});
 
 export default function useThemes(): UseThemes {
   const doesUserPreferDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
@@ -146,15 +137,10 @@ export default function useThemes(): UseThemes {
   const theme = useMemo(
     (): Theme =>
       createTheme({
-        breakpoints: { ...breakpoints },
-        components: { ...components },
-        palette: {
-          ...(colorMode === ColorMode.DARK ? darkTheme.palette : lightTheme.palette),
-          mode: colorMode,
-        },
-        typography: {
-          ...(colorMode === ColorMode.DARK ? darkTheme.typography : lightTheme.typography),
-        },
+        breakpoints,
+        components: getComponents(colorMode),
+        palette: getPalette(colorMode),
+        typography,
       }),
     [colorMode],
   );
