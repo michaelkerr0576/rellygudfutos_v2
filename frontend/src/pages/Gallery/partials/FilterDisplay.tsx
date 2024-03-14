@@ -8,12 +8,13 @@ import Chip from '@/components/dataDisplay/Chip';
 import Divider from '@/components/dataDisplay/Divider';
 import Button from '@/components/inputs/Button';
 import IconButton from '@/components/inputs/IconButton';
+import Box from '@/components/layout/Box';
 import Stack from '@/components/layout/Stack';
 import { TagFilter } from '@/types/store/gallery.types';
 
 import useGallery from '../hooks/useGallery';
 
-const StyledFilterDisplay = styled(Stack)(({ theme }): { [key: string]: any } => ({
+const StyledFilterDisplay = styled(Box)(({ theme }): { [key: string]: any } => ({
   '.rgf': {
     '&-filterDisplay': {
       '&--activeFilterChips': {
@@ -28,6 +29,9 @@ const StyledFilterDisplay = styled(Stack)(({ theme }): { [key: string]: any } =>
     },
   },
 
+  alignItems: 'center',
+  display: 'flex',
+  gap: theme.spacing(0.5),
   margin: theme.spacing(0, -2, 1, 0),
   overflowX: 'auto',
 }));
@@ -39,30 +43,35 @@ export default function FilterDisplay(): JSX.Element {
   const renderFilterChips = (): JSX.Element => {
     const showSearchChip = search.length > 0;
     const showTagChips = tagsFilter.length > 0;
+    const showDivider = showSearchChip || showTagChips;
 
     return (
-      <Stack className="rgf-filterDisplay--activeFilterChips" spacing={0.5}>
-        {showSearchChip && (
-          <Chip
-            label={search}
-            onClick={handleOpenFilterDrawer}
-            startIcon={<SearchIcon color="secondary" size="small" variant="outlined" />}
-            variant="outlined"
-          />
-        )}
+      <>
+        {showDivider && <Divider orientation="vertical" variant="partial" />}
 
-        {showTagChips &&
-          tagsFilter.map(
-            (tag: TagFilter): JSX.Element => (
-              <Chip
-                key={tag.id}
-                label={tag.label}
-                onClick={handleOpenFilterDrawer}
-                startIcon={<TagIcon color="secondary" size="small" />}
-              />
-            ),
+        <Stack className="rgf-filterDisplay--activeFilterChips" spacing={0.5}>
+          {showSearchChip && (
+            <Chip
+              label={search}
+              onClick={handleOpenFilterDrawer}
+              startIcon={<SearchIcon color="secondary" size="small" variant="outlined" />}
+              variant="outlined"
+            />
           )}
-      </Stack>
+
+          {showTagChips &&
+            tagsFilter.map(
+              (tag: TagFilter): JSX.Element => (
+                <Chip
+                  key={tag.id}
+                  label={tag.label}
+                  onClick={handleOpenFilterDrawer}
+                  startIcon={<TagIcon color="secondary" size="small" />}
+                />
+              ),
+            )}
+        </Stack>
+      </>
     );
   };
 
@@ -90,13 +99,10 @@ export default function FilterDisplay(): JSX.Element {
   );
 
   return (
-    <StyledFilterDisplay alignItems="center" className="rgf-filterDisplay" spacing={0.5}>
+    <StyledFilterDisplay className="rgf-filterDisplay">
       {renderFilterButton()}
 
       {renderSortByButton()}
-
-      {/* // TODO - make divider a little less long */}
-      <Divider orientation="vertical" />
 
       {renderFilterChips()}
     </StyledFilterDisplay>

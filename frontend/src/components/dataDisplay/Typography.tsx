@@ -57,7 +57,7 @@ export default function Typography(props: TypographyProps): JSX.Element {
     }
   };
 
-  const typographyStyles = clsx('rgf-typography', `rgf-typography--${variant}`, {
+  const typographyStyles = clsx('rgf-typography', `rgf-typography--${variant}`, `rgf-typography--${color}`, {
     'rgf-typography--maxLines': !!maxLines,
     'rgf-typography--paragraph': !!isParagraph,
     // eslint-disable-next-line sort-keys

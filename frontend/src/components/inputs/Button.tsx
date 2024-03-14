@@ -53,7 +53,7 @@ export default function Button(props: ButtonProps): JSX.Element {
     }
   };
 
-  const buttonStyles = clsx('rgf-button', `rgf-button--${variant}`, {
+  const buttonStyles = clsx('rgf-button', `rgf-button--${variant}`, `rgf-button--${color}`, {
     [className]: !!className,
   });
 

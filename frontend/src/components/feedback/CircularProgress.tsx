@@ -63,9 +63,14 @@ export default function CircularProgress(props: CircularProgressProps): JSX.Elem
     }
   };
 
-  const circularProgressStyles = clsx('rgf-circularProgress', `rgf-circularProgress--${variant}`, {
-    [className]: !!className,
-  });
+  const circularProgressStyles = clsx(
+    'rgf-circularProgress',
+    `rgf-circularProgress--${variant}`,
+    `rgf-circularProgress--${color}`,
+    {
+      [className]: !!className,
+    },
+  );
 
   return (
     <StyledCircularProgress className={circularProgressStyles}>

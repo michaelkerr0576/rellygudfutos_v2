@@ -15,7 +15,7 @@ export interface StackProps {
   direction?: Direction;
   hasDivider?: boolean;
   justifyContent?: JustifyContent;
-  spacing?: MuiStackProps['spacing']; // * The gap elements in theme.spacing()
+  spacing?: MuiStackProps['spacing']; // * The gap in theme.spacing()
 }
 
 export default function Stack(props: StackProps): JSX.Element {
@@ -55,7 +55,11 @@ export default function Stack(props: StackProps): JSX.Element {
     }
   };
 
-  const stackStyles = clsx('rgf-stack', {
+  const renderDivider = (): JSX.Element => (
+    <Divider orientation={direction === 'column' ? 'horizontal' : 'vertical'} />
+  );
+
+  const stackStyles = clsx('rgf-stack', `rgf-stack--${direction}`, {
     [className]: !!className,
   });
 
@@ -64,7 +68,7 @@ export default function Stack(props: StackProps): JSX.Element {
       alignItems={getAlignItems()}
       className={stackStyles}
       direction={direction}
-      divider={hasDivider ? <Divider orientation="vertical" /> : null}
+      divider={hasDivider ? renderDivider() : null}
       justifyContent={getJustifyContent()}
       spacing={spacing}
     >
