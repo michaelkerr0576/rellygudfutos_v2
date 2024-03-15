@@ -18,12 +18,12 @@ const StyledPhotoDialogContentSkeleton = styled('div')(({ theme }): { [key: stri
     '&-photoDialog': {
       '&--content': {
         '&Date, &Caption, &Details, &Tags, &Title': {
-          padding: theme.spacing(1.5, 2),
+          padding: theme.spacing(1.5),
         },
       },
       '&--contentTags': {
         '.rgf-chip': {
-          margin: theme.spacing(0.5, 1),
+          margin: theme.spacing(0.5, 0.75),
         },
       },
     },
@@ -35,8 +35,16 @@ const StyledPhotoDialogContentSkeleton = styled('div')(({ theme }): { [key: stri
     '.rgf': {
       '&-photoDialog': {
         '&--content': {
+          '&Date, &Caption, &Details, &Tags, &Title': {
+            padding: theme.spacing(1.5, 2),
+          },
           '&DetailsColumnOne': {
             paddingRight: theme.spacing(4),
+          },
+        },
+        '&--contentTags': {
+          '.rgf-chip': {
+            margin: theme.spacing(0.5, 1),
           },
         },
       },
