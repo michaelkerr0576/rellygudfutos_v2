@@ -29,8 +29,8 @@ export interface DialogProps {
   dialogActions: JSX.Element;
   isOpen: boolean;
   maxWidth?: MaxWidth;
+  onClose: () => void;
   onMoreOptionsClick?: MouseEventHandler<HTMLButtonElement>;
-  setIsOpen: (isOpen: boolean) => void;
   title?: string;
 }
 
@@ -95,17 +95,13 @@ export default function Dialog(props: DialogProps): JSX.Element {
     dialogActions,
     isOpen,
     maxWidth = 'tablet',
+    onClose,
     onMoreOptionsClick = undefined,
-    setIsOpen,
     title = '',
   } = props;
 
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.between('mobile', 'laptop'));
-
-  const handleCloseDialog = (): void => {
-    setIsOpen(false);
-  };
 
   const renderDialogTitle = (): JSX.Element => {
     const showTitle = !!title;
@@ -128,7 +124,7 @@ export default function Dialog(props: DialogProps): JSX.Element {
         ariaLabel="close"
         className="rgf-dialog--titleCloseButton"
         edge={isSmallScreen ? 'start' : 'end'}
-        onClick={handleCloseDialog}
+        onClick={onClose}
       >
         {isSmallScreen ? <BackIcon /> : <CloseIcon />}
       </IconButton>
@@ -182,7 +178,7 @@ export default function Dialog(props: DialogProps): JSX.Element {
       fullScreen={isSmallScreen}
       fullWidth
       maxWidth={maxWidth}
-      onClose={handleCloseDialog}
+      onClose={onClose}
       open={isOpen}
       scroll="paper"
     >

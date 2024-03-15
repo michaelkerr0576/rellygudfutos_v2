@@ -21,7 +21,8 @@ export interface DrawerProps {
   children: React.ReactNode;
   className?: MuiSwipeableDrawerProps['className'];
   isOpen: boolean;
-  setIsOpen: (isOpen: boolean) => void;
+  onClose: () => void;
+  onOpen: () => void;
 }
 
 const StyledMuiSwipeableDrawer = styled(MuiSwipeableDrawer)(({ theme }): { [key: string]: any } => ({
@@ -79,17 +80,9 @@ const StyledMuiSwipeableDrawer = styled(MuiSwipeableDrawer)(({ theme }): { [key:
 }));
 
 export default function Drawer(props: DrawerProps): JSX.Element {
-  const { anchor, children, className = '', isOpen, setIsOpen } = props;
+  const { anchor, children, className = '', isOpen, onClose, onOpen } = props;
 
   const isBottomDrawer = anchor === 'bottom';
-
-  const handleOpenDrawer = (): void => {
-    setIsOpen(true);
-  };
-
-  const handleCloseDrawer = (): void => {
-    setIsOpen(false);
-  };
 
   const drawerStyles = clsx('rgf-drawer', {
     [className]: !!className,
@@ -100,14 +93,14 @@ export default function Drawer(props: DrawerProps): JSX.Element {
       anchor={anchor}
       className={drawerStyles}
       disableSwipeToOpen
-      onClose={handleCloseDrawer}
-      onOpen={handleOpenDrawer}
+      onClose={onClose}
+      onOpen={onOpen}
       open={isOpen}
     >
       {isBottomDrawer && (
         <Paper className="rgf-drawer--expandDrawerButton" elevation={1}>
           <Grid justifyContent="center">
-            <IconButton ariaLabel="less" onClick={handleCloseDrawer}>
+            <IconButton ariaLabel="less" onClick={onClose}>
               <ExpandIcon type={isOpen ? 'less' : 'more'} size="large" />
             </IconButton>
           </Grid>

@@ -84,7 +84,13 @@ const StyledDrawer = styled(Drawer)(({ theme }): { [key: string]: any } => ({
 }));
 
 export default function FilterDrawer(): JSX.Element {
-  const { handleToggleFilterDrawer, isFilterDrawerOpen, sortByOptions } = useGallery();
+  const {
+    handleCloseFilterDrawer,
+    handleOpenFilterDrawer,
+    handleToggleFilterDrawer,
+    isFilterDrawerOpen,
+    sortByOptions,
+  } = useGallery();
 
   const {
     draftSearch,
@@ -189,7 +195,8 @@ export default function FilterDrawer(): JSX.Element {
       anchor="bottom"
       className="rgf-filterDrawer"
       isOpen={isFilterDrawerOpen}
-      setIsOpen={handleToggleFilterDrawer}
+      onClose={handleCloseFilterDrawer}
+      onOpen={handleOpenFilterDrawer}
     >
       {renderSearchField()}
 

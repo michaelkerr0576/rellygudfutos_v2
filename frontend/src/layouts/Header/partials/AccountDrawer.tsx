@@ -28,7 +28,12 @@ const StyledDrawer = styled(Drawer)(({ theme }): { [key: string]: any } => ({
 export default function AccountDrawer(): JSX.Element {
   const { pathname } = useLocation();
 
-  const { handleCloseAccountDrawer, handleToggleAccountDrawer, isAccountDrawerOpen } = useMenu();
+  const {
+    handleCloseAccountDrawer,
+    handleOpenAccountDrawer,
+    handleToggleAccountDrawer,
+    isAccountDrawerOpen,
+  } = useMenu();
 
   const renderAccountButton = (isDrawerOpen: boolean): JSX.Element => (
     <IconButton ariaLabel="account" edge="end" onClick={(): void => handleToggleAccountDrawer(isDrawerOpen)}>
@@ -48,7 +53,12 @@ export default function AccountDrawer(): JSX.Element {
     <Box className="rgf-accountDrawer">
       {renderAccountButton(true)}
 
-      <StyledDrawer anchor="right" isOpen={isAccountDrawerOpen} setIsOpen={handleToggleAccountDrawer}>
+      <StyledDrawer
+        anchor="right"
+        isOpen={isAccountDrawerOpen}
+        onClose={handleCloseAccountDrawer}
+        onOpen={handleOpenAccountDrawer}
+      >
         {renderDrawerHeader()}
 
         <Divider />

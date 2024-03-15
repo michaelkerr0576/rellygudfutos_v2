@@ -33,7 +33,7 @@ export default function LoginDialog(): JSX.Element {
 
   const { mutate: loginUser, isLoading } = useUserLogin();
 
-  const { handleToggleLoginDialog, isLoginDialogOpen } = useMenu();
+  const { handleCloseLoginDialog, isLoginDialogOpen } = useMenu();
 
   const handleOnSubmit: SubmitHandler<LoginFormInput> = async (data): Promise<void> => {
     const { email, password } = data;
@@ -97,8 +97,8 @@ export default function LoginDialog(): JSX.Element {
     <Dialog
       className="rgf-loginDialog"
       dialogActions={renderDialogActions()}
-      setIsOpen={handleToggleLoginDialog}
       isOpen={isLoginDialogOpen}
+      onClose={handleCloseLoginDialog}
       title="Login"
     >
       {renderEmailField()}

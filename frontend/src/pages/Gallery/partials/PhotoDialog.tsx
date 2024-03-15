@@ -92,7 +92,7 @@ const StyledPhotoDialog = styled(Dialog)(({ theme }): { [key: string]: any } => 
 export default function PhotoDialog(): JSX.Element {
   const { photoId = '' } = useParams();
 
-  const { handleTogglePhotoDialog, isPhotoDialogOpen } = useGallery();
+  const { handleClosePhotoDialog, isPhotoDialogOpen } = useGallery();
 
   const { data: photo, isError, isLoading, error } = usePhoto(photoId);
 
@@ -294,7 +294,7 @@ export default function PhotoDialog(): JSX.Element {
       dialogActions={renderDialogActions()}
       isOpen={isPhotoDialogOpen}
       maxWidth="desktop"
-      setIsOpen={(isOpen): void => handleTogglePhotoDialog(isOpen, photoId)}
+      onClose={handleClosePhotoDialog}
       onMoreOptionsClick={(): void => {}}
     >
       {renderDialogContent()}

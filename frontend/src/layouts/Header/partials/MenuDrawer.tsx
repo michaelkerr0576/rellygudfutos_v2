@@ -35,7 +35,7 @@ export default function MenuDrawer(): JSX.Element {
 
   const { colorMode, handleToggleColorMode } = useThemes();
 
-  const { handleCloseMenuDrawer, handleToggleMenuDrawer, isMenuDrawerOpen } = useMenu();
+  const { handleCloseMenuDrawer, handleOpenMenuDrawer, handleToggleMenuDrawer, isMenuDrawerOpen } = useMenu();
 
   const renderMenuButton = (isDrawerOpen: boolean): JSX.Element => (
     <IconButton ariaLabel="menu" edge="start" onClick={(): void => handleToggleMenuDrawer(isDrawerOpen)}>
@@ -64,7 +64,12 @@ export default function MenuDrawer(): JSX.Element {
     <Box className="rgf-menuDrawer">
       {renderMenuButton(true)}
 
-      <StyledDrawer anchor="left" isOpen={isMenuDrawerOpen} setIsOpen={handleToggleMenuDrawer}>
+      <StyledDrawer
+        anchor="left"
+        isOpen={isMenuDrawerOpen}
+        onClose={handleCloseMenuDrawer}
+        onOpen={handleOpenMenuDrawer}
+      >
         {renderDrawerHeader()}
 
         <Divider />
