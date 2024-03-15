@@ -32,9 +32,14 @@ const StyledFilterDisplay = styled(Stack)(({ theme }): { [key: string]: any } =>
     },
   },
 
-  margin: theme.spacing(0, -2, 1, 0),
+  margin: theme.spacing(0, -1.5, 1, 0),
   overflowX: 'auto',
   paddingRight: theme.spacing(1),
+
+  [theme.breakpoints.up('laptop')]: {
+    marginRight: 0,
+    paddingRight: 0,
+  },
 }));
 
 export default function FilterDisplay(): JSX.Element {

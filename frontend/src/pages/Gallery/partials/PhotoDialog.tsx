@@ -43,11 +43,11 @@ const StyledPhotoDialog = styled(Dialog)(({ theme }): { [key: string]: any } => 
     '&-photoDialog': {
       '&--content': {
         '&Date, &Caption, &Details, &Title': {
-          padding: theme.spacing(1.5, 2),
+          padding: theme.spacing(1.5),
         },
         '&Tags': {
           '.rgf-chip': {
-            margin: theme.spacing(0.5, 1),
+            margin: theme.spacing(0.5, 0.75),
           },
 
           padding: theme.spacing(1, 0),
@@ -60,7 +60,7 @@ const StyledPhotoDialog = styled(Dialog)(({ theme }): { [key: string]: any } => 
       },
 
       '&--error': {
-        padding: theme.spacing(1.5, 2),
+        padding: theme.spacing(1.5),
       },
     },
   },
@@ -69,9 +69,20 @@ const StyledPhotoDialog = styled(Dialog)(({ theme }): { [key: string]: any } => 
     '.rgf': {
       '&-photoDialog': {
         '&--content': {
+          '&Date, &Caption, &Details, &Title': {
+            padding: theme.spacing(1.5, 2),
+          },
           '&DetailsColumnOne': {
             paddingRight: theme.spacing(4),
           },
+          '&Tags': {
+            '.rgf-chip': {
+              margin: theme.spacing(0.5, 1),
+            },
+          },
+        },
+        '&--error': {
+          padding: theme.spacing(1.5, 2),
         },
       },
     },

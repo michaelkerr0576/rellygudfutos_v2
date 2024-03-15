@@ -25,13 +25,21 @@ export interface DrawerProps {
 }
 
 const StyledMuiSwipeableDrawer = styled(MuiSwipeableDrawer)(({ theme }): { [key: string]: any } => ({
+  // #region Mui Overrides
+  '.MuiListItemButton-root': {
+    padding: theme.spacing(1, 1.5),
+  },
+  '.MuiListSubheader-root': {
+    padding: theme.spacing(0, 1.5),
+  },
+  // #endregion
   '.rgf': {
     '&-drawer': {
       '&--children': {
         display: 'flex',
         flexDirection: 'column',
         overflowY: 'auto',
-        padding: theme.spacing(0, 2),
+        padding: theme.spacing(0, 1.5),
       },
       '&--expandDrawerButton': {
         left: 0,
@@ -41,17 +49,30 @@ const StyledMuiSwipeableDrawer = styled(MuiSwipeableDrawer)(({ theme }): { [key:
       },
     },
     '&-list, &-divider': {
-      marginLeft: theme.spacing(-2),
-      marginRight: theme.spacing(-2),
+      marginLeft: theme.spacing(-1.5),
+      marginRight: theme.spacing(-1.5),
     },
   },
 
   [theme.breakpoints.up('laptop')]: {
+    // #region Mui Overrides
+    '.MuiListItemButton-root': {
+      padding: theme.spacing(1, 2),
+    },
+    '.MuiListSubheader-root': {
+      padding: theme.spacing(0, 2),
+    },
+    // #endregion
     '.rgf': {
       '&-drawer': {
         '&--children': {
           height: 'auto',
+          padding: theme.spacing(0, 2),
         },
+      },
+      '&-list, &-divider': {
+        marginLeft: theme.spacing(-2),
+        marginRight: theme.spacing(-2),
       },
     },
   },

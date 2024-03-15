@@ -40,11 +40,11 @@ const StyledMuiDialog = styled(MuiDialog)(({ theme }): { [key: string]: any } =>
     display: 'inherit',
     height: FIXED_BOTTOM_APP_BAR_HEIGHT,
     justifyContent: 'inherit',
-    padding: theme.spacing(0.86, 1),
+    padding: theme.spacing(0.86, 1.5),
   },
   '.MuiDialogContent-root': {
     minHeight: 400,
-    padding: theme.spacing(1, 2),
+    padding: theme.spacing(1, 1.5),
   },
   '.MuiDialogTitle-root': {
     height: FIXED_HEADER_HEIGHT,
@@ -68,7 +68,10 @@ const StyledMuiDialog = styled(MuiDialog)(({ theme }): { [key: string]: any } =>
 
   [theme.breakpoints.up('laptop')]: {
     // #region Mui Overrides
-    '.MuiDialogTitle-root': {
+    '.MuiDialogActions-root': {
+      padding: theme.spacing(0.86, 2),
+    },
+    '.MuiDialogContent-root, .MuiDialogTitle-root': {
       padding: theme.spacing(1, 2),
     },
     // #endregion

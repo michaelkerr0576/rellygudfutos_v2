@@ -48,7 +48,7 @@ const StyledDrawer = styled(Drawer)(({ theme }): { [key: string]: any } => ({
       '&--actionButtonGroup': {
         '.rgf-stack': {
           height: FIXED_BOTTOM_APP_BAR_HEIGHT,
-          padding: theme.spacing(1),
+          padding: theme.spacing(1, 1.5),
         },
 
         bottom: 0,
@@ -60,9 +60,24 @@ const StyledDrawer = styled(Drawer)(({ theme }): { [key: string]: any } => ({
       '&--dirtyFilterAlert': {
         bottom: FIXED_BOTTOM_APP_BAR_HEIGHT,
         left: 0,
-        padding: theme.spacing(2, 2),
+        padding: theme.spacing(2, 1.5),
         position: 'fixed',
         right: 0,
+      },
+    },
+  },
+
+  [theme.breakpoints.up('laptop')]: {
+    '.rgf': {
+      '&-filterDrawer': {
+        '&--actionButtonGroup': {
+          '.rgf-stack': {
+            padding: theme.spacing(1, 2),
+          },
+        },
+        '&--dirtyFilterAlert': {
+          padding: theme.spacing(2),
+        },
       },
     },
   },

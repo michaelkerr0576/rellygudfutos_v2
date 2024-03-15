@@ -17,7 +17,7 @@ export interface PageProps {
 const StyledPage = styled('main')(({ theme }): { [key: string]: any } => ({
   '&.rgf, .rgf': {
     '&-container': {
-      padding: theme.spacing(1, 2),
+      padding: theme.spacing(1, 1.5),
     },
     '&-page': {
       '&--bottomNavigation': {
