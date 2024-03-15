@@ -48,7 +48,7 @@ const StyledDrawer = styled(Drawer)(({ theme }): { [key: string]: any } => ({
       '&--actionButtonGroup': {
         '.rgf-stack': {
           height: FIXED_BOTTOM_APP_BAR_HEIGHT,
-          padding: theme.spacing(1, 1.5),
+          padding: theme.spacing(0.86, 1.5),
         },
 
         bottom: 0,
@@ -72,7 +72,7 @@ const StyledDrawer = styled(Drawer)(({ theme }): { [key: string]: any } => ({
       '&-filterDrawer': {
         '&--actionButtonGroup': {
           '.rgf-stack': {
-            padding: theme.spacing(1, 2),
+            padding: theme.spacing(0.86, 2),
           },
         },
         '&--dirtyFilterAlert': {
