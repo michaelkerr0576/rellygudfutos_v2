@@ -102,7 +102,7 @@ export default function TextField(props: TextFieldProps): JSX.Element {
             edge="end"
             onMouseDown={handleClear} // * onClick makes the field lose focus
           >
-            <CloseIcon />
+            <CloseIcon size="small" />
           </IconButton>
         </MuiInputAdornment>
       );

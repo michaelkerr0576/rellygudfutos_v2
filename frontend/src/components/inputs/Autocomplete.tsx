@@ -1,8 +1,13 @@
 import clsx from 'clsx';
 
-import MuiAutocomplete from '@mui/material/Autocomplete';
+import MuiAutocomplete, {
+  AutocompleteRenderGetTagProps as MuiAutocompleteRenderGetTagProps,
+  AutocompleteRenderInputParams as MuiAutocompleteRenderInputParams,
+} from '@mui/material/Autocomplete';
 import { styled } from '@mui/material/styles';
 import MuiTextField from '@mui/material/TextField';
+
+import Chip from '../dataDisplay/Chip';
 
 type Option = {
   id: number;
@@ -39,6 +44,25 @@ export default function Autocomplete(props: AutocompleteProps): JSX.Element {
   const handleChange = (_event: React.SyntheticEvent<Element, Event>, values: Option[]): void =>
     onChange(values);
 
+  const renderTextField = (params: MuiAutocompleteRenderInputParams): JSX.Element => (
+    <MuiTextField
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...params}
+      inputProps={{
+        ...params.inputProps,
+        maxLength: maxCharacterLength,
+      }}
+      label={label}
+    />
+  );
+
+  const renderChips = (chips: Option[], getTagProps: MuiAutocompleteRenderGetTagProps): JSX.Element[] =>
+    chips.map((chip, index): JSX.Element => {
+      const { className: tagClassName, key, onDelete } = getTagProps({ index });
+
+      return <Chip className={tagClassName} key={key} label={chip.label} onDelete={onDelete} />;
+    });
+
   const autocompleteStyles = clsx('rgf-autocomplete', {
     [className]: !!className,
   });
@@ -46,7 +70,6 @@ export default function Autocomplete(props: AutocompleteProps): JSX.Element {
   return (
     <StyledAutocomplete className={autocompleteStyles}>
       <MuiAutocomplete
-        disableClearable
         disableCloseOnSelect
         filterSelectedOptions
         fullWidth
@@ -57,17 +80,8 @@ export default function Autocomplete(props: AutocompleteProps): JSX.Element {
         noOptionsText={noOptionsLabel}
         onChange={handleChange}
         options={options}
-        renderInput={(params): JSX.Element => (
-          <MuiTextField
-            // eslint-disable-next-line react/jsx-props-no-spreading
-            {...params}
-            inputProps={{
-              ...params.inputProps,
-              maxLength: maxCharacterLength,
-            }}
-            label={label}
-          />
-        )}
+        renderInput={renderTextField}
+        renderTags={renderChips}
         value={value}
       />
     </StyledAutocomplete>
