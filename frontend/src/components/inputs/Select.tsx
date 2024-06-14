@@ -9,6 +9,8 @@ import MuiSelect, {
 } from '@mui/material/Select';
 import { styled } from '@mui/material/styles';
 
+import Box from '../layout/Box';
+
 type Option = {
   id: string;
   label: string;
@@ -24,7 +26,7 @@ export interface SelectProps {
   value: string;
 }
 
-const StyledSelect = styled('div')(({ theme }): { [key: string]: any } => ({
+const StyledSelect = styled(Box)(({ theme }): { [key: string]: any } => ({
   padding: theme.spacing(2, 0),
 }));
 

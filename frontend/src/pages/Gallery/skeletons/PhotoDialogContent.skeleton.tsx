@@ -13,7 +13,7 @@ import Paper from '@/components/surfaces/Paper';
 
 import { LANDSCAPE_PHOTO_LARGE_SCREEN_HEIGHT, LANDSCAPE_PHOTO_SMALL_SCREEN_HEIGHT } from '../constants';
 
-const StyledPhotoDialogContentSkeleton = styled('div')(({ theme }): { [key: string]: any } => ({
+const StyledPhotoDialogContentSkeleton = styled(Box)(({ theme }): { [key: string]: any } => ({
   '.rgf': {
     '&-photoDialog': {
       '&--content': {

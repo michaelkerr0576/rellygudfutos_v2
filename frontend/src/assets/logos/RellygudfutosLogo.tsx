@@ -3,13 +3,15 @@ import clsx from 'clsx';
 import { styled } from '@mui/material/styles';
 import MuiSvgIcon from '@mui/material/SvgIcon';
 
+import Box from '@/components/layout/Box';
+
 type Size = 'large' | 'medium' | 'small';
 
 export interface RellygudfutosLogoProps {
   size?: Size;
 }
 
-const StyledRellygudfutosLogo = styled('div')((): { [key: string]: any } => ({
+const StyledRellygudfutosLogo = styled(Box)((): { [key: string]: any } => ({
   '&.rgf': {
     '&-rellygudfutosLogo': {
       '&--large': {

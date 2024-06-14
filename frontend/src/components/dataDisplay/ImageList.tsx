@@ -45,10 +45,12 @@ export interface ImageListProps {
   variant: Variant;
 }
 
-const StyledMuiImageList = styled(MuiImageList)((): { [key: string]: any } => ({
+const StyledMuiImageList = styled(MuiImageList)(({ theme }): { [key: string]: any } => ({
   '.rgf': {
     '&-imageList': {
       '&--listItem': {
+        borderRadius: theme.shape.borderRadius,
+        boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.2)',
         cursor: 'pointer',
         display: 'flex',
         justifyContent: 'center',

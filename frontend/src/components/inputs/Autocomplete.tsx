@@ -8,6 +8,7 @@ import { styled } from '@mui/material/styles';
 import MuiTextField from '@mui/material/TextField';
 
 import Chip from '../dataDisplay/Chip';
+import Box from '../layout/Box';
 
 type Option = {
   id: number;
@@ -25,7 +26,7 @@ export interface AutocompleteProps {
   value: Option[];
 }
 
-const StyledAutocomplete = styled('div')(({ theme }): { [key: string]: any } => ({
+const StyledAutocomplete = styled(Box)(({ theme }): { [key: string]: any } => ({
   padding: theme.spacing(2, 0),
 }));
 
