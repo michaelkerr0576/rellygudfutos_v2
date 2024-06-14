@@ -58,7 +58,7 @@ export default function useMenu(): UseMenu {
 
   const handleOpenLoginDialog = (): void => handleToggleLoginDialog(true);
 
-  const handleCloseLoginDialog = (): void => handleToggleLoginDialog(true);
+  const handleCloseLoginDialog = (): void => handleToggleLoginDialog(false);
 
   const handleToggleMenuDrawer = (isOpen: boolean): void => setIsMenuDrawerOpen(isOpen);
 

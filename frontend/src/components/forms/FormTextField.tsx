@@ -6,6 +6,7 @@ import { styled } from '@mui/material/styles';
 import TextField, { TextFieldProps } from '../inputs/TextField';
 
 export interface FormTextFieldProps {
+  autoFill?: TextFieldProps['autoFill'];
   className?: TextFieldProps['className'];
   control: Control<any>;
   endAdornment?: TextFieldProps['endAdornment'];
@@ -35,6 +36,7 @@ const StyledTextField = styled(TextField)(({ theme }): { [key: string]: any } =>
 
 export default function FormTextField(props: FormTextFieldProps): JSX.Element {
   const {
+    autoFill = 'on',
     className = '',
     control,
     endAdornment = undefined,
@@ -58,6 +60,7 @@ export default function FormTextField(props: FormTextFieldProps): JSX.Element {
       rules={validationRules}
       render={({ field: { onChange, ref, value }, fieldState: { error } }): JSX.Element => (
         <StyledTextField
+          autoFill={autoFill}
           className={formTextFieldStyles}
           endAdornment={endAdornment}
           helperText={error?.message ? error.message : ''}
@@ -69,6 +72,7 @@ export default function FormTextField(props: FormTextFieldProps): JSX.Element {
           startAdornment={startAdornment}
           type={type}
           value={value}
+          variant={variant}
         />
       )}
     />

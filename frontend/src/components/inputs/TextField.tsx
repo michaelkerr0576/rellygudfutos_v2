@@ -15,6 +15,7 @@ import IconButton from './IconButton';
 type Variant = 'standard' | 'outlined';
 
 export interface TextFieldProps {
+  autoFill?: MuiTextFieldProps['autoComplete']; // * https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#autofill
   className?: MuiTextFieldProps['className'];
   endAdornment?: JSX.Element;
   helperText?: MuiTextFieldProps['helperText'];
@@ -33,6 +34,28 @@ export interface TextFieldProps {
 const StyledTextField = styled(Stack)(({ theme }): { [key: string]: any } => ({
   // #region Mui Overrides
   '.MuiInputBase-root': {
+    '& input:-webkit-autofill': {
+      boxShadow: '0 0 0 1000px transparent inset',
+      transition: 'background-color 5000s ease-in-out 0s',
+      WebkitBoxShadow: '0 0 0 1000px transparent inset',
+      WebkitTextFillColor: theme.palette.text.primary,
+    },
+    '& input:-webkit-autofill:active': {
+      boxShadow: '0 0 0 1000px transparent inset',
+      WebkitBoxShadow: '0 0 0 1000px transparent inset',
+      WebkitTextFillColor: theme.palette.text.primary,
+    },
+    '& input:-webkit-autofill:focus': {
+      boxShadow: '0 0 0 1000px transparent inset',
+      WebkitBoxShadow: '0 0 0 1000px transparent inset',
+      WebkitTextFillColor: theme.palette.text.primary,
+    },
+    '& input:-webkit-autofill:hover': {
+      boxShadow: '0 0 0 1000px transparent inset',
+      WebkitBoxShadow: '0 0 0 1000px transparent inset',
+      WebkitTextFillColor: theme.palette.text.primary,
+    },
+
     paddingRight: theme.spacing(1),
   },
   // #endregion
@@ -50,6 +73,7 @@ const StyledTextField = styled(Stack)(({ theme }): { [key: string]: any } => ({
 
 export default function TextField(props: TextFieldProps): JSX.Element {
   const {
+    autoFill = 'on',
     className = '',
     endAdornment = null,
     helperText = '',
@@ -124,6 +148,7 @@ export default function TextField(props: TextFieldProps): JSX.Element {
       {variant === 'standard' && renderStandardStartAdornment()}
 
       <MuiTextField
+        autoComplete={autoFill}
         error={isError}
         fullWidth
         helperText={helperText}

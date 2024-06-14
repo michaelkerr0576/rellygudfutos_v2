@@ -6,6 +6,7 @@ import LockIcon from '@/assets/icons/LockIcon';
 import LoginIcon from '@/assets/icons/LoginIcon';
 import VisibilityIcon from '@/assets/icons/VisibilityIcon';
 import Dialog from '@/components/dataDisplay/Dialog';
+import Form from '@/components/forms/Form';
 import FormTextField from '@/components/forms/FormTextField';
 import Button from '@/components/inputs/Button';
 import IconButton from '@/components/inputs/IconButton';
@@ -49,6 +50,7 @@ export default function LoginDialog(): JSX.Element {
 
   const renderEmailField = (): JSX.Element => (
     <FormTextField
+      autoFill="email"
       className="rgf-loginDialog--emailField"
       control={control}
       label="Email"
@@ -61,6 +63,7 @@ export default function LoginDialog(): JSX.Element {
 
   const renderPasswordField = (): JSX.Element => (
     <FormTextField
+      autoFill="current-password"
       className="rgf-loginDialog--passwordField"
       control={control}
       endAdornment={
@@ -101,9 +104,11 @@ export default function LoginDialog(): JSX.Element {
       onClose={handleCloseLoginDialog}
       title="Login"
     >
-      {renderEmailField()}
+      <Form>
+        {renderEmailField()}
 
-      {renderPasswordField()}
+        {renderPasswordField()}
+      </Form>
     </Dialog>
   );
 }
