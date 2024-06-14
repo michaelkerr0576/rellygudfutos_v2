@@ -46,7 +46,7 @@ export default function FormTextField(props: FormTextFieldProps): JSX.Element {
     startAdornment = undefined,
     type = 'text',
     validationRules = undefined,
-    variant = 'standard',
+    variant = 'outlined',
   } = props;
 
   const formTextFieldStyles = clsx('rgf-formTextField', `rgf-formTextField--${variant}`, {

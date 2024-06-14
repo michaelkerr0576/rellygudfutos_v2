@@ -66,7 +66,7 @@ const StyledMuiDialog = styled(MuiDialog)(({ theme }): { [key: string]: any } =>
     },
   },
 
-  [theme.breakpoints.up('laptop')]: {
+  [theme.breakpoints.up('tablet')]: {
     // #region Mui Overrides
     '.MuiDialogActions-root': {
       padding: theme.spacing(0.86, 2),
@@ -101,7 +101,7 @@ export default function Dialog(props: DialogProps): JSX.Element {
   } = props;
 
   const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.between('mobile', 'laptop'));
+  const isExtraSmallScreen = useMediaQuery(theme.breakpoints.between('mobile', 'tablet'));
 
   const renderDialogTitle = (): JSX.Element => {
     const showTitle = !!title;
@@ -123,10 +123,10 @@ export default function Dialog(props: DialogProps): JSX.Element {
       <IconButton
         ariaLabel="close"
         className="rgf-dialog--titleCloseButton"
-        edge={isSmallScreen ? 'start' : 'end'}
+        edge={isExtraSmallScreen ? 'start' : 'end'}
         onClick={onClose}
       >
-        {isSmallScreen ? <BackIcon /> : <CloseIcon />}
+        {isExtraSmallScreen ? <BackIcon /> : <CloseIcon />}
       </IconButton>
     );
 
@@ -134,7 +134,7 @@ export default function Dialog(props: DialogProps): JSX.Element {
       <IconButton
         ariaLabel="more options"
         className="rgf-dialog--titleMoreOptionsButton"
-        edge={isSmallScreen ? 'end' : 'start'}
+        edge={isExtraSmallScreen ? 'end' : 'start'}
         onClick={onMoreOptionsClick}
       >
         <MoreOptionsIcon />
@@ -175,7 +175,7 @@ export default function Dialog(props: DialogProps): JSX.Element {
       aria-describedby="dialog-description"
       aria-labelledby="dialog-title"
       className={dialogStyles}
-      fullScreen={isSmallScreen}
+      fullScreen={isExtraSmallScreen}
       fullWidth
       maxWidth={maxWidth}
       onClose={onClose}

@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
+import { styled } from '@mui/material/styles';
+
 import AccountCircleIcon from '@/assets/icons/AccountCircleIcon';
 import LockIcon from '@/assets/icons/LockIcon';
 import LoginIcon from '@/assets/icons/LoginIcon';
@@ -19,6 +21,14 @@ interface LoginFormInput {
   email: string;
   password: string;
 }
+
+const StyledLoginDialog = styled(Dialog)(({ theme }): { [key: string]: any } => ({
+  '.rgf': {
+    '&-form': {
+      padding: theme.spacing(2.5, 0),
+    },
+  },
+}));
 
 export default function LoginDialog(): JSX.Element {
   const {
@@ -97,7 +107,7 @@ export default function LoginDialog(): JSX.Element {
   );
 
   return (
-    <Dialog
+    <StyledLoginDialog
       className="rgf-loginDialog"
       dialogActions={renderDialogActions()}
       isOpen={isLoginDialogOpen}
@@ -109,6 +119,6 @@ export default function LoginDialog(): JSX.Element {
 
         {renderPasswordField()}
       </Form>
-    </Dialog>
+    </StyledLoginDialog>
   );
 }

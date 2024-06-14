@@ -86,7 +86,7 @@ export default function TextField(props: TextFieldProps): JSX.Element {
     startAdornment = null,
     type = 'text',
     value,
-    variant = 'standard',
+    variant = 'outlined',
   } = props;
 
   const [isFocused, setIsFocused] = useState(false);

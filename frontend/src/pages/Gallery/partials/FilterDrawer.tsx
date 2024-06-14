@@ -122,7 +122,6 @@ export default function FilterDrawer(): JSX.Element {
           onChange={handleSearch}
           type="search"
           value={draftSearch}
-          variant="outlined"
         />,
       )}
 
