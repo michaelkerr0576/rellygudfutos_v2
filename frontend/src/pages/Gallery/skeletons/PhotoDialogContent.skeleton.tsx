@@ -10,8 +10,14 @@ import Box from '@/components/layout/Box';
 import Grid from '@/components/layout/Grid';
 import Stack from '@/components/layout/Stack';
 import Paper from '@/components/surfaces/Paper';
+import { ApiResponse } from '@/types/api/data.types';
+import { Photo } from '@/types/api/photo.types';
 
 import { LANDSCAPE_PHOTO_LARGE_SCREEN_HEIGHT, LANDSCAPE_PHOTO_SMALL_SCREEN_HEIGHT } from '../constants';
+
+export interface PhotoDialogProps {
+  photo?: ApiResponse<Photo>;
+}
 
 const StyledPhotoDialogContentSkeleton = styled(Box)(({ theme }): { [key: string]: any } => ({
   '.rgf': {
@@ -52,9 +58,14 @@ const StyledPhotoDialogContentSkeleton = styled(Box)(({ theme }): { [key: string
   },
 }));
 
-export default function PhotoDialogContentSkeleton(): JSX.Element {
+export default function PhotoDialogContentSkeleton(props: PhotoDialogProps): JSX.Element {
+  const { photo } = props;
+
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.between('mobile', 'laptop'));
+
+  const imageHeight = photo?.data.image.height || 720;
+  const imageUrl = photo?.data.image.url || '../../../../src/assets/images/greyBackground_landscape.jpg';
 
   const renderImageSkeleton = (): JSX.Element => (
     <Skeleton
@@ -63,10 +74,10 @@ export default function PhotoDialogContentSkeleton(): JSX.Element {
     >
       <Image
         alt="Image skeleton loader"
-        isPermanentlyLoading
-        maxHeight={720}
-        maxWidth={1080}
-        src="../../../../src/assets/images/greyBackground_landscape.jpg"
+        isMinimumLoad
+        maxHeight={imageHeight}
+        maxWidth="100%"
+        src={imageUrl}
         variant="square"
       />
     </Skeleton>

@@ -4,18 +4,18 @@ import { AlertProps } from '@/components/feedback/Alert';
 import { ApiErrorResponse } from '@/types/api/data.types';
 import { getErrorMessage } from '@/utils/api.utils';
 
-export interface UseError {
+export interface UseMessageError {
   errorCode: number | null;
   errorMessage: string | null;
   errorSeverity: AlertProps['severity'] | null;
 }
 
-export interface UseErrorProps {
+export interface UseErrorMessageProps {
   error: ApiErrorResponse | null;
   defaultErrorMessage?: string;
 }
 
-export default function useError(props: UseErrorProps): UseError {
+export default function useErrorMessage(props: UseErrorMessageProps): UseMessageError {
   const { error, defaultErrorMessage = 'There was an unexpected error' } = props;
 
   const getSeverity = (code: number): AlertProps['severity'] => {
@@ -29,7 +29,7 @@ export default function useError(props: UseErrorProps): UseError {
     return 'error';
   };
 
-  const { errorCode, errorMessage, errorSeverity } = useMemo((): UseError => {
+  const { errorCode, errorMessage, errorSeverity } = useMemo((): UseMessageError => {
     const code = error?.response?.status;
 
     return {

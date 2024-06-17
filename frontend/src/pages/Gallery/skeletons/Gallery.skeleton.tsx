@@ -79,8 +79,9 @@ export default function GallerySkeleton(props: GallerySkeletonProps): JSX.Elemen
     <Box className="rgf-gallery">
       <ImageList
         images={photosSkeleton}
-        isPermanentlyLoading
+        isMinimumLoad
         maxWidth={GALLERY_MAX_WIDTH}
+        minimumLoadTime="infinite"
         onClick={(): void => {}}
         variant={variant}
       />

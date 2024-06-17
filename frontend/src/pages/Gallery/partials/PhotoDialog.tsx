@@ -26,6 +26,7 @@ import Stack from '@/components/layout/Stack';
 import Paper from '@/components/surfaces/Paper';
 import usePhoto from '@/hooks/queries/usePhoto';
 import useErrorMessage from '@/hooks/shared/useErrorMessage';
+import useMinimumLoading from '@/hooks/shared/useMinimumLoading';
 import { PhotoTag } from '@/types/api/photo.types';
 import { formatDateTime } from '@/utils/dateTime.utils';
 
@@ -91,10 +92,9 @@ const StyledPhotoDialog = styled(Dialog)(({ theme }): { [key: string]: any } => 
 
 export default function PhotoDialog(): JSX.Element {
   const { photoId = '' } = useParams();
-
   const { handleClosePhotoDialog, isPhotoDialogOpen } = useGallery();
-
   const { data: photo, isError, isLoading, error } = usePhoto(photoId);
+  const { isMinimumLoading } = useMinimumLoading({ isLoading });
 
   const defaultErrorMessage =
     'There was an error retrieving the photo from the server. Please try refreshing the page or go back to the Gallery';
@@ -236,18 +236,18 @@ export default function PhotoDialog(): JSX.Element {
       );
     }
 
-    if (isLoading) {
-      return <PhotoDialogContentSkeleton />;
+    if (isMinimumLoading) {
+      return <PhotoDialogContentSkeleton photo={photo} />;
     }
 
-    const imageUrl = photo?.data.image.url || '';
     const imageHeight = photo?.data.image.height || 'inherit';
-    const title = photo?.data.title || '';
+    const imageUrl = photo?.data.image.url || '';
+    const imageTitle = photo?.data.title || '';
 
     return (
       <>
         <Image
-          alt={title}
+          alt={imageTitle}
           isOnClickNewTabEnabled
           maxHeight={imageHeight}
           maxWidth="100%"

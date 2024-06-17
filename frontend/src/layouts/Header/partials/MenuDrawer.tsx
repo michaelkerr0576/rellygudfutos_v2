@@ -30,11 +30,8 @@ const StyledDrawer = styled(Drawer)(({ theme }): { [key: string]: any } => ({
 
 export default function MenuDrawer(): JSX.Element {
   const navigate = useNavigate();
-
   const { pathname } = useLocation();
-
   const { colorMode, handleToggleColorMode } = useThemes();
-
   const { handleCloseMenuDrawer, handleOpenMenuDrawer, handleToggleMenuDrawer, isMenuDrawerOpen } = useMenu();
 
   const renderMenuButton = (isDrawerOpen: boolean): JSX.Element => (

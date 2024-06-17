@@ -91,7 +91,6 @@ export default function FilterDrawer(): JSX.Element {
     isFilterDrawerOpen,
     sortByOptions,
   } = useGallery();
-
   const {
     draftSearch,
     draftSortBy,

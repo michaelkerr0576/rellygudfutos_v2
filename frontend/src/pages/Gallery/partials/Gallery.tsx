@@ -24,10 +24,10 @@ export interface GalleryProps {
 export default function Gallery(props: GalleryProps): JSX.Element {
   const { error, isError, isFetchingNextPage, isLoading, lastImageRef, photos } = props;
 
-  const { handleOpenPhotoDialog, layoutVariant } = useGallery();
-
   const defaultErrorMessage =
     'There was an error retrieving photos from the server. Please try refreshing the page';
+
+  const { handleOpenPhotoDialog, layoutVariant } = useGallery();
   const { errorMessage, errorSeverity } = useErrorMessage({ defaultErrorMessage, error });
 
   if (isError) {
@@ -42,6 +42,7 @@ export default function Gallery(props: GalleryProps): JSX.Element {
     <Box className="rgf-gallery">
       <ImageList
         images={photos}
+        isMinimumLoad
         lastImageRef={lastImageRef}
         maxWidth={GALLERY_MAX_WIDTH}
         onClick={handleOpenPhotoDialog}

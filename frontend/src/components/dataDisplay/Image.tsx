@@ -3,6 +3,11 @@ import clsx from 'clsx';
 
 import { alpha, styled, useTheme } from '@mui/material/styles';
 
+import useMinimumLoading, {
+  MINIMUM_LOADING_TIME_MS,
+  UseMinimumLoadingProps,
+} from '@/hooks/shared/useMinimumLoading';
+
 import Skeleton from '../feedback/Skeleton';
 import Box from '../layout/Box';
 
@@ -14,11 +19,11 @@ export interface ImageProps {
   className?: string;
   imageFit?: ImageFit;
   imageRef?: RefObject<any> | ((node?: Element | null) => void);
-  isMinimumLoad?: boolean;
+  isMinimumLoad?: UseMinimumLoadingProps['isLoading'];
   isOnClickNewTabEnabled?: boolean;
-  isPermanentlyLoading?: boolean; // * Used for skeleton loaders
   maxHeight?: string | number;
   maxWidth?: string | number;
+  minimumLoadTime?: UseMinimumLoadingProps['minimumLoadTime'];
   src: string;
   variant?: Variant;
 }
@@ -39,14 +44,9 @@ const StyledImg = styled('img')(({ theme }): { [key: string]: any } => ({
 
 const StyledImgSkeleton = styled(Box)<Partial<ImageProps>>(({ theme, variant }): { [key: string]: any } => ({
   '.rgf-skeleton': {
-    backgroundColor:
-      theme.palette.mode === 'dark'
-        ? alpha(theme.palette.common.white, 0.25)
-        : alpha(theme.palette.common.white, 0.75),
     borderRadius: variant === 'rounded' ? theme.shape.borderRadius : 0,
   },
 
-  backgroundColor: alpha(theme.palette.common.black, 0.75),
   borderRadius: variant === 'rounded' ? theme.shape.borderRadius : 0,
   display: 'flex',
   justifyContent: 'center',
@@ -58,31 +58,29 @@ export default function Image(props: ImageProps): JSX.Element {
     className = '',
     imageFit = 'contain',
     imageRef = undefined,
-    isMinimumLoad = true,
+    isMinimumLoad = false,
     isOnClickNewTabEnabled = false,
-    isPermanentlyLoading = undefined,
     maxHeight = 'inherit',
     maxWidth = 'inherit',
+    minimumLoadTime = MINIMUM_LOADING_TIME_MS,
     src,
     variant = 'rounded',
   } = props;
 
   const theme = useTheme();
-
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isImageLoading, setIsImageLoading] = useState<boolean>(true);
+  const { isMinimumLoading } = useMinimumLoading({
+    isLoading: isMinimumLoad ? isImageLoading : false,
+    minimumLoadTime,
+  });
+  const isLoading = isImageLoading || isMinimumLoading;
 
   const handleOpenImageInNewTab = (): void => {
     window.open(src, '_blank');
   };
 
   const handleImageLoad = (): void => {
-    if (isMinimumLoad) {
-      setTimeout((): void => {
-        setIsLoading(false);
-      }, 750);
-    } else {
-      setIsLoading(false);
-    }
+    setIsImageLoading(false);
   };
 
   const renderImage = (ref?: ImageProps['imageRef']): JSX.Element => {
@@ -112,10 +110,10 @@ export default function Image(props: ImageProps): JSX.Element {
     );
   };
 
-  if (isPermanentlyLoading || isLoading) {
+  if (isLoading) {
     return (
       <StyledImgSkeleton className="rgf-image--skeleton" variant={variant}>
-        <Skeleton variant={variant === 'rounded' ? 'rounded' : 'rectangular'}>{renderImage()}</Skeleton>
+        <Skeleton>{renderImage()}</Skeleton>
       </StyledImgSkeleton>
     );
   }

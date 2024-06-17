@@ -6,6 +6,8 @@ import MuiImageListItem from '@mui/material/ImageListItem';
 import { styled, useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
+import { MINIMUM_LOADING_TIME_MS, UseMinimumLoadingProps } from '@/hooks/shared/useMinimumLoading';
+
 import Image from './Image';
 
 export const IMAGE_CONTAINER_COLUMNS = 8;
@@ -38,9 +40,10 @@ type ImageListItem = {
 export interface ImageListProps {
   className?: MuiImageListProps['className'];
   images: ImageListItem[];
-  isPermanentlyLoading?: boolean; // * Used for skeleton loaders
+  isMinimumLoad?: UseMinimumLoadingProps['isLoading'];
   lastImageRef?: RefObject<any> | ((node?: Element | null) => void);
   maxWidth?: number;
+  minimumLoadTime?: UseMinimumLoadingProps['minimumLoadTime'];
   onClick: (imageId: string) => void;
   variant: Variant;
 }
@@ -65,9 +68,10 @@ export default function ImageList(props: ImageListProps): JSX.Element {
   const {
     className = '',
     images,
-    isPermanentlyLoading = undefined,
+    isMinimumLoad = false,
     lastImageRef = undefined,
     maxWidth = 'inherit',
+    minimumLoadTime = MINIMUM_LOADING_TIME_MS,
     onClick,
     variant,
   } = props;
@@ -124,9 +128,10 @@ export default function ImageList(props: ImageListProps): JSX.Element {
             alt={imageTitle}
             imageFit="cover"
             imageRef={isLastImage ? lastImageRef : undefined}
-            isPermanentlyLoading={isPermanentlyLoading}
+            isMinimumLoad={isMinimumLoad}
             maxHeight={imageHeight}
             maxWidth={imageWidth}
+            minimumLoadTime={minimumLoadTime}
             src={imageUrl}
           />
         </MuiImageListItem>

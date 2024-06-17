@@ -51,9 +51,7 @@ const StyledHeader = styled('header')(({ theme }): { [key: string]: any } => ({
 
 export default function Header(): JSX.Element {
   const navigate = useNavigate();
-
   const { handleOpenLoginDialog, isLoginDialogOpen } = useMenu();
-
   const handleNavigateGallery = (): void => navigate('/');
 
   const renderSiteAction = (): JSX.Element => (

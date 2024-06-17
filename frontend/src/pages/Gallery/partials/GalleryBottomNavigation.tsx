@@ -12,7 +12,6 @@ import useGallery from '../hooks/useGallery';
 
 export default function GalleryBottomNavigation(): JSX.Element {
   const { handleToggleColorMode, colorMode } = useThemes();
-
   const { handleChangeNavigationValue, handleOpenFilterDrawer, navigationValue } = useGallery();
 
   return (

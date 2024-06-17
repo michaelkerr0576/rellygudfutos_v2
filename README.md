@@ -267,7 +267,7 @@ I wanted to avoid slow webpack so Vite.js it is.
 
 ### Material UI
 
-UI library with all the components I will need. Each component used will be put into `src/components` folder where I can do any custom design and ensure the components are being used the same throughout the app.
+UI library with all the components I will need. Each component used will be put into `src/components` folder and will be very opinionated. The aim is to have any custom design within the component with any shared style logic. This will ensure that there is a consistent UI throughout the app.
 
 Each component will have a `className` to make it easier to customize from a parent component eg. `className="rgf-list"`. `rgf` prefix stands for the app name rellygudfutos.
 
@@ -314,7 +314,7 @@ Examples of data that needs to go into global state:
 
 - Gallery filters, search and sorting. Avoid prop drilling and just connect to the global state.
 
-4. **Gallery**
+4. **Authorisation**
 
 - User authorisation will not be persisted to local storage for obvious security concerns. But will be very useful in a global state to check permissions for certain actions.
 
@@ -355,6 +355,14 @@ The approach will be to wrap the top-level route components to display a “Some
 **Useful Links:**
 
 - [Error Boundary - Docs](https://reactjs.org/docs/error-boundaries.html)
+
+### Loading
+
+Each loading state will be determined by the length of time it takes to do an API request. In some instances I will artificially increase the loading time to create a more tactile app. For example, when the user clicks into a photo there will be a minimum loading time to display a loading skelton.
+
+Implementing a minimum loading state in an application can enhance user experience by providing a more consistent and predictable interaction. It’s best used for elements where quick loading states can cause visual disruption or where consistent loading indicators improve user perception.
+
+The main pro is that it will reduce jitter where there is rapid state changes. A minimum loading state can smooth out these transitions, creating a more polished experience.
 
 ## Retrospective
 

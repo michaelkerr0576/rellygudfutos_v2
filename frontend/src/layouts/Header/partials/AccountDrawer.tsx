@@ -27,7 +27,6 @@ const StyledDrawer = styled(Drawer)(({ theme }): { [key: string]: any } => ({
 
 export default function AccountDrawer(): JSX.Element {
   const { pathname } = useLocation();
-
   const {
     handleCloseAccountDrawer,
     handleOpenAccountDrawer,

@@ -41,22 +41,20 @@ export default function LoginDialog(): JSX.Element {
       password: '',
     },
   });
-
   const { mutate: loginUser, isLoading } = useUserLogin();
-
   const { handleCloseLoginDialog, isLoginDialogOpen } = useMenu();
-
-  const handleOnSubmit: SubmitHandler<LoginFormInput> = async (data): Promise<void> => {
-    const { email, password } = data;
-
-    loginUser({ email, password });
-  };
 
   // TODO - move useState hook
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   // TODO - move handles to hook
   const handleToggleShowPassword = (): void => setShowPassword((isShown): boolean => !isShown);
+
+  const handleOnSubmit: SubmitHandler<LoginFormInput> = async (data): Promise<void> => {
+    const { email, password } = data;
+
+    loginUser({ email, password });
+  };
 
   const renderEmailField = (): JSX.Element => (
     <FormTextField

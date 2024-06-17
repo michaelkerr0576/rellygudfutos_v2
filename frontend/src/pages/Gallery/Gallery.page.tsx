@@ -13,9 +13,7 @@ import PhotoDialog from './partials/PhotoDialog';
 
 export default function GalleryPage(): JSX.Element {
   useGalleryDialogRoutes();
-
   const { search, sortBy, tagsFilterIds, isPhotoDialogOpen } = useGallery();
-
   const {
     data: photosData,
     error: photosError,
@@ -28,7 +26,6 @@ export default function GalleryPage(): JSX.Element {
     sort: sortBy,
     tagIds: tagsFilterIds,
   });
-
   const { data: photos, inViewRef: inViewPhotoRef } = useInfinitePagination<Photo>({
     fetchedPages: photosData?.pages,
     onFetchNextPage: onFetchNextPhotoPage,
