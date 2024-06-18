@@ -129,7 +129,6 @@ export default function ImageList(props: ImageListProps): JSX.Element {
           className="rgf-imageList--listItem"
           cols={getColumns()}
           key={imageId}
-          onClick={handleImageClick}
           rows={getRows()}
         >
           <Image
@@ -141,6 +140,7 @@ export default function ImageList(props: ImageListProps): JSX.Element {
             maxHeight={imageHeight}
             maxWidth={imageWidth}
             minimumLoadTime={minimumLoadTime}
+            onClick={handleImageClick}
             src={imageUrl}
           />
         </MuiImageListItem>
