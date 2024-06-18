@@ -11,7 +11,7 @@ export interface AvatarProps {
   size?: Size;
 }
 
-const StyledMuiAvatar = styled(MuiAvatar)((): { [key: string]: any } => ({
+const StyledAvatar = styled(MuiAvatar)((): { [key: string]: any } => ({
   '&.rgf': {
     '&-avatar': {
       '&--large': {
@@ -40,5 +40,5 @@ export default function Avatar(props: AvatarProps): JSX.Element {
     [className]: !!className,
   });
 
-  return <StyledMuiAvatar className={avatarStyles}>{children}</StyledMuiAvatar>;
+  return <StyledAvatar className={avatarStyles}>{children}</StyledAvatar>;
 }

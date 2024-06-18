@@ -17,7 +17,7 @@ export interface TypographyProps {
   variant?: Variant;
 }
 
-const StyledMuiTypography = styled(MuiTypography)((): { [key: string]: any } => ({
+const StyledTypography = styled(MuiTypography)((): { [key: string]: any } => ({
   '&.rgf': {
     '&-typography': {
       '&--maxLines': {
@@ -65,7 +65,7 @@ export default function Typography(props: TypographyProps): JSX.Element {
   });
 
   return (
-    <StyledMuiTypography
+    <StyledTypography
       align={align}
       className={typographyStyles}
       color={color}
@@ -75,6 +75,6 @@ export default function Typography(props: TypographyProps): JSX.Element {
       variant={getVariant()}
     >
       {children}
-    </StyledMuiTypography>
+    </StyledTypography>
   );
 }

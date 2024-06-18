@@ -37,7 +37,7 @@ const tags = [
   { id: 15, label: 'Cityscape 6' },
 ];
 
-const StyledDrawer = styled(Drawer)(({ theme }): { [key: string]: any } => ({
+const StyledFilterDrawer = styled(Drawer)(({ theme }): { [key: string]: any } => ({
   '.rgf': {
     '&-drawer': {
       '&--children': {
@@ -189,7 +189,7 @@ export default function FilterDrawer(): JSX.Element {
   );
 
   return (
-    <StyledDrawer
+    <StyledFilterDrawer
       anchor="bottom"
       className="rgf-filterDrawer"
       isOpen={isFilterDrawerOpen}
@@ -205,6 +205,6 @@ export default function FilterDrawer(): JSX.Element {
       {isFilterDirty && renderDirtyFilterAlert()}
 
       {renderActionButtonGroup()}
-    </StyledDrawer>
+    </StyledFilterDrawer>
   );
 }

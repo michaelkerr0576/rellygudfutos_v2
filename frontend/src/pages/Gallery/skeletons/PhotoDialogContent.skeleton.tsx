@@ -32,6 +32,9 @@ const StyledPhotoDialogContentSkeleton = styled(Box)(({ theme }): { [key: string
           margin: theme.spacing(0.5, 0.75),
         },
       },
+      '&--image': {
+        minHeight: LANDSCAPE_PHOTO_SMALL_SCREEN_HEIGHT,
+      },
     },
   },
 
@@ -53,6 +56,9 @@ const StyledPhotoDialogContentSkeleton = styled(Box)(({ theme }): { [key: string
             margin: theme.spacing(0.5, 1),
           },
         },
+        '&--image': {
+          minHeight: LANDSCAPE_PHOTO_LARGE_SCREEN_HEIGHT,
+        },
       },
     },
   },
@@ -68,19 +74,16 @@ export default function PhotoDialogContentSkeleton(props: PhotoDialogProps): JSX
   const imageUrl = photo?.data.image.url || '../../../../src/assets/images/greyBackground_landscape.jpg';
 
   const renderImageSkeleton = (): JSX.Element => (
-    <Skeleton
-      minHeight={isSmallScreen ? LANDSCAPE_PHOTO_SMALL_SCREEN_HEIGHT : LANDSCAPE_PHOTO_LARGE_SCREEN_HEIGHT}
-      width="100%"
-    >
-      <Image
-        alt="Image skeleton loader"
-        isMinimumLoad
-        maxHeight={imageHeight}
-        maxWidth="100%"
-        src={imageUrl}
-        variant="square"
-      />
-    </Skeleton>
+    <Image
+      alt="Image skeleton loader"
+      className="rgf-photoDialog--image"
+      isMinimumLoad
+      maxHeight={imageHeight}
+      maxWidth="100%"
+      minimumLoadTime="infinite"
+      src={imageUrl}
+      variant="square"
+    />
   );
 
   const renderTitleSkeleton = (): JSX.Element => (

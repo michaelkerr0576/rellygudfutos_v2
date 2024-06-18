@@ -15,7 +15,7 @@ export interface ChipProps {
   variant?: MuiChipProps['variant'];
 }
 
-const StyledMuiChip = styled(MuiChip)(({ theme }): { [key: string]: any } => ({
+const StyledChip = styled(MuiChip)(({ theme }): { [key: string]: any } => ({
   '&.rgf': {
     '&-chip': {
       '&--endIcon': {
@@ -64,7 +64,7 @@ export default function Chip(props: ChipProps): JSX.Element {
   });
 
   const renderChip = (): JSX.Element => (
-    <StyledMuiChip
+    <StyledChip
       className={chipStyles}
       icon={startIcon}
       label={truncatedLabel}

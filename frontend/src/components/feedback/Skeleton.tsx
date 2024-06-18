@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 
 import MuiSkeleton, { SkeletonProps as MuiSkeletonProps } from '@mui/material/Skeleton';
+import { styled } from '@mui/material/styles';
 
 type Variant = 'circular' | 'rectangular' | 'rounded' | 'text';
 
@@ -12,6 +13,18 @@ export interface SkeletonProps {
   variant?: Variant;
   width?: string | number;
 }
+
+interface SkeletonStyleProps {
+  styleProps: {
+    minHeight: SkeletonProps['minHeight'];
+  };
+}
+
+const StyledSkeleton = styled(MuiSkeleton, {
+  shouldForwardProp: (prop): boolean => prop !== 'styleProps', // * Filter out styleProps prop when forwarding to DOM
+})<SkeletonStyleProps>(({ styleProps: { minHeight } }): { [key: string]: any } => ({
+  minHeight,
+}));
 
 export default function Skeleton(props: SkeletonProps): JSX.Element {
   const {
@@ -28,17 +41,15 @@ export default function Skeleton(props: SkeletonProps): JSX.Element {
   });
 
   return (
-    <MuiSkeleton
+    <StyledSkeleton
       animation="wave"
       className={skeletonStyles}
       height={height}
-      style={{
-        minHeight,
-      }}
+      styleProps={{ minHeight }}
       variant={variant}
       width={width}
     >
       {children}
-    </MuiSkeleton>
+    </StyledSkeleton>
   );
 }

@@ -42,13 +42,21 @@ export interface ImageListProps {
   images: ImageListItem[];
   isMinimumLoad?: UseMinimumLoadingProps['isLoading'];
   lastImageRef?: RefObject<any> | ((node?: Element | null) => void);
-  maxWidth?: number;
+  maxWidth?: number | 'inherit';
   minimumLoadTime?: UseMinimumLoadingProps['minimumLoadTime'];
   onClick: (imageId: string) => void;
   variant: Variant;
 }
 
-const StyledMuiImageList = styled(MuiImageList)(({ theme }): { [key: string]: any } => ({
+interface ImageListStyleProps {
+  styleProps: {
+    maxWidth: ImageListProps['maxWidth'];
+  };
+}
+
+const StyledMuiImageList = styled(MuiImageList, {
+  shouldForwardProp: (prop): boolean => prop !== 'css', // * Filter out styleProps prop when forwarding to DOM
+})<ImageListStyleProps>(({ styleProps: { maxWidth }, theme }): { [key: string]: any } => ({
   '.rgf': {
     '&-imageList': {
       '&--listItem': {
@@ -62,6 +70,7 @@ const StyledMuiImageList = styled(MuiImageList)(({ theme }): { [key: string]: an
   },
 
   margin: '0 auto',
+  maxWidth,
 }));
 
 export default function ImageList(props: ImageListProps): JSX.Element {
@@ -147,7 +156,7 @@ export default function ImageList(props: ImageListProps): JSX.Element {
       className={imageListStyles}
       cols={IMAGE_CONTAINER_COLUMNS}
       gap={isSmallScreen ? IMAGE_SMALL_SCREEN_GAP : IMAGE_LARGE_SCREEN_GAP}
-      style={{ maxWidth }}
+      styleProps={{ maxWidth }}
       variant="quilted"
     >
       {renderImageListItems()}

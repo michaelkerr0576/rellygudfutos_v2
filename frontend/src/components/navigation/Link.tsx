@@ -10,7 +10,7 @@ export interface LinkProps {
   to: ReactRouterLinkProps['to'];
 }
 
-const StyledReactRouterLink = styled(ReactRouterLink)((): { [key: string]: any } => ({
+const StyledLink = styled(ReactRouterLink)((): { [key: string]: any } => ({
   color: 'inherit',
   textDecoration: 'none',
   WebkitTapHighlightColor: 'transparent',
@@ -24,9 +24,9 @@ function Link(props: LinkProps, ref: React.Ref<HTMLAnchorElement> | undefined): 
   });
 
   return (
-    <StyledReactRouterLink className={linkStyles} ref={ref} to={to}>
+    <StyledLink className={linkStyles} ref={ref} to={to}>
       {children}
-    </StyledReactRouterLink>
+    </StyledLink>
   );
 }
 

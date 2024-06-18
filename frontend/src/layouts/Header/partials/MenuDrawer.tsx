@@ -18,7 +18,7 @@ import useMenu from '@/hooks/shared/useMenu';
 import useThemes from '@/hooks/shared/useThemes';
 import { ColorMode } from '@/types/store/theme.types';
 
-const StyledDrawer = styled(Drawer)(({ theme }): { [key: string]: any } => ({
+const StyledMenuDrawer = styled(Drawer)(({ theme }): { [key: string]: any } => ({
   '.rgf': {
     '&-menuDrawer': {
       '&--header': {
@@ -61,7 +61,7 @@ export default function MenuDrawer(): JSX.Element {
     <Box className="rgf-menuDrawer">
       {renderMenuButton(true)}
 
-      <StyledDrawer
+      <StyledMenuDrawer
         anchor="left"
         isOpen={isMenuDrawerOpen}
         onClose={handleCloseMenuDrawer}
@@ -100,7 +100,7 @@ export default function MenuDrawer(): JSX.Element {
         />
 
         <Divider />
-      </StyledDrawer>
+      </StyledMenuDrawer>
     </Box>
   );
 }

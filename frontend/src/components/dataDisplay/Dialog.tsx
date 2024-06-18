@@ -34,7 +34,7 @@ export interface DialogProps {
   title?: string;
 }
 
-const StyledMuiDialog = styled(MuiDialog)(({ theme }): { [key: string]: any } => ({
+const StyledDialog = styled(MuiDialog)(({ theme }): { [key: string]: any } => ({
   // #region Mui Overrides
   '.MuiDialogActions-root': {
     display: 'inherit',
@@ -171,7 +171,7 @@ export default function Dialog(props: DialogProps): JSX.Element {
   });
 
   return (
-    <StyledMuiDialog
+    <StyledDialog
       aria-describedby="dialog-description"
       aria-labelledby="dialog-title"
       className={dialogStyles}
@@ -187,6 +187,6 @@ export default function Dialog(props: DialogProps): JSX.Element {
       <MuiDialogContent className="rgf-dialog--content">{children}</MuiDialogContent>
 
       {renderDialogActions()}
-    </StyledMuiDialog>
+    </StyledDialog>
   );
 }

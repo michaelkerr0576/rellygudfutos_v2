@@ -25,7 +25,15 @@ export interface DrawerProps {
   onOpen: () => void;
 }
 
-const StyledMuiSwipeableDrawer = styled(MuiSwipeableDrawer)(({ theme }): { [key: string]: any } => ({
+interface DrawerStyleProps {
+  styleProps: {
+    isBottomDrawer: boolean;
+  };
+}
+
+const StyledDrawer = styled(MuiSwipeableDrawer, {
+  shouldForwardProp: (prop): boolean => prop !== 'styleProps', // * Filter out styleProps prop when forwarding to DOM
+})<DrawerStyleProps>(({ styleProps: { isBottomDrawer }, theme }): { [key: string]: any } => ({
   // #region Mui Overrides
   '.MuiListItemButton-root': {
     padding: theme.spacing(1, 1.5),
@@ -39,8 +47,10 @@ const StyledMuiSwipeableDrawer = styled(MuiSwipeableDrawer)(({ theme }): { [key:
       '&--children': {
         display: 'flex',
         flexDirection: 'column',
+        height: isBottomDrawer ? `calc(100vh - ${BOTTOM_DRAWER_MOBILE_TOP_OFFSET})` : 'auto',
         overflowY: 'auto',
         padding: theme.spacing(0, 1.5),
+        width: isBottomDrawer ? 'auto' : 250,
       },
       '&--expandDrawerButton': {
         left: 0,
@@ -89,13 +99,14 @@ export default function Drawer(props: DrawerProps): JSX.Element {
   });
 
   return (
-    <StyledMuiSwipeableDrawer
+    <StyledDrawer
       anchor={anchor}
       className={drawerStyles}
       disableSwipeToOpen
       onClose={onClose}
       onOpen={onOpen}
       open={isOpen}
+      styleProps={{ isBottomDrawer }}
     >
       {isBottomDrawer && (
         <Paper className="rgf-drawer--expandDrawerButton" elevation={1}>
@@ -107,15 +118,7 @@ export default function Drawer(props: DrawerProps): JSX.Element {
         </Paper>
       )}
 
-      <Box
-        className="rgf-drawer--children"
-        style={{
-          height: isBottomDrawer ? `calc(100vh - ${BOTTOM_DRAWER_MOBILE_TOP_OFFSET})` : 'auto',
-          width: isBottomDrawer ? 'auto' : 250,
-        }}
-      >
-        {children}
-      </Box>
-    </StyledMuiSwipeableDrawer>
+      <Box className="rgf-drawer--children">{children}</Box>
+    </StyledDrawer>
   );
 }

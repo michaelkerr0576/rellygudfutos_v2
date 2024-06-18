@@ -22,7 +22,7 @@ export interface ButtonProps {
   variant?: Variant;
 }
 
-const StyledMuiButton = styled(MuiButton)(({ theme }): { [key: string]: any } => ({
+const StyledButton = styled(MuiButton)(({ theme }): { [key: string]: any } => ({
   fontWeight: theme.typography.fontWeightSemiBold,
 }));
 
@@ -58,7 +58,7 @@ export default function Button(props: ButtonProps): JSX.Element {
   });
 
   return (
-    <StyledMuiButton
+    <StyledButton
       className={buttonStyles}
       color={color}
       disabled={isDisabled || isLoading}
@@ -73,6 +73,6 @@ export default function Button(props: ButtonProps): JSX.Element {
       {children}
 
       {isLoading && <CircularProgress color="inherit" variant="inline" />}
-    </StyledMuiButton>
+    </StyledButton>
   );
 }

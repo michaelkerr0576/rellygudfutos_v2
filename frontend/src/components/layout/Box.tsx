@@ -9,7 +9,6 @@ export interface BoxProps {
   children?: React.ReactNode;
   className?: MuiBoxProps['className'];
   onClick?: MuiBoxProps['onClick'];
-  style?: MuiBoxProps['sx'];
 }
 
 export default function Box(props: BoxProps): JSX.Element {
@@ -20,7 +19,6 @@ export default function Box(props: BoxProps): JSX.Element {
     children = null,
     className = '',
     onClick = undefined,
-    style = undefined,
   } = props;
 
   const boxStyles = clsx('rgf-box', {
@@ -28,14 +26,7 @@ export default function Box(props: BoxProps): JSX.Element {
   });
 
   return (
-    <MuiBox
-      aria-label={ariaLabel}
-      className={boxStyles}
-      onClick={onClick}
-      ref={boxRef}
-      role={ariaRole}
-      sx={style}
-    >
+    <MuiBox aria-label={ariaLabel} className={boxStyles} onClick={onClick} ref={boxRef} role={ariaRole}>
       {children}
     </MuiBox>
   );

@@ -27,7 +27,7 @@ export interface ListProps {
   subHeader?: string;
 }
 
-const StyledMuiList = styled(MuiList)((): { [key: string]: any } => ({
+const StyledList = styled(MuiList)((): { [key: string]: any } => ({
   // #region Mui Overrides
   '.MuiListSubheader-root': {
     backgroundColor: 'inherit',
@@ -75,8 +75,8 @@ export default function List(props: ListProps): JSX.Element {
   });
 
   return (
-    <StyledMuiList className={listStyles} subheader={<MuiListSubheader>{subHeader}</MuiListSubheader>}>
+    <StyledList className={listStyles} subheader={<MuiListSubheader>{subHeader}</MuiListSubheader>}>
       {renderListItems()}
-    </StyledMuiList>
+    </StyledList>
   );
 }

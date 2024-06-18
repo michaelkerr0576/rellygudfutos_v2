@@ -1,7 +1,7 @@
 import { RefObject, useState } from 'react';
 import clsx from 'clsx';
 
-import { alpha, styled, useTheme } from '@mui/material/styles';
+import { alpha, styled } from '@mui/material/styles';
 
 import useMinimumLoading, {
   MINIMUM_LOADING_TIME_MS,
@@ -28,26 +28,54 @@ export interface ImageProps {
   variant?: Variant;
 }
 
-const StyledImg = styled('img')(({ theme }): { [key: string]: any } => ({
-  '&.rgf': {
-    '&-image': {
-      '&--clickable': {
-        cursor: 'pointer',
-      },
+interface ImageStyleProps {
+  styleProps: {
+    imageFit: ImageProps['imageFit'];
+    isOnClickNewTabEnabled: ImageProps['isOnClickNewTabEnabled'];
+    maxHeight: ImageProps['maxHeight'];
+    maxWidth: ImageProps['maxWidth'];
+    variant: ImageProps['variant'];
+  };
+}
 
-      backgroundColor: alpha(theme.palette.common.black, 0.75),
-      display: 'block',
-      width: '100%',
-    },
-  },
-}));
+interface ImageSkeletonStyleProps {
+  styleProps: {
+    variant: ImageProps['variant'];
+  };
+}
 
-const StyledImgSkeleton = styled(Box)<Partial<ImageProps>>(({ theme, variant }): { [key: string]: any } => ({
+const StyledImg = styled('img', {
+  shouldForwardProp: (prop): boolean => prop !== 'styleProps', // * Filter out styleProps prop when forwarding to DOM
+})<ImageStyleProps>(
+  ({
+    styleProps: { imageFit, isOnClickNewTabEnabled, maxHeight, maxWidth, variant },
+    theme,
+  }): { [key: string]: any } => ({
+    backgroundColor: alpha(theme.palette.common.black, 0.75),
+    borderRadius: variant === 'rounded' ? theme.shape.borderRadius : 0,
+    cursor: isOnClickNewTabEnabled ? 'pointer' : 'inherit',
+    display: 'block',
+    height: imageFit === 'cover' ? '100%' : 'inherit',
+    maxHeight,
+    maxWidth,
+    objectFit: imageFit,
+    width: '100%',
+  }),
+);
+
+const StyledImgSkeleton = styled(Box, {
+  shouldForwardProp: (prop): boolean => prop !== 'styleProps', // * Filter out styleProps prop when forwarding to DOM
+})<ImageSkeletonStyleProps>(({ styleProps: { variant }, theme }): { [key: string]: any } => ({
   '.rgf-skeleton': {
+    backgroundColor:
+      theme.palette.mode === 'dark'
+        ? alpha(theme.palette.common.white, 0.25)
+        : alpha(theme.palette.common.white, 0.75),
     borderRadius: variant === 'rounded' ? theme.shape.borderRadius : 0,
   },
 
-  borderRadius: variant === 'rounded' ? theme.shape.borderRadius : 0,
+  backgroundColor: alpha(theme.palette.common.black, 0.75),
+  borderRadius: variant === 'rounded' ? `${theme.shape.borderRadius + 0.2}px` : 0, // * + 0.2 hides backgroundColor showing at edges
   display: 'flex',
   justifyContent: 'center',
 }));
@@ -67,8 +95,8 @@ export default function Image(props: ImageProps): JSX.Element {
     variant = 'rounded',
   } = props;
 
-  const theme = useTheme();
   const [isImageLoading, setIsImageLoading] = useState<boolean>(true);
+
   const { isMinimumLoading } = useMinimumLoading({
     isLoading: isMinimumLoad ? isImageLoading : false,
     minimumLoadTime,
@@ -85,8 +113,6 @@ export default function Image(props: ImageProps): JSX.Element {
 
   const renderImage = (ref?: ImageProps['imageRef']): JSX.Element => {
     const imageStyles = clsx('rgf-image', `rgf-image--${variant}`, {
-      'rgf-image--clickable': isOnClickNewTabEnabled,
-      // eslint-disable-next-line sort-keys
       [className]: !!className,
     });
 
@@ -99,20 +125,14 @@ export default function Image(props: ImageProps): JSX.Element {
         onLoad={handleImageLoad}
         ref={ref}
         src={src}
-        style={{
-          borderRadius: variant === 'rounded' ? theme.shape.borderRadius : 0,
-          height: imageFit === 'cover' ? '100%' : 'inherit',
-          maxHeight,
-          maxWidth,
-          objectFit: imageFit,
-        }}
+        styleProps={{ imageFit, isOnClickNewTabEnabled, maxHeight, maxWidth, variant }}
       />
     );
   };
 
   if (isLoading) {
     return (
-      <StyledImgSkeleton className="rgf-image--skeleton" variant={variant}>
+      <StyledImgSkeleton className="rgf-image--skeleton" styleProps={{ variant }}>
         <Skeleton>{renderImage()}</Skeleton>
       </StyledImgSkeleton>
     );
