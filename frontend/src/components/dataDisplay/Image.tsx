@@ -17,6 +17,7 @@ type Variant = 'rounded' | 'square';
 export interface ImageProps {
   alt: string;
   className?: string;
+  hasBoxShadow?: boolean;
   imageFit?: ImageFit;
   imageRef?: RefObject<any> | ((node?: Element | null) => void);
   isMinimumLoad?: UseMinimumLoadingProps['isLoading'];
@@ -30,7 +31,9 @@ export interface ImageProps {
 
 interface ImageStyleProps {
   styleProps: {
+    hasBoxShadow: ImageProps['hasBoxShadow'];
     imageFit: ImageProps['imageFit'];
+    isFinishedTransition: boolean;
     isOnClickNewTabEnabled: ImageProps['isOnClickNewTabEnabled'];
     maxHeight: ImageProps['maxHeight'];
     maxWidth: ImageProps['maxWidth'];
@@ -38,7 +41,7 @@ interface ImageStyleProps {
   };
 }
 
-interface ImageSkeletonStyleProps {
+interface ImageContainerStyleProps {
   styleProps: {
     variant: ImageProps['variant'];
   };
@@ -48,30 +51,49 @@ const StyledImg = styled('img', {
   shouldForwardProp: (prop): boolean => prop !== 'styleProps', // * Filter out styleProps prop when forwarding to DOM
 })<ImageStyleProps>(
   ({
-    styleProps: { imageFit, isOnClickNewTabEnabled, maxHeight, maxWidth, variant },
+    styleProps: {
+      hasBoxShadow,
+      imageFit,
+      isFinishedTransition,
+      isOnClickNewTabEnabled,
+      maxHeight,
+      maxWidth,
+      variant,
+    },
     theme,
   }): { [key: string]: any } => ({
-    backgroundColor: alpha(theme.palette.common.black, 0.75),
+    '&:hover': {
+      boxShadow: hasBoxShadow ? theme.shadows[6] : theme.shadows[0],
+    },
+
     borderRadius: variant === 'rounded' ? theme.shape.borderRadius : 0,
+    boxShadow: hasBoxShadow && isFinishedTransition ? theme.shadows[3] : theme.shadows[0],
     cursor: isOnClickNewTabEnabled ? 'pointer' : 'inherit',
     display: 'block',
     height: imageFit === 'cover' ? '100%' : 'inherit',
     maxHeight,
     maxWidth,
     objectFit: imageFit,
+    opacity: isFinishedTransition ? 1 : 0,
+    transition: theme.transitions.create(['opacity', 'box-shadow'], {
+      duration: theme.transitions.duration.standard,
+      easing: theme.transitions.easing.easeInOut,
+    }),
     width: '100%',
   }),
 );
 
-const StyledImgSkeleton = styled(Box, {
+const StyledImgContainer = styled(Box, {
   shouldForwardProp: (prop): boolean => prop !== 'styleProps', // * Filter out styleProps prop when forwarding to DOM
-})<ImageSkeletonStyleProps>(({ styleProps: { variant }, theme }): { [key: string]: any } => ({
-  '.rgf-skeleton': {
-    backgroundColor:
-      theme.palette.mode === 'dark'
-        ? alpha(theme.palette.common.white, 0.25)
-        : alpha(theme.palette.common.white, 0.75),
-    borderRadius: variant === 'rounded' ? theme.shape.borderRadius : 0,
+})<ImageContainerStyleProps>(({ styleProps: { variant }, theme }): { [key: string]: any } => ({
+  '.rgf': {
+    '&-skeleton': {
+      backgroundColor:
+        theme.palette.mode === 'dark'
+          ? alpha(theme.palette.common.white, 0.25)
+          : alpha(theme.palette.common.white, 0.75),
+      borderRadius: variant === 'rounded' ? theme.shape.borderRadius : 0,
+    },
   },
 
   backgroundColor: alpha(theme.palette.common.black, 0.75),
@@ -84,6 +106,7 @@ export default function Image(props: ImageProps): JSX.Element {
   const {
     alt,
     className = '',
+    hasBoxShadow = false,
     imageFit = 'contain',
     imageRef = undefined,
     isMinimumLoad = false,
@@ -96,6 +119,7 @@ export default function Image(props: ImageProps): JSX.Element {
   } = props;
 
   const [isImageLoading, setIsImageLoading] = useState<boolean>(true);
+  const [isFinishedTransition, setIsFinishedTransition] = useState<boolean>(false);
 
   const { isMinimumLoading } = useMinimumLoading({
     isLoading: isMinimumLoad ? isImageLoading : false,
@@ -108,6 +132,12 @@ export default function Image(props: ImageProps): JSX.Element {
   };
 
   const handleImageLoad = (): void => {
+    if (!isLoading) {
+      setTimeout((): void => {
+        setIsFinishedTransition(true);
+      }, 100);
+    }
+
     setIsImageLoading(false);
   };
 
@@ -117,26 +147,32 @@ export default function Image(props: ImageProps): JSX.Element {
     });
 
     return (
-      <StyledImg
-        alt={alt}
-        className={imageStyles}
-        loading="lazy"
-        onClick={isOnClickNewTabEnabled ? handleOpenImageInNewTab : undefined}
-        onLoad={handleImageLoad}
-        ref={ref}
-        src={src}
-        styleProps={{ imageFit, isOnClickNewTabEnabled, maxHeight, maxWidth, variant }}
-      />
+      <StyledImgContainer className="rgf-image--container" styleProps={{ variant }}>
+        <StyledImg
+          alt={alt}
+          className={imageStyles}
+          loading="lazy"
+          onClick={isOnClickNewTabEnabled ? handleOpenImageInNewTab : undefined}
+          onLoad={handleImageLoad}
+          ref={ref}
+          src={src}
+          styleProps={{
+            hasBoxShadow,
+            imageFit,
+            isFinishedTransition,
+            isOnClickNewTabEnabled,
+            maxHeight,
+            maxWidth,
+            variant,
+          }}
+        />
+      </StyledImgContainer>
     );
   };
 
-  if (isLoading) {
-    return (
-      <StyledImgSkeleton className="rgf-image--skeleton" styleProps={{ variant }}>
-        <Skeleton>{renderImage()}</Skeleton>
-      </StyledImgSkeleton>
-    );
-  }
-
-  return renderImage(imageRef);
+  return (
+    <StyledImgContainer className="rgf-image--container" styleProps={{ variant }}>
+      {isLoading ? <Skeleton>{renderImage()}</Skeleton> : renderImage(imageRef)}
+    </StyledImgContainer>
+  );
 }

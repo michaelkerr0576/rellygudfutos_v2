@@ -55,13 +55,12 @@ interface ImageListStyleProps {
 }
 
 const StyledMuiImageList = styled(MuiImageList, {
-  shouldForwardProp: (prop): boolean => prop !== 'css', // * Filter out styleProps prop when forwarding to DOM
+  shouldForwardProp: (prop): boolean => prop !== 'styleProps', // * Filter out styleProps prop when forwarding to DOM
 })<ImageListStyleProps>(({ styleProps: { maxWidth }, theme }): { [key: string]: any } => ({
   '.rgf': {
     '&-imageList': {
       '&--listItem': {
         borderRadius: theme.shape.borderRadius,
-        boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.2)',
         cursor: 'pointer',
         display: 'flex',
         justifyContent: 'center',
@@ -135,6 +134,7 @@ export default function ImageList(props: ImageListProps): JSX.Element {
         >
           <Image
             alt={imageTitle}
+            hasBoxShadow
             imageFit="cover"
             imageRef={isLastImage ? lastImageRef : undefined}
             isMinimumLoad={isMinimumLoad}
