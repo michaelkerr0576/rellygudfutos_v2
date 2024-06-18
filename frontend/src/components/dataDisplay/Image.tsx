@@ -147,26 +147,24 @@ export default function Image(props: ImageProps): JSX.Element {
     });
 
     return (
-      <StyledImgContainer className="rgf-image--container" styleProps={{ variant }}>
-        <StyledImg
-          alt={alt}
-          className={imageStyles}
-          loading="lazy"
-          onClick={isOnClickNewTabEnabled ? handleOpenImageInNewTab : undefined}
-          onLoad={handleImageLoad}
-          ref={ref}
-          src={src}
-          styleProps={{
-            hasBoxShadow,
-            imageFit,
-            isFinishedTransition,
-            isOnClickNewTabEnabled,
-            maxHeight,
-            maxWidth,
-            variant,
-          }}
-        />
-      </StyledImgContainer>
+      <StyledImg
+        alt={alt}
+        className={imageStyles}
+        loading="lazy"
+        onClick={isOnClickNewTabEnabled ? handleOpenImageInNewTab : undefined}
+        onLoad={handleImageLoad}
+        ref={ref}
+        src={src}
+        styleProps={{
+          hasBoxShadow,
+          imageFit,
+          isFinishedTransition,
+          isOnClickNewTabEnabled,
+          maxHeight,
+          maxWidth,
+          variant,
+        }}
+      />
     );
   };
 
