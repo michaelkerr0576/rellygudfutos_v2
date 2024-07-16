@@ -3,8 +3,6 @@ import Box from '@/components/layout/Box';
 import { PhotoAspectRatio } from '@/types/api/photo.types';
 import { LayoutVariant } from '@/types/store/gallery.types';
 
-import { GALLERY_MAX_WIDTH } from '../constants';
-
 export interface GallerySkeletonProps {
   variant: LayoutVariant;
 }
@@ -80,7 +78,6 @@ export default function GallerySkeleton(props: GallerySkeletonProps): JSX.Elemen
       <ImageList
         images={photosSkeleton}
         isMinimumLoad
-        maxWidth={GALLERY_MAX_WIDTH}
         minimumLoadTime="infinite"
         onClick={(): void => {}}
         variant={variant}

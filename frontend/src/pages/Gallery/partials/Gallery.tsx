@@ -10,7 +10,6 @@ import useErrorMessage from '@/hooks/shared/useErrorMessage';
 import { ApiErrorResponse } from '@/types/api/data.types';
 import { Photo } from '@/types/api/photo.types';
 
-import { GALLERY_MAX_WIDTH } from '../constants';
 import useGallery from '../hooks/useGallery';
 import GallerySkeleton from '../skeletons/Gallery.skeleton';
 
@@ -56,7 +55,6 @@ export default function Gallery(props: GalleryProps): JSX.Element {
         images={photos}
         isMinimumLoad
         lastImageRef={lastImageRef}
-        maxWidth={GALLERY_MAX_WIDTH}
         onClick={handleOpenPhotoDialog}
         variant={layoutVariant}
       />

@@ -12,5 +12,9 @@ export default function Form(props: FormProps): JSX.Element {
     [className]: !!className,
   });
 
-  return <form className={formStyles}>{children}</form>;
+  return (
+    <form className={formStyles} onSubmit={(event): void => event.preventDefault()}>
+      {children}
+    </form>
+  );
 }

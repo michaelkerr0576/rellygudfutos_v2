@@ -16,6 +16,7 @@ const StyledAlert = styled(MuiAlert)(({ theme }): { [key: string]: any } => ({
     fontWeight: theme.typography.fontWeightBold,
   },
   // #endregion
+  width: '100%',
 }));
 
 export default function Alert(props: AlertProps): JSX.Element {

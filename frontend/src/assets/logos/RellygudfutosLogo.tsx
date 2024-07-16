@@ -36,7 +36,6 @@ const StyledRellygudfutosLogo = styled(Box)((): { [key: string]: any } => ({
     width: 'auto',
   },
   // #endregion
-
   display: 'flex',
 }));
 

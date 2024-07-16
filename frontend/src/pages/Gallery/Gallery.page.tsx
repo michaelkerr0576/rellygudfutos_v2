@@ -1,3 +1,6 @@
+import { styled } from '@mui/material/styles';
+
+import Stack from '@/components/layout/Stack';
 import usePhotos from '@/hooks/queries/usePhotos';
 import useInfinitePagination from '@/hooks/shared/useInfinitePagination';
 import Page from '@/layouts/Page/Page';
@@ -10,6 +13,12 @@ import FilterDrawer from './partials/FilterDrawer';
 import Gallery from './partials/Gallery';
 import GalleryBottomNavigation from './partials/GalleryBottomNavigation';
 import PhotoDialog from './partials/PhotoDialog';
+import { GALLERY_MAX_WIDTH } from './constants';
+
+const StyledGalleryPageContent = styled(Stack)((): { [key: string]: any } => ({
+  margin: '0 auto',
+  maxWidth: GALLERY_MAX_WIDTH,
+}));
 
 export default function GalleryPage(): JSX.Element {
   useGalleryDialogRoutes();
@@ -33,16 +42,22 @@ export default function GalleryPage(): JSX.Element {
 
   return (
     <Page bottomNavigation={<GalleryBottomNavigation />} pageName="gallery">
-      <FilterDisplay />
+      <StyledGalleryPageContent
+        className="rgf-page--galleryContent"
+        direction="column"
+        justifyContent="center"
+      >
+        <FilterDisplay />
 
-      <Gallery
-        error={photosError}
-        isError={isPhotosError}
-        isFetchingNextPage={isFetchingNextPhotoPage}
-        isLoading={isPhotosLoading}
-        lastImageRef={inViewPhotoRef}
-        photos={photos}
-      />
+        <Gallery
+          error={photosError}
+          isError={isPhotosError}
+          isFetchingNextPage={isFetchingNextPhotoPage}
+          isLoading={isPhotosLoading}
+          lastImageRef={inViewPhotoRef}
+          photos={photos}
+        />
+      </StyledGalleryPageContent>
 
       <FilterDrawer />
 

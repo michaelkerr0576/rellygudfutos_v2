@@ -91,7 +91,27 @@ export default function TextField(props: TextFieldProps): JSX.Element {
 
   const [isFocused, setIsFocused] = useState(false);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => onChange(event.target.value);
+  const getType = (): MuiTextFieldProps['type'] => {
+    // * Type "search" limits customisation where it has its own clear button
+    const isSearch = type === 'search';
+    // * Type "number" does not work with maxCharacterLength
+    const isNumber = type === 'number';
+    if (isSearch || isNumber) {
+      return 'text';
+    }
+
+    return type;
+  };
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    const isNumber = type === 'number';
+    if (isNumber) {
+      const numericValue = event.target.value.replace(/[^0-9]/g, '');
+      return onChange(numericValue);
+    }
+
+    return onChange(event.target.value);
+  };
 
   const handleFocus = (): void => setIsFocused(true);
 
@@ -165,7 +185,7 @@ export default function TextField(props: TextFieldProps): JSX.Element {
         onBlur={handleBlur}
         onChange={handleChange}
         onFocus={handleFocus}
-        type={type === 'search' ? 'text' : type}
+        type={getType()}
         value={value}
         variant={variant}
       />

@@ -32,13 +32,12 @@ const StyledFilterDisplay = styled(Stack)(({ theme }): { [key: string]: any } =>
     },
   },
 
-  margin: theme.spacing(0, -1.5, 1, 0),
+  maxWidth: 'calc(100% + 12px)', // * 100% container width + 12px for padding to the right
   overflowX: 'auto',
-  paddingRight: theme.spacing(1),
+  paddingBottom: theme.spacing(1),
 
-  [theme.breakpoints.up('laptop')]: {
-    marginRight: 0,
-    paddingRight: 0,
+  [theme.breakpoints.up('desktop')]: {
+    maxWidth: '100%',
   },
 }));
 
