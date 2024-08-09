@@ -7,6 +7,7 @@ import useMinimumLoading, {
   MINIMUM_LOADING_TIME_MS,
   UseMinimumLoadingProps,
 } from '@/hooks/shared/useMinimumLoading';
+import { openUrlInNewTab } from '@/utils/window.utils';
 
 import Skeleton from '../feedback/Skeleton';
 import Box from '../layout/Box';
@@ -131,7 +132,7 @@ export default function Image(props: ImageProps): JSX.Element {
       onClick();
     }
     if (isOnClickNewTabEnabled) {
-      window.open(src, '_blank');
+      openUrlInNewTab(src);
     }
   };
 

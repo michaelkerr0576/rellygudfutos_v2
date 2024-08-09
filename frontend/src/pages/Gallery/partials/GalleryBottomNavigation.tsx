@@ -7,6 +7,7 @@ import Box from '@/components/layout/Box';
 import BottomNavigation from '@/components/navigation/BottomNavigation';
 import useThemes from '@/hooks/shared/useThemes';
 import { NavigationValue } from '@/types/store/gallery.types';
+import { scrollToTop } from '@/utils/window.utils';
 
 import useGallery from '../hooks/useGallery';
 
@@ -21,8 +22,7 @@ export default function GalleryBottomNavigation(): JSX.Element {
           {
             icon: <HomeIcon variant={navigationValue === NavigationValue.HOME ? 'filled' : 'outlined'} />,
             label: 'Home',
-            // TODO - fix scrollTo top and make scroll.utils file
-            onClick: (): void => window.scrollTo(0, 0),
+            onClick: scrollToTop,
             value: NavigationValue.HOME,
           },
           {
