@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 
 import { common } from '@mui/material/colors';
-import { alpha, Components, createTheme, Theme } from '@mui/material/styles';
+import { alpha, createTheme, Theme } from '@mui/material/styles';
 import { TypographyOptions } from '@mui/material/styles/createTypography';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
@@ -45,41 +45,6 @@ const breakpoints = {
     tablet: 640,
   },
 };
-
-const getComponents = (colorMode: ColorMode | undefined): Components<Omit<Theme, 'components'>> => ({
-  MuiCssBaseline: {
-    styleOverrides: {
-      '&::-webkit-scrollbar': {
-        height: 8,
-        width: 8,
-      },
-      '&::-webkit-scrollbar-thumb': {
-        backgroundClip: 'content-box',
-        backgroundColor: colorMode === ColorMode.DARK ? alpha(common.white, 0.4) : alpha(common.black, 0.4),
-        border: 'solid 2px transparent',
-        borderRadius: 3.5,
-        cursor: 'pointer',
-        position: 'fixed',
-      },
-      '&::-webkit-scrollbar-track': {
-        // * boxShadow: (horizontalLength, shadowTop & shadowBottom, blurRadius, spreadRadius)
-        boxShadow: `inset 1px 0px 0px 0px ${
-          colorMode === ColorMode.DARK ? alpha(common.white, 0.4) : alpha(common.black, 0.4)
-        }`,
-      },
-
-      '@media only screen and (min-width: 640px)': {
-        '&::-webkit-scrollbar': {
-          height: 12,
-          width: 12,
-        },
-        '&::-webkit-scrollbar-thumb': {
-          borderRadius: 6,
-        },
-      },
-    },
-  },
-});
 
 const typography = {
   fontFamily: ['Roboto', 'Helvetica', 'Arial', 'sans-serif'].join(','),
@@ -138,7 +103,6 @@ export default function useThemes(): UseThemes {
     (): Theme =>
       createTheme({
         breakpoints,
-        components: getComponents(colorMode),
         palette: getPalette(colorMode),
         typography,
       }),
