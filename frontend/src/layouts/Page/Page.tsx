@@ -63,7 +63,7 @@ export default function Page(props: PageProps): JSX.Element {
 
   const renderPageHeader = (): JSX.Element => (
     <Paper className="rgf-page--header" elevation={1}>
-      <Stack direction="row" spacing={2} alignItems="center">
+      <Stack alignItems="center" direction="row" spacing={2}>
         <Typography variant="h1">{title}</Typography>
 
         {headerContent && (

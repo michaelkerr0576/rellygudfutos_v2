@@ -161,16 +161,16 @@ export default function Image(props: ImageProps): JSX.Element {
   const renderImage = (ref?: ImageProps['imageRef']): JSX.Element => (
     // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
     <img
+      ref={ref}
       alt={alt}
       className="rgf-image--img"
       loading="lazy"
-      onClick={handleClick}
-      onKeyDown={isInteractable ? handleKeyDown : undefined}
-      onLoad={handleImageLoad}
-      ref={ref}
       role={isInteractable ? 'button' : 'img'}
       src={src}
       tabIndex={isInteractable ? 0 : undefined}
+      onClick={handleClick}
+      onKeyDown={isInteractable ? handleKeyDown : undefined}
+      onLoad={handleImageLoad}
     />
   );
 

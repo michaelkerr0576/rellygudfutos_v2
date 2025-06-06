@@ -157,12 +157,12 @@ export default function PhotoDialog(): JSX.Element {
       const settingsShutterSpeed = photo?.data.settings.shutterSpeed || '';
 
       return (
-        <Grid className="rgf-photoDialog--contentDetails" isContainer>
+        <Grid isContainer className="rgf-photoDialog--contentDetails">
           <Grid
             className="rgf-photoDialog--contentDetailsColumnOne"
             direction="column"
-            mobile={12}
             laptop="auto"
+            mobile={12}
           >
             <TypographyIcon
               startIcon={<PersonIcon color="secondary" size="small" />}
@@ -188,8 +188,8 @@ export default function PhotoDialog(): JSX.Element {
           <Grid
             className="rgf-photoDialog--contentDetailsColumnTwo"
             direction="column"
-            mobile={12}
             laptop="auto"
+            mobile={12}
           >
             <TypographyIcon
               startIcon={<ApertureIcon color="secondary" size="small" />}
@@ -247,9 +247,9 @@ export default function PhotoDialog(): JSX.Element {
     return (
       <>
         <Image
+          isOnClickNewTabEnabled
           alt={imageTitle}
           className="rgf-photoDialog--image"
-          isOnClickNewTabEnabled
           maxHeight={imageHeight}
           maxWidth="100%"
           src={imageUrl}
@@ -279,11 +279,11 @@ export default function PhotoDialog(): JSX.Element {
 
   const renderDialogActions = (): JSX.Element => (
     <Stack alignItems="center" justifyContent="end" spacing={1}>
-      <Button onClick={(): void => {}} startIcon={<ShareIcon size="large" />} variant="tertiary">
+      <Button startIcon={<ShareIcon size="large" />} variant="tertiary" onClick={(): void => {}}>
         Share
       </Button>
 
-      <Button onClick={(): void => {}} startIcon={<CartIcon size="large" />}>
+      <Button startIcon={<CartIcon size="large" />} onClick={(): void => {}}>
         Purchase
       </Button>
     </Stack>

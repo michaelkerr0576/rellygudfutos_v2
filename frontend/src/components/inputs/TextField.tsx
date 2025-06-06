@@ -168,9 +168,9 @@ export default function TextField(props: TextFieldProps): JSX.Element {
       {variant === 'standard' && renderStandardStartAdornment()}
 
       <MuiTextField
+        fullWidth
         autoComplete={autoFill}
         error={isError}
-        fullWidth
         helperText={helperText}
         inputProps={{
           maxLength: maxCharacterLength,
@@ -182,12 +182,12 @@ export default function TextField(props: TextFieldProps): JSX.Element {
         }}
         inputRef={inputRef}
         label={label}
-        onBlur={handleBlur}
-        onChange={handleChange}
-        onFocus={handleFocus}
         type={getType()}
         value={value}
         variant={variant}
+        onBlur={handleBlur}
+        onChange={handleChange}
+        onFocus={handleFocus}
       />
     </StyledTextField>
   );

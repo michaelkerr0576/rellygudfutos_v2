@@ -41,7 +41,7 @@ export default function AccountDrawer(): JSX.Element {
   );
 
   const renderDrawerHeader = (): JSX.Element => (
-    <Stack className="rgf-accountDrawer--header" alignItems="center" justifyContent="spaceBetween">
+    <Stack alignItems="center" className="rgf-accountDrawer--header" justifyContent="spaceBetween">
       <Typography variant="h3">Michael Kerr</Typography>
 
       {renderAccountButton(false)}

@@ -26,7 +26,7 @@ export default function Box(props: BoxProps): JSX.Element {
   });
 
   return (
-    <MuiBox aria-label={ariaLabel} className={boxStyles} onClick={onClick} ref={boxRef} role={ariaRole}>
+    <MuiBox ref={boxRef} aria-label={ariaLabel} className={boxStyles} role={ariaRole} onClick={onClick}>
       {children}
     </MuiBox>
   );

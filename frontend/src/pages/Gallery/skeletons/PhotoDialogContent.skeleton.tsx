@@ -75,9 +75,9 @@ export default function PhotoDialogContentSkeleton(props: PhotoDialogProps): JSX
 
   const renderImageSkeleton = (): JSX.Element => (
     <Image
+      isMinimumLoad
       alt="Image skeleton loader"
       className="rgf-photoDialog--image"
-      isMinimumLoad
       maxHeight={imageHeight}
       maxWidth="100%"
       minimumLoadTime="infinite"
@@ -115,46 +115,46 @@ export default function PhotoDialogContentSkeleton(props: PhotoDialogProps): JSX
 
   const renderCaptionSkeleton = (): JSX.Element => (
     <Box className="rgf-photoDialog--contentCaption">
-      <Skeleton width={isSmallScreen ? '100%' : '50%'} variant="text" />
-      <Skeleton width={isSmallScreen ? '100%' : '50%'} variant="text" />
-      <Skeleton width={isSmallScreen ? '50%' : '25%'} variant="text" />
+      <Skeleton variant="text" width={isSmallScreen ? '100%' : '50%'} />
+      <Skeleton variant="text" width={isSmallScreen ? '100%' : '50%'} />
+      <Skeleton variant="text" width={isSmallScreen ? '50%' : '25%'} />
     </Box>
   );
 
   const renderDetailsSkeleton = (): JSX.Element => (
-    <Grid className="rgf-photoDialog--contentDetails" isContainer>
-      <Grid className="rgf-photoDialog--contentDetailsColumnOne" direction="column" mobile={12} laptop="auto">
-        <Skeleton variant="text" height={32}>
+    <Grid isContainer className="rgf-photoDialog--contentDetails">
+      <Grid className="rgf-photoDialog--contentDetailsColumnOne" direction="column" laptop="auto" mobile={12}>
+        <Skeleton height={32} variant="text">
           <Typography>Mr Skeleton Skelly</Typography>
         </Skeleton>
 
-        <Skeleton variant="text" height={32}>
+        <Skeleton height={32} variant="text">
           <Typography>Skeleton Lane, Skellyville</Typography>
         </Skeleton>
 
-        <Skeleton variant="text" height={32}>
+        <Skeleton height={32} variant="text">
           <Typography>Skeleton camera name</Typography>
         </Skeleton>
 
-        <Skeleton variant="text" height={32}>
+        <Skeleton height={32} variant="text">
           <Typography>Skeleton lens name</Typography>
         </Skeleton>
       </Grid>
 
-      <Grid className="rgf-photoDialog--contentDetailsColumnTwo" direction="column" mobile={12} laptop="auto">
-        <Skeleton variant="text" height={32}>
+      <Grid className="rgf-photoDialog--contentDetailsColumnTwo" direction="column" laptop="auto" mobile={12}>
+        <Skeleton height={32} variant="text">
           <Typography>f/1.8</Typography>
         </Skeleton>
 
-        <Skeleton variant="text" height={32}>
+        <Skeleton height={32} variant="text">
           <Typography>700mm</Typography>
         </Skeleton>
 
-        <Skeleton variant="text" height={32}>
+        <Skeleton height={32} variant="text">
           <Typography>100 ISO</Typography>
         </Skeleton>
 
-        <Skeleton variant="text" height={32}>
+        <Skeleton height={32} variant="text">
           <Typography>1/1000</Typography>
         </Skeleton>
       </Grid>

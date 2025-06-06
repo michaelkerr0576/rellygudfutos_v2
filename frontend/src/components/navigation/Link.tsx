@@ -24,7 +24,7 @@ function Link(props: LinkProps, ref: React.Ref<HTMLAnchorElement> | undefined): 
   });
 
   return (
-    <StyledLink className={linkStyles} ref={ref} to={to}>
+    <StyledLink ref={ref} className={linkStyles} to={to}>
       {children}
     </StyledLink>
   );

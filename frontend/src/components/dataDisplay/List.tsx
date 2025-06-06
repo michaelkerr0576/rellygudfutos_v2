@@ -13,13 +13,13 @@ import { styled } from '@mui/material/styles';
 
 import Link from '@/components/navigation/Link';
 
-type ListItem = {
+interface ListItem {
   action?: JSX.Element;
   icon: JSX.Element;
   label: string;
   navigateTo?: ReactRouterLinkProps['to'];
   onClick?: MuiListItemButtonProps['onClick'];
-};
+}
 
 export interface ListProps {
   className?: MuiListProps['className'];
@@ -56,14 +56,14 @@ export default function List(props: ListProps): JSX.Element {
 
       if (navigateTo) {
         return (
-          <MuiListItem disablePadding key={label} component={Link} to={navigateTo}>
+          <MuiListItem key={label} disablePadding component={Link} to={navigateTo}>
             {renderListItem(listItem)}
           </MuiListItem>
         );
       }
 
       return (
-        <MuiListItem disablePadding key={label}>
+        <MuiListItem key={label} disablePadding>
           {renderListItem(listItem)}
         </MuiListItem>
       );

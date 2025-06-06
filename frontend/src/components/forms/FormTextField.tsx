@@ -55,9 +55,8 @@ export default function FormTextField(props: FormTextFieldProps): JSX.Element {
 
   return (
     <Controller
-      name={name}
       control={control}
-      rules={validationRules}
+      name={name}
       render={({ field: { onChange, ref, value }, fieldState: { error } }): JSX.Element => (
         <StyledTextField
           autoFill={autoFill}
@@ -68,13 +67,14 @@ export default function FormTextField(props: FormTextFieldProps): JSX.Element {
           isError={!!error}
           label={label}
           maxCharacterLength={maxCharacterLength}
-          onChange={onChange}
           startAdornment={startAdornment}
           type={type}
           value={value}
           variant={variant}
+          onChange={onChange}
         />
       )}
+      rules={validationRules}
     />
   );
 }

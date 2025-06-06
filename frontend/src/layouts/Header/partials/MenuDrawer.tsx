@@ -47,7 +47,7 @@ export default function MenuDrawer(): JSX.Element {
     };
 
     return (
-      <Stack className="rgf-menuDrawer--header" alignItems="center" spacing={0.5}>
+      <Stack alignItems="center" className="rgf-menuDrawer--header" spacing={0.5}>
         {renderMenuButton(false)}
 
         <LogoButton ariaLabel="really good photos" onClick={handleLogoButtonClick}>

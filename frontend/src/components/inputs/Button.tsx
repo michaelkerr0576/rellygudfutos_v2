@@ -64,11 +64,11 @@ export default function Button(props: ButtonProps): JSX.Element {
       disabled={isDisabled || isLoading}
       endIcon={endIcon}
       fullWidth={isFullWidth}
-      onClick={onClick}
       size="large"
       startIcon={startIcon}
       type={type}
       variant={getVariant()}
+      onClick={onClick}
     >
       {children}
 

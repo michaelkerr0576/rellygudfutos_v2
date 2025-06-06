@@ -32,9 +32,9 @@ export default function IconButton(props: IconButtonProps): JSX.Element {
       aria-label={ariaLabel}
       className={iconButtonStyles}
       edge={edge}
+      size="small"
       onClick={onClick}
       onMouseDown={onMouseDown}
-      size="small"
     >
       {children}
     </MuiIconButton>

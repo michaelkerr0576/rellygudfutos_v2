@@ -10,12 +10,12 @@ import { styled } from '@mui/material/styles';
 
 import Paper from '../surfaces/Paper';
 
-type Action = {
+interface Action {
   icon: JSX.Element;
   label: string;
   onClick?: MuiBottomNavigationPropsAction['onClick'];
   value: string;
-};
+}
 
 export interface BottomNavigationProps {
   actions: Action[];
@@ -42,11 +42,11 @@ export default function BottomNavigation(props: BottomNavigationProps): JSX.Elem
     actions.map(
       (action: Action): JSX.Element => (
         <MuiBottomNavigationAction
-          icon={action.icon}
           key={action.value}
+          icon={action.icon}
           label={action.label}
-          onClick={action.onClick}
           value={action.value}
+          onClick={action.onClick}
         />
       ),
     );

@@ -105,7 +105,7 @@ export default function FilterDrawer(): JSX.Element {
 
   const renderRow = (children: React.ReactNode): JSX.Element => (
     <Grid isContainer>
-      <Grid mobile={12} laptop={6} laptopOffset={3} desktop={4} desktopOffset={4}>
+      <Grid desktop={4} desktopOffset={4} laptop={6} laptopOffset={3} mobile={12}>
         {children}
       </Grid>
     </Grid>
@@ -115,12 +115,12 @@ export default function FilterDrawer(): JSX.Element {
     <Box className="rgf-filterDrawer--searchField">
       {renderRow(
         <TextField
-          endAdornment={<SearchIcon variant="outlined" />}
           isClearable
+          endAdornment={<SearchIcon variant="outlined" />}
           label="Search"
-          onChange={handleSearch}
           type="search"
           value={draftSearch}
+          onChange={handleSearch}
         />,
       )}
 
@@ -135,9 +135,9 @@ export default function FilterDrawer(): JSX.Element {
           fieldId="filter-drawer-tags-autocomplete"
           label="Tags"
           noOptionsLabel="No tags"
-          onChange={handleTagsFilter}
           options={tags}
           value={draftTagsFilter}
+          onChange={handleTagsFilter}
         />,
       )}
 
@@ -151,9 +151,9 @@ export default function FilterDrawer(): JSX.Element {
         <Select
           fieldId="filter-drawer-sort-select"
           label="Sort"
-          onChange={handleSortBy}
           options={sortByOptions}
           value={draftSortBy}
+          onChange={handleSortBy}
         />,
       )}
 
@@ -173,14 +173,14 @@ export default function FilterDrawer(): JSX.Element {
         <Stack alignItems="center" spacing={1}>
           <Button
             isFullWidth
-            onClick={handleClearFilters}
             startIcon={<FilterIcon size="large" type="off" />}
             variant="secondary"
+            onClick={handleClearFilters}
           >
             Clear
           </Button>
 
-          <Button isFullWidth onClick={handleApplyFilters} startIcon={<FilterIcon size="large" type="on" />}>
+          <Button isFullWidth startIcon={<FilterIcon size="large" type="on" />} onClick={handleApplyFilters}>
             Apply
           </Button>
         </Stack>,

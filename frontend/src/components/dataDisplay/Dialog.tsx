@@ -172,15 +172,15 @@ export default function Dialog(props: DialogProps): JSX.Element {
 
   return (
     <StyledDialog
+      fullWidth
       aria-describedby="dialog-description"
       aria-labelledby="dialog-title"
       className={dialogStyles}
       fullScreen={isExtraSmallScreen}
-      fullWidth
       maxWidth={maxWidth}
-      onClose={onClose}
       open={isOpen}
       scroll="paper"
+      onClose={onClose}
     >
       {renderDialogTitle()}
 

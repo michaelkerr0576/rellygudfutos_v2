@@ -76,11 +76,11 @@ export default function GallerySkeleton(props: GallerySkeletonProps): JSX.Elemen
   return (
     <Box className="rgf-gallery">
       <ImageList
-        images={photosSkeleton}
         isMinimumLoad
+        images={photosSkeleton}
         minimumLoadTime="infinite"
-        onClick={(): void => {}}
         variant={variant}
+        onClick={(): void => {}}
       />
     </Box>
   );

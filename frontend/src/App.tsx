@@ -34,20 +34,20 @@ export default function App(): JSX.Element {
             <Header />
             <Routes>
               {/* // * Public routes */}
-              <Route path="/" element={<GalleryPage />}>
+              <Route element={<GalleryPage />} path="/">
                 {/* // * Gallery dialog routes */}
-                <Route path="/photo/:photoId" element={<PhotoDialog />} />
-                <Route path="/login" element={<LoginDialog />} />
+                <Route element={<PhotoDialog />} path="/photo/:photoId" />
+                <Route element={<LoginDialog />} path="/login" />
               </Route>
 
               {/* // * Protected routes at a user level */}
               <Route element={<ProtectedRoute accessLevel={AuthRole.USER} />}>
-                <Route path="/account/profile" element={<ProfilePage />} />
-                <Route path="/account/dashboard" element={<DashboardPage />} />
+                <Route element={<ProfilePage />} path="/account/profile" />
+                <Route element={<DashboardPage />} path="/account/dashboard" />
               </Route>
 
               {/* // * Catch all */}
-              <Route path="/*" element={<Navigate replace to="/" />} />
+              <Route element={<Navigate replace to="/" />} path="/*" />
             </Routes>
           </Router>
         </ThemeProvider>

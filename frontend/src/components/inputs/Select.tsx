@@ -11,10 +11,10 @@ import { styled } from '@mui/material/styles';
 
 import Box from '../layout/Box';
 
-type Option = {
+interface Option {
   id: string;
   label: string;
-};
+}
 type OptionDictionary = Record<string, Option>;
 
 export interface SelectProps {
@@ -62,9 +62,9 @@ export default function Select(props: SelectProps): JSX.Element {
           id={`rgf-${fieldId}`}
           label={label}
           labelId={`rgf-${fieldId}-label`}
-          onChange={handleChange}
           value={value}
           variant="outlined"
+          onChange={handleChange}
         >
           {renderMenuItems()}
         </MuiSelect>

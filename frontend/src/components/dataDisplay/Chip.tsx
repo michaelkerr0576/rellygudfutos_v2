@@ -68,9 +68,9 @@ export default function Chip(props: ChipProps): JSX.Element {
       className={chipStyles}
       icon={startIcon}
       label={truncatedLabel}
+      variant={variant}
       onClick={onClick}
       onDelete={onDelete}
-      variant={variant}
     />
   );
 

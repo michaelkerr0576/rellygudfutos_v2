@@ -56,9 +56,9 @@ export default function FilterDisplay(): JSX.Element {
         {showSearchChip && (
           <Chip
             label={search}
-            onClick={handleOpenFilterDrawer}
             startIcon={<SearchIcon color="secondary" size="small" variant="outlined" />}
             variant="outlined"
+            onClick={handleOpenFilterDrawer}
           />
         )}
 
@@ -68,8 +68,8 @@ export default function FilterDisplay(): JSX.Element {
               <Chip
                 key={tag.id}
                 label={tag.label}
-                onClick={handleOpenFilterDrawer}
                 startIcon={<TagIcon color="secondary" size="small" />}
+                onClick={handleOpenFilterDrawer}
               />
             ),
           )}
@@ -93,8 +93,8 @@ export default function FilterDisplay(): JSX.Element {
       className="rgf-filterDisplay--sortButton"
       color="secondary"
       endIcon={<ArrowDropDownIcon type={isFilterDrawerOpen ? 'open' : 'closed'} />}
-      onClick={handleOpenFilterDrawer}
       variant="tertiary"
+      onClick={handleOpenFilterDrawer}
     >
       {sortByOptions[sortBy].label}
     </Button>

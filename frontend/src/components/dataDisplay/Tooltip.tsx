@@ -16,7 +16,7 @@ export default function Tooltip(props: TooltipProps): JSX.Element {
   });
 
   return (
-    <MuiTooltip arrow className={tooltipStyles} describeChild placement="top" title={label}>
+    <MuiTooltip arrow describeChild className={tooltipStyles} placement="top" title={label}>
       {children}
     </MuiTooltip>
   );

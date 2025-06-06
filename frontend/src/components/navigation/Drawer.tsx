@@ -100,19 +100,19 @@ export default function Drawer(props: DrawerProps): JSX.Element {
 
   return (
     <StyledDrawer
+      disableSwipeToOpen
       anchor={anchor}
       className={drawerStyles}
-      disableSwipeToOpen
-      onClose={onClose}
-      onOpen={onOpen}
       open={isOpen}
       styleProps={{ isBottomDrawer }}
+      onClose={onClose}
+      onOpen={onOpen}
     >
       {isBottomDrawer && (
         <Paper className="rgf-drawer--expandDrawerButton" elevation={1}>
           <Grid justifyContent="center">
             <IconButton ariaLabel="less" onClick={onClose}>
-              <ExpandIcon type={isOpen ? 'less' : 'more'} size="large" />
+              <ExpandIcon size="large" type={isOpen ? 'less' : 'more'} />
             </IconButton>
           </Grid>
         </Paper>

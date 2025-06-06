@@ -24,18 +24,18 @@ export const IMAGE_SMALL_SCREEN_GAP = 8; // * The gap between images in px
 type AspectRatio = 'landscape' | 'portrait';
 type Variant = 'grid' | 'list';
 
-type Img = {
+interface Img {
   height: number;
   url: string;
   width: number;
-};
+}
 
-type ImageListItem = {
+interface ImageListItem {
   _id: string;
   aspectRatio: AspectRatio;
   image: Img;
   title: string;
-};
+}
 
 export interface ImageListProps {
   className?: MuiImageListProps['className'];
@@ -126,22 +126,22 @@ export default function ImageList(props: ImageListProps): JSX.Element {
 
       return (
         <MuiImageListItem
+          key={imageId}
           className="rgf-imageList--listItem"
           cols={getColumns()}
-          key={imageId}
           rows={getRows()}
         >
           <Image
-            alt={imageTitle}
             hasBoxShadow
+            alt={imageTitle}
             imageFit="cover"
             imageRef={isLastImage ? lastImageRef : undefined}
             isMinimumLoad={isMinimumLoad}
             maxHeight={imageHeight}
             maxWidth={imageWidth}
             minimumLoadTime={minimumLoadTime}
-            onClick={handleImageClick}
             src={imageUrl}
+            onClick={handleImageClick}
           />
         </MuiImageListItem>
       );

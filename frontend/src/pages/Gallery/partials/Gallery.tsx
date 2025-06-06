@@ -52,11 +52,11 @@ export default function Gallery(props: GalleryProps): JSX.Element {
   return (
     <StyledGallery className="rgf-gallery">
       <ImageList
-        images={photos}
         isMinimumLoad
+        images={photos}
         lastImageRef={lastImageRef}
-        onClick={handleOpenPhotoDialog}
         variant={layoutVariant}
+        onClick={handleOpenPhotoDialog}
       />
 
       <Box className="rgf-gallery--loadingPanel">

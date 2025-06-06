@@ -10,10 +10,10 @@ import MuiTextField from '@mui/material/TextField';
 import Chip from '../dataDisplay/Chip';
 import Box from '../layout/Box';
 
-type Option = {
+interface Option {
   id: number;
   label: string;
-};
+}
 
 export interface AutocompleteProps {
   className?: string;
@@ -61,7 +61,7 @@ export default function Autocomplete(props: AutocompleteProps): JSX.Element {
     chips.map((chip, index): JSX.Element => {
       const { className: tagClassName, key, onDelete } = getTagProps({ index });
 
-      return <Chip className={tagClassName} key={key} label={chip.label} onDelete={onDelete} />;
+      return <Chip key={key} className={tagClassName} label={chip.label} onDelete={onDelete} />;
     });
 
   const autocompleteStyles = clsx('rgf-autocomplete', {
@@ -74,16 +74,16 @@ export default function Autocomplete(props: AutocompleteProps): JSX.Element {
         disableCloseOnSelect
         filterSelectedOptions
         fullWidth
+        multiple
         getOptionLabel={(option): string => option.label}
         id={`rgf-${fieldId}`}
         isOptionEqualToValue={(option, propValue): boolean => option.label === propValue.label}
-        multiple
         noOptionsText={noOptionsLabel}
-        onChange={handleChange}
         options={options}
         renderInput={renderTextField}
         renderTags={renderChips}
         value={value}
+        onChange={handleChange}
       />
     </StyledAutocomplete>
   );

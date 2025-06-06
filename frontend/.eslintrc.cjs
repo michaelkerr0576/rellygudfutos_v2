@@ -48,12 +48,15 @@ module.exports = {
     'simple-import-sort',
   ],
   rules: {
+    '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
     '@typescript-eslint/explicit-function-return-type': [
       'error',
       {
         allowTypedFunctionExpressions: false,
       },
     ],
+    '@typescript-eslint/interface-name-prefix': 'off',
+    '@typescript-eslint/no-empty-interface': 'error',
     '@typescript-eslint/no-unused-vars': [
       'error',
       {
@@ -62,6 +65,7 @@ module.exports = {
         varsIgnorePattern: '^_',
       },
     ],
+    '@typescript-eslint/sort-type-constituents': 'error',
     'import/extensions': [
       'error',
       'ignorePackages',
@@ -116,11 +120,22 @@ module.exports = {
     'react/jsx-curly-newline': 'error',
     'react/jsx-filename-extension': [2, { extensions: ['.js', '.jsx', '.ts', '.tsx'] }],
     'react/jsx-key': 'error',
+    'react/jsx-max-props-per-line': ['error', { maximum: 1, when: 'multiline' }],
     'react/jsx-no-bind': 'error',
     'react/jsx-no-constructed-context-values': 'error',
     'react/jsx-no-script-url': 'error',
     'react/jsx-no-target-blank': 'error',
     'react/jsx-props-no-spreading': 'error',
+    'react/jsx-sort-props': [
+      'error',
+      {
+        callbacksLast: true,
+        ignoreCase: true,
+        noSortAlphabetically: false,
+        reservedFirst: true,
+        shorthandFirst: true,
+      },
+    ],
     'react/jsx-uses-react': 'error',
     'react/no-array-index-key': 'error',
     'react/no-children-prop': 'error',

@@ -80,7 +80,7 @@ export default function LoginDialog(): JSX.Element {
           className="rgf-dialog--titleMoreOptionsButton"
           onClick={handleToggleShowPassword}
         >
-          <VisibilityIcon type={showPassword ? 'off' : 'on'} color="secondary" />
+          <VisibilityIcon color="secondary" type={showPassword ? 'off' : 'on'} />
         </IconButton>
       }
       label="Password"
@@ -93,12 +93,12 @@ export default function LoginDialog(): JSX.Element {
 
   const renderDialogActions = (): JSX.Element => (
     <Button
-      className="rgf-loginDialog--loginButton"
       isFullWidth
+      className="rgf-loginDialog--loginButton"
       isLoading={isSubmitting || isLoading}
-      onClick={handleSubmit(handleOnSubmit)}
       startIcon={<LoginIcon />}
       type="submit"
+      onClick={handleSubmit(handleOnSubmit)}
     >
       Login
     </Button>
@@ -109,8 +109,8 @@ export default function LoginDialog(): JSX.Element {
       className="rgf-loginDialog"
       dialogActions={renderDialogActions()}
       isOpen={isLoginDialogOpen}
-      onClose={handleCloseLoginDialog}
       title="Login"
+      onClose={handleCloseLoginDialog}
     >
       <Form>
         {renderEmailField()}
