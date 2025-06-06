@@ -54,7 +54,7 @@ const typography = {
   fontWeightRegular: 400,
   fontWeightSemiBold: 600,
   h1: {
-    fontSize: '2rem',
+    fontSize: '1.75rem',
   },
   h2: {
     fontSize: '1.5rem',

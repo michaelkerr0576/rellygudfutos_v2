@@ -41,14 +41,13 @@ export default function GalleryPage(): JSX.Element {
   });
 
   return (
-    <Page bottomNavigation={<GalleryBottomNavigation />} pageName="gallery">
-      <StyledGalleryPageContent
-        className="rgf-page--galleryContent"
-        direction="column"
-        justifyContent="center"
-      >
-        <FilterDisplay />
-
+    <Page
+      bottomNavigation={<GalleryBottomNavigation />}
+      headerContent={<FilterDisplay />}
+      pageName="gallery"
+      title="Gallery"
+    >
+      <StyledGalleryPageContent alignItems="center" className="rgf-page--galleryContent" direction="column">
         <Gallery
           error={photosError}
           isError={isPhotosError}

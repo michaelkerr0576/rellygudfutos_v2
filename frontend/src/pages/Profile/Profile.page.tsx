@@ -1,5 +1,9 @@
 import Page from '@/layouts/Page/Page';
 
 export default function ProfilePage(): JSX.Element {
-  return <Page pageName="profile">Profile</Page>;
+  return (
+    <Page pageName="profile" title="Profile">
+      Profile
+    </Page>
+  );
 }

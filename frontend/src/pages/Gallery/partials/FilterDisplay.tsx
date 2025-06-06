@@ -34,7 +34,6 @@ const StyledFilterDisplay = styled(Stack)(({ theme }): { [key: string]: any } =>
 
   maxWidth: 'calc(100% + 12px)', // * 100% container width + 12px for padding to the right
   overflowX: 'auto',
-  paddingBottom: theme.spacing(1),
 
   [theme.breakpoints.up('desktop')]: {
     maxWidth: '100%',

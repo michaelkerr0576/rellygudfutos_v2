@@ -11,7 +11,6 @@ import { styled } from '@mui/material/styles';
 import Paper from '../surfaces/Paper';
 
 type Action = {
-  // TODO - add aria labels for each gallery navigation option
   icon: JSX.Element;
   label: string;
   onClick?: MuiBottomNavigationPropsAction['onClick'];
@@ -26,6 +25,7 @@ export interface BottomNavigationProps {
 }
 
 const StyledBottomNavigation = styled(Paper)(({ theme }): { [key: string]: any } => ({
+  borderTop: `1px solid ${theme.palette.divider}`,
   bottom: 0,
   left: 0,
   position: 'fixed',
